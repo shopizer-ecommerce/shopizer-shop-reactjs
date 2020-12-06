@@ -1,0 +1,129 @@
+/*------ 24. login register Page  --------*/
+
+.login-register-wrapper {
+  .login-register-tab-list {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+    .nav-item {
+      position: relative;
+      a {
+        background: none;
+        padding: 0;
+
+        h4 {
+          font-size: 25px;
+          font-weight: 700;
+          margin: 0 20px;
+          text-transform: capitalize;
+          transition: all 0.3s ease 0s;
+        }
+        &:last-child::before {
+          display: none;
+        }
+      }
+      a.active h4 {
+        color: $theme-color;
+      }
+
+      &:before {
+        background-color: #454545;
+        bottom: 5px;
+        content: "";
+        height: 18px;
+        margin: 0 auto;
+        position: absolute;
+        right: -2px;
+        transition: all 0.4s ease 0s;
+        width: 1px;
+      }
+
+      &:last-child {
+        &::before {
+          display: none;
+        }
+      }
+    }
+  }
+  .login-form-container {
+    background: transparent none repeat scroll 0 0;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+    padding: 80px;
+    text-align: left;
+    @media #{$lg-layout} {
+      padding: 80px 50px;
+    }
+    @media #{$xs-layout} {
+      padding: 40px 15px;
+    }
+    .login-register-form {
+      form {
+        input {
+          background-color: transparent;
+          border: 1px solid #ebebeb;
+          color: #333;
+          font-size: 14px;
+          height: 45px;
+          margin-bottom: 30px;
+          padding: 0 15px;
+        }
+        input[type="checkbox"] {
+          height: 15px;
+          margin: 0;
+          position: relative;
+          top: 1px;
+          width: 17px;
+        }
+        .button-box {
+          .login-toggle-btn {
+            padding: 10px 0 19px;
+            label {
+              color: #242424;
+              font-size: 15px;
+              font-weight: 400;
+              @media #{$xs-layout} {
+                font-size: 14px;
+              }
+            }
+            a {
+              color: #242424;
+              float: right;
+              font-size: 15px;
+              @media #{$xs-layout} {
+                font-size: 14px;
+              }
+              transition: all 0.3s ease 0s;
+              &:hover {
+                color: $theme-color;
+              }
+            }
+          }
+          button {
+            background-color: #f2f2f2;
+            border: medium none;
+            color: #333;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1;
+            padding: 11px 30px;
+            text-transform: uppercase;
+            transition: all 0.3s ease 0s;
+            &:hover {
+              background-color: $theme-color;
+              color: #fff;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.login-register-area {
+  @media #{$xs-layout} {
+    &.pb-100 {
+      padding-bottom: 60px;
+    }
+  }
+}

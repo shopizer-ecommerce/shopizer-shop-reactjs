@@ -1,0 +1,14 @@
+[
+  {
+    "id": "1",
+    "content": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.",
+    "customerName": "Grace Alvarado",
+    "title": "customer"
+  },
+  {
+    "id": "2",
+    "content": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.",
+    "customerName": "John Doe",
+    "title": "customer"
+  }
+]

@@ -1,0 +1,15 @@
+/*----- 12. image slider style  -----*/
+
+.single-image {
+  overflow: hidden;
+  a {
+    img {
+      width: 100%;
+      transition: all 0.5s ease 0s;
+      transform: scale(1);
+    }
+  }
+  &:hover a img {
+    transform: scale(1.1);
+  }
+}

@@ -1,0 +1,37 @@
+[
+  {
+    "id": "1",
+    "image": "/assets/img/product/category1.jpg",
+    "subtitle": "2 Products",
+    "title": "New",
+    "link": "/shop-grid-standard"
+  },
+  {
+    "id": "2",
+    "image": "/assets/img/product/category2.jpg",
+    "subtitle": "3 Products",
+    "title": "Crafts",
+    "link": "/shop-grid-standard"
+  },
+  {
+    "id": "3",
+    "image": "/assets/img/product/category3.jpg",
+    "subtitle": "6 Products",
+    "title": "Earthenware",
+    "link": "/shop-grid-standard"
+  },
+  {
+    "id": "4",
+    "image": "/assets/img/product/category4.jpg",
+    "subtitle": "5 Products",
+    "title": "Featured",
+    "link": "/shop-grid-standard"
+  },
+  {
+    "id": "5",
+    "image": "/assets/img/product/category2.jpg",
+    "subtitle": "3 Products",
+    "title": "Best Products",
+    "link": "/shop-grid-standard"
+  }
+]

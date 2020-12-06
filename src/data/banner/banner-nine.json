@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "image": "/assets/img/banner/banner-16.png",
+    "title": "Eye Lashes",
+    "subtitle": "Starting at",
+    "price": "$9.00",
+    "link": "/shop-grid-standard"
+  },
+  {
+    "id": 2,
+    "image": "/assets/img/banner/banner-17.png",
+    "title": "Anti-Wrinkles",
+    "subtitle": "Starting at",
+    "price": "$7.00",
+    "link": "/shop-grid-standard"
+  }
+]

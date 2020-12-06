@@ -1,0 +1,291 @@
+/*------ 10. Suscribe style  ------*/
+
+.subscribe-style-2 {
+  h2 {
+    font-size: 48px;
+
+    margin: 0 0 23px;
+
+    color: #010101;
+    @media #{$xs-layout} {
+      font-size: 30px;
+
+      margin: 0 0 12px;
+    }
+  }
+  p {
+    font-size: 16px;
+
+    margin: 0 0 23px;
+
+    color: #696969;
+  }
+  .subscribe-form-2 {
+    input {
+      font-size: 14px;
+
+      height: 45px;
+      padding: 2px 50px 2px 0;
+
+      color: #333;
+      border: none;
+      border-bottom: 2px solid #e2e2e2;
+      background: transparent;
+    }
+    .mc-news {
+      display: none;
+    }
+    .mc-form {
+      position: relative;
+    }
+    .clear-2 {
+      position: absolute;
+      right: 0;
+
+//background: rgba(0, 0, 0, 0) url("../../assets/img/icon-img/suscribe.png") no-repeat scroll right 0 center;
+      bottom: 0;
+
+      display: inline-block;
+
+      button {
+        font-size: 30px;
+
+        height: 45px;
+        padding: 0;
+
+        transition: 0.3s;
+
+        color: #cacaca;
+        border: none;
+        background: none;
+        @media #{$xs-layout} {
+          font-size: 20px;
+        }
+        &:hover {
+          color: #333;
+        }
+      }
+    }
+  }
+}
+
+.subscribe-area-3.pb-100 {
+  @media #{$xs-layout} {
+    padding-bottom: 60px;
+  }
+}
+
+.subscribe-area-3 {
+  &.ml-70 {
+    @media #{$md-layout,
+    $sm-layout} {
+      margin-left: 30px;
+    }
+    @media #{$xs-layout} {
+      margin-left: 15px;
+    }
+  }
+
+  &.mr-70 {
+    @media #{$md-layout,
+    $sm-layout} {
+      margin-right: 30px;
+    }
+    @media #{
+    $xs-layout} {
+      margin-right: 15px;
+    }
+  }
+}
+
+.subscribe-style-3 {
+  h2 {
+    font-size: 48px;
+
+    margin: 0 0 23px;
+
+    color: #010101;
+    @media #{$xs-layout} {
+      font-size: 35px;
+
+      margin: 0 0 12px;
+    }
+    @media #{$md-layout} {
+      font-size: 40px;
+    }
+  }
+  p {
+    font-size: 16px;
+    line-height: 1.5;
+
+    margin: 0;
+
+    color: #696969;
+  }
+
+  &--title-style2 {
+    h2 {
+      font-family: $josefin;
+      font-size: 36px;
+    }
+  }
+
+  .subscribe-form-3 {
+    input {
+      height: 46px;
+
+      text-align: center;
+
+      color: #333;
+      border: none;
+      border-bottom: 2px solid #e2e2e2;
+      background: transparent;
+    }
+    .mc-news {
+      display: none;
+    }
+    .clear-3 {
+      margin-top: 40px;
+      input,
+      button {
+        font-weight: 500;
+        line-height: 1;
+
+        width: auto;
+        height: auto;
+        padding: 17px 55px;
+
+        letter-spacing: 2px;
+        text-transform: uppercase;
+
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        background: none;
+        background-color: #070508;
+        &:hover {
+          background-color: $theme-color;
+        }
+      }
+      &.hover-red {
+        input,
+        button {
+          &:hover {
+            background-color: #df262b;
+          }
+        }
+      }
+      &.red-subscribe {
+        input,
+        button {
+          background-color: #df262b;
+          &:hover {
+            background-color: $theme-color;
+          }
+        }
+      }
+      &.green-subscribe {
+        input,
+        button {
+          background-color: #6eab49;
+          &:hover {
+            background-color: $theme-color;
+          }
+        }
+      }
+      &.dark-red-subscribe {
+        input,
+        button {
+          border-radius: 50px;
+          background-color: #c61a32;
+          &:hover {
+            background-color: $theme-color;
+          }
+        }
+      }
+      &.dark-blue-subscribe {
+        input,
+        button {
+          border-radius: 50px;
+          background-color: #053399;
+          &:hover {
+            background-color: #053399;
+          }
+        }
+      }
+      &.red-2-subscribe {
+        input,
+        button {
+          background-color: #e90042;
+          &:hover {
+            background-color: $theme-color;
+          }
+        }
+      }
+      &.pink-subscribe {
+        input,
+        button {
+          background-color: #ed59a0;
+          &:hover {
+            background-color: $theme-color;
+          }
+        }
+      }
+    }
+  }
+
+  &--blue {
+    h2 {
+      font-family: $josefin;
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1.3;
+
+      color: #053399;
+    }
+    p {
+      font-family: $josefin;
+      font-size: 18px;
+      font-weight: 700;
+
+      text-transform: uppercase;
+
+      color: #333;
+    }
+  }
+  &.subscribe-style-3-white {
+    h2 {
+      color: #fff;
+    }
+    p {
+      color: #fff;
+    }
+    .subscribe-form-3 {
+      input {
+        color: #cacaca;
+        border-bottom: 2px solid #e2e2e2;
+      }
+      .mc-news {
+        display: none;
+      }
+      .clear-3 {
+        margin-top: 40px;
+        input {
+          color: #fff;
+          border: none;
+          &:hover {
+            background-color: $theme-color;
+          }
+        }
+        &.red-2-subscribe {
+          input {
+            background-color: #e90042;
+            &:hover {
+              background-color: $theme-color;
+            }
+          }
+        }
+      }
+    }
+  }
+}

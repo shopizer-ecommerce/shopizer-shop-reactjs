@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "title": "New Arrivals",
+    "subtitle": "Book Shop <br /> Find Your Book",
+    "image": "/assets/img/slider/slider-11.jpg",
+    "url": "/shop-grid-standard"
+  },
+  {
+    "id": 2,
+    "title": "New Arrivals",
+    "subtitle": "Book Shop <br /> Find Your Book",
+    "image": "/assets/img/slider/slider-11-2.jpg",
+    "url": "/shop-grid-standard"
+  }
+]

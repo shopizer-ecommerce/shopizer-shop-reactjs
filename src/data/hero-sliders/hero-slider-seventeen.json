@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "title": "2020 Latest Collection",
+    "subtitle": "-30% Offer All <br /> Hand & Made.",
+    "image": "/assets/img/slider/slider-14.jpg",
+    "url": "/shop-grid-standard"
+  },
+  {
+    "id": 2,
+    "title": "2020 Latest Collection",
+    "subtitle": "-40% Offer All <br /> Hand & Made.",
+    "image": "/assets/img/slider/slider-15.jpg",
+    "url": "/shop-grid-standard"
+  }
+]

@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "image": "/assets/img/slider/valentine-text.png",
+    "backgroundImage": "/assets/img/slider/slider-38.jpg",
+    "title": "New Collection For <br>Big Sale 40%",
+    "url": "/shop-grid-standard"
+  },
+  {
+    "id": 2,
+    "image": "/assets/img/slider/valentine-text.png",
+    "backgroundImage": "/assets/img/slider/slider-38.jpg",
+    "title": "New Collection For <br>Big Sale 40%",
+    "url": "/shop-grid-standard"
+  }
+]

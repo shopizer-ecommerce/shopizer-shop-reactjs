@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "image": "/assets/img/icon-img/support-1.png",
+    "title": "Free Shipping",
+    "subtitle": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusm."
+  },
+  {
+    "id": 2,
+    "image": "/assets/img/icon-img/support-11.png",
+    "title": "Support 24/7",
+    "subtitle": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusm."
+  },
+  {
+    "id": 3,
+    "image": "/assets/img/icon-img/support-12.png",
+    "title": "Money Return",
+    "subtitle": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusm."
+  }
+]

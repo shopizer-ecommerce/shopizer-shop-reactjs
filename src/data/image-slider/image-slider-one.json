@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1",
+    "image": "/assets/img/image-slider/image-slider-1.jpg",
+    "link": "/shop-grid-standard"
+  },
+  {
+    "id": "2",
+    "image": "/assets/img/image-slider/image-slider-2.jpg",
+    "link": "/shop-grid-standard"
+  },
+  {
+    "id": "3",
+    "image": "/assets/img/image-slider/image-slider-3.jpg",
+    "link": "/shop-grid-standard"
+  },
+  {
+    "id": "4",
+    "image": "/assets/img/image-slider/image-slider-4.jpg",
+    "link": "/shop-grid-standard"
+  },
+  {
+    "id": "5",
+    "image": "/assets/img/image-slider/image-slider-5.jpg",
+    "link": "/shop-grid-standard"
+  },
+  {
+    "id": "6",
+    "image": "/assets/img/image-slider/image-slider-2.jpg",
+    "link": "/shop-grid-standard"
+  }
+]

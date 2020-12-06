@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "image": "/assets/img/banner/banner-40.png",
+    "title": "Covid - 19",
+    "subtitle": "Medicine <br>& Equipment",
+    "text": "20% OFF",
+    "link": "/shop-grid-standard"
+  },
+  {
+    "id": 2,
+    "image": "/assets/img/banner/banner-41.png",
+    "title": "Covid - 19",
+    "subtitle": "Medix Mask <br>& Sanitizer",
+    "text": "30% OFF",
+    "link": "/shop-grid-standard"
+  },
+  {
+    "id": 3,
+    "image": "/assets/img/banner/banner-42.png",
+    "title": "Covid - 19",
+    "subtitle": "Hand Gloves <br>& Sanitizer",
+    "text": "40% OFF",
+    "link": "/shop-grid-standard"
+  }
+]

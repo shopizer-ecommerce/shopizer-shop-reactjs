@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "image": "/assets/img/banner/banner-54.png",
+    "title": "Single Sofa",
+    "subtitle": "Starting at",
+    "price": "$99.00",
+    "link": "/shop-grid-standard"
+  },
+  {
+    "id": 2,
+    "image": "/assets/img/banner/banner-55.png",
+    "title": "Single Sofa",
+    "subtitle": "Starting at",
+    "price": "$79.00",
+    "link": "/shop-grid-standard"
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "image": "/assets/img/banner/banner27.jpg",
+    "title": "Cup cakes",
+    "subtitle": "Choose Your Products Here",
+    "link": "/shop-grid-standard",
+    "textAlign": "right"
+  },
+  {
+    "id": 2,
+    "image": "/assets/img/banner/banner28.jpg",
+    "title": "Vanilla cakes",
+    "subtitle": "Choose Your Products Here",
+    "link": "/shop-grid-standard",
+    "textAlign": "left"
+  }
+]

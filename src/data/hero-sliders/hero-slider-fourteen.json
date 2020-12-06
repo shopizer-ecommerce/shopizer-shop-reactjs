@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "title": "Welcome to Flone",
+    "subtitle": "30% off Summer Vacation",
+    "image": "/assets/img/slider/slider-5.jpg",
+    "url": "/shop-grid-standard"
+  },
+  {
+    "id": 2,
+    "title": "Smart Products",
+    "subtitle": "40% off Summer Vacation",
+    "image": "/assets/img/slider/slider-5-1.jpg",
+    "url": "/shop-grid-standard"
+  }
+]

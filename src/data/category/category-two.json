@@ -1,0 +1,37 @@
+[
+  {
+    "id": "1",
+    "image": "/assets/img/product/hm8-pro-1.jpg",
+    "subtitle": "2 Products",
+    "title": "Living Room",
+    "link": "/shop-grid-standard"
+  },
+  {
+    "id": "2",
+    "image": "/assets/img/product/hm8-pro-2.jpg",
+    "subtitle": "3 Products",
+    "title": "Drawing Room",
+    "link": "/shop-grid-standard"
+  },
+  {
+    "id": "3",
+    "image": "/assets/img/product/hm8-pro-3.jpg",
+    "subtitle": "6 Products",
+    "title": "Dining Room",
+    "link": "/shop-grid-standard"
+  },
+  {
+    "id": "4",
+    "image": "/assets/img/product/hm8-pro-4.jpg",
+    "subtitle": "5 Products",
+    "title": "Drawing Room",
+    "link": "/shop-grid-standard"
+  },
+  {
+    "id": "5",
+    "image": "/assets/img/product/hm8-pro-2.jpg",
+    "subtitle": "3 Products",
+    "title": "Living Room",
+    "link": "/shop-grid-standard"
+  }
+]

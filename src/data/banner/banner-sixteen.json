@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "image": "/assets/img/banner/banner17.jpg",
+    "title": "Featured Products",
+    "subtitle": "Choose Your Products Here",
+    "link": "/shop-grid-standard",
+    "textAlign": "right"
+  },
+  {
+    "id": 2,
+    "image": "/assets/img/banner/banner18.jpg",
+    "title": "New Products",
+    "subtitle": "Choose Your Products Here",
+    "link": "/shop-grid-standard",
+    "textAlign": "left"
+  }
+]

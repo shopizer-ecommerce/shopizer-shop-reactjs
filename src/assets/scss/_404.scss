@@ -1,0 +1,93 @@
+.error {
+  h1 {
+    font-size: 17rem;
+    font-weight: bold;
+    letter-spacing: 1rem;
+    line-height: 1.1;
+    margin-bottom: 30px;
+    color: #a749ff;
+    @media #{$lg-layout} {
+      font-size: 15rem;
+      margin-bottom: 4px;
+    }
+    @media #{$md-layout} {
+      font-size: 12rem;
+    }
+    @media #{$xs-layout} {
+      font-size: 7rem;
+      line-height: 88px;
+    }
+    @media #{$sm-layout} {
+      font-size: 9rem;
+      line-height: 100px;
+    }
+  }
+  h2 {
+    font-size: 25px;
+    font-weight: 600;
+  }
+}
+
+.error-btn {
+  position: relative;
+  transition: all 0.3s;
+  color: #fff;
+  font-size: 16px;
+  min-width: 184px;
+  min-height: 55px;
+  line-height: 55px;
+  margin-bottom: 6px;
+  padding: 0 10px;
+  border: none;
+  border-radius: 0;
+  background-color: #a749ff;
+  display: inline-block;
+  &:after {
+    position: absolute;
+    content: "";
+    left: 0;
+    bottom: -6px;
+    height: 3px;
+    width: 100%;
+    background-color: #a749ff;
+    transition: all 0.3s;
+  }
+  &:hover {
+    background-color: #111111;
+    color: #fff;
+    &:after {
+      background-color: #111111;
+    }
+  }
+}
+
+.searchform {
+  position: relative;
+  & input {
+    border: 1px solid #eeeeee;
+    height: 45px;
+    width: 100%;
+    padding-left: 15px;
+    padding-right: 80px;
+    background-color: transparent;
+  }
+  & button {
+    border: none;
+    background-color: #a749ff;
+    width: 70px;
+    color: #fff;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    &:hover {
+      background-color: #000;
+    }
+  }
+  @media #{$xs-layout} {
+    &.mb-50 {
+      margin-bottom: 20px;
+    }
+  }
+}

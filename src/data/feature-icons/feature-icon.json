@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "image": "/assets/img/icon-img/support-1.png",
+    "title": "Free Shipping",
+    "subtitle": "Free shipping on all order"
+  },
+  {
+    "id": 2,
+    "image": "/assets/img/icon-img/support-2.png",
+    "title": "Support 24/7",
+    "subtitle": "Free shipping on all order"
+  },
+  {
+    "id": 3,
+    "image": "/assets/img/icon-img/support-3.png",
+    "title": "Money Return",
+    "subtitle": "Free shipping on all order"
+  },
+  {
+    "id": 4,
+    "image": "/assets/img/icon-img/support-4.png",
+    "title": "Order Discount",
+    "subtitle": "Free shipping on all order"
+  }
+]

@@ -1,0 +1,191 @@
+/*------ 25. My account Page  ------*/
+
+.single-my-account {
+  margin-bottom: 20px;
+  border: 1px solid #ebebeb;
+  .panel-heading {
+    padding: 0;
+    & > button {
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+      padding: 0;
+    }
+  }
+  .card-body {
+    border-bottom: 1px solid #ebebeb;
+  }
+  h3.panel-title {
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ebebeb;
+    font-size: 15px;
+    font-weight: 500;
+    margin: 0;
+    text-transform: uppercase;
+    color: #242424;
+    display: block;
+    padding: 16px 55px;
+    position: relative;
+    @media #{$xs-layout} {
+      line-height: 22px;
+      font-size: 14px;
+      padding: 16px 30px 16px 40px;
+    }
+
+    &:hover {
+      color: $theme-color;
+    }
+    &::before {
+      color: #000;
+      content: "\f107";
+      display: inline-block;
+      font-family: "FontAwesome";
+      font-size: 16px;
+      position: absolute;
+      right: 10px;
+      top: 19px;
+    }
+    &:hover::before {
+      color: $theme-color;
+    }
+
+    span {
+      color: #242424;
+      font-size: 15px;
+      left: 20px;
+      position: absolute;
+      top: 16px;
+    }
+  }
+  .myaccount-info-wrapper {
+    padding: 30px 20px;
+    background-color: #fff;
+    .account-info-wrapper {
+      border-bottom: 1px solid #eaeaea;
+      margin-bottom: 28px;
+      padding-bottom: 30px;
+      h4 {
+        font-size: 15px;
+        margin: 0;
+        text-transform: uppercase;
+      }
+      h5 {
+        font-size: 16px;
+        letter-spacing: 0.2px;
+        margin-top: 7px;
+      }
+    }
+    .billing-info {
+      margin-bottom: 20px;
+      label {
+        color: #000;
+        font-size: 14px;
+        text-transform: capitalize;
+      }
+      input {
+        background: transparent none repeat scroll 0 0;
+        border: 1px solid #ebebeb;
+        color: #000;
+        height: 40px;
+        padding: 0 15px;
+      }
+    }
+    .billing-back-btn {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 26px;
+      align-items: center;
+      .billing-back {
+        a {
+          color: #000;
+          display: inline-block;
+          font-size: 14px;
+          font-weight: 500;
+          text-transform: uppercase;
+          &:hover {
+            color: $theme-color;
+          }
+          i {
+            font-size: 16px;
+            color: $theme-color;
+          }
+        }
+      }
+      .billing-btn {
+        button {
+          background-color: #f2f2f2;
+          border: medium none;
+          color: #000;
+          display: inline-block;
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 1;
+          padding: 16px 35px 17px;
+          text-transform: uppercase;
+          cursor: pointer;
+          transition: all 0.3s ease 0s;
+          &:hover {
+            background: $theme-color;
+            color: #fff;
+          }
+        }
+      }
+    }
+    .entries-wrapper {
+      border: 1px solid #eaeaea;
+      position: relative;
+      @media #{$xs-layout} {
+        padding: 30px 10px;
+        &::before {
+          display: none;
+        }
+      }
+      &::before {
+        position: absolute;
+        content: "";
+        height: 100%;
+        width: 1px;
+        left: 50%;
+        top: 0;
+        background-color: #eaeaea;
+      }
+      .entries-info {
+        padding: 30px 20px;
+        @media #{$xs-layout} {
+          padding: 0 10px 30px;
+        }
+        p {
+          color: #000;
+          font-size: 15px;
+          margin: 0;
+          text-transform: capitalize;
+        }
+      }
+      .entries-edit-delete {
+        a,
+        button {
+          background: none;
+          border: none;
+          background-color: #000;
+          color: #fff;
+          display: inline-block;
+          line-height: 1;
+          margin: 0 2px;
+          padding: 12px 15px;
+          text-transform: uppercase;
+          font-weight: 500;
+          &:hover {
+            background-color: $theme-color;
+          }
+          &.edit {
+            background-color: #df5c39;
+            &:hover {
+              background-color: $theme-color;
+            }
+          }
+        }
+      }
+    }
+  }
+}

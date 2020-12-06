@@ -1,0 +1,30 @@
+[
+  {
+    "id": "1",
+    "image": "/assets/img/product/hm9-cagi-1.jpg",
+    "subtitle": "4 Products",
+    "title": "Bluetooth Speaker",
+    "link": "/shop-grid-standard"
+  },
+  {
+    "id": "2",
+    "image": "/assets/img/product/hm9-cagi-2.jpg",
+    "subtitle": "8 Products",
+    "title": "Bluetooth Headphone",
+    "link": "/shop-grid-standard"
+  },
+  {
+    "id": "3",
+    "image": "/assets/img/product/hm9-cagi-3.jpg",
+    "subtitle": "9 Products",
+    "title": "Kardon Aura Studio",
+    "link": "/shop-grid-standard"
+  },
+  {
+    "id": "4",
+    "image": "/assets/img/product/hm9-cagi-2.jpg",
+    "subtitle": "4 Products",
+    "title": "Bluetooth Speaker",
+    "link": "/shop-grid-standard"
+  }
+]

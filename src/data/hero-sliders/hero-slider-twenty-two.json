@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "title": "Hurry Up",
+    "subtitle": "Get 50% Offer",
+    "text": "All Pastrys For This Summer.",
+    "image": "/assets/img/slider/slider-22.jpg",
+    "url": "/shop-grid-standard"
+  },
+  {
+    "id": 2,
+    "title": "Hurry Up",
+    "subtitle": "Get 30% Offer",
+    "text": "All cakes For This Summer.",
+    "image": "/assets/img/slider/slider-22.jpg",
+    "url": "/shop-grid-standard"
+  }
+]

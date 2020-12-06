@@ -1,0 +1,57 @@
+/*------ 16. Breadcrumb style  --------*/
+
+.breadcrumb-content {
+  ul {
+    li {
+      display: inline-block;
+      font-size: 15px;
+      font-weight: 500;
+      color: #5b5858;
+      margin-right: 18px;
+      text-transform: uppercase;
+      position: relative;
+      &::before {
+        position: absolute;
+        width: 18px;
+        height: 1px;
+        background-color: #5b5858;
+        content: "";
+        right: -21px;
+        top: 12px;
+        z-index: 99;
+        transform: rotate(115deg);
+      }
+      &:last-child::before {
+        display: none;
+      }
+      a {
+        color: #5b5858;
+        &:hover {
+          color: $theme-color;
+        }
+      }
+    }
+  }
+
+  span {
+    & > span {
+      display: inline-block;
+      font-size: 15px;
+      font-weight: 500;
+      text-transform: uppercase;
+
+      & > a {
+        font-weight: 500;
+        color: #5b5858;
+        &:hover {
+          color: $theme-color;
+        }
+      }
+
+      & > span {
+        margin-right: 0;
+        margin: 0 15px;
+      }
+    }
+  }
+}

@@ -1,0 +1,194 @@
+/*------- 11. About style ------ */
+
+.welcome-content {
+  h5 {
+    font-weight: 500;
+    font-size: 16px;
+    color: #666;
+    margin: 0;
+    letter-spacing: 0.3px;
+  }
+  h1 {
+    font-size: 30px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    margin: 8px 0 30px;
+    color: #433f3f;
+    position: relative;
+    display: inline-block;
+    padding: 0 0 23px;
+    line-height: 1;
+    &:before {
+      position: absolute;
+      background-color: #070508;
+      height: 3px;
+      width: 70px;
+      content: "";
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: 0 auto;
+    }
+  }
+  p {
+    font-size: 16px;
+    color: #4b4b4b;
+    line-height: 30px;
+    width: 66%;
+    margin: 0 auto;
+    @media #{$lg-layout} {
+      width: 80%;
+    }
+    @media #{$md-layout} {
+      width: 95%;
+    }
+    @media #{$xs-layout} {
+      width: 100%;
+      font-size: 15px;
+    }
+  }
+}
+
+/* about page */
+
+.single-count {
+  .count-icon {
+    i {
+      font-size: 50px;
+      line-height: 1;
+      display: inline-block;
+      @media #{$md-layout} {
+        font-size: 45px;
+      }
+      @media #{$xs-layout} {
+        font-size: 45px;
+      }
+    }
+  }
+  h2 {
+    & > span {
+      color: $theme-color;
+      font-size: 40px;
+      font-weight: bold;
+      margin: 25px 0 12px;
+      display: inline-block;
+      @media #{$md-layout} {
+        margin: 10px 0 8px;
+        font-size: 35px;
+      }
+      @media #{$xs-layout} {
+        margin: 6px 0 8px;
+        font-size: 35px;
+      }
+    }
+  }
+  span {
+    color: #333;
+    font-size: 20px;
+    text-transform: capitalize;
+    font-weight: 500;
+  }
+}
+
+.team-wrapper {
+  background-color: #f7f7f7;
+  .team-img {
+    position: relative;
+
+    img {
+      width: 100%;
+    }
+
+    .team-action {
+      background: #fff none repeat scroll 0 0;
+      left: 0;
+      opacity: 0;
+      padding: 10px;
+      position: absolute;
+      right: 0;
+      text-align: center;
+      top: 70%;
+      transform: translateY(-50%);
+      transition: all 0.6s ease 0s;
+      width: 100%;
+      z-index: 5;
+      a {
+        border-radius: 50px;
+        color: #fff;
+        display: inline-block;
+        font-size: 14px;
+        height: 30px;
+        line-height: 28px;
+        text-align: center;
+        width: 30px;
+        margin: 0 3px;
+        &.facebook {
+          border: 1px solid #3b5998;
+          background-color: #3b5998;
+          &:hover {
+            background-color: transparent;
+            color: #3b5998;
+          }
+        }
+        &.twitter {
+          border: 1px solid #55acee;
+          background-color: #55acee;
+          &:hover {
+            background-color: transparent;
+            color: #55acee;
+          }
+        }
+        &.instagram {
+          border: 1px solid #c32aa3;
+          background-color: #c32aa3;
+          &:hover {
+            background-color: transparent;
+            color: #c32aa3;
+          }
+        }
+      }
+    }
+  }
+  .team-content {
+    padding: 20px 10px 23px;
+    h4 {
+      font-size: 18px;
+      font-weight: 500;
+      margin: 0 0 3px;
+      text-transform: capitalize;
+    }
+    span {
+      font-size: 15px;
+      font-style: italic;
+    }
+  }
+  &:hover .team-action {
+    top: 50%;
+    opacity: 1;
+  }
+}
+
+.single-mission {
+  h3 {
+    font-size: 25px;
+    font-weight: 500;
+    margin: 0 0 20px;
+    text-transform: capitalize;
+    line-height: 22px;
+    color: #333;
+    @media #{$xs-layout} {
+      margin: 0 0 10px;
+    }
+  }
+  p {
+    margin: 0;
+  }
+}
+
+.about-brand-logo {
+  @media #{$xs-layout} {
+    &.pb-100 {
+      padding-bottom: 60px;
+    }
+  }
+}

@@ -1,0 +1,162 @@
+
+/*----------  video popup  ----------*/
+
+.video-popup {
+  &__image {
+    img {
+      width: 100%;
+    }
+    @media #{$md-layout,
+    $xs-layout} {
+      margin-bottom: 30px;
+    }
+  }
+
+  &__content {
+    .title {
+      font-family: $josefin;
+      font-size: 36px;
+      font-weight: 700;
+
+      margin-left: -120px;
+
+      color: #313131;
+
+      @media #{$md-layout,
+      $xs-layout} {
+        margin-left: 0;
+      }
+
+      @media #{$xs-layout} {
+        font-size: 25px;
+      }
+    }
+    .text {
+      font-size: 16px;
+
+      color: #313131;
+    }
+    .link {
+      font-family: $josefin;
+      font-size: 16px;
+      font-weight: 5000;
+      a {
+        border-bottom: 1px solid;
+        &:hover {
+          color: #ff0000;
+        }
+      }
+    }
+
+    button {
+      border: none;
+      background: none;
+      i {
+        font-size: 50px;
+
+        color: #ff0000;
+      }
+    }
+  }
+}
+
+.video-popup-2 {
+  display: flex;
+  flex-basis: 50%;
+  @media #{$xs-layout} {
+    flex-direction: column;
+  }
+
+  &__left {
+    position: relative;
+  }
+
+  &__left,
+  &__right {
+    width: 100%;
+    height: 450px;
+
+    @media #{$lg-layout,
+    $md-layout,
+    $xs-layout} {
+      height: 350px;
+    }
+  }
+
+  &__button {
+    position: absolute;
+    top: 50%;
+    right: 0;
+
+    transform: translate(45px, -50%);
+
+    @media #{$xs-layout} {
+      top: auto;
+      right: 50%;
+      bottom: 0;
+
+      transform: translate(50%, 45px);
+    }
+
+    button {
+      padding: 0;
+
+      border: none;
+      background: none;
+    }
+  }
+
+  &__content {
+    padding: 100px 150px;
+    @media #{$lg-layout,
+    $md-layout,
+    $xs-layout} {
+      padding: 50px 50px;
+    }
+    .title {
+      font-family: $josefin;
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 1.5;
+
+      color: #444;
+
+      @media #{$lg-layout,
+      $md-layout,
+      $xs-layout} {
+        font-size: 30px;
+      }
+    }
+    .text {
+      font-size: 16px;
+      font-weight: 400;
+    }
+
+    .link {
+      a {
+        font-family: $josefin;
+        font-size: 18px;
+        line-height: 1;
+
+        position: relative;
+
+        padding-bottom: 5px;
+
+        color: #000;
+
+        &:after {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+
+          width: 50px;
+          height: 1px;
+
+          content: "";
+
+          background-color: #000;
+        }
+      }
+    }
+  }
+}

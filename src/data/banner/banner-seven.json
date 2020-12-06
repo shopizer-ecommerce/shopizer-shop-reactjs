@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "image": "/assets/img/banner/banner-35.png",
+    "title": "Flower",
+    "subtitle": "Starting at",
+    "price": "$99.00",
+    "link": "/shop-grid-standard"
+  },
+  {
+    "id": 2,
+    "image": "/assets/img/banner/banner-36.png",
+    "title": "Flower",
+    "subtitle": "Starting at",
+    "price": "$79.00",
+    "link": "/shop-grid-standard"
+  },
+  {
+    "id": 3,
+    "image": "/assets/img/banner/banner-37.png",
+    "title": "Flower",
+    "subtitle": "Starting at",
+    "price": "$29.00",
+    "link": "/shop-grid-standard"
+  }
+]

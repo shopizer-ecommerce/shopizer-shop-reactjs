@@ -1,0 +1,288 @@
+/*------ 15. Timer style  -----*/
+
+.funfact-area.bg-img {
+  position: relative;
+  @media #{$md-layout} {
+    background-position: 15%;
+    &:before {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+
+      content: "";
+
+      opacity: 0.7;
+      background-color: #fff;
+    }
+  }
+  @media #{$xs-layout} {
+    background-position: 15%;
+    &:before {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+
+      content: "";
+
+      opacity: 0.7;
+      background-color: #fff;
+    }
+  }
+}
+
+.funfact-content {
+  position: relative;
+  z-index: 9;
+  h2 {
+    font-size: 48px;
+
+    margin: 0;
+
+    color: #010101;
+    @media #{$xs-layout} {
+      font-size: 32px;
+    }
+  }
+  .timer {
+    margin: 65px 0 0;
+
+    text-align: center;
+    @media #{$lg-layout} {
+      margin: 44px 0 0;
+    }
+    @media #{$xs-layout} {
+      margin: 24px 0 0;
+    }
+    span {
+      font-size: 48px;
+      font-weight: 300;
+
+      display: inline-block;
+
+      min-width: 75px;
+      margin: 0 32px;
+
+      color: #555;
+      @media #{$lg-layout} {
+        font-size: 40px;
+
+        margin: 0 15px;
+      }
+      @media #{$xs-layout} {
+        font-size: 22px;
+
+        min-width: 55px;
+        margin: 0 5px;
+      }
+      p {
+        font-size: 18px;
+        font-weight: 500;
+
+        margin: 34px 0 0;
+
+        text-transform: uppercase;
+
+        color: #555;
+        @media #{$lg-layout} {
+          margin: 24px 0 0;
+        }
+        @media #{$xs-layout} {
+          font-size: 14px;
+
+          margin: 12px 0 0;
+        }
+      }
+    }
+  }
+
+  &--style2 {
+    h2 {
+      font-family: $josefin;
+    }
+  }
+  .funfact-btn {
+    margin-top: 43px;
+    @media #{$xs-layout} {
+      margin-top: 23px;
+    }
+    a {
+      line-height: 1;
+
+      z-index: 1;
+
+      display: inline-block;
+
+      padding: 16px 56px;
+
+      color: #fff;
+      border: 1px solid transparent;
+      background-color: #000;
+      &:hover {
+        border: 1px solid $theme-color;
+      }
+    }
+    &.btn-only-round {
+      a {
+        overflow: hidden;
+
+        border-radius: 50px;
+        &:hover {
+          border: 1px solid $theme-color;
+        }
+      }
+    }
+    &.funfact-btn-red {
+      a {
+        background-color: #c61a32;
+        &:hover {
+          border: 1px solid $theme-color;
+        }
+      }
+    }
+    &.funfact-btn-red-2 {
+      a {
+        background-color: #c61a32;
+        &:hover {
+          border: 1px solid $theme-color;
+        }
+      }
+    }
+    &.funfact-btn-violet {
+      a {
+        background-color: #ab87cd;
+        &:hover {
+          border: 1px solid $theme-color;
+        }
+      }
+    }
+    &.funfact-btn-green {
+      a {
+        background-color: #6eab49;
+        &:hover {
+          border: 1px solid $theme-color;
+        }
+      }
+    }
+    &.funfact-btn-brown {
+      a {
+        font-weight: 500;
+
+        color: #000;
+        border: 2px solid #000;
+        background-color: transparent;
+        &:after {
+          background-color: #bca487;
+        }
+      }
+    }
+
+    &--round-shape {
+      a {
+        overflow: hidden;
+
+        border-radius: 30px;
+      }
+    }
+  }
+  @media #{$lg-layout} {
+    &.mt-90 {
+      margin-top: 0;
+    }
+  }
+  @media #{$md-layout} {
+    &.funfact-res {
+      h2 {
+        font-size: 35px;
+      }
+      .timer {
+        margin: 30px 0 0;
+        span {
+          font-size: 30px;
+
+          margin: 0 9px;
+          p {
+            font-size: 15px;
+
+            margin: 14px 0 0;
+          }
+        }
+      }
+    }
+    &.mt-90 {
+      margin-top: 0;
+    }
+  }
+  @media #{$xs-layout} {
+    &.mt-90 {
+      margin-top: 30px;
+    }
+  }
+}
+
+.gift-img {
+  margin: 0 10px;
+  a {
+    display: block;
+    img {
+      width: 100%;
+    }
+  }
+}
+.fruits-deal-img {
+  margin: 0 90px;
+  @media #{$lg-layout} {
+    margin: 0 50px 0;
+  }
+  @media #{$md-layout} {
+    margin: 0 0 0;
+  }
+  @media #{$xs-layout} {
+    margin: 30px 0 0;
+  }
+  @media #{$sm-layout} {
+    margin: 30px 30px 0;
+  }
+  a {
+    display: block;
+    img {
+      width: 100%;
+    }
+  }
+}
+
+.funfact-image {
+  @media #{$xs-layout} {
+    margin: 30px 0 0;
+  }
+}
+
+.black-friday-deal-content {
+  h2 {
+    font-family: $abrilfatface;
+    font-size: 60px;
+    line-height: 48px;
+
+    margin: 0 0 67px;
+
+    color: #fff;
+    @media #{$md-layout} {
+      font-size: 50px;
+
+      margin: 0 0 50px;
+    }
+    @media #{$xs-layout} {
+      font-size: 30px;
+
+      margin: 0 0 27px;
+    }
+    @media #{$sm-layout} {
+      font-size: 40px;
+
+      margin: 0 0 35px;
+    }
+  }
+}
