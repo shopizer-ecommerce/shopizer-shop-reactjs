@@ -1,10 +1,12 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
 import SectionTitleThree from "../../components/section-title/SectionTitleThree";
 import ProductGridTwo from "./ProductGridTwo";
+import WebService from '../../util/webService';
+import constant from '../../util/constant';
 
 const TabProductNine = ({
   spaceTopClass,
@@ -13,53 +15,81 @@ const TabProductNine = ({
   containerClass,
   extraClass
 }) => {
+  // const [featuredData, setFeaturedData] = useState([]);
+  const [categoryData, setCategoryData] = useState([]);
+  useEffect(() => {
+    getProductList();
+
+  }, []);
+  const getProductList = async () => {
+    let action = constant.ACTION.PRODUCT_GROUP + 'FEATURED_ITEM';
+    try {
+      let response = await WebService.get(action);
+      // console.log(response);
+      if (response) {
+        let category = [{ 'id': '', 'name': 'All', 'code': 'all', data: response.products }];
+        response.products.map(item => {
+          item.categories.map(a => {
+            // console.log(a)
+            let index = category.findIndex(value => value.id == a.id);
+            // console.log(index);
+            if (index == -1) {
+              category.push({ 'id': a.description.id, 'name': a.description.name, 'code': a.code, data: [item] })
+            } else {
+              category[index].data.push(item)
+            }
+          })
+        });
+        // setFeaturedData(response.products)
+        setCategoryData(category)
+      }
+    } catch (error) {
+    }
+  }
   return (
     <div
       className={`product-area ${spaceTopClass ? spaceTopClass : ""} ${
         spaceBottomClass ? spaceBottomClass : ""
-      } ${extraClass ? extraClass : ""}`}
+        } ${extraClass ? extraClass : ""}`}
     >
       <div className={`${containerClass ? containerClass : "container"}`}>
-        <SectionTitleThree
-          titleText="Featured Products"
-          positionClass="text-center"
-        />
-        <Tab.Container defaultActiveKey="men">
-          <Nav
-            variant="pills"
-            className="product-tab-list pt-30 pb-55 text-center"
-          >
-            <Nav.Item>
-              <Nav.Link eventKey="men">
-                <h4>Men</h4>
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link eventKey="women">
-                <h4>Women</h4>
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link eventKey="saleItems">
-                <h4>Sale Items</h4>
-              </Nav.Link>
-            </Nav.Item>
+        <SectionTitleThree titleText="Featured Products" positionClass="text-center" />
+        <Tab.Container defaultActiveKey="all">
+          <Nav variant="pills" className="product-tab-list pt-30 pb-55 text-center">
+            {
+              categoryData.map((value, i) => {
+                return (
+                  <Nav.Item key={i} >
+                    <Nav.Link eventKey={value.code}>
+                      <h4>{value.name}</h4>
+                    </Nav.Link>
+                  </Nav.Item>)
+              })
+            }
           </Nav>
           <Tab.Content>
-            <Tab.Pane eventKey="men">
+            {
+              categoryData.map((value, i) => {
+                return (
+                  <Tab.Pane key={i} eventKey={value.code}>
+                    <div className="row">
+                      <ProductGridTwo
+                        products={value.data}
+                        type="men"
+                        limit={8}
+                        spaceBottomClass="mb-25"
+                      />
+                    </div>
+                  </Tab.Pane>
+                )
+              })
+            }
+            {/* <Tab.Pane eventKey="women">
               <div className="row">
                 <ProductGridTwo
-                  category="men"
-                  limit={4}
-                  spaceBottomClass="mb-25"
-                />
-              </div>
-            </Tab.Pane>
-            <Tab.Pane eventKey="women">
-              <div className="row">
-                <ProductGridTwo
+                  products={featuredData}
                   category="women"
-                  limit={4}
+                  limit={8}
                   spaceBottomClass="mb-25"
                 />
               </div>
@@ -67,23 +97,21 @@ const TabProductNine = ({
             <Tab.Pane eventKey="saleItems">
               <div className="row">
                 <ProductGridTwo
+                  products={featuredData}
                   category={category}
                   type="saleItems"
-                  limit={4}
+                  limit={8}
                   spaceBottomClass="mb-25"
                 />
               </div>
-            </Tab.Pane>
+            </Tab.Pane> */}
           </Tab.Content>
         </Tab.Container>
-        <div className="view-more round-btn text-center mt-20 toggle-btn6 col-12">
-          <Link
-            className="loadMore6"
-            to={process.env.PUBLIC_URL + "/shop-grid-standard"}
-          >
+        {/* <div className="view-more round-btn text-center mt-20 toggle-btn6 col-12">
+          <Link className="loadMore6">
             Discover More
           </Link>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -8,40 +8,30 @@ import { connect } from "react-redux";
 
 function ProductModal(props) {
   const { product } = props;
-  const { currency } = props;
-  const { discountedprice } = props;
+  // const { currency } = props;
+  // const { discountedprice } = props;
   const { finalproductprice } = props;
   const { finaldiscountedprice } = props;
 
   const [gallerySwiper, getGallerySwiper] = useState(null);
   const [thumbnailSwiper, getThumbnailSwiper] = useState(null);
-  const [selectedProductColor, setSelectedProductColor] = useState(
-    product.variation ? product.variation[0].color : ""
-  );
-  const [selectedProductSize, setSelectedProductSize] = useState(
-    product.variation ? product.variation[0].size[0].name : ""
-  );
-  const [productStock, setProductStock] = useState(
-    product.variation ? product.variation[0].size[0].stock : product.stock
-  );
+
+  const [selectedProductColor, setSelectedProductColor] = useState();
+  const [selectedProductSize, setSelectedProductSize] = useState();
+  // const [productStock, setProductStock] = useState();
   const [quantityCount, setQuantityCount] = useState(1);
 
-  const wishlistItem = props.wishlistitem;
-  const compareItem = props.compareitem;
+  // const wishlistItem = props.wishlistitem;
+  // const compareItem = props.compareitem;
 
   const addToCart = props.addtocart;
-  const addToWishlist = props.addtowishlist;
-  const addToCompare = props.addtocompare;
+  // const addToWishlist = props.addtowishlist;
+  // const addToCompare = props.addtocompare;
 
   const addToast = props.addtoast;
-  const cartItems = props.cartitems;
+  // const cartItems = props.cartitems;
 
-  const productCartQty = getProductCartQuantity(
-    cartItems,
-    product,
-    selectedProductColor,
-    selectedProductSize
-  );
+  // const productCartQty = 0
 
   useEffect(() => {
     if (
@@ -59,7 +49,7 @@ function ProductModal(props) {
     getSwiper: getGallerySwiper,
     spaceBetween: 10,
     loopedSlides: 4,
-    loop: true
+    loop: false
   };
 
   const thumbnailSwiperParams = {
@@ -69,7 +59,7 @@ function ProductModal(props) {
     loopedSlides: 4,
     touchRatio: 0.2,
     freeMode: true,
-    loop: true,
+    loop: false,
     slideToClickedSlide: true,
     navigation: {
       nextEl: ".swiper-button-next",
@@ -101,13 +91,13 @@ function ProductModal(props) {
             <div className="col-md-5 col-sm-12 col-xs-12">
               <div className="product-large-image-wrapper">
                 <Swiper {...gallerySwiperParams}>
-                  {product.image &&
-                    product.image.map((single, key) => {
+                  {product.images.length > 0 &&
+                    product.images.map((single, key) => {
                       return (
                         <div key={key}>
                           <div className="single-image">
                             <img
-                              src={process.env.PUBLIC_URL + single}
+                              src={single.imageUrl}
                               className="img-fluid"
                               alt=""
                             />
@@ -119,13 +109,13 @@ function ProductModal(props) {
               </div>
               <div className="product-small-image-wrapper mt-15">
                 <Swiper {...thumbnailSwiperParams}>
-                  {product.image &&
-                    product.image.map((single, key) => {
+                  {product.images.length > 1 &&
+                    product.images.map((single, key) => {
                       return (
                         <div key={key}>
                           <div className="single-image">
                             <img
-                              src={process.env.PUBLIC_URL + single}
+                              src={single.imageUrl}
                               className="img-fluid"
                               alt=""
                             />
@@ -138,156 +128,129 @@ function ProductModal(props) {
             </div>
             <div className="col-md-7 col-sm-12 col-xs-12">
               <div className="product-details-content quickview-content">
-                <h2>{product.name}</h2>
+                <h2>{product.description.name}</h2>
                 <div className="product-details-price">
-                  {discountedprice !== null ? (
+                  {product.discounted ? (
                     <Fragment>
                       <span>
-                        {currency.currencySymbol + finaldiscountedprice}
+                        {finaldiscountedprice}
                       </span>{" "}
                       <span className="old">
-                        {currency.currencySymbol + finalproductprice}
+                        {finalproductprice}
                       </span>
                     </Fragment>
-                  ) : (
-                    <span>{currency.currencySymbol + finalproductprice} </span>
-                  )}
-                </div>
-                {product.rating && product.rating > 0 ? (
-                  <div className="pro-details-rating-wrap">
-                    <div className="pro-details-rating">
-                      <Rating ratingValue={product.rating} />
-                    </div>
-                  </div>
-                ) : (
-                  ""
-                )}
-                <div className="pro-details-list">
-                  <p>{product.shortDescription}</p>
+                  ) : (<span>{finalproductprice} </span>)}
                 </div>
 
-                {product.variation ? (
+                <div className="pro-details-rating-wrap">
+                  <div className="pro-details-rating">
+                    <Rating ratingValue={product.rating} />
+                  </div>
+                </div>
+                <div className="pro-details-list">
+                  <p dangerouslySetInnerHTML={{ __html: product.description.description }}></p>
+                </div>
+
+                {product.options ? (
                   <div className="pro-details-size-color">
                     <div className="pro-details-color-wrap">
                       <span>Color</span>
                       <div className="pro-details-color-content">
-                        {product.variation.map((single, key) => {
+                        {product.options.map((option, key) => {
                           return (
-                            <label
-                              className={`pro-details-color-content--single ${single.color}`}
-                              key={key}
-                            >
-                              <input
-                                type="radio"
-                                value={single.color}
-                                name="product-color"
-                                checked={
-                                  single.color === selectedProductColor
-                                    ? "checked"
-                                    : ""
-                                }
-                                onChange={() => {
-                                  setSelectedProductColor(single.color);
-                                  setSelectedProductSize(single.size[0].name);
-                                  setProductStock(single.size[0].stock);
-                                  setQuantityCount(1);
-                                }}
-                              />
-                              <span className="checkmark"></span>
-                            </label>
+                            option.code == 'COLOR' &&
+                            option.optionValues.map((value, index) => {
+                              return (<label className={`pro-details-color-content--single ${value.code}`} key={index}>
+                                <input
+                                  type="radio"
+                                  value={value.id}
+                                  name="product-color"
+                                  checked={value.defaultValue}
+                                  onChange={() => {
+                                    // setSelectedProductColor(value.color);
+                                    // setSelectedProductSize(value.size[0].name);
+                                    // setProductStock(value.size[0].stock);
+                                    // setQuantityCount(1);
+                                  }}
+                                />
+
+                                <span className="checkmark"></span>
+                              </label>
+                              )
+                            })
+
                           );
+
+
                         })}
                       </div>
                     </div>
                     <div className="pro-details-size">
                       <span>Size</span>
                       <div className="pro-details-size-content">
-                        {product.variation &&
-                          product.variation.map(single => {
-                            return single.color === selectedProductColor
-                              ? single.size.map((singleSize, key) => {
-                                  return (
-                                    <label
-                                      className={`pro-details-size-content--single`}
-                                      key={key}
-                                    >
-                                      <input
-                                        type="radio"
-                                        value={singleSize.name}
-                                        checked={
-                                          singleSize.name ===
+                        {product.options &&
+                          product.options.map(single => {
+                            single.code == 'SIZE' &&
+                              single.optionValues.map((singleSize, key) => {
+                                return (
+                                  <label
+                                    className={`pro-details-size-content--single`} key={key} >
+                                    <input
+                                      type="radio"
+                                      value={singleSize.name}
+                                      checked={
+                                        singleSize.name ===
                                           selectedProductSize
-                                            ? "checked"
-                                            : ""
-                                        }
-                                        onChange={() => {
-                                          setSelectedProductSize(
-                                            singleSize.name
-                                          );
-                                          setProductStock(singleSize.stock);
-                                          setQuantityCount(1);
-                                        }}
-                                      />
-                                      <span className="size-name">
-                                        {singleSize.name}
-                                      </span>
-                                    </label>
-                                  );
-                                })
-                              : "";
+                                          ? "checked"
+                                          : ""
+                                      }
+                                      onChange={() => {
+                                        // setSelectedProductSize(
+                                        //   singleSize.name
+                                        // );
+                                        // setProductStock(singleSize.stock);
+                                        // setQuantityCount(1);
+                                      }}
+                                    />
+                                    <span className="size-name">
+                                      {singleSize.name}
+                                    </span>
+                                  </label>
+                                );
+                              })
                           })}
                       </div>
                     </div>
                   </div>
                 ) : (
-                  ""
-                )}
-                {product.affiliateLink ? (
-                  <div className="pro-details-quality">
-                    <div className="pro-details-cart btn-hover">
-                      <a
-                        href={product.affiliateLink}
-                        rel="noopener noreferrer"
-                        target="_blank"
-                      >
-                        Buy Now
-                      </a>
-                    </div>
-                  </div>
-                ) : (
+                    ""
+                  )}
+                {
+                  //   product.affiliateLink ? (
+                  //   <div className="pro-details-quality">
+                  //     <div className="pro-details-cart btn-hover">
+                  //       <a
+                  //         href={product.affiliateLink}
+                  //         rel="noopener noreferrer"
+                  //         target="_blank"
+                  //       >
+                  //         Buy Now
+                  //       </a>
+                  //     </div>
+                  //   </div>
+                  // ) : (
                   <div className="pro-details-quality">
                     <div className="cart-plus-minus">
-                      <button
-                        onClick={() =>
-                          setQuantityCount(
-                            quantityCount > 1 ? quantityCount - 1 : 1
-                          )
-                        }
-                        className="dec qtybutton"
-                      >
+                      <button onClick={() => setQuantityCount(quantityCount > 1 ? quantityCount - 1 : 1)} className="dec qtybutton">
                         -
                       </button>
-                      <input
-                        className="cart-plus-minus-box"
-                        type="text"
-                        value={quantityCount}
-                        readOnly
-                      />
-                      <button
-                        onClick={() =>
-                          setQuantityCount(
-                            quantityCount < productStock - productCartQty
-                              ? quantityCount + 1
-                              : quantityCount
-                          )
-                        }
-                        className="inc qtybutton"
-                      >
+                      <input className="cart-plus-minus-box" type="text" value={quantityCount} readOnly />
+                      <button onClick={() => setQuantityCount(quantityCount < product.quantity ? quantityCount + 1 : quantityCount)} className="inc qtybutton" >
                         +
                       </button>
                     </div>
                     <div className="pro-details-cart btn-hover">
-                      {productStock && productStock > 0 ? (
+                      {product.available ? (
                         <button
                           onClick={() =>
                             addToCart(
@@ -298,45 +261,43 @@ function ProductModal(props) {
                               selectedProductSize
                             )
                           }
-                          disabled={productCartQty >= productStock}
-                        >
-                          {" "}
-                          Add To Cart{" "}
-                        </button>
+                        // disabled={productCartQty >= productStock}
+                        >Add To Cart</button>
                       ) : (
-                        <button disabled>Out of Stock</button>
-                      )}
+                          <button disabled>Out of Stock</button>
+                        )}
                     </div>
-                    <div className="pro-details-wishlist">
-                      <button
-                        className={wishlistItem !== undefined ? "active" : ""}
-                        disabled={wishlistItem !== undefined}
-                        title={
-                          wishlistItem !== undefined
-                            ? "Added to wishlist"
-                            : "Add to wishlist"
-                        }
-                        onClick={() => addToWishlist(product, addToast)}
-                      >
-                        <i className="pe-7s-like" />
-                      </button>
-                    </div>
-                    <div className="pro-details-compare">
-                      <button
-                        className={compareItem !== undefined ? "active" : ""}
-                        disabled={compareItem !== undefined}
-                        title={
-                          compareItem !== undefined
-                            ? "Added to compare"
-                            : "Add to compare"
-                        }
-                        onClick={() => addToCompare(product, addToast)}
-                      >
-                        <i className="pe-7s-shuffle" />
-                      </button>
-                    </div>
+                    {/* <div className="pro-details-wishlist">
+                        <button
+                          className={wishlistItem !== undefined ? "active" : ""}
+                          disabled={wishlistItem !== undefined}
+                          title={
+                            wishlistItem !== undefined
+                              ? "Added to wishlist"
+                              : "Add to wishlist"
+                          }
+                          onClick={() => addToWishlist(product, addToast)}
+                        >
+                          <i className="pe-7s-like" />
+                        </button>
+                      </div> */}
+                    {/* <div className="pro-details-compare">
+                        <button
+                          className={compareItem !== undefined ? "active" : ""}
+                          disabled={compareItem !== undefined}
+                          title={
+                            compareItem !== undefined
+                              ? "Added to compare"
+                              : "Add to compare"
+                          }
+                          onClick={() => addToCompare(product, addToast)}
+                        >
+                          <i className="pe-7s-shuffle" />
+                        </button>
+                      </div> */}
                   </div>
-                )}
+                  // )
+                }
               </div>
             </div>
           </div>
@@ -349,23 +310,23 @@ function ProductModal(props) {
 ProductModal.propTypes = {
   addtoast: PropTypes.func,
   addtocart: PropTypes.func,
-  addtocompare: PropTypes.func,
-  addtowishlist: PropTypes.func,
-  cartitems: PropTypes.array,
-  compareitem: PropTypes.object,
-  currency: PropTypes.object,
-  discountedprice: PropTypes.number,
-  finaldiscountedprice: PropTypes.number,
-  finalproductprice: PropTypes.number,
+  // addtocompare: PropTypes.func,
+  // addtowishlist: PropTypes.func,
+  // cartitems: PropTypes.array,
+  // compareitem: PropTypes.object,
+  // currency: PropTypes.object,
+  // discountedprice: PropTypes.number,
+  finaldiscountedprice: PropTypes.string,
+  finalproductprice: PropTypes.string,
   onHide: PropTypes.func,
   product: PropTypes.object,
   show: PropTypes.bool,
-  wishlistitem: PropTypes.object
+  // wishlistitem: PropTypes.object
 };
 
 const mapStateToProps = state => {
   return {
-    cartitems: state.cartData
+    // cartitems: state.cartData
   };
 };
 

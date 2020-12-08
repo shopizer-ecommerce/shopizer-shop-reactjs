@@ -12,11 +12,11 @@ const HomeFashionSeven = () => {
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | Fashion Home</title>
-        <meta
+        <title>Shopizer | Home</title>
+        {/* <meta
           name="description"
           content="Fashion home of flone react minimalist eCommerce template."
-        />
+        /> */}
       </MetaTags>
       <LayoutOne
         headerContainerClass="container-fluid"

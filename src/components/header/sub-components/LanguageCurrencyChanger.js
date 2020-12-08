@@ -13,10 +13,10 @@ const LanguageCurrencyChanger = ({
     dispatch(changeLanguage(languageCode));
   };
 
-  const setCurrencyTrigger = e => {
-    const currencyName = e.target.value;
-    setCurrency(currencyName);
-  };
+  // const setCurrencyTrigger = e => {
+  //   const currencyName = e.target.value;
+  //   setCurrency(currencyName);
+  // };
 
   return (
     <div className="language-currency-wrap">
@@ -25,10 +25,10 @@ const LanguageCurrencyChanger = ({
           {currentLanguageCode === "en"
             ? "English"
             : currentLanguageCode === "fn"
-            ? "French"
-            : currentLanguageCode === "de"
-            ? "Germany"
-            : ""}{" "}
+              ? "French"
+              : currentLanguageCode === "de"
+                ? "Germany"
+                : ""}{" "}
           <i className="fa fa-angle-down" />
         </span>
         <div className="lang-car-dropdown">
@@ -51,7 +51,7 @@ const LanguageCurrencyChanger = ({
           </ul>
         </div>
       </div>
-      <div className="same-language-currency use-style">
+      {/* <div className="same-language-currency use-style">
         <span>
           {currency.currencyName} <i className="fa fa-angle-down" />
         </span>
@@ -74,7 +74,7 @@ const LanguageCurrencyChanger = ({
             </li>
           </ul>
         </div>
-      </div>
+      </div> */}
       <div className="same-language-currency">
         <p>Call Us 3965410</p>
       </div>

@@ -10,8 +10,10 @@ import Breadcrumb from '../../wrappers/breadcrumb/Breadcrumb';
 import ShopSidebar from '../../wrappers/product/ShopSidebar';
 import ShopTopbar from '../../wrappers/product/ShopTopbar';
 import ShopProducts from '../../wrappers/product/ShopProducts';
+import WebService from '../../util/webService';
+import constant from '../../util/constant';
 
-const ShopGridStandard = ({location, products}) => {
+const ShopGridStandard = ({ location, products }) => {
     const [layout, setLayout] = useState('grid three-column');
     const [sortType, setSortType] = useState('');
     const [sortValue, setSortValue] = useState('');
@@ -19,11 +21,11 @@ const ShopGridStandard = ({location, products}) => {
     const [filterSortValue, setFilterSortValue] = useState('');
     const [offset, setOffset] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
-    const [currentData, setCurrentData] = useState([]);
+    const [productData, setProductData] = useState([]);
     const [sortedProducts, setSortedProducts] = useState([]);
 
     const pageLimit = 15;
-    const {pathname} = location;
+    const { pathname } = location;
 
     const getLayout = (layout) => {
         setLayout(layout)
@@ -40,24 +42,39 @@ const ShopGridStandard = ({location, products}) => {
     }
 
     useEffect(() => {
-        let sortedProducts = getSortedProducts(products, sortType, sortValue);
-        const filterSortedProducts = getSortedProducts(sortedProducts, filterSortType, filterSortValue);
-        sortedProducts = filterSortedProducts;
-        setSortedProducts(sortedProducts);
-        setCurrentData(sortedProducts.slice(offset, offset + pageLimit));
-    }, [offset, products, sortType, sortValue, filterSortType, filterSortValue ]);
+        getProductList()
+        // let sortedProducts = getSortedProducts(products, sortType, sortValue);
+        // const filterSortedProducts = getSortedProducts(sortedProducts, filterSortType, filterSortValue);
+        // sortedProducts = filterSortedProducts;
+        // setSortedProducts(sortedProducts);
+        // setCurrentData(sortedProducts.slice(offset, offset + pageLimit));
+    }, [offset, products, sortType, sortValue, filterSortType, filterSortValue]);
+    const getProductList = async () => {
+        // console.log(filter)
+        let action = constant.ACTION.PRODUCTS + 'FEATURED_ITEM';
+        try {
+            let response = await WebService.get(action);
+            // console.log(response);
+            if (response) {
 
+                // setFeaturedData(response.products)
+            }
+        } catch (error) {
+        }
+    }
     return (
         <Fragment>
             <MetaTags>
-                <title>Flone | Shop Page</title>
-                <meta name="description" content="Shop page of flone react minimalist eCommerce template." />
+                <title>Shopizer | Shop</title>
+                {/* <meta name="description" content="Shop page of flone react minimalist eCommerce template." /> */}
             </MetaTags>
 
             <BreadcrumbsItem to={process.env.PUBLIC_URL + '/'}>Home</BreadcrumbsItem>
             <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>Shop</BreadcrumbsItem>
 
-            <LayoutOne headerTop="visible">
+            <LayoutOne headerContainerClass="container-fluid"
+                headerPaddingClass="header-padding-2"
+                headerTop="visible">
                 {/* breadcrumb */}
                 <Breadcrumb />
 
@@ -66,14 +83,14 @@ const ShopGridStandard = ({location, products}) => {
                         <div className="row">
                             <div className="col-lg-3 order-2 order-lg-1">
                                 {/* shop sidebar */}
-                                <ShopSidebar products={products} getSortParams={getSortParams} sideSpaceClass="mr-30"/>
+                                <ShopSidebar products={products} getSortParams={getSortParams} sideSpaceClass="mr-30" />
                             </div>
                             <div className="col-lg-9 order-1 order-lg-2">
                                 {/* shop topbar default */}
-                                <ShopTopbar getLayout={getLayout} getFilterSortParams={getFilterSortParams} productCount={products.length} sortedProductCount={currentData.length} />
+                                <ShopTopbar getLayout={getLayout} getFilterSortParams={getFilterSortParams} productCount={products.length} sortedProductCount={productData.length} />
 
                                 {/* shop page content default */}
-                                <ShopProducts layout={layout} products={currentData} />
+                                <ShopProducts layout={layout} products={productData} />
 
                                 {/* shop product pagination */}
                                 <div className="pro-pagination-style text-center mt-30">
@@ -99,12 +116,12 @@ const ShopGridStandard = ({location, products}) => {
 }
 
 ShopGridStandard.propTypes = {
-  location: PropTypes.object,
-  products: PropTypes.array
+    location: PropTypes.object,
+    products: PropTypes.array
 }
 
 const mapStateToProps = state => {
-    return{
+    return {
         products: state.productData.products
     }
 }

@@ -15,17 +15,19 @@ const Checkout = ({ location, cartItems, currency }) => {
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | Checkout</title>
-        <meta
+        <title>Shopizer | Checkout</title>
+        {/* <meta
           name="description"
           content="Checkout page of flone react minimalist eCommerce template."
-        />
+        /> */}
       </MetaTags>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
         Checkout
       </BreadcrumbsItem>
-      <LayoutOne headerTop="visible">
+      <LayoutOne headerContainerClass="container-fluid"
+        headerPaddingClass="header-padding-2"
+        headerTop="visible">
         {/* breadcrumb */}
         <Breadcrumb />
         <div className="checkout-area pt-95 pb-100">
@@ -154,9 +156,9 @@ const Checkout = ({ location, cartItems, currency }) => {
 
                               discountedPrice != null
                                 ? (cartTotalPrice +=
-                                    finalDiscountedPrice * cartItem.quantity)
+                                  finalDiscountedPrice * cartItem.quantity)
                                 : (cartTotalPrice +=
-                                    finalProductPrice * cartItem.quantity);
+                                  finalProductPrice * cartItem.quantity);
                               return (
                                 <li key={key}>
                                   <span className="order-middle-left">
@@ -165,14 +167,14 @@ const Checkout = ({ location, cartItems, currency }) => {
                                   <span className="order-price">
                                     {discountedPrice !== null
                                       ? currency.currencySymbol +
-                                        (
-                                          finalDiscountedPrice *
-                                          cartItem.quantity
-                                        ).toFixed(2)
+                                      (
+                                        finalDiscountedPrice *
+                                        cartItem.quantity
+                                      ).toFixed(2)
                                       : currency.currencySymbol +
-                                        (
-                                          finalProductPrice * cartItem.quantity
-                                        ).toFixed(2)}
+                                      (
+                                        finalProductPrice * cartItem.quantity
+                                      ).toFixed(2)}
                                   </span>
                                 </li>
                               );
@@ -204,22 +206,22 @@ const Checkout = ({ location, cartItems, currency }) => {
                 </div>
               </div>
             ) : (
-              <div className="row">
-                <div className="col-lg-12">
-                  <div className="item-empty-area text-center">
-                    <div className="item-empty-area__icon mb-30">
-                      <i className="pe-7s-cash"></i>
-                    </div>
-                    <div className="item-empty-area__text">
-                      No items found in cart to checkout <br />{" "}
-                      <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
-                        Shop Now
+                <div className="row">
+                  <div className="col-lg-12">
+                    <div className="item-empty-area text-center">
+                      <div className="item-empty-area__icon mb-30">
+                        <i className="pe-7s-cash"></i>
+                      </div>
+                      <div className="item-empty-area__text">
+                        No items found in cart to checkout <br />{" "}
+                        <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
+                          Shop Now
                       </Link>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
           </div>
         </div>
       </LayoutOne>

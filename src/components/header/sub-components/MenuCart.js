@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 import { getDiscountPrice } from "../../../helpers/product";
 
-const MenuCart = ({ cartData, currency, deleteFromCart }) => {
+const MenuCart = ({ cartData, deleteFromCart }) => {
   let cartTotalPrice = 0;
   const { addToast } = useToasts();
   return (
@@ -13,56 +13,35 @@ const MenuCart = ({ cartData, currency, deleteFromCart }) => {
         <Fragment>
           <ul>
             {cartData.map((single, key) => {
-              const discountedPrice = getDiscountPrice(
-                single.price,
-                single.discount
-              );
-              const finalProductPrice = (
-                single.price * currency.currencyRate
-              ).toFixed(2);
-              const finalDiscountedPrice = (
-                discountedPrice * currency.currencyRate
-              ).toFixed(2);
-
-              discountedPrice != null
-                ? (cartTotalPrice += finalDiscountedPrice * single.quantity)
-                : (cartTotalPrice += finalProductPrice * single.quantity);
-
+              const finalProductPrice = single.originalPrice;
+              const finalDiscountedPrice = single.finalPrice;
+              cartTotalPrice += single.price;
               return (
                 <li className="single-shopping-cart" key={key}>
                   <div className="shopping-cart-img">
                     <Link to={process.env.PUBLIC_URL + "/product/" + single.id}>
-                      <img
-                        alt=""
-                        src={process.env.PUBLIC_URL + single.image[0]}
-                        className="img-fluid"
-                      />
+                      <img alt="" src={single.image.imageUrl} className="img-fluid" />
                     </Link>
                   </div>
                   <div className="shopping-cart-title">
                     <h4>
-                      <Link
-                        to={process.env.PUBLIC_URL + "/product/" + single.id}
-                      >
-                        {" "}
-                        {single.name}{" "}
+                      <Link>
+                        {single.description.name}
                       </Link>
                     </h4>
                     <h6>Qty: {single.quantity}</h6>
                     <span>
-                      {discountedPrice !== null
-                        ? currency.currencySymbol + finalDiscountedPrice
-                        : currency.currencySymbol + finalProductPrice}
+                      {single.discounted ? finalDiscountedPrice : finalProductPrice}
                     </span>
-                    {single.selectedProductColor &&
-                    single.selectedProductSize ? (
-                      <div className="cart-item-variation">
-                        <span>Color: {single.selectedProductColor}</span>
-                        <span>Size: {single.selectedProductSize}</span>
-                      </div>
-                    ) : (
-                      ""
-                    )}
+                    {/* {single.selectedProductColor &&
+                      single.selectedProductSize ? (
+                        <div className="cart-item-variation">
+                          <span>Color: {single.selectedProductColor}</span>
+                          <span>Size: {single.selectedProductSize}</span>
+                        </div>
+                      ) : (
+                        ""
+                      )} */}
                   </div>
                   <div className="shopping-cart-delete">
                     <button onClick={() => deleteFromCart(single, addToast)}>
@@ -75,9 +54,9 @@ const MenuCart = ({ cartData, currency, deleteFromCart }) => {
           </ul>
           <div className="shopping-cart-total">
             <h4>
-              Total :{" "}
+              Total :
               <span className="shop-total">
-                {currency.currencySymbol + cartTotalPrice.toFixed(2)}
+                {"US$"}{cartTotalPrice.toFixed(2)}
               </span>
             </h4>
           </div>
@@ -94,15 +73,15 @@ const MenuCart = ({ cartData, currency, deleteFromCart }) => {
           </div>
         </Fragment>
       ) : (
-        <p className="text-center">No items added to cart</p>
-      )}
+          <p className="text-center">No items added to cart</p>
+        )}
     </div>
   );
 };
 
 MenuCart.propTypes = {
   cartData: PropTypes.array,
-  currency: PropTypes.object,
+  // currency: PropTypes.object,
   deleteFromCart: PropTypes.func
 };
 

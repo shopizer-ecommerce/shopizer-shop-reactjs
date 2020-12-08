@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { animateScroll } from "react-scroll";
 import FooterCopyright from "../../components/footer/FooterCopyright";
 import FooterNewsletter from "../../components/footer/FooterNewsletter";
-
+import { getLocalData } from '../../util/helper';
 const FooterOne = ({
   backgroundColorClass,
   spaceTopClass,
@@ -17,9 +17,11 @@ const FooterOne = ({
 }) => {
   const [scroll, setScroll] = useState(0);
   const [top, setTop] = useState(0);
+  const [merchant, setMerchant] = useState('');
 
   useEffect(() => {
     setTop(100);
+    setMerchant(JSON.parse(getLocalData('store')))
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -38,18 +40,18 @@ const FooterOne = ({
     <footer
       className={`footer-area ${
         backgroundColorClass ? backgroundColorClass : ""
-      } ${spaceTopClass ? spaceTopClass : ""} ${
+        } ${spaceTopClass ? spaceTopClass : ""} ${
         spaceBottomClass ? spaceBottomClass : ""
-      } ${extraFooterClass ? extraFooterClass : ""} ${
+        } ${extraFooterClass ? extraFooterClass : ""} ${
         spaceLeftClass ? spaceLeftClass : ""
-      } ${spaceRightClass ? spaceRightClass : ""}`}
+        } ${spaceRightClass ? spaceRightClass : ""}`}
     >
       <div className={`${containerClass ? containerClass : "container"}`}>
         <div className="row">
           <div
             className={`${
               sideMenu ? "col-xl-2 col-sm-4" : "col-lg-2 col-sm-4"
-            }`}
+              }`}
           >
             {/* footer copyright */}
             <FooterCopyright
@@ -60,47 +62,49 @@ const FooterOne = ({
           <div
             className={`${
               sideMenu ? "col-xl-2 col-sm-4" : "col-lg-2 col-sm-4"
-            }`}
+              }`}
           >
             <div className="footer-widget mb-30 ml-30">
               <div className="footer-title">
-                <h3>ABOUT US</h3>
+                <h3>Address</h3>
               </div>
               <div className="footer-list">
-                <ul>
-                  <li>
-                    <Link to={process.env.PUBLIC_URL + "/about"}>About us</Link>
-                  </li>
-                  <li>
-                    <Link to={process.env.PUBLIC_URL + "#/"}>
-                      Store location
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to={process.env.PUBLIC_URL + "/contact"}>
-                      Contact
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to={process.env.PUBLIC_URL + "#/"}>
-                      Orders tracking
-                    </Link>
-                  </li>
-                </ul>
+                {
+
+                  merchant &&
+                  <ul>
+                    <li>
+                      <Link>
+                        {merchant.address.address}  {merchant.address.city}, {merchant.address.stateProvince},
+                       {merchant.address.country} <br /> {merchant.address.postalCode}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link>
+                        Tel: {merchant.phone}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link>
+                        E-mail : {merchant.email}
+                      </Link>
+                    </li>
+                  </ul>
+                }
               </div>
             </div>
           </div>
           <div
             className={`${
               sideMenu ? "col-xl-2 col-sm-4" : "col-lg-2 col-sm-4"
-            }`}
+              }`}
           >
             <div
               className={`${
                 sideMenu
                   ? "footer-widget mb-30 ml-95"
                   : "footer-widget mb-30 ml-50"
-              }`}
+                }`}
             >
               <div className="footer-title">
                 <h3>USEFUL LINKS</h3>
@@ -128,14 +132,14 @@ const FooterOne = ({
           <div
             className={`${
               sideMenu ? "col-xl-3 col-sm-4" : "col-lg-2 col-sm-6"
-            }`}
+              }`}
           >
             <div
               className={`${
                 sideMenu
                   ? "footer-widget mb-30 ml-145"
                   : "footer-widget mb-30 ml-75"
-              }`}
+                }`}
             >
               <div className="footer-title">
                 <h3>FOLLOW US</h3>
@@ -185,7 +189,7 @@ const FooterOne = ({
           <div
             className={`${
               sideMenu ? "col-xl-3 col-sm-8" : "col-lg-4 col-sm-6"
-            }`}
+              }`}
           >
             {/* footer newsletter */}
             <FooterNewsletter

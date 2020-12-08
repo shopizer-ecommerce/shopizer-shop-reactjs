@@ -13,17 +13,19 @@ const MyAccount = ({ location }) => {
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | My Account</title>
-        <meta
+        <title>Shopizer | My Account</title>
+        {/* <meta
           name="description"
           content="Compare page of flone react minimalist eCommerce template."
-        />
+        /> */}
       </MetaTags>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
         My Account
       </BreadcrumbsItem>
-      <LayoutOne headerTop="visible">
+      <LayoutOne headerContainerClass="container-fluid"
+        headerPaddingClass="header-padding-2"
+        headerTop="visible">
         {/* breadcrumb */}
         <Breadcrumb />
         <div className="myaccount-area pb-80 pt-100">

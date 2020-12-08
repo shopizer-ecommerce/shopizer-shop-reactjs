@@ -14,17 +14,19 @@ const LoginRegister = ({ location }) => {
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | Login</title>
-        <meta
+        <title>Shopizer | Login</title>
+        {/* <meta
           name="description"
           content="Compare page of flone react minimalist eCommerce template."
-        />
+        /> */}
       </MetaTags>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
         Login Register
       </BreadcrumbsItem>
-      <LayoutOne headerTop="visible">
+      <LayoutOne headerContainerClass="container-fluid"
+        headerPaddingClass="header-padding-2"
+        headerTop="visible">
         {/* breadcrumb */}
         <Breadcrumb />
         <div className="login-register-area pt-100 pb-100">
