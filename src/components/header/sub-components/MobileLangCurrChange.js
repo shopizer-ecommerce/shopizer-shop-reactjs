@@ -2,11 +2,11 @@ import PropTypes from "prop-types";
 import React from "react";
 import { multilanguage, changeLanguage } from "redux-multilanguage";
 import { connect } from "react-redux";
-import { setCurrency } from "../../../redux/actions/currencyActions";
+// import { setCurrency } from "../../../redux/actions/currencyActions";
 
 const MobileLangCurrChange = ({
-  currency,
-  setCurrency,
+  // currency,
+  // setCurrency,
   currentLanguageCode,
   dispatch
 }) => {
@@ -15,10 +15,10 @@ const MobileLangCurrChange = ({
     dispatch(changeLanguage(languageCode));
   };
 
-  const setCurrencyTrigger = e => {
-    const currencyName = e.target.value;
-    setCurrency(currencyName);
-  };
+  // const setCurrencyTrigger = e => {
+  //   const currencyName = e.target.value;
+  //   setCurrency(currencyName);
+  // };
 
   const closeMobileMenu = () => {
     const offcanvasMobileMenu = document.querySelector(
@@ -43,7 +43,7 @@ const MobileLangCurrChange = ({
           <option value="de">Germany</option>
         </select>
       </div>
-      <div className="lang-curr-style">
+      {/* <div className="lang-curr-style">
         <span className="title mb-2">Choose Currency</span>
         <select
           value={currency.currencyName}
@@ -56,29 +56,29 @@ const MobileLangCurrChange = ({
           <option value="EUR">EUR</option>
           <option value="GBP">GBP</option>
         </select>
-      </div>
+      </div> */}
     </div>
   );
 };
 
 MobileLangCurrChange.propTypes = {
-  setCurrency: PropTypes.func,
-  currency: PropTypes.object,
+  // setCurrency: PropTypes.func,
+  // currency: PropTypes.object,
   currentLanguageCode: PropTypes.string,
   dispatch: PropTypes.func
 };
 
 const mapStateToProps = state => {
   return {
-    currency: state.currencyData
+    // currency: state.currencyData
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    setCurrency: currencyName => {
-      dispatch(setCurrency(currencyName));
-    }
+    // setCurrency: currencyName => {
+    //   dispatch(setCurrency(currencyName));
+    // }
   };
 };
 

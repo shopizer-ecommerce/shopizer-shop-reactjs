@@ -4,11 +4,6 @@ import { Link } from "react-router-dom";
 import { multilanguage } from "redux-multilanguage";
 
 const NavMenu = ({ strings, menuWhiteClass, sidebarMenu, categories, contents }) => {
-  console.log(categories)
-
-
-
-
   return (
     <div
       className={` ${
@@ -21,7 +16,7 @@ const NavMenu = ({ strings, menuWhiteClass, sidebarMenu, categories, contents })
         <ul>
           <li>
             <Link to={"/"}>
-              {strings["home"]}
+              {strings["Home"]}
             </Link>
           </li>
           {
@@ -29,7 +24,7 @@ const NavMenu = ({ strings, menuWhiteClass, sidebarMenu, categories, contents })
               return (
                 item.visible &&
                 <li key={index}>
-                  <Link to={"/category/" + item.description.friendlyUrl}>{item.description.name}
+                  <Link to={"/category/" + item.description.friendlyUrl}>{strings[item.description.name]}
                     {item.children && item.children.length > 0 ?
                       sidebarMenu ? (
                         <span>
@@ -49,7 +44,7 @@ const NavMenu = ({ strings, menuWhiteClass, sidebarMenu, categories, contents })
                         item.children.map((submenu, index) => {
                           return (<li key={index}>
                             <Link to={"/category/" + submenu.description.friendlyUrl}>
-                              {submenu.description.name}
+                              {strings[submenu.description.name]}
                             </Link>
                           </li>)
                         })
@@ -65,13 +60,13 @@ const NavMenu = ({ strings, menuWhiteClass, sidebarMenu, categories, contents })
             contents.map((content, index) => {
               return (
                 content.displayedInMenu &&
-                <li key={index}> <Link to={"/content/" + content.slug} >{content.name}</Link></li>
+                <li key={index}> <Link to={"/content/" + content.slug} >{strings[content.name]}</Link></li>
               )
             })
           }
           <li>
             <Link to={"/contact"}>
-              {strings["contact_us"]}
+              {strings["Contact"]}
             </Link>
           </li>
         </ul>

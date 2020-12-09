@@ -36,8 +36,7 @@ const App = (props) => {
       loadLanguages({
         languages: {
           en: require("./translations/english.json"),
-          fn: require("./translations/french.json"),
-          de: require("./translations/germany.json")
+          fr: require("./translations/french.json")
         }
       })
     );

@@ -6,10 +6,10 @@ import MenuCart from "./sub-components/MenuCart";
 import { deleteFromCart } from "../../redux/actions/cartActions";
 
 const IconGroup = ({
-  currency,
+  // currency,
   cartData,
-  wishlistData,
-  compareData,
+  // wishlistData,
+  // compareData,
   deleteFromCart,
   iconWhiteClass
 }) => {
@@ -118,19 +118,19 @@ const IconGroup = ({
 
 IconGroup.propTypes = {
   cartData: PropTypes.array,
-  compareData: PropTypes.array,
-  currency: PropTypes.object,
+  // compareData: PropTypes.array,
+  // currency: PropTypes.object,
   iconWhiteClass: PropTypes.string,
   deleteFromCart: PropTypes.func,
-  wishlistData: PropTypes.array
+  // wishlistData: PropTypes.array
 };
 
 const mapStateToProps = state => {
   return {
-    currency: state.currencyData,
+    // currency: state.currencyData,
     cartData: state.cartData,
-    wishlistData: state.wishlistData,
-    compareData: state.compareData
+    // wishlistData: state.wishlistData,
+    // compareData: state.compareData
   };
 };
 

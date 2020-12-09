@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
+import { multilanguage } from "redux-multilanguage";
+import { connect } from "react-redux";
 import Logo from "../../components/header/Logo";
 import NavMenu from "../../components/header/NavMenu";
 import IconGroup from "../../components/header/IconGroup";
@@ -7,8 +9,11 @@ import MobileMenu from "../../components/header/MobileMenu";
 import HeaderTop from "../../components/header/HeaderTop";
 import WebService from '../../util/webService';
 import constant from '../../util/constant';
-import { setLocalData } from '../../util/helper';
+// import { setLocalData } from '../../util/helper';
+import { setMerchant } from "../../redux/actions/storeAction";
 const HeaderOne = ({
+  setMerchant,
+  merchant,
   layout,
   top,
   borderStyle,
@@ -18,14 +23,11 @@ const HeaderOne = ({
 }) => {
   const [scroll, setScroll] = useState(0);
   const [headerTop, setHeaderTop] = useState(0);
-  const [merchant, setMerchant] = useState('');
   const [categoryData, setCategoryData] = useState([]);
   const [contentData, setContentData] = useState([]);
 
   useEffect(() => {
-    console.log(process.env)
-
-    getStore();
+    setMerchant()
     getCategoryHierarchy();
     getContent();
     const header = document.querySelector(".sticky-bar");
@@ -37,24 +39,6 @@ const HeaderOne = ({
 
   }, []);
 
-  const getStore = async () => {
-    let action = constant.ACTION.STORE + constant.ACTION.DEFAULT;
-    try {
-      let response = await WebService.get(action);
-      console.log(response);
-      if (response) {
-        setMerchant(response)
-        // if (getLocalData('langulage')) {
-        //   i18n.changeLanguage(response.defaultLanguage)
-        // } else {
-        //   i18n.changeLanguage(response.defaultLanguage)
-        setLocalData('store', JSON.stringify(response))
-        setLocalData('language', response.defaultLanguage)
-        // }
-      }
-    } catch (error) {
-    }
-  }
   const getCategoryHierarchy = async () => {
     let action = constant.ACTION.CATEGORY + '?count=20&page=0';
     try {
@@ -128,11 +112,32 @@ const HeaderOne = ({
 };
 
 HeaderOne.propTypes = {
+  // merchant: PropTypes.string,
   borderStyle: PropTypes.string,
   headerPaddingClass: PropTypes.string,
   headerPositionClass: PropTypes.string,
   layout: PropTypes.string,
-  top: PropTypes.string
+  top: PropTypes.string,
+  // setMerchant: PropTypes.func
 };
 
-export default HeaderOne;
+const mapStateToProps = state => {
+  return {
+    merchant: state.merchantData.merchant
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setMerchant: () => {
+      dispatch(setMerchant());
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(multilanguage(HeaderOne));
+
+// export default HeaderOne;

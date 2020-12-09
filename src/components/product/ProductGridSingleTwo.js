@@ -75,13 +75,17 @@ const ProductGridSingleTwo = ({
                 to={`${process.env.PUBLIC_URL}/product/${product.id}`} title="Select options">
                 <i className="fa fa-cog"></i>
               </Link>
-              <button
-                onClick={() => addToCart(product, addToast)}
-                className="active"
-                // disabled={cartItem !== undefined && cartItem.quantity > 0}
-                title="Add to cart">
-                <i className="fa fa-shopping-cart"></i>{" "}
-              </button>
+              {
+                product.available && product.canBePurchased && product.visible && product.quantity > 0 &&
+                < button
+                  onClick={() => addToCart(product, addToast)}
+                  className="active"
+                  // disabled={cartItem !== undefined && cartItem.quantity > 0}
+                  title="Add to cart">
+                  <i className="fa fa-shopping-cart"></i>{" "}
+                </button>
+              }
+
               {/* ) : (
                       <button disabled className="active" title="Out of stock">
                         <i className="fa fa-shopping-cart"></i>
@@ -162,7 +166,7 @@ const ProductGridSingleTwo = ({
         // addtocompare={addToCompare}
         addtoast={addToast}
       />
-    </Fragment>
+    </Fragment >
   );
 };
 

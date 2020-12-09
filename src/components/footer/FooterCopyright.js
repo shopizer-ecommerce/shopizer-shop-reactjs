@@ -2,12 +2,14 @@ import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getLocalData } from '../../util/helper';
-const FooterCopyright = ({ footerLogo, spaceBottomClass, colorClass }) => {
+import { multilanguage } from "redux-multilanguage";
+import { connect } from "react-redux";
+const FooterCopyright = ({ footerLogo, spaceBottomClass, colorClass, merchant }) => {
 
-  const [merchant, setMerchant] = useState('');
+  // const [merchant, setMerchant] = useState('');
   useEffect(() => {
     // console.log(getLocalData('store')
-    setMerchant(JSON.parse(getLocalData('store')))
+    // setMerchant(JSON.parse(getLocalData('store')))
   }, {})
   return (
     <div
@@ -25,9 +27,9 @@ const FooterCopyright = ({ footerLogo, spaceBottomClass, colorClass }) => {
 
       </div>
       <p>
-        © 2020{" "}
+        Copyright © {new Date(merchant.inBusinessSince).getFullYear()}{" "}
         <a href="//hasthemes.com" rel="noopener noreferrer" target="_blank">
-          Flone
+          {merchant.name}
         </a>
         .<br /> All Rights Reserved
       </p>
@@ -41,4 +43,21 @@ FooterCopyright.propTypes = {
   colorClass: PropTypes.string
 };
 
-export default FooterCopyright;
+
+const mapStateToProps = state => {
+  return {
+    merchant: state.merchantData.merchant
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(multilanguage(FooterCopyright));
+// export default FooterCopyright;

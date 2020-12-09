@@ -5,15 +5,13 @@ const SectionTitleThree = ({
   titleText,
   positionClass,
   spaceClass,
-  colorClass
+  colorClass,
+  strings
 }) => {
   return (
     <div
-      className={`section-title-5 ${positionClass ? positionClass : ""} ${
-        spaceClass ? spaceClass : ""
-      }`}
-    >
-      <h2 className={`${colorClass ? colorClass : ""}`}>{titleText}</h2>
+      className={`section-title-5 ${positionClass ? positionClass : ""} ${spaceClass ? spaceClass : ""}`} >
+      <h2 className={colorClass ? colorClass : ""}>{titleText}</h2>
     </div>
   );
 };
@@ -21,7 +19,8 @@ const SectionTitleThree = ({
 SectionTitleThree.propTypes = {
   positionClass: PropTypes.string,
   spaceClass: PropTypes.string,
-  titleText: PropTypes.string
+  titleText: PropTypes.string,
+  strings: PropTypes.object
 };
 
 export default SectionTitleThree;

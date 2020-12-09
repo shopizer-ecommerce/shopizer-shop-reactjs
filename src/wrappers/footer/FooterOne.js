@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import { animateScroll } from "react-scroll";
 import FooterCopyright from "../../components/footer/FooterCopyright";
 import FooterNewsletter from "../../components/footer/FooterNewsletter";
-import { getLocalData } from '../../util/helper';
+import { multilanguage } from "redux-multilanguage";
+import { connect } from "react-redux";
 const FooterOne = ({
   backgroundColorClass,
   spaceTopClass,
@@ -13,15 +14,16 @@ const FooterOne = ({
   spaceRightClass,
   containerClass,
   extraFooterClass,
-  sideMenu
+  sideMenu,
+  merchant
 }) => {
   const [scroll, setScroll] = useState(0);
   const [top, setTop] = useState(0);
-  const [merchant, setMerchant] = useState('');
+  // const [merchant, setMerchant] = useState('');
 
   useEffect(() => {
     setTop(100);
-    setMerchant(JSON.parse(getLocalData('store')))
+    // setMerchant(JSON.parse(getLocalData('store')))
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -48,22 +50,14 @@ const FooterOne = ({
     >
       <div className={`${containerClass ? containerClass : "container"}`}>
         <div className="row">
-          <div
-            className={`${
-              sideMenu ? "col-xl-2 col-sm-4" : "col-lg-2 col-sm-4"
-              }`}
-          >
+          <div className={sideMenu ? "col-xl-3 col-sm-4" : "col-lg-2 col-sm-4"}>
             {/* footer copyright */}
             <FooterCopyright
               footerLogo="/assets/img/logo/logo.png"
               spaceBottomClass="mb-30"
             />
           </div>
-          <div
-            className={`${
-              sideMenu ? "col-xl-2 col-sm-4" : "col-lg-2 col-sm-4"
-              }`}
-          >
+          <div className={sideMenu ? "col-xl-3 col-sm-4" : "col-lg-3 col-sm-4"}>
             <div className="footer-widget mb-30 ml-30">
               <div className="footer-title">
                 <h3>Address</h3>
@@ -94,18 +88,8 @@ const FooterOne = ({
               </div>
             </div>
           </div>
-          <div
-            className={`${
-              sideMenu ? "col-xl-2 col-sm-4" : "col-lg-2 col-sm-4"
-              }`}
-          >
-            <div
-              className={`${
-                sideMenu
-                  ? "footer-widget mb-30 ml-95"
-                  : "footer-widget mb-30 ml-50"
-                }`}
-            >
+          <div className={sideMenu ? "col-xl-3 col-sm-4" : "col-lg-3 col-sm-4"}>
+            <div className={sideMenu ? "footer-widget mb-30 ml-95" : "footer-widget mb-30 ml-50"} >
               <div className="footer-title">
                 <h3>USEFUL LINKS</h3>
               </div>
@@ -129,7 +113,7 @@ const FooterOne = ({
               </div>
             </div>
           </div>
-          <div
+          {/* <div
             className={`${
               sideMenu ? "col-xl-3 col-sm-4" : "col-lg-2 col-sm-6"
               }`}
@@ -185,12 +169,8 @@ const FooterOne = ({
                 </ul>
               </div>
             </div>
-          </div>
-          <div
-            className={`${
-              sideMenu ? "col-xl-3 col-sm-8" : "col-lg-4 col-sm-6"
-              }`}
-          >
+          </div> */}
+          <div className={sideMenu ? "col-xl-3 col-sm-8" : "col-lg-4 col-sm-6"}>
             {/* footer newsletter */}
             <FooterNewsletter
               spaceBottomClass="mb-30"
@@ -221,4 +201,21 @@ FooterOne.propTypes = {
   spaceRightClass: PropTypes.string
 };
 
-export default FooterOne;
+
+const mapStateToProps = state => {
+  return {
+    merchant: state.merchantData.merchant
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(multilanguage(FooterOne));
+// export default FooterOne;

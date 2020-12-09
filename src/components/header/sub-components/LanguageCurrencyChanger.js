@@ -1,10 +1,13 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { changeLanguage } from "redux-multilanguage";
-
+import { multilanguage } from "redux-multilanguage";
+import { connect } from "react-redux";
 const LanguageCurrencyChanger = ({
-  currency,
-  setCurrency,
+  // currency,
+  // setCurrency,
+  strings,
+  merchant,
   currentLanguageCode,
   dispatch
 }) => {
@@ -24,21 +27,27 @@ const LanguageCurrencyChanger = ({
         <span>
           {currentLanguageCode === "en"
             ? "English"
-            : currentLanguageCode === "fn"
+            : currentLanguageCode === "fr"
               ? "French"
-              : currentLanguageCode === "de"
-                ? "Germany"
-                : ""}{" "}
+
+              : ""}{" "}
           <i className="fa fa-angle-down" />
         </span>
         <div className="lang-car-dropdown">
           <ul>
-            <li>
-              <button value="en" onClick={e => changeLanguageTrigger(e)}>
-                English
-              </button>
-            </li>
-            <li>
+            {merchant &&
+              merchant.supportedLanguages.map((value, i) => {
+                return (
+                  <li key={i}>
+                    <button value={value.code} onClick={e => changeLanguageTrigger(e)}>
+                      {strings[value.code]}
+                    </button>
+                  </li>
+                )
+              })
+            }
+
+            {/* <li>
               <button value="fn" onClick={e => changeLanguageTrigger(e)}>
                 French
               </button>
@@ -47,7 +56,7 @@ const LanguageCurrencyChanger = ({
               <button value="de" onClick={e => changeLanguageTrigger(e)}>
                 Germany
               </button>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>
@@ -76,17 +85,33 @@ const LanguageCurrencyChanger = ({
         </div>
       </div> */}
       <div className="same-language-currency">
-        <p>Call Us 3965410</p>
+        <p>{strings['Call Us']} : {merchant.phone}</p>
       </div>
     </div>
   );
 };
 
 LanguageCurrencyChanger.propTypes = {
-  setCurrency: PropTypes.func,
-  currency: PropTypes.object,
+  // setCurrency: PropTypes.func,
+  // currency: PropTypes.object,
   currentLanguageCode: PropTypes.string,
-  dispatch: PropTypes.func
+  dispatch: PropTypes.func,
+  strings: PropTypes.object
 };
 
-export default LanguageCurrencyChanger;
+const mapStateToProps = state => {
+  return {
+    merchant: state.merchantData.merchant
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(multilanguage(LanguageCurrencyChanger));
+// export default LanguageCurrencyChanger;

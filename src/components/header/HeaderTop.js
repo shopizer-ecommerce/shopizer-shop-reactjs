@@ -2,12 +2,13 @@ import PropTypes from "prop-types";
 import React from "react";
 import { multilanguage } from "redux-multilanguage";
 import { connect } from "react-redux";
-import { setCurrency } from "../../redux/actions/currencyActions";
+// import { setCurrency } from "../../redux/actions/currencyActions";
 import LanguageCurrencyChanger from "./sub-components/LanguageCurrencyChanger";
 
 const HeaderTop = ({
-  currency,
-  setCurrency,
+  // currency,
+  // setCurrency,
+  strings,
   currentLanguageCode,
   dispatch,
   borderStyle
@@ -16,19 +17,19 @@ const HeaderTop = ({
     <div
       className={`header-top-wap ${
         borderStyle === "fluid-border" ? "border-bottom" : ""
-      }`}
+        }`}
     >
       <LanguageCurrencyChanger
-        currency={currency}
-        setCurrency={setCurrency}
+        // currency={currency}
+        // setCurrency={setCurrency}
         currentLanguageCode={currentLanguageCode}
         dispatch={dispatch}
       />
       <div className="header-offer">
         <p>
-          Free delivery on order over{" "}
+          {strings['Free delivery on order over']} {" "}
           <span>
-            {currency.currencySymbol + (200 * currency.currencyRate).toFixed(2)}
+            {'US$999.99'}
           </span>
         </p>
       </div>
@@ -38,23 +39,24 @@ const HeaderTop = ({
 
 HeaderTop.propTypes = {
   borderStyle: PropTypes.string,
-  setCurrency: PropTypes.func,
-  currency: PropTypes.object,
+  // setCurrency: PropTypes.func,
+  // currency: PropTypes.object,
   currentLanguageCode: PropTypes.string,
-  dispatch: PropTypes.func
+  dispatch: PropTypes.func,
+  strings: PropTypes.object
 };
 
 const mapStateToProps = state => {
   return {
-    currency: state.currencyData
+    // currency: state.currencyData
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    setCurrency: currencyName => {
-      dispatch(setCurrency(currencyName));
-    }
+    // setCurrency: currencyName => {
+    //   dispatch(setCurrency(currencyName));
+    // }
   };
 };
 

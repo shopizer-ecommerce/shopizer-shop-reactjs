@@ -1,3 +1,7 @@
+import WebService from '../../util/webService';
+import constant from '../../util/constant';
+export const GET_SHOPIZER_CART_ID = "GET_SHOPIZER_CART_ID";
+export const GET_CART = "GET_CART";
 export const ADD_TO_CART = "ADD_TO_CART";
 export const DECREASE_QUANTITY = "DECREASE_QUANTITY";
 export const DELETE_FROM_CART = "DELETE_FROM_CART";
@@ -8,32 +12,72 @@ export const addToCart = (
   item,
   addToast,
   quantityCount,
-  selectedProductColor,
-  selectedProductSize
+  // selectedProductColor,
+  // selectedProductSize
 ) => {
-  return dispatch => {
-    if (addToast) {
-      addToast("Added To Cart", { appearance: "success", autoDismiss: true });
-    }
-    dispatch({
-      type: ADD_TO_CART,
-      payload: {
-        ...item,
-        quantity: quantityCount,
-        selectedProductColor: selectedProductColor
-          ? selectedProductColor
-          : item.selectedProductColor
-          ? item.selectedProductColor
-          : null,
-        selectedProductSize: selectedProductSize
-          ? selectedProductSize
-          : item.selectedProductSize
-          ? item.selectedProductSize
-          : null
+  return async dispatch => {
+    console.log(item)
+
+    // if (userData) {
+    //   action = Action.CUSTOMERS + userData.id + '/' + Action.CARTS;
+    // } else {
+    // }
+
+    try {
+      let action = constant.ACTION.CART;
+      let param = { "product": item.id, "quantity": 1 }
+      let response = await WebService.post(action, param);
+      console.log(response)
+      dispatch(setShopizerCartID(response.code))
+      if (addToast) {
+        addToast("Added To Cart", { appearance: "success", autoDismiss: true });
       }
-    });
+      dispatch(getCart(response.code));
+      // dispatch({
+      //   type: GET_CART,
+      //   payload: response
+      // });
+    } catch (error) {
+    }
+    // debugger
+    // if (addToast) {
+    //   addToast("Added To Cart", { appearance: "success", autoDismiss: true });
+    // }
+    // dispatch({
+    //   type: ADD_TO_CART,
+    //   payload: {
+    //     ...item,
+    //     quantity: quantityCount
+    //   }
+    // });
   };
 };
+
+//Get cart
+
+export const getCart = (cartID) => {
+  return async dispatch => {
+    try {
+      let action = constant.ACTION.CART + cartID;
+      let response = await WebService.get(action);
+      console.log(response)
+
+      // dispatch({
+      //   type: GET_CART,
+      //   payload: response
+      // });
+    } catch (error) {
+    }
+  }
+}
+export const setShopizerCartID = (id) => {
+  return dispatch => {
+    dispatch({
+      type: GET_SHOPIZER_CART_ID,
+      payload: id
+    });
+  }
+}
 //decrease from cart
 export const decreaseQuantity = (item, addToast) => {
   return dispatch => {

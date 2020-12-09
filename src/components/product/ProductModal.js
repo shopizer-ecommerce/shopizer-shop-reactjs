@@ -250,19 +250,17 @@ function ProductModal(props) {
                       </button>
                     </div>
                     <div className="pro-details-cart btn-hover">
-                      {product.available ? (
+                      {product.available && product.canBePurchased && product.visible && product.quantity > 0 ? (
                         <button
                           onClick={() =>
                             addToCart(
                               product,
                               addToast,
-                              quantityCount,
-                              selectedProductColor,
-                              selectedProductSize
+                              // quantityCount,
+                              // selectedProductColor,
+                              // selectedProductSize
                             )
-                          }
-                        // disabled={productCartQty >= productStock}
-                        >Add To Cart</button>
+                          }>Add To Cart</button>
                       ) : (
                           <button disabled>Out of Stock</button>
                         )}
