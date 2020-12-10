@@ -1,5 +1,5 @@
 import axios from 'axios';
-import constant from './constant.js'
+// import constant from './constant.js'
 
 const BASE_URL = process.env.REACT_APP_BASE_URL + process.env.REACT_APP_API_VERSION;
 axios.defaults.baseURL = BASE_URL
@@ -40,4 +40,28 @@ export default class WebService {
 // }, (error) => {
 //     // Do something with request error
 //     return Promise.reject(error);
-// });
+// });  
+
+
+axios.interceptors.response.use((response) => {
+    // Any status code that lie within the range of 2xx cause this function to trigger
+    // Do something with response data
+
+    return response;
+}, (error) => {
+
+    // // Any status codes that falls outside the range of 2xx cause this function to trigger
+    // // Do something with response error
+
+    const { config, response } = error;
+    const originalRequest = config;
+
+    if (response.status === 401 || response.status === 404) {
+
+        return Promise.reject(error);
+    }
+    else {
+        return Promise.reject(error);
+    }
+});
+

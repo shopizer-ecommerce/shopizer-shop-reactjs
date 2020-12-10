@@ -74,7 +74,7 @@ const mapStateToProps = (state, ownProps) => {
       ownProps.limit
     ),
     currency: state.currencyData,
-    cartItems: state.cartData,
+    cartItems: state.cartData.cartItems,
     wishlistItems: state.wishlistData,
     compareItems: state.compareData
   };

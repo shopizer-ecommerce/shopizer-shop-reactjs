@@ -19,11 +19,9 @@ const FooterOne = ({
 }) => {
   const [scroll, setScroll] = useState(0);
   const [top, setTop] = useState(0);
-  // const [merchant, setMerchant] = useState('');
 
   useEffect(() => {
     setTop(100);
-    // setMerchant(JSON.parse(getLocalData('store')))
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -68,18 +66,18 @@ const FooterOne = ({
                   merchant &&
                   <ul>
                     <li>
-                      <Link>
+                      <Link to="">
                         {merchant.address.address}  {merchant.address.city}, {merchant.address.stateProvince},
                        {merchant.address.country} <br /> {merchant.address.postalCode}
                       </Link>
                     </li>
                     <li>
-                      <Link>
+                      <Link to="">
                         Tel: {merchant.phone}
                       </Link>
                     </li>
                     <li>
-                      <Link>
+                      <Link to="">
                         E-mail : {merchant.email}
                       </Link>
                     </li>

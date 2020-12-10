@@ -2,20 +2,20 @@ import PropTypes from "prop-types";
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
-import { getDiscountPrice } from "../../../helpers/product";
+// import { getDiscountPrice } from "../../../helpers/product";
 
 const MenuCart = ({ cartData, deleteFromCart }) => {
-  let cartTotalPrice = 0;
+  // let cartTotalPrice = 0;
   const { addToast } = useToasts();
   return (
     <div className="shopping-cart-content">
-      {cartData && cartData.length > 0 ? (
+      {Object.keys(cartData).length > 0 && cartData.products.length > 0 ? (
         <Fragment>
           <ul>
-            {cartData.map((single, key) => {
+            {cartData.products.map((single, key) => {
               const finalProductPrice = single.originalPrice;
               const finalDiscountedPrice = single.finalPrice;
-              cartTotalPrice += single.price;
+              // cartTotalPrice += single.price;
               return (
                 <li className="single-shopping-cart" key={key}>
                   <div className="shopping-cart-img">
@@ -25,7 +25,7 @@ const MenuCart = ({ cartData, deleteFromCart }) => {
                   </div>
                   <div className="shopping-cart-title">
                     <h4>
-                      <Link>
+                      <Link to="">
                         {single.description.name}
                       </Link>
                     </h4>
@@ -44,7 +44,7 @@ const MenuCart = ({ cartData, deleteFromCart }) => {
                       )} */}
                   </div>
                   <div className="shopping-cart-delete">
-                    <button onClick={() => deleteFromCart(single, addToast)}>
+                    <button onClick={() => deleteFromCart(cartData.code, single, addToast)}>
                       <i className="fa fa-times-circle" />
                     </button>
                   </div>
@@ -56,7 +56,7 @@ const MenuCart = ({ cartData, deleteFromCart }) => {
             <h4>
               Total :
               <span className="shop-total">
-                {"US$"}{cartTotalPrice.toFixed(2)}
+                {cartData.displayTotal}
               </span>
             </h4>
           </div>
@@ -80,7 +80,7 @@ const MenuCart = ({ cartData, deleteFromCart }) => {
 };
 
 MenuCart.propTypes = {
-  cartData: PropTypes.array,
+  cartData: PropTypes.object,
   // currency: PropTypes.object,
   deleteFromCart: PropTypes.func
 };

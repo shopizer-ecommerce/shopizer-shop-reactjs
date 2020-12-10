@@ -1,5 +1,3 @@
-import axios from "axios";
-
 import WebService from '../../util/webService';
 import constant from '../../util/constant';
 export const SET_MERCHANT = "SET_MERCHANT";
@@ -15,8 +13,6 @@ export const setMerchant = () => {
                 type: SET_MERCHANT,
                 payload: response
             });
-            // setMerchant(response)
-            // }
         } catch (error) {
         }
 

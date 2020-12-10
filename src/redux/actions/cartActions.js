@@ -8,48 +8,34 @@ export const DELETE_FROM_CART = "DELETE_FROM_CART";
 export const DELETE_ALL_FROM_CART = "DELETE_ALL_FROM_CART";
 
 //add to cart
-export const addToCart = (
-  item,
-  addToast,
-  quantityCount,
-  // selectedProductColor,
-  // selectedProductSize
-) => {
+export const addToCart = (item, addToast, cartId, quantityCount) => {
   return async dispatch => {
-    console.log(item)
 
-    // if (userData) {
-    //   action = Action.CUSTOMERS + userData.id + '/' + Action.CARTS;
-    // } else {
-    // }
 
     try {
-      let action = constant.ACTION.CART;
-      let param = { "product": item.id, "quantity": 1 }
-      let response = await WebService.post(action, param);
-      console.log(response)
-      dispatch(setShopizerCartID(response.code))
-      if (addToast) {
-        addToast("Added To Cart", { appearance: "success", autoDismiss: true });
+      let action;
+      let param;
+      let response;
+      if (cartId) {
+        action = constant.ACTION.CART + cartId;
+        param = { "product": item.id, "quantity": quantityCount }
+        response = await WebService.put(action, param);
+      } else {
+        action = constant.ACTION.CART
+        param = { "product": item.id, "quantity": quantityCount }
+        response = await WebService.post(action, param);
       }
-      dispatch(getCart(response.code));
-      // dispatch({
-      //   type: GET_CART,
-      //   payload: response
-      // });
+
+      if (response) {
+        dispatch(setShopizerCartID(response.code))
+        if (addToast) {
+          addToast("Added To Cart", { appearance: "success", autoDismiss: true });
+        }
+        dispatch(getCart(response.code));
+      }
     } catch (error) {
     }
-    // debugger
-    // if (addToast) {
-    //   addToast("Added To Cart", { appearance: "success", autoDismiss: true });
-    // }
-    // dispatch({
-    //   type: ADD_TO_CART,
-    //   payload: {
-    //     ...item,
-    //     quantity: quantityCount
-    //   }
-    // });
+
   };
 };
 
@@ -60,12 +46,10 @@ export const getCart = (cartID) => {
     try {
       let action = constant.ACTION.CART + cartID;
       let response = await WebService.get(action);
-      console.log(response)
-
-      // dispatch({
-      //   type: GET_CART,
-      //   payload: response
-      // });
+      dispatch({
+        type: GET_CART,
+        payload: response
+      });
     } catch (error) {
     }
   }
@@ -91,12 +75,22 @@ export const decreaseQuantity = (item, addToast) => {
   };
 };
 //delete from cart
-export const deleteFromCart = (item, addToast) => {
-  return dispatch => {
-    if (addToast) {
-      addToast("Removed From Cart", { appearance: "error", autoDismiss: true });
+export const deleteFromCart = (cartID, item, addToast) => {
+  return async dispatch => {
+    try {
+      let action = constant.ACTION.CART + cartID + '/' + constant.ACTION.PRODUCT + item.id;
+      let response = await WebService.delete(action);
+      dispatch({
+        type: DELETE_FROM_CART,
+        payload: item
+      });
+      if (addToast) {
+        addToast("Removed From Cart", { appearance: "error", autoDismiss: true });
+      }
+
+      // dispatch(getCart(cartID));
+    } catch (error) {
     }
-    dispatch({ type: DELETE_FROM_CART, payload: item });
   };
 };
 //delete all from cart

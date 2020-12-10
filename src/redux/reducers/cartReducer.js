@@ -1,4 +1,4 @@
-import uuid from "uuid/v4";
+// import uuid from "uuid/v4";
 import {
   ADD_TO_CART,
   DECREASE_QUANTITY,
@@ -8,7 +8,12 @@ import {
   GET_SHOPIZER_CART_ID
 } from "../actions/cartActions";
 
-const initState = [];
+const initState = {
+  cartItems: {},
+  cartID: '',
+  cartCount: 0
+
+};
 
 const cartReducer = (state = initState, action) => {
   const cartItems = state,
@@ -20,83 +25,13 @@ const cartReducer = (state = initState, action) => {
     };
   }
   if (action.type === GET_CART) {
-
+    return {
+      ...state,
+      cartItems: action.payload,
+      cartCount: action.payload.products.length
+    }
   }
-  if (action.type === ADD_TO_CART) {
-    // for non variant products
-    // if (product.variation === undefined) {
-    // const cartItem = cartItems.filter(item => item.id === product.id)[0];
-    // if (cartItem === undefined) {
-    //   return [
-    //     ...cartItems,
-    //     {
-    //       ...product,
-    //       quantity: product.quantity ? product.quantity : 1,
-    //       cartItemId: uuid()
-    //     }
-    //   ];
-    // } else {
-    //   return cartItems.map(item =>
-    //     item.cartItemId === cartItem.cartItemId
-    //       ? {
-    //         ...item,
-    //         quantity: product.quantity
-    //           ? item.quantity + product.quantity
-    //           : item.quantity + 1
-    //       }
-    //       : item
-    //   );
-    // }
-    // for variant products
-    // } else {
-    //   const cartItem = cartItems.filter(
-    //     item =>
-    //       item.id === product.id &&
-    //       product.selectedProductColor &&
-    //       product.selectedProductColor === item.selectedProductColor &&
-    //       product.selectedProductSize &&
-    //       product.selectedProductSize === item.selectedProductSize &&
-    //       (product.cartItemId ? product.cartItemId === item.cartItemId : true)
-    //   )[0];
 
-    //   if (cartItem === undefined) {
-    //     return [
-    //       ...cartItems,
-    //       {
-    //         ...product,
-    //         quantity: product.quantity ? product.quantity : 1,
-    //         cartItemId: uuid()
-    //       }
-    //     ];
-    //   } else if (
-    //     cartItem !== undefined &&
-    //     (cartItem.selectedProductColor !== product.selectedProductColor ||
-    //       cartItem.selectedProductSize !== product.selectedProductSize)
-    //   ) {
-    //     return [
-    //       ...cartItems,
-    //       {
-    //         ...product,
-    //         quantity: product.quantity ? product.quantity : 1,
-    //         cartItemId: uuid()
-    //       }
-    //     ];
-    //   } else {
-    //     return cartItems.map(item =>
-    //       item.cartItemId === cartItem.cartItemId
-    //         ? {
-    //           ...item,
-    //           quantity: product.quantity
-    //             ? item.quantity + product.quantity
-    //             : item.quantity + 1,
-    //           selectedProductColor: product.selectedProductColor,
-    //           selectedProductSize: product.selectedProductSize
-    //         }
-    //         : item
-    //     );
-    //   }
-    // }
-  }
 
   if (action.type === DECREASE_QUANTITY) {
     if (product.quantity === 1) {
@@ -115,9 +50,24 @@ const cartReducer = (state = initState, action) => {
   }
 
   if (action.type === DELETE_FROM_CART) {
-    const remainingItems = (cartItems, product) =>
-      cartItems.filter(cartItem => cartItem.cartItemId !== product.cartItemId);
-    return remainingItems(cartItems, product);
+    let index = cartItems.cartItems.products.findIndex(order => order.id === product.id);
+    cartItems.cartItems.products.splice(index, 1);
+    if (cartItems.cartItems.products.length == 0) {
+      return {
+        ...state,
+        cartItems: {},
+        cartCount: cartItems.cartItems.products.length,
+        cartID: ''
+      }
+    } else {
+      return {
+        ...state,
+        cartCount: cartItems.cartItems.products.length,
+        cartItems: cartItems.cartItems,
+      }
+    }
+
+    // return remainingItems(cartItems, product);
   }
 
   if (action.type === DELETE_ALL_FROM_CART) {

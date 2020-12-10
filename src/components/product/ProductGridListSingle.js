@@ -8,13 +8,13 @@ import ProductModal from "./ProductModal";
 
 const ProductGridListSingle = ({
   product,
-  currency,
+  // currency,
   addToCart,
-  addToWishlist,
-  addToCompare,
-  cartItem,
-  wishlistItem,
-  compareItem,
+  // addToWishlist,
+  // addToCompare,
+  // cartItem,
+  // wishlistItem,
+  // compareItem,
   sliderClassName,
   spaceBottomClass
 }) => {
@@ -22,17 +22,15 @@ const ProductGridListSingle = ({
   const { addToast } = useToasts();
 
   const discountedPrice = getDiscountPrice(product.price, product.discount);
-  const finalProductPrice = +(product.price * currency.currencyRate).toFixed(2);
-  const finalDiscountedPrice = +(
-    discountedPrice * currency.currencyRate
-  ).toFixed(2);
+  const finalProductPrice = product.price;
+  const finalDiscountedPrice = discountedPrice;
 
   return (
     <Fragment>
       <div
         className={`col-xl-4 col-sm-6 ${
           sliderClassName ? sliderClassName : ""
-        }`}
+          }`}
       >
         <div
           className={`product-wrap ${spaceBottomClass ? spaceBottomClass : ""}`}
@@ -51,24 +49,24 @@ const ProductGridListSingle = ({
                   alt=""
                 />
               ) : (
-                ""
-              )}
+                  ""
+                )}
             </Link>
             {product.discount || product.new ? (
               <div className="product-img-badges">
                 {product.discount ? (
                   <span className="pink">-{product.discount}%</span>
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
                 {product.new ? <span className="purple">New</span> : ""}
               </div>
             ) : (
-              ""
-            )}
+                ""
+              )}
 
             <div className="product-action">
-              <div className="pro-same-action pro-wishlist">
+              {/* <div className="pro-same-action pro-wishlist">
                 <button
                   className={wishlistItem !== undefined ? "active" : ""}
                   disabled={wishlistItem !== undefined}
@@ -81,9 +79,9 @@ const ProductGridListSingle = ({
                 >
                   <i className="pe-7s-like" />
                 </button>
-              </div>
+              </div> */}
               <div className="pro-same-action pro-cart">
-                {product.affiliateLink ? (
+                {/* {product.affiliateLink ? (
                   <a
                     href={product.affiliateLink}
                     rel="noopener noreferrer"
@@ -115,11 +113,11 @@ const ProductGridListSingle = ({
                       ? "Added"
                       : "Add to cart"}
                   </button>
-                ) : (
-                  <button disabled className="active">
-                    Out of Stock
+                ) : ( */}
+                <button disabled className="active">
+                  Out of Stock
                   </button>
-                )}
+                {/* )} */}
               </div>
               <div className="pro-same-action pro-quickview">
                 <button onClick={() => setModalShow(true)} title="Quick View">
@@ -139,19 +137,19 @@ const ProductGridListSingle = ({
                 <Rating ratingValue={product.rating} />
               </div>
             ) : (
-              ""
-            )}
+                ""
+              )}
             <div className="product-price">
               {discountedPrice !== null ? (
                 <Fragment>
-                  <span>{currency.currencySymbol + finalDiscountedPrice}</span>{" "}
+                  <span>{finalDiscountedPrice}</span>{" "}
                   <span className="old">
-                    {currency.currencySymbol + finalProductPrice}
+                    {finalProductPrice}
                   </span>
                 </Fragment>
               ) : (
-                <span>{currency.currencySymbol + finalProductPrice} </span>
-              )}
+                  <span>{finalProductPrice} </span>
+                )}
             </div>
           </div>
         </div>
@@ -173,21 +171,21 @@ const ProductGridListSingle = ({
                         alt=""
                       />
                     ) : (
-                      ""
-                    )}
+                        ""
+                      )}
                   </Link>
                   {product.discount || product.new ? (
                     <div className="product-img-badges">
                       {product.discount ? (
                         <span className="pink">-{product.discount}%</span>
                       ) : (
-                        ""
-                      )}
+                          ""
+                        )}
                       {product.new ? <span className="purple">New</span> : ""}
                     </div>
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
                 </div>
               </div>
             </div>
@@ -202,15 +200,15 @@ const ProductGridListSingle = ({
                   {discountedPrice !== null ? (
                     <Fragment>
                       <span>
-                        {currency.currencySymbol + finalDiscountedPrice}
+                        {finalDiscountedPrice}
                       </span>{" "}
                       <span className="old">
-                        {currency.currencySymbol + finalProductPrice}
+                        {finalProductPrice}
                       </span>
                     </Fragment>
                   ) : (
-                    <span>{currency.currencySymbol + finalProductPrice} </span>
-                  )}
+                      <span>{finalProductPrice} </span>
+                    )}
                 </div>
                 {product.rating && product.rating > 0 ? (
                   <div className="rating-review">
@@ -219,17 +217,17 @@ const ProductGridListSingle = ({
                     </div>
                   </div>
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
                 {product.shortDescription ? (
                   <p>{product.shortDescription}</p>
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
 
                 <div className="shop-list-actions d-flex align-items-center">
                   <div className="shop-list-btn btn-hover">
-                    {product.affiliateLink ? (
+                    {/* {product.affiliateLink ? (
                       <a
                         href={product.affiliateLink}
                         rel="noopener noreferrer"
@@ -267,14 +265,14 @@ const ProductGridListSingle = ({
                           ? "Added"
                           : "Add to cart"}
                       </button>
-                    ) : (
-                      <button disabled className="active">
-                        Out of Stock
+                    ) : ( */}
+                    <button disabled className="active">
+                      Out of Stock
                       </button>
-                    )}
+                    {/* )} */}
                   </div>
 
-                  <div className="shop-list-wishlist ml-10">
+                  {/* <div className="shop-list-wishlist ml-10">
                     <button
                       className={wishlistItem !== undefined ? "active" : ""}
                       disabled={wishlistItem !== undefined}
@@ -287,8 +285,8 @@ const ProductGridListSingle = ({
                     >
                       <i className="pe-7s-like" />
                     </button>
-                  </div>
-                  <div className="shop-list-compare ml-10">
+                  </div> */}
+                  {/* <div className="shop-list-compare ml-10">
                     <button
                       className={compareItem !== undefined ? "active" : ""}
                       disabled={compareItem !== undefined}
@@ -301,7 +299,7 @@ const ProductGridListSingle = ({
                     >
                       <i className="pe-7s-shuffle" />
                     </button>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -309,37 +307,37 @@ const ProductGridListSingle = ({
         </div>
       </div>
       {/* product modal */}
-      <ProductModal
+      {/* <ProductModal
         show={modalShow}
         onHide={() => setModalShow(false)}
         product={product}
-        currency={currency}
+        // currency={currency}
         discountedprice={discountedPrice}
         finalproductprice={finalProductPrice}
         finaldiscountedprice={finalDiscountedPrice}
-        cartitem={cartItem}
-        wishlistitem={wishlistItem}
-        compareitem={compareItem}
+        // cartitem={cartItem}
+        // wishlistitem={wishlistItem}
+        // compareitem={compareItem}
         addtocart={addToCart}
-        addtowishlist={addToWishlist}
-        addtocompare={addToCompare}
+        // addtowishlist={addToWishlist}
+        // addtocompare={addToCompare}
         addtoast={addToast}
-      />
+      /> */}
     </Fragment>
   );
 };
 
 ProductGridListSingle.propTypes = {
   addToCart: PropTypes.func,
-  addToCompare: PropTypes.func,
-  addToWishlist: PropTypes.func,
-  cartItem: PropTypes.object,
-  compareItem: PropTypes.object,
-  currency: PropTypes.object,
+  // addToCompare: PropTypes.func,
+  // addToWishlist: PropTypes.func,
+  // cartItem: PropTypes.object,
+  // compareItem: PropTypes.object,
+  // currency: PropTypes.object,
   product: PropTypes.object,
   sliderClassName: PropTypes.string,
   spaceBottomClass: PropTypes.string,
-  wishlistItem: PropTypes.object
+  // wishlistItem: PropTypes.object
 };
 
 export default ProductGridListSingle;

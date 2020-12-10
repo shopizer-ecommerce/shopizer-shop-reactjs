@@ -257,7 +257,7 @@ Wishlist.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    cartItems: state.cartData,
+    cartItems: state.cartData.cartItems,
     wishlistItems: state.wishlistData,
     currency: state.currencyData
   };

@@ -1,13 +1,13 @@
 import PropTypes from "prop-types";
 import React, { Fragment, useState, useEffect } from "react";
 import Swiper from "react-id-swiper";
-import { getProductCartQuantity } from "../../helpers/product";
+// import { getProductCartQuantity } from "../../helpers/product";
 import { Modal } from "react-bootstrap";
 import Rating from "./sub-components/ProductRating";
 import { connect } from "react-redux";
 
 function ProductModal(props) {
-  const { product } = props;
+  const { product, cartID, cartData } = props;
   // const { currency } = props;
   // const { discountedprice } = props;
   const { finalproductprice } = props;
@@ -16,8 +16,8 @@ function ProductModal(props) {
   const [gallerySwiper, getGallerySwiper] = useState(null);
   const [thumbnailSwiper, getThumbnailSwiper] = useState(null);
 
-  const [selectedProductColor, setSelectedProductColor] = useState();
-  const [selectedProductSize, setSelectedProductSize] = useState();
+  // const [selectedProductColor, setSelectedProductColor] = useState();
+  // const [selectedProductSize, setSelectedProductSize] = useState();
   // const [productStock, setProductStock] = useState();
   const [quantityCount, setQuantityCount] = useState(1);
 
@@ -158,7 +158,7 @@ function ProductModal(props) {
                       <div className="pro-details-color-content">
                         {product.options.map((option, key) => {
                           return (
-                            option.code == 'COLOR' &&
+                            option.code === 'COLOR' &&
                             option.optionValues.map((value, index) => {
                               return (<label className={`pro-details-color-content--single ${value.code}`} key={index}>
                                 <input
@@ -189,8 +189,8 @@ function ProductModal(props) {
                       <span>Size</span>
                       <div className="pro-details-size-content">
                         {product.options &&
-                          product.options.map(single => {
-                            single.code == 'SIZE' &&
+                          product.options.map((single) => {
+                            single.code === 'SIZE' &&
                               single.optionValues.map((singleSize, key) => {
                                 return (
                                   <label
@@ -198,12 +198,12 @@ function ProductModal(props) {
                                     <input
                                       type="radio"
                                       value={singleSize.name}
-                                      checked={
-                                        singleSize.name ===
-                                          selectedProductSize
-                                          ? "checked"
-                                          : ""
-                                      }
+                                      // checked={
+                                      //   singleSize.name ===
+                                      //     selectedProductSize
+                                      //     ? "checked"
+                                      //     : ""
+                                      // }
                                       onChange={() => {
                                         // setSelectedProductSize(
                                         //   singleSize.name
@@ -256,7 +256,8 @@ function ProductModal(props) {
                             addToCart(
                               product,
                               addToast,
-                              // quantityCount,
+                              cartData,
+                              quantityCount
                               // selectedProductColor,
                               // selectedProductSize
                             )
@@ -319,6 +320,8 @@ ProductModal.propTypes = {
   onHide: PropTypes.func,
   product: PropTypes.object,
   show: PropTypes.bool,
+  cartID: PropTypes.string,
+
   // wishlistitem: PropTypes.object
 };
 

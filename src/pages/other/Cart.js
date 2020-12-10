@@ -368,7 +368,7 @@ Cart.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    cartItems: state.cartData,
+    cartItems: state.cartData.cartItems,
     currency: state.currencyData
   };
 };

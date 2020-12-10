@@ -8,6 +8,7 @@ import { deleteFromCart } from "../../redux/actions/cartActions";
 const IconGroup = ({
   // currency,
   cartData,
+  cartCount,
   // wishlistData,
   // compareData,
   deleteFromCart,
@@ -86,7 +87,7 @@ const IconGroup = ({
         <button className="icon-cart" onClick={e => handleClick(e)}>
           <i className="pe-7s-shopbag" />
           <span className="count-style">
-            {cartData && cartData.length ? cartData.length : 0}
+            {cartCount}
           </span>
         </button>
         {/* menu cart */}
@@ -100,7 +101,7 @@ const IconGroup = ({
         <Link className="icon-cart" to={process.env.PUBLIC_URL + "/cart"}>
           <i className="pe-7s-shopbag" />
           <span className="count-style">
-            {cartData && cartData.length ? cartData.length : 0}
+            {cartCount}
           </span>
         </Link>
       </div>
@@ -117,7 +118,7 @@ const IconGroup = ({
 };
 
 IconGroup.propTypes = {
-  cartData: PropTypes.array,
+  cartData: PropTypes.object,
   // compareData: PropTypes.array,
   // currency: PropTypes.object,
   iconWhiteClass: PropTypes.string,
@@ -128,7 +129,8 @@ IconGroup.propTypes = {
 const mapStateToProps = state => {
   return {
     // currency: state.currencyData,
-    cartData: state.cartData,
+    cartData: state.cartData.cartItems,
+    cartCount: state.cartData.cartCount
     // wishlistData: state.wishlistData,
     // compareData: state.compareData
   };
@@ -136,8 +138,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    deleteFromCart: (item, addToast) => {
-      dispatch(deleteFromCart(item, addToast));
+    deleteFromCart: (cartId, item, addToast) => {
+      dispatch(deleteFromCart(cartId, item, addToast));
     }
   };
 };

@@ -2,7 +2,7 @@ export function setLocalData(key, value) {
   try {
     localStorage.setItem(key, value)
   } catch (error) {
-    console.log("error", error)
+    // console.log("error", error)
   }
 }
 export function getLocalData(key) {
@@ -10,7 +10,7 @@ export function getLocalData(key) {
     let data = localStorage.getItem(key);
     return data
   } catch (error) {
-    console.log("error", error)
+    // console.log("error", error)
   }
 }
 

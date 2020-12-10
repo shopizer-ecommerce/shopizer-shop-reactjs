@@ -42,26 +42,24 @@ const ShopGridStandard = ({ location, products }) => {
     }
 
     useEffect(() => {
-        getProductList()
-        // let sortedProducts = getSortedProducts(products, sortType, sortValue);
-        // const filterSortedProducts = getSortedProducts(sortedProducts, filterSortType, filterSortValue);
-        // sortedProducts = filterSortedProducts;
-        // setSortedProducts(sortedProducts);
-        // setCurrentData(sortedProducts.slice(offset, offset + pageLimit));
+        // getProductList()
+        let sortedProducts = getSortedProducts(products, sortType, sortValue);
+        const filterSortedProducts = getSortedProducts(sortedProducts, filterSortType, filterSortValue);
+        sortedProducts = filterSortedProducts;
+        setSortedProducts(sortedProducts);
+        setProductData(sortedProducts.slice(offset, offset + pageLimit));
     }, [offset, products, sortType, sortValue, filterSortType, filterSortValue]);
-    const getProductList = async () => {
-        // console.log(filter)
-        let action = constant.ACTION.PRODUCTS + 'FEATURED_ITEM';
-        try {
-            let response = await WebService.get(action);
-            // console.log(response);
-            if (response) {
+    // const getProductList = async () => {
+    //     let action = constant.ACTION.PRODUCTS + 'FEATURED_ITEM';
+    //     try {
+    //         let response = await WebService.get(action);
+    //         if (response) {
 
-                // setFeaturedData(response.products)
-            }
-        } catch (error) {
-        }
-    }
+    //             // setFeaturedData(response.products)
+    //         }
+    //     } catch (error) {
+    //     }
+    // }
     return (
         <Fragment>
             <MetaTags>

@@ -118,7 +118,7 @@ HeaderOne.propTypes = {
   headerPositionClass: PropTypes.string,
   layout: PropTypes.string,
   top: PropTypes.string,
-  // setMerchant: PropTypes.func
+  setMerchant: PropTypes.func
 };
 
 const mapStateToProps = state => {

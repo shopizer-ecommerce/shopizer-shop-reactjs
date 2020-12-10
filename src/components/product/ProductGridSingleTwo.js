@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
-import { getDiscountPrice } from "../../helpers/product";
+// import { getDiscountPrice } from "../../helpers/product";
 import ProductModal from "./ProductModal";
 
 const ProductGridSingleTwo = ({
@@ -11,7 +11,8 @@ const ProductGridSingleTwo = ({
   addToCart,
   // addToWishlist,
   // addToCompare,
-  // cartItem,
+  cartID,
+  cartData,
   // wishlistItem,
   // compareItem,
   sliderClassName,
@@ -77,8 +78,8 @@ const ProductGridSingleTwo = ({
               </Link>
               {
                 product.available && product.canBePurchased && product.visible && product.quantity > 0 &&
-                < button
-                  onClick={() => addToCart(product, addToast)}
+                <button
+                  onClick={() => addToCart(product, addToast, cartData, 1)}
                   className="active"
                   // disabled={cartItem !== undefined && cartItem.quantity > 0}
                   title="Add to cart">
@@ -162,6 +163,9 @@ const ProductGridSingleTwo = ({
         // wishlistitem={wishlistItem}
         // compareitem={compareItem}
         addtocart={addToCart}
+
+        cartID={cartID}
+        cartData={cartData}
         // addtowishlist={addToWishlist}
         // addtocompare={addToCompare}
         addtoast={addToast}
@@ -174,7 +178,7 @@ ProductGridSingleTwo.propTypes = {
   addToCart: PropTypes.func,
   // addToCompare: PropTypes.func,
   // addToWishlist: PropTypes.func,
-  // cartItem: PropTypes.object,
+  cartID: PropTypes.string,
   // compareItem: PropTypes.object,
   // currency: PropTypes.object,
   product: PropTypes.object,

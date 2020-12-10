@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
-import { getProducts } from "../../helpers/product";
+// import { getProducts } from "../../helpers/product";
 import ProductGridSingleTwo from "../../components/product/ProductGridSingleTwo";
 import { addToCart } from "../../redux/actions/cartActions";
 // import { addToWishlist } from "../../redux/actions/wishlistActions";
@@ -13,7 +13,8 @@ const ProductGridTwo = ({
   addToCart,
   // addToWishlist,
   // addToCompare,
-  cartItems,
+  cartID,
+  cartData,
   // wishlistItems,
   // compareItems,
   sliderClassName,
@@ -32,9 +33,11 @@ const ProductGridTwo = ({
             product={product}
             // currency={currency}
             addToCart={addToCart}
+            cartID={cartID}
+            cartData={cartData}
             // addToWishlist={addToWishlist}
             // addToCompare={addToCompare}
-            // cartItem={
+            // cartItem={cartItems}
             // cartItems.filter((cartItem) => cartItem.id === product.id)[0]
             // }
             // wishlistItem={
@@ -60,7 +63,7 @@ ProductGridTwo.propTypes = {
   addToCart: PropTypes.func,
   // addToCompare: PropTypes.func,
   // addToWishlist: PropTypes.func,
-  cartItems: PropTypes.array,
+  cartID: PropTypes.string,
   compareItems: PropTypes.array,
   currency: PropTypes.object,
   products: PropTypes.array,
@@ -80,7 +83,8 @@ const mapStateToProps = (state, ownProps) => {
     //   ownProps.limit
     // ),
     // currency: state.currencyData,
-    // cartItems: state.cartData,
+    cartID: state.cartData.cartID,
+    cartData: state.cartData.cartItems
     // wishlistItems: state.wishlistData,
     // compareItems: state.compareData
   };
@@ -91,17 +95,18 @@ const mapDispatchToProps = (dispatch) => {
     addToCart: (
       item,
       addToast,
+      cartData,
       quantityCount,
       // selectedProductColor,
       // selectedProductSize
     ) => {
+      let index = cartData.products.findIndex(order => order.id === item.id);
       dispatch(
         addToCart(
           item,
           addToast,
-          quantityCount,
-          // selectedProductColor,
-          // selectedProductSize
+          cartData.code,
+          index === -1 ? quantityCount : cartData.products[index].quantity + quantityCount
         )
       );
     },
