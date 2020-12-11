@@ -10,8 +10,8 @@ import Breadcrumb from '../../wrappers/breadcrumb/Breadcrumb';
 import ShopSidebar from '../../wrappers/product/ShopSidebar';
 import ShopTopbar from '../../wrappers/product/ShopTopbar';
 import ShopProducts from '../../wrappers/product/ShopProducts';
-import WebService from '../../util/webService';
-import constant from '../../util/constant';
+// import WebService from '../../util/webService';
+// import constant from '../../util/constant';
 
 const ShopGridStandard = ({ location, products }) => {
     const [layout, setLayout] = useState('grid three-column');

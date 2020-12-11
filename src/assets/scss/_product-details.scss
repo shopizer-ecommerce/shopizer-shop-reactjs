@@ -254,6 +254,11 @@
 
       .review-name {
         margin-right: 25px;
+        width: 180px;
+        white-space: nowrap;
+        overflow: hidden !important;
+
+        text-overflow: ellipsis;
 
         h4 {
           font-size: 16px;
@@ -290,6 +295,10 @@
       font-weight: 500;
       line-height: 1;
     }
+  }
+
+  .review-bottom {
+    width: 550px;
   }
 
   .review-bottom p {

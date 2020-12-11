@@ -53,8 +53,8 @@ axios.interceptors.response.use((response) => {
     // // Any status codes that falls outside the range of 2xx cause this function to trigger
     // // Do something with response error
 
-    const { config, response } = error;
-    const originalRequest = config;
+    const { response } = error;
+    // const originalRequest = config;
 
     if (response.status === 401 || response.status === 404) {
 

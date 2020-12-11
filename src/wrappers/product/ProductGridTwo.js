@@ -6,14 +6,13 @@ import ProductGridSingleTwo from "../../components/product/ProductGridSingleTwo"
 import { addToCart } from "../../redux/actions/cartActions";
 // import { addToWishlist } from "../../redux/actions/wishlistActions";
 // import { addToCompare } from "../../redux/actions/compareActions";
-
+import { isValidObject } from "../../util/helper";
 const ProductGridTwo = ({
   products,
   currency,
   addToCart,
   // addToWishlist,
   // addToCompare,
-  cartID,
   cartData,
   // wishlistItems,
   // compareItems,
@@ -33,7 +32,6 @@ const ProductGridTwo = ({
             product={product}
             // currency={currency}
             addToCart={addToCart}
-            cartID={cartID}
             cartData={cartData}
             // addToWishlist={addToWishlist}
             // addToCompare={addToCompare}
@@ -63,7 +61,6 @@ ProductGridTwo.propTypes = {
   addToCart: PropTypes.func,
   // addToCompare: PropTypes.func,
   // addToWishlist: PropTypes.func,
-  cartID: PropTypes.string,
   compareItems: PropTypes.array,
   currency: PropTypes.object,
   products: PropTypes.array,
@@ -83,7 +80,6 @@ const mapStateToProps = (state, ownProps) => {
     //   ownProps.limit
     // ),
     // currency: state.currencyData,
-    cartID: state.cartData.cartID,
     cartData: state.cartData.cartItems
     // wishlistItems: state.wishlistData,
     // compareItems: state.compareData
@@ -100,7 +96,8 @@ const mapDispatchToProps = (dispatch) => {
       // selectedProductColor,
       // selectedProductSize
     ) => {
-      let index = cartData.products.findIndex(order => order.id === item.id);
+      console.log(cartData)
+      let index = isValidObject(cartData) ? cartData.products.findIndex(order => order.id === item.id) : -1;
       dispatch(
         addToCart(
           item,

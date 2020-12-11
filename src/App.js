@@ -7,6 +7,7 @@ import { multilanguage, loadLanguages } from "redux-multilanguage";
 import { connect } from "react-redux";
 import { BreadcrumbsProvider } from "react-breadcrumbs-dynamic";
 
+import Loader from "./components/loader/loader"
 // home pages
 
 const HomeFashionSeven = lazy(() => import("./pages/home/HomeFashionSeven"));
@@ -46,6 +47,7 @@ const App = (props) => {
     <ToastProvider placement="bottom-left">
       <BreadcrumbsProvider>
         <Router>
+          <Loader></Loader>
           <ScrollToTop>
             <Suspense
               fallback={
@@ -78,7 +80,7 @@ const App = (props) => {
 
                 {/* Shop product pages */}
                 <Route
-                  path={"/product/:id"}
+                  path="/product/:id"
                   component={Product}
                 // render={(routeProps) => (
                 //   <Product {...routeProps} key={routeProps.match.params.id} />

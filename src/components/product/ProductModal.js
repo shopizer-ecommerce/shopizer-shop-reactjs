@@ -7,7 +7,7 @@ import Rating from "./sub-components/ProductRating";
 import { connect } from "react-redux";
 
 function ProductModal(props) {
-  const { product, cartID, cartData } = props;
+  const { product, cartData } = props;
   // const { currency } = props;
   // const { discountedprice } = props;
   const { finalproductprice } = props;
@@ -319,8 +319,7 @@ ProductModal.propTypes = {
   finalproductprice: PropTypes.string,
   onHide: PropTypes.func,
   product: PropTypes.object,
-  show: PropTypes.bool,
-  cartID: PropTypes.string,
+  show: PropTypes.bool
 
   // wishlistitem: PropTypes.object
 };

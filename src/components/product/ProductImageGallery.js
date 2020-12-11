@@ -25,7 +25,7 @@ const ProductImageGallery = ({ product }) => {
     getSwiper: getGallerySwiper,
     spaceBetween: 10,
     loopedSlides: 4,
-    loop: true,
+    loop: false,
     effect: "fade"
   };
 
@@ -36,7 +36,7 @@ const ProductImageGallery = ({ product }) => {
     loopedSlides: 4,
     touchRatio: 0.2,
     freeMode: true,
-    loop: true,
+    loop: false,
     slideToClickedSlide: true,
     navigation: {
       nextEl: ".swiper-button-next",
@@ -57,7 +57,7 @@ const ProductImageGallery = ({ product }) => {
   return (
     <Fragment>
       <div className="product-large-image-wrapper">
-        {product.discount || product.new ? (
+        {/* {product.discount || product.new ? (
           <div className="product-img-badges">
             {product.discount ? (
               <span className="pink">-{product.discount}%</span>
@@ -68,16 +68,16 @@ const ProductImageGallery = ({ product }) => {
           </div>
         ) : (
           ""
-        )}
+        )} */}
         <LightgalleryProvider>
           <Swiper {...gallerySwiperParams}>
-            {product.image &&
-              product.image.map((single, key) => {
+            {product.images.length > 0 &&
+              product.images.map((single, key) => {
                 return (
                   <div key={key}>
                     <LightgalleryItem
                       group="any"
-                      src={process.env.PUBLIC_URL + single}
+                      src={single.imageUrl}
                     >
                       <button>
                         <i className="pe-7s-expand1"></i>
@@ -85,7 +85,7 @@ const ProductImageGallery = ({ product }) => {
                     </LightgalleryItem>
                     <div className="single-image">
                       <img
-                        src={process.env.PUBLIC_URL + single}
+                        src={single.imageUrl}
                         className="img-fluid"
                         alt=""
                       />
@@ -98,13 +98,13 @@ const ProductImageGallery = ({ product }) => {
       </div>
       <div className="product-small-image-wrapper mt-15">
         <Swiper {...thumbnailSwiperParams}>
-          {product.image &&
-            product.image.map((single, key) => {
+          {product.images.length > 1 &&
+            product.images.map((single, key) => {
               return (
                 <div key={key}>
                   <div className="single-image">
                     <img
-                      src={process.env.PUBLIC_URL + single}
+                      src={single.imageUrl}
                       className="img-fluid"
                       alt=""
                     />

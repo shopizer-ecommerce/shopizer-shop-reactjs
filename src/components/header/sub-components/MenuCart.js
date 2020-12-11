@@ -2,14 +2,14 @@ import PropTypes from "prop-types";
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
-// import { getDiscountPrice } from "../../../helpers/product";
+import { isValidObject } from "../../../util/helper";
 
 const MenuCart = ({ cartData, deleteFromCart }) => {
   // let cartTotalPrice = 0;
   const { addToast } = useToasts();
   return (
     <div className="shopping-cart-content">
-      {Object.keys(cartData).length > 0 && cartData.products.length > 0 ? (
+      {isValidObject(cartData) && cartData.products.length > 0 ? (
         <Fragment>
           <ul>
             {cartData.products.map((single, key) => {

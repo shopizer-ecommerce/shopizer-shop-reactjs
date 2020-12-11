@@ -28,7 +28,13 @@ export function hasProperty(object, key) {
     return object.hasOwnProperty(key)
   }
 }
-
+export function isValidObject(items) {
+  if (Object.keys(items).length > 0) {
+    return true
+  } else {
+    return false
+  }
+}
 export function getValueFromObject(object, key) {
   if (hasProperty(object, key)) {
     if (isValidValue(object[key])) {

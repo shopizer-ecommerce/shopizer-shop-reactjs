@@ -3,7 +3,15 @@ import React from "react";
 import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
 
-const ProductDescriptionTab = ({ spaceBottomClass, productFullDesc }) => {
+const ProductDescriptionTab = ({ spaceBottomClass, product, review }) => {
+
+  const getRating = (ratingValue) => {
+    let rating = [];
+    for (let i = 0; i <= ratingValue - 1; i++) {
+      rating.push(i);
+    }
+    return rating;
+  }
   return (
     <div className={`description-review-area ${spaceBottomClass}`}>
       <div className="container">
@@ -27,105 +35,72 @@ const ProductDescriptionTab = ({ spaceBottomClass, productFullDesc }) => {
                 <div className="product-anotherinfo-wrapper">
                   <ul>
                     <li>
-                      <span>Weight</span> 400 g
+                      <span>Weight</span> {product.productSpecifications.weight} kg
                     </li>
                     <li>
-                      <span>Dimensions</span>10 x 10 x 15 cm{" "}
+                      <span>Dimensions</span>{product.productSpecifications.length}{" "} x {product.productSpecifications.width}{" "}
+                      x {product.productSpecifications.height} cm{" "}
                     </li>
-                    <li>
+                    {/* <li>
                       <span>Materials</span> 60% cotton, 40% polyester
                     </li>
                     <li>
                       <span>Other Info</span> American heirloom jean shorts pug
                       seitan letterpress
-                    </li>
+                    </li> */}
                   </ul>
                 </div>
               </Tab.Pane>
               <Tab.Pane eventKey="productDescription">
-                {productFullDesc}
+                <p dangerouslySetInnerHTML={{ __html: product.description.description }}></p>
               </Tab.Pane>
               <Tab.Pane eventKey="productReviews">
                 <div className="row">
                   <div className="col-lg-7">
-                    <div className="review-wrapper">
-                      <div className="single-review">
-                        <div className="review-img">
-                          <img
-                            src={
-                              process.env.PUBLIC_URL +
-                              "/assets/img/testimonial/1.jpg"
-                            }
-                            alt=""
-                          />
-                        </div>
-                        <div className="review-content">
-                          <div className="review-top-wrap">
-                            <div className="review-left">
-                              <div className="review-name">
-                                <h4>White Lewis</h4>
-                              </div>
-                              <div className="review-rating">
-                                <i className="fa fa-star" />
-                                <i className="fa fa-star" />
-                                <i className="fa fa-star" />
-                                <i className="fa fa-star" />
-                                <i className="fa fa-star" />
-                              </div>
+                    {
+                      review.map((a, key) => {
+                        return (<div className="review-wrapper" key={key}>
+                          <div className="single-review">
+                            <div className="review-img">
+                              <img src={process.env.PUBLIC_URL + "/assets/img/testimonial/1.jpg"} alt="" />
                             </div>
-                            <div className="review-left">
-                              <button>Reply</button>
-                            </div>
-                          </div>
-                          <div className="review-bottom">
-                            <p>
-                              Vestibulum ante ipsum primis aucibus orci
-                              luctustrices posuere cubilia Curae Suspendisse
-                              viverra ed viverra. Mauris ullarper euismod
-                              vehicula. Phasellus quam nisi, congue id nulla.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="single-review child-review">
-                        <div className="review-img">
-                          <img
-                            src={
-                              process.env.PUBLIC_URL +
-                              "/assets/img/testimonial/2.jpg"
-                            }
-                            alt=""
-                          />
-                        </div>
-                        <div className="review-content">
-                          <div className="review-top-wrap">
-                            <div className="review-left">
-                              <div className="review-name">
-                                <h4>White Lewis</h4>
+                            <div className="review-content">
+                              <div className="review-top-wrap">
+                                <div className="review-left">
+                                  <div className="review-name">
+                                    <h4>{a.customer.firstName} {a.customer.lastName}</h4>
+                                  </div>
+                                  <div className="review-rating">
+                                    {
+                                      getRating(a.rating)
+                                        .map((rate, key) => {
+                                          return (<i className="fa fa-star" key={key} />)
+                                        })
+                                    }
+                                    {/* <Rating ratingValue={a.rating} /> */}
+                                    {/* <i className="fa fa-star" />
+                                    <i className="fa fa-star" />
+                                    <i className="fa fa-star" />
+                                    <i className="fa fa-star" />
+                                    <i className="fa fa-star" /> */}
+                                  </div>
+                                </div>
+                                <div className="review-left">
+                                  <button>{a.date}</button>
+                                </div>
                               </div>
-                              <div className="review-rating">
-                                <i className="fa fa-star" />
-                                <i className="fa fa-star" />
-                                <i className="fa fa-star" />
-                                <i className="fa fa-star" />
-                                <i className="fa fa-star" />
+                              <div className="review-bottom">
+                                <p>
+                                  {a.description}
+                                </p>
                               </div>
                             </div>
-                            <div className="review-left">
-                              <button>Reply</button>
-                            </div>
-                          </div>
-                          <div className="review-bottom">
-                            <p>
-                              Vestibulum ante ipsum primis aucibus orci
-                              luctustrices posuere cubilia Curae Suspendisse
-                              viverra ed viverra. Mauris ullarper euismod
-                              vehicula. Phasellus quam nisi, congue id nulla.
-                            </p>
                           </div>
                         </div>
-                      </div>
-                    </div>
+                        )
+                      })
+
+                    }
                   </div>
                   <div className="col-lg-5">
                     <div className="ratting-form-wrapper pl-50">
@@ -179,7 +154,8 @@ const ProductDescriptionTab = ({ spaceBottomClass, productFullDesc }) => {
 };
 
 ProductDescriptionTab.propTypes = {
-  productFullDesc: PropTypes.string,
+  product: PropTypes.object,
+  review: PropTypes.array,
   spaceBottomClass: PropTypes.string
 };
 

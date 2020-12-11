@@ -7,8 +7,11 @@ import SectionTitleThree from "../../components/section-title/SectionTitleThree"
 import ProductGridTwo from "./ProductGridTwo";
 import WebService from '../../util/webService';
 import constant from '../../util/constant';
-
+import { setLoader } from "../../redux/actions/loaderActions";
+import { multilanguage } from "redux-multilanguage";
+import { connect } from "react-redux";
 const TabProductNine = ({
+  setLoader,
   spaceTopClass,
   spaceBottomClass,
   category,
@@ -22,6 +25,7 @@ const TabProductNine = ({
 
   }, []);
   const getProductList = async () => {
+    setLoader(true)
     let action = constant.ACTION.PRODUCT_GROUP + 'FEATURED_ITEM';
     try {
       let response = await WebService.get(action);
@@ -42,8 +46,10 @@ const TabProductNine = ({
         });
         // setFeaturedData(response.products)
         setCategoryData(category)
+        setLoader(false)
       }
     } catch (error) {
+      setLoader(false)
     }
   }
   return (
@@ -96,7 +102,22 @@ TabProductNine.propTypes = {
   containerClass: PropTypes.string,
   extraClass: PropTypes.string,
   spaceBottomClass: PropTypes.string,
-  spaceTopClass: PropTypes.string
+  spaceTopClass: PropTypes.string,
+  setLoader: PropTypes.func
 };
 
-export default TabProductNine;
+
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setLoader: (value) => {
+      dispatch(setLoader(value));
+    }
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(multilanguage(TabProductNine));
+// export default TabProductNine;

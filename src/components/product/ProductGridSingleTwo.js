@@ -11,7 +11,6 @@ const ProductGridSingleTwo = ({
   addToCart,
   // addToWishlist,
   // addToCompare,
-  cartID,
   cartData,
   // wishlistItem,
   // compareItem,
@@ -73,7 +72,7 @@ const ProductGridSingleTwo = ({
                 </Link>
               ) : product.stock && product.stock > 0 ? ( */}
               <Link
-                to={`${process.env.PUBLIC_URL}/product/${product.id}`} title="Select options">
+                to={`product/${product.id}`} title="Select options">
                 <i className="fa fa-cog"></i>
               </Link>
               {
@@ -164,7 +163,6 @@ const ProductGridSingleTwo = ({
         // compareitem={compareItem}
         addtocart={addToCart}
 
-        cartID={cartID}
         cartData={cartData}
         // addtowishlist={addToWishlist}
         // addtocompare={addToCompare}
@@ -178,7 +176,6 @@ ProductGridSingleTwo.propTypes = {
   addToCart: PropTypes.func,
   // addToCompare: PropTypes.func,
   // addToWishlist: PropTypes.func,
-  cartID: PropTypes.string,
   // compareItem: PropTypes.object,
   // currency: PropTypes.object,
   product: PropTypes.object,

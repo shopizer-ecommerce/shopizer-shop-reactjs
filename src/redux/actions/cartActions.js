@@ -1,5 +1,6 @@
 import WebService from '../../util/webService';
 import constant from '../../util/constant';
+import { setLoader } from "../actions/loaderActions";
 export const GET_SHOPIZER_CART_ID = "GET_SHOPIZER_CART_ID";
 export const GET_CART = "GET_CART";
 export const ADD_TO_CART = "ADD_TO_CART";
@@ -11,7 +12,7 @@ export const DELETE_ALL_FROM_CART = "DELETE_ALL_FROM_CART";
 export const addToCart = (item, addToast, cartId, quantityCount) => {
   return async dispatch => {
 
-
+    dispatch(setLoader(true))
     try {
       let action;
       let param;
@@ -28,12 +29,15 @@ export const addToCart = (item, addToast, cartId, quantityCount) => {
 
       if (response) {
         dispatch(setShopizerCartID(response.code))
+        dispatch(setLoader(false))
         if (addToast) {
           addToast("Added To Cart", { appearance: "success", autoDismiss: true });
         }
         dispatch(getCart(response.code));
+
       }
     } catch (error) {
+      dispatch(setLoader(false))
     }
 
   };
@@ -77,6 +81,7 @@ export const decreaseQuantity = (item, addToast) => {
 //delete from cart
 export const deleteFromCart = (cartID, item, addToast) => {
   return async dispatch => {
+    dispatch(setLoader(true))
     try {
       let action = constant.ACTION.CART + cartID + '/' + constant.ACTION.PRODUCT + item.id;
       let response = await WebService.delete(action);
@@ -84,12 +89,14 @@ export const deleteFromCart = (cartID, item, addToast) => {
         type: DELETE_FROM_CART,
         payload: item
       });
+      dispatch(setLoader(false))
       if (addToast) {
         addToast("Removed From Cart", { appearance: "error", autoDismiss: true });
       }
 
       // dispatch(getCart(cartID));
     } catch (error) {
+      dispatch(setLoader(false))
     }
   };
 };
