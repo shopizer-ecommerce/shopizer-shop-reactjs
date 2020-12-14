@@ -9,21 +9,24 @@ export const DELETE_FROM_CART = "DELETE_FROM_CART";
 export const DELETE_ALL_FROM_CART = "DELETE_ALL_FROM_CART";
 
 //add to cart
-export const addToCart = (item, addToast, cartId, quantityCount) => {
+export const addToCart = (item, addToast, cartId, quantityCount, defaultStore, selectedProductColor) => {
   return async dispatch => {
-
+    console.log(selectedProductColor)
     dispatch(setLoader(true))
     try {
       let action;
       let param;
       let response;
-      if (cartId) {
-        action = constant.ACTION.CART + cartId;
+      if (selectedProductColor !== undefined) {
+        param = { "attributes": [{ "id": selectedProductColor }], "product": item.id, "quantity": quantityCount }
+      } else {
         param = { "product": item.id, "quantity": quantityCount }
+      }
+      if (cartId) {
+        action = constant.ACTION.CART + cartId + '?store=' + defaultStore;
         response = await WebService.put(action, param);
       } else {
-        action = constant.ACTION.CART
-        param = { "product": item.id, "quantity": quantityCount }
+        action = constant.ACTION.CART + '?store=' + defaultStore
         response = await WebService.post(action, param);
       }
 
@@ -79,11 +82,11 @@ export const decreaseQuantity = (item, addToast) => {
   };
 };
 //delete from cart
-export const deleteFromCart = (cartID, item, addToast) => {
+export const deleteFromCart = (cartID, item, defaultStore, addToast) => {
   return async dispatch => {
     dispatch(setLoader(true))
     try {
-      let action = constant.ACTION.CART + cartID + '/' + constant.ACTION.PRODUCT + item.id;
+      let action = constant.ACTION.CART + cartID + '/' + constant.ACTION.PRODUCT + item.id + '?store=' + defaultStore;
       let response = await WebService.delete(action);
       dispatch({
         type: DELETE_FROM_CART,

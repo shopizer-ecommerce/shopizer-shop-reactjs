@@ -16,7 +16,8 @@ const TabProductNine = ({
   spaceBottomClass,
   category,
   containerClass,
-  extraClass
+  extraClass,
+  defaultStore
 }) => {
   // const [featuredData, setFeaturedData] = useState([]);
   const [categoryData, setCategoryData] = useState([]);
@@ -26,7 +27,7 @@ const TabProductNine = ({
   }, []);
   const getProductList = async () => {
     setLoader(true)
-    let action = constant.ACTION.PRODUCT_GROUP + 'FEATURED_ITEM';
+    let action = constant.ACTION.PRODUCT_GROUP + 'FEATURED_ITEM?store=' + defaultStore;
     try {
       let response = await WebService.get(action);
       // console.log(response);
@@ -107,7 +108,11 @@ TabProductNine.propTypes = {
 };
 
 
-
+const mapStateToProps = state => {
+  return {
+    defaultStore: state.merchantData.defaultStore
+  };
+};
 const mapDispatchToProps = dispatch => {
   return {
     setLoader: (value) => {
@@ -117,7 +122,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(multilanguage(TabProductNine));
 // export default TabProductNine;

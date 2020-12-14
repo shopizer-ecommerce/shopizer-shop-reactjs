@@ -8,6 +8,9 @@ import { addToCart } from "../../redux/actions/cartActions";
 // import { addToWishlist } from "../../redux/actions/wishlistActions";
 // import { addToCompare } from "../../redux/actions/compareActions";
 import Rating from "./sub-components/ProductRating";
+import WebService from '../../util/webService';
+import constant from '../../util/constant';
+import { setLoader } from "../../redux/actions/loaderActions";
 
 const ProductDescriptionInfo = ({
   product,
@@ -20,12 +23,14 @@ const ProductDescriptionInfo = ({
   // compareItem,
   addToast,
   addToCart,
+  setLoader,
+  productID,
+  defaultStore
   // addToWishlist,
   // addToCompare
 }) => {
-  // const [selectedProductColor, setSelectedProductColor] = useState(
-  //   product.variation ? product.variation[0].color : ""
-  // );
+  const [selectedProductColor, setSelectedProductColor] = useState("")
+
   // const [selectedProductSize, setSelectedProductSize] = useState(
   //   product.variation ? product.variation[0].size[0].name : ""
   // );
@@ -34,6 +39,24 @@ const ProductDescriptionInfo = ({
   // );
   const [quantityCount, setQuantityCount] = useState(1);
 
+  const onChangeOptions = async (value) => {
+    console.log(value)
+
+    setLoader(true)
+    let action = constant.ACTION.PRODUCTS + productID + '/' + constant.ACTION.PRICE;
+    let param = { "options": [{ id: value.id }] }
+    try {
+      let response = await WebService.post(action, param);
+      // console.log(response);
+      if (response) {
+        // setProductDetails(response)
+        setLoader(false)
+      }
+    } catch (error) {
+      setLoader(false)
+    }
+    setSelectedProductColor(value.id);
+  }
   // const productCartQty = getProductCartQuantity(
   //   cartItems,
   //   product,
@@ -71,69 +94,86 @@ const ProductDescriptionInfo = ({
 
       {product.options ? (
         <div className="pro-details-size-color">
-          <div className="pro-details-color-wrap">
-            <span>Color</span>
-            <div className="pro-details-color-content">
-              {product.options.map((option, key) => {
+          {
+            product.options.map((option, key) => {
 
-                return (
-                  option.code === 'COLOR' &&
-                  option.optionValues.map((value, index) => {
-                    return (
-                      <label className={`pro-details-color-content--single ${value.code}`} key={index} >
-                        <input
-                          type="radio"
-                          value={value.id}
-                          name="product-color"
-                          checked={value.defaultValue}
-                          onChange={() => {
-                            // setSelectedProductColor(single.color);
-                            // setSelectedProductSize(single.size[0].name);
-                            // setProductStock(single.size[0].stock);
-                            // setQuantityCount(1);
-                          }}
-                        />
-                        <span className="checkmark"></span>
-                      </label>
-                    );
-                  })
-                )
-              })}
-            </div>
-          </div>
-          <div className="pro-details-size">
-            <span>Size</span>
-            <div className="pro-details-size-content">
-              {product.options &&
-                product.options.map(single => {
-                  single.code === 'SIZE' &&
-                    single.optionValues.map((singleSize, key) => {
-                      return (
-                        <label
-                          className={`pro-details-size-content--single`}
-                          key={key}
-                        >
-                          <input
-                            type="radio"
-                            value={singleSize.name}
-                          // checked={
-                          //   singleSize.name === selectedProductSize
-                          //     ? "checked"
-                          //     : ""
-                          // }
-                          // onChange={() => {
-                          //   setSelectedProductSize(singleSize.name);
-                          //   setProductStock(singleSize.stock);
-                          //   setQuantityCount(1);
-                          // }}
-                          />
-                          <span className="size-name">{singleSize.name}</span>
-                        </label>
-                      );
-                    })
-                })}
-            </div>
-          </div>
+              return (
+                // option.code === 'COLOR' &&
+                <div className="pro-details-color-wrap" key={key}>
+                  <span>{option.name}</span>
+                  <div className="pro-details-color-content" style={{ display: 'flex' }}>
+                    {
+
+                      option.optionValues.map((value, index) => {
+                        return (
+                          <div style={{ flexDirection: 'column', display: 'flex', alignItems: 'center', marginRight: 15 }} key={index}>
+                            <img src={value.image} alt="product-option" />
+                            <label className={`pro-details-color-content--single ${value.code}`} key={index} >
+
+                              <input
+                                type={option.type}
+                                value={value.id}
+                                name={option.name}
+                                checked={selectedProductColor == '' ? value.defaultValue : value.id === selectedProductColor}
+                                onChange={() => onChangeOptions(value)}
+                              //    {
+                              //   setSelectedProductColor(value.id);
+                              //   // setSelectedProductSize(single.size[0].name);
+                              //   // setProductStock(single.size[0].stock);
+                              //   // setQuantityCount(1);
+                              // }}
+                              />
+                              <span className="checkmark"></span>
+                            </label>
+                          </div>
+                        );
+                      })
+                      // )
+                    }
+
+                  </div>
+                </div>
+              )
+            })
+          }
+          {/* {
+
+            product.options.map((single) => {
+              return (
+                single.code === 'SIZE' &&
+                <div className="pro-details-size">
+                  <span>Size</span>
+                  <div className="pro-details-size-content">
+                    {
+                      single.optionValues.map((singleSize, key) => {
+                        return (
+                          <label
+                            className={`pro-details-size-content--single`}
+                            key={key}
+                          >
+                            <input
+                              type="radio"
+                              value={singleSize.name}
+                            // checked={
+                            //   singleSize.name === selectedProductSize
+                            //     ? "checked"
+                            //     : ""
+                            // }
+                            // onChange={() => {
+                            //   setSelectedProductSize(singleSize.name);
+                            //   setProductStock(singleSize.stock);
+                            //   setQuantityCount(1);
+                            // }}
+                            />
+                            <span className="size-name">{singleSize.name}</span>
+                          </label>
+                        );
+
+                      })}
+                  </div>
+                </div>
+              )
+            })} */}
         </div>
       ) : (
           ""
@@ -171,7 +211,9 @@ const ProductDescriptionInfo = ({
                     product,
                     addToast,
                     cartItems,
-                    quantityCount
+                    quantityCount,
+                    defaultStore,
+                    selectedProductColor
                   )
                 }>
                 {" "}
@@ -307,17 +349,25 @@ ProductDescriptionInfo.propTypes = {
   // wishlistItem: PropTypes.object
 };
 const mapStateToProps = (state, ownProps) => {
+  const prodID = ownProps.product.id;
   return {
-    cartItems: state.cartData.cartItems
+    productID: prodID,
+    cartItems: state.cartData.cartItems,
+    defaultStore: state.merchantData.defaultStore
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
+    setLoader: (value) => {
+      dispatch(setLoader(value));
+    },
     addToCart: (
       item,
       addToast,
       cartItem,
       quantityCount,
+      defaultStore,
+      selectedProductColor
     ) => {
       // console.log(isValidObject(cartItem));
 
@@ -327,7 +377,9 @@ const mapDispatchToProps = dispatch => {
           item,
           addToast,
           cartItem.code,
-          index === -1 ? quantityCount : cartItem.products[index].quantity + quantityCount
+          index === -1 ? quantityCount : cartItem.products[index].quantity + quantityCount,
+          defaultStore,
+          selectedProductColor
         )
       );
     },

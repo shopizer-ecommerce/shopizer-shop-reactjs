@@ -92,12 +92,12 @@ const mapDispatchToProps = dispatch => {
         )
       );
     },
-    addToWishlist: (item, addToast) => {
-      dispatch(addToWishlist(item, addToast));
-    },
-    addToCompare: (item, addToast) => {
-      dispatch(addToCompare(item, addToast));
-    }
+    // addToWishlist: (item, addToast) => {
+    //   dispatch(addToWishlist(item, addToast));
+    // },
+    // addToCompare: (item, addToast) => {
+    //   dispatch(addToCompare(item, addToast));
+    // }
   };
 };
 

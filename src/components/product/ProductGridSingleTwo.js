@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
+import { connect } from "react-redux";
 // import { getDiscountPrice } from "../../helpers/product";
 import ProductModal from "./ProductModal";
 
@@ -17,7 +18,8 @@ const ProductGridSingleTwo = ({
   sliderClassName,
   spaceBottomClass,
   colorClass,
-  titlePriceClass
+  titlePriceClass,
+  defaultStore
 }) => {
   const [modalShow, setModalShow] = useState(false);
   const { addToast } = useToasts();
@@ -78,7 +80,7 @@ const ProductGridSingleTwo = ({
               {
                 product.available && product.canBePurchased && product.visible && product.quantity > 0 &&
                 <button
-                  onClick={() => addToCart(product, addToast, cartData, 1)}
+                  onClick={() => addToCart(product, addToast, cartData, 1, defaultStore)}
                   className="active"
                   // disabled={cartItem !== undefined && cartItem.quantity > 0}
                   title="Add to cart">
@@ -154,6 +156,7 @@ const ProductGridSingleTwo = ({
         show={modalShow}
         onHide={() => setModalShow(false)}
         product={product}
+        defaultStore={defaultStore}
         // currency={currency}
         // discountedprice={discountedPrice}
         finalproductprice={finalProductPrice}
@@ -186,4 +189,10 @@ ProductGridSingleTwo.propTypes = {
   // wishlistItem: PropTypes.object
 };
 
-export default ProductGridSingleTwo;
+const mapStateToProps = state => {
+  return {
+    defaultStore: state.merchantData.defaultStore
+  };
+};
+
+export default connect(mapStateToProps, null)(ProductGridSingleTwo);

@@ -3,8 +3,8 @@ import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 import { isValidObject } from "../../../util/helper";
-
-const MenuCart = ({ cartData, deleteFromCart }) => {
+import { connect } from "react-redux";
+const MenuCart = ({ cartData, deleteFromCart, defaultStore }) => {
   // let cartTotalPrice = 0;
   const { addToast } = useToasts();
   return (
@@ -19,7 +19,7 @@ const MenuCart = ({ cartData, deleteFromCart }) => {
               return (
                 <li className="single-shopping-cart" key={key}>
                   <div className="shopping-cart-img">
-                    <Link to={process.env.PUBLIC_URL + "/product/" + single.id}>
+                    <Link to={"/product/" + single.id}>
                       <img alt="" src={single.image.imageUrl} className="img-fluid" />
                     </Link>
                   </div>
@@ -44,7 +44,7 @@ const MenuCart = ({ cartData, deleteFromCart }) => {
                       )} */}
                   </div>
                   <div className="shopping-cart-delete">
-                    <button onClick={() => deleteFromCart(cartData.code, single, addToast)}>
+                    <button onClick={() => deleteFromCart(cartData.code, single, defaultStore, addToast)}>
                       <i className="fa fa-times-circle" />
                     </button>
                   </div>
@@ -61,12 +61,12 @@ const MenuCart = ({ cartData, deleteFromCart }) => {
             </h4>
           </div>
           <div className="shopping-cart-btn btn-hover text-center">
-            <Link className="default-btn" to={process.env.PUBLIC_URL + "/cart"}>
+            <Link className="default-btn" to="/cart">
               view cart
             </Link>
             <Link
               className="default-btn"
-              to={process.env.PUBLIC_URL + "/checkout"}
+              to="/checkout"
             >
               checkout
             </Link>
@@ -85,4 +85,12 @@ MenuCart.propTypes = {
   deleteFromCart: PropTypes.func
 };
 
-export default MenuCart;
+const mapStateToProps = state => {
+  return {
+    defaultStore: state.merchantData.defaultStore
+  };
+};
+
+
+export default connect(mapStateToProps, null)(MenuCart);
+// export default MenuCart;

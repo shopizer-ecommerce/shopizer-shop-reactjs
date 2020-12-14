@@ -1,7 +1,9 @@
 import { SET_MERCHANT } from "../actions/storeAction";
+import { SET_STORE } from "../actions/storeAction";
 
 const initState = {
-    merchant: ''
+    merchant: '',
+    defaultStore: ''
 };
 
 const storeReducer = (state = initState, action) => {
@@ -9,6 +11,12 @@ const storeReducer = (state = initState, action) => {
         return {
             ...state,
             merchant: action.payload
+        };
+    }
+    if (action.type === SET_STORE) {
+        return {
+            ...state,
+            defaultStore: action.payload
         };
     }
 

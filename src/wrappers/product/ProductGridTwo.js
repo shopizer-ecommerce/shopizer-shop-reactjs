@@ -93,6 +93,7 @@ const mapDispatchToProps = (dispatch) => {
       addToast,
       cartData,
       quantityCount,
+      selectedProductColor
       // selectedProductColor,
       // selectedProductSize
     ) => {
@@ -103,7 +104,8 @@ const mapDispatchToProps = (dispatch) => {
           item,
           addToast,
           cartData.code,
-          index === -1 ? quantityCount : cartData.products[index].quantity + quantityCount
+          index === -1 ? quantityCount : cartData.products[index].quantity + quantityCount,
+          selectedProductColor
         )
       );
     },

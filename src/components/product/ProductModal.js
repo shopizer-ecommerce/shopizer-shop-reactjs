@@ -7,7 +7,7 @@ import Rating from "./sub-components/ProductRating";
 import { connect } from "react-redux";
 
 function ProductModal(props) {
-  const { product, cartData } = props;
+  const { product, cartData, defaultStore } = props;
   // const { currency } = props;
   // const { discountedprice } = props;
   const { finalproductprice } = props;
@@ -15,9 +15,7 @@ function ProductModal(props) {
 
   const [gallerySwiper, getGallerySwiper] = useState(null);
   const [thumbnailSwiper, getThumbnailSwiper] = useState(null);
-
-  // const [selectedProductColor, setSelectedProductColor] = useState();
-  // const [selectedProductSize, setSelectedProductSize] = useState();
+  const [selectedProductColor, setSelectedProductColor] = useState("");
   // const [productStock, setProductStock] = useState();
   const [quantityCount, setQuantityCount] = useState(1);
 
@@ -153,74 +151,47 @@ function ProductModal(props) {
 
                 {product.options ? (
                   <div className="pro-details-size-color">
-                    <div className="pro-details-color-wrap">
-                      <span>Color</span>
-                      <div className="pro-details-color-content">
-                        {product.options.map((option, key) => {
-                          return (
-                            option.code === 'COLOR' &&
-                            option.optionValues.map((value, index) => {
-                              return (<label className={`pro-details-color-content--single ${value.code}`} key={index}>
-                                <input
-                                  type="radio"
-                                  value={value.id}
-                                  name="product-color"
-                                  checked={value.defaultValue}
-                                  onChange={() => {
-                                    // setSelectedProductColor(value.color);
-                                    // setSelectedProductSize(value.size[0].name);
-                                    // setProductStock(value.size[0].stock);
-                                    // setQuantityCount(1);
-                                  }}
-                                />
+                    {
+                      product.options.map((option, key) => {
 
-                                <span className="checkmark"></span>
-                              </label>
-                              )
-                            })
+                        return (
+                          // option.code === 'COLOR' &&
+                          <div className="pro-details-color-wrap" key={key}>
+                            <span>{option.name}</span>
+                            <div className="pro-details-color-content" style={{ display: 'flex' }}>
+                              {
 
-                          );
+                                option.optionValues.map((value, index) => {
+                                  return (
+                                    <div style={{ flexDirection: 'column', display: 'flex', alignItems: 'center', marginRight: 15 }} key={index}>
+                                      <img src={value.image} alt="product-option" />
+                                      <label className={`pro-details-color-content--single ${value.code}`} key={index} >
+                                        <input
+                                          type={option.type}
+                                          value={value.id}
+                                          name={option.name}
+                                          checked={selectedProductColor == '' ? value.defaultValue : value.id === selectedProductColor}
+                                          onChange={() => {
+                                            setSelectedProductColor(value.id);
+                                            // setSelectedProductSize(single.size[0].name);
+                                            // setProductStock(single.size[0].stock);
+                                            // setQuantityCount(1);
+                                          }}
+                                        />
+                                        <span className="checkmark"></span>
+                                      </label>
+                                    </div>
+                                  );
+                                })
+                                // )
+                              }
 
+                            </div>
+                          </div>
+                        )
+                      })
+                    }
 
-                        })}
-                      </div>
-                    </div>
-                    <div className="pro-details-size">
-                      <span>Size</span>
-                      <div className="pro-details-size-content">
-                        {product.options &&
-                          product.options.map((single) => {
-                            single.code === 'SIZE' &&
-                              single.optionValues.map((singleSize, key) => {
-                                return (
-                                  <label
-                                    className={`pro-details-size-content--single`} key={key} >
-                                    <input
-                                      type="radio"
-                                      value={singleSize.name}
-                                      // checked={
-                                      //   singleSize.name ===
-                                      //     selectedProductSize
-                                      //     ? "checked"
-                                      //     : ""
-                                      // }
-                                      onChange={() => {
-                                        // setSelectedProductSize(
-                                        //   singleSize.name
-                                        // );
-                                        // setProductStock(singleSize.stock);
-                                        // setQuantityCount(1);
-                                      }}
-                                    />
-                                    <span className="size-name">
-                                      {singleSize.name}
-                                    </span>
-                                  </label>
-                                );
-                              })
-                          })}
-                      </div>
-                    </div>
                   </div>
                 ) : (
                     ""
@@ -257,7 +228,9 @@ function ProductModal(props) {
                               product,
                               addToast,
                               cartData,
-                              quantityCount
+                              quantityCount,
+                              defaultStore,
+                              selectedProductColor
                               // selectedProductColor,
                               // selectedProductSize
                             )

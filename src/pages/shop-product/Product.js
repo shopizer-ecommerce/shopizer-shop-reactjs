@@ -11,7 +11,7 @@ import ProductImageDescription from "../../wrappers/product/ProductImageDescript
 import WebService from '../../util/webService';
 import constant from '../../util/constant';
 import { setLoader } from "../../redux/actions/loaderActions";
-const Product = ({ location, productID, currentLanguageCode, setLoader }) => {
+const Product = ({ location, productID, currentLanguageCode, setLoader, defaultStore }) => {
   const { pathname } = location;
   const [productDetails, setProductDetails] = useState();
   const [productReview, setProductReview] = useState([]);
@@ -23,7 +23,7 @@ const Product = ({ location, productID, currentLanguageCode, setLoader }) => {
 
   const getProductDetails = async () => {
     setLoader(true)
-    let action = constant.ACTION.PRODUCTS + productID + '?lang=' + currentLanguageCode;
+    let action = constant.ACTION.PRODUCTS + productID + '?lang=' + currentLanguageCode + '&store=' + defaultStore;
     try {
       let response = await WebService.get(action);
       // console.log(response);
@@ -36,7 +36,7 @@ const Product = ({ location, productID, currentLanguageCode, setLoader }) => {
     }
   }
   const getReview = async () => {
-    let action = constant.ACTION.PRODUCTS + productID + '/reviews';
+    let action = constant.ACTION.PRODUCTS + productID + '/reviews?store=' + defaultStore;
     try {
       let response = await WebService.get(action);
       // console.log(response);
@@ -108,7 +108,8 @@ const mapStateToProps = (state, ownProps) => {
   const itemId = ownProps.match.params.id;
   return {
     productID: itemId,
-    currentLanguageCode: state.multilanguage.currentLanguageCode
+    currentLanguageCode: state.multilanguage.currentLanguageCode,
+    defaultStore: state.merchantData.defaultStore
   };
 };
 const mapDispatchToProps = dispatch => {

@@ -8,7 +8,8 @@ const Constant = {
         PRODUCT_GROUP: 'products/group/',
         PRODUCT: 'product/',
         PRODUCTS: 'products/',
-        CART: 'cart/'
+        CART: 'cart/',
+        PRICE: 'price/'
     }
 }
 

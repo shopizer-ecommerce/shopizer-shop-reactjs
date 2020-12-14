@@ -138,8 +138,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    deleteFromCart: (cartId, item, addToast) => {
-      dispatch(deleteFromCart(cartId, item, addToast));
+    deleteFromCart: (cartId, item, defaultStore, addToast) => {
+      dispatch(deleteFromCart(cartId, item, defaultStore, addToast));
     }
   };
 };

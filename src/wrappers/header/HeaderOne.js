@@ -19,7 +19,8 @@ const HeaderOne = ({
   borderStyle,
   headerPaddingClass,
   headerPositionClass,
-  headerBgClass
+  headerBgClass,
+  defaultStore
 }) => {
   const [scroll, setScroll] = useState(0);
   const [headerTop, setHeaderTop] = useState(0);
@@ -40,7 +41,7 @@ const HeaderOne = ({
   }, []);
 
   const getCategoryHierarchy = async () => {
-    let action = constant.ACTION.CATEGORY + '?count=20&page=0';
+    let action = constant.ACTION.CATEGORY + '?count=20&page=0&store=' + defaultStore;
     try {
       let response = await WebService.get(action);
       if (response) {
@@ -52,7 +53,7 @@ const HeaderOne = ({
 
   }
   const getContent = async () => {
-    let action = constant.ACTION.CONTENT + constant.ACTION.PAGES;
+    let action = constant.ACTION.CONTENT + constant.ACTION.PAGES + '?&store=' + defaultStore;
     try {
       let response = await WebService.get(action);
       if (response) {
@@ -123,7 +124,8 @@ HeaderOne.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    merchant: state.merchantData.merchant
+    merchant: state.merchantData.merchant,
+    defaultStore: state.merchantData.defaultStore
   };
 };
 
