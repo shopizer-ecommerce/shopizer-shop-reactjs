@@ -8,7 +8,7 @@ export const setMerchant = () => {
         let action = constant.ACTION.STORE + process.env.REACT_APP_MERCHANT;
         try {
             let response = await WebService.get(action);
-            console.log(response);
+            // console.log(response);
             // if (response) {
             dispatch({
                 type: SET_MERCHANT,

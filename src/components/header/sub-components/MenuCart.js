@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 import { isValidObject } from "../../../util/helper";
 import { connect } from "react-redux";
-const MenuCart = ({ cartData, deleteFromCart, defaultStore }) => {
+import { multilanguage } from "redux-multilanguage";
+const MenuCart = ({ cartData, deleteFromCart, defaultStore, strings }) => {
   // let cartTotalPrice = 0;
   const { addToast } = useToasts();
   return (
@@ -62,7 +63,7 @@ const MenuCart = ({ cartData, deleteFromCart, defaultStore }) => {
           </div>
           <div className="shopping-cart-btn btn-hover text-center">
             <Link className="default-btn" to="/cart">
-              view cart
+              {strings["View Cart"]}
             </Link>
             <Link
               className="default-btn"
@@ -82,7 +83,8 @@ const MenuCart = ({ cartData, deleteFromCart, defaultStore }) => {
 MenuCart.propTypes = {
   cartData: PropTypes.object,
   // currency: PropTypes.object,
-  deleteFromCart: PropTypes.func
+  deleteFromCart: PropTypes.func,
+  strings: PropTypes.object
 };
 
 const mapStateToProps = state => {
@@ -92,5 +94,5 @@ const mapStateToProps = state => {
 };
 
 
-export default connect(mapStateToProps, null)(MenuCart);
+export default connect(mapStateToProps, null)(multilanguage(MenuCart));
 // export default MenuCart;

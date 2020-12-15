@@ -9,7 +9,7 @@ import { getDiscountPrice } from "../../helpers/product";
 import { isValidObject } from "../../util/helper";
 import {
   addToCart,
-  decreaseQuantity,
+  // decreaseQuantity,
   deleteFromCart,
   cartItemStock,
   deleteAllFromCart
@@ -20,16 +20,20 @@ import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 const Cart = ({
   location,
   cartItems,
+  defaultStore,
   decreaseQuantity,
-  addToCart,
+  increaseQuantity,
+  // addToCart,
   deleteFromCart,
-  deleteAllFromCart
+  deleteAllFromCart,
+
 }) => {
   const [quantityCount] = useState(1);
   const { addToast } = useToasts();
   const { pathname } = location;
-  let cartTotalPrice = 0;
-
+  const cartTotalPrice = cartItems.displaySubTotal;
+  const grandTotalPrice = cartItems.displaySubTotal;
+  console.log(cartItems);
   return (
     <Fragment>
       <MetaTags>
@@ -40,7 +44,7 @@ const Cart = ({
         /> */}
       </MetaTags>
 
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
+      <BreadcrumbsItem to="/">Home</BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
         Cart
       </BreadcrumbsItem>
@@ -74,22 +78,7 @@ const Cart = ({
 
                             const finalProductPrice = cartItem.originalPrice;
                             const finalDiscountedPrice = cartItem.finalPrice;
-                            // const discountedPrice = getDiscountPrice(
-                            //   cartItem.price,
-                            //   cartItem.discount
-                            // );
-                            // const finalProductPrice = (
-                            //   cartItem.price * currency.currencyRate
-                            // ).toFixed(2);
-                            // const finalDiscountedPrice = (
-                            //   discountedPrice * currency.currencyRate
-                            // ).toFixed(2);
 
-                            // discountedPrice != null
-                            //   ? (cartTotalPrice +=
-                            //     finalDiscountedPrice * cartItem.quantity)
-                            //   : (cartTotalPrice +=
-                            //     finalProductPrice * cartItem.quantity);
                             return (
                               <tr key={key}>
                                 <td className="product-thumbnail">
@@ -136,42 +125,9 @@ const Cart = ({
 
                                 <td className="product-quantity">
                                   <div className="cart-plus-minus">
-                                    <button
-                                      className="dec qtybutton"
-                                      onClick={() =>
-                                        decreaseQuantity(cartItem, addToast)
-                                      }
-                                    >
-                                      -
-                                    </button>
-                                    <input
-                                      className="cart-plus-minus-box"
-                                      type="text"
-                                      value={cartItem.quantity}
-                                      readOnly
-                                    />
-                                    <button
-                                      className="inc qtybutton"
-                                      onClick={() =>
-                                        addToCart(
-                                          cartItem,
-                                          addToast,
-                                          quantityCount
-                                        )
-                                      }
-                                    // disabled={
-                                    //   cartItem !== undefined &&
-                                    //   cartItem.quantity &&
-                                    //   cartItem.quantity >=
-                                    //   cartItemStock(
-                                    //     cartItem,
-                                    //     cartItem.selectedProductColor,
-                                    //     cartItem.selectedProductSize
-                                    //   )
-                                    // }
-                                    >
-                                      +
-                                    </button>
+                                    <button className="dec qtybutton" onClick={() => decreaseQuantity(cartItem, addToast, cartItems.code, cartItem.quantity - 1, defaultStore)} > - </button>
+                                    <input className="cart-plus-minus-box" type="text" value={cartItem.quantity} readOnly />
+                                    <button className="inc qtybutton" onClick={() => increaseQuantity(cartItem, addToast, cartItems.code, cartItem.quantity + 1, defaultStore)}>+</button>
                                   </div>
                                 </td>
                                 <td className="product-subtotal">
@@ -190,13 +146,7 @@ const Cart = ({
                                 </td>
 
                                 <td className="product-remove">
-                                  <button
-                                    onClick={() =>
-                                      deleteFromCart(cartItem, addToast)
-                                    }
-                                  >
-                                    <i className="fa fa-times"></i>
-                                  </button>
+                                  <button onClick={() => deleteFromCart(cartItems.code, cartItem, defaultStore, addToast)}> <i className="fa fa-times"></i> </button>
                                 </td>
                               </tr>
                             );
@@ -210,11 +160,7 @@ const Cart = ({
                   <div className="col-lg-12">
                     <div className="cart-shiping-update-wrapper">
                       <div className="cart-shiping-update">
-                        <Link
-                          to={process.env.PUBLIC_URL + "/shop-grid-standard"}
-                        >
-                          Continue Shopping
-                        </Link>
+                        <Link to="/">Continue Shopping </Link>
                       </div>
                       <div className="cart-clear">
                         <button onClick={() => deleteAllFromCart(addToast)}>
@@ -299,14 +245,14 @@ const Cart = ({
                       <h5>
                         Total products{" "}
                         <span>
-                          {cartTotalPrice.toFixed(2)}
+                          {cartTotalPrice}
                         </span>
                       </h5>
 
                       <h4 className="grand-totall-title">
                         Grand Total{" "}
                         <span>
-                          {cartTotalPrice.toFixed(2)}
+                          {grandTotalPrice}
                         </span>
                       </h4>
                       <Link to={process.env.PUBLIC_URL + "/checkout"}>
@@ -325,7 +271,7 @@ const Cart = ({
                       </div>
                       <div className="item-empty-area__text">
                         No items found in cart <br />{" "}
-                        <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
+                        <Link to="/">
                           Shop Now
                       </Link>
                       </div>
@@ -341,10 +287,11 @@ const Cart = ({
 };
 
 Cart.propTypes = {
-  addToCart: PropTypes.func,
+  // addToCart: PropTypes.func,
   cartItems: PropTypes.object,
   // currency: PropTypes.object,
   decreaseQuantity: PropTypes.func,
+  increaseQuantity: PropTypes.func,
   location: PropTypes.object,
   deleteAllFromCart: PropTypes.func,
   deleteFromCart: PropTypes.func
@@ -353,20 +300,24 @@ Cart.propTypes = {
 const mapStateToProps = state => {
   return {
     cartItems: state.cartData.cartItems,
+    defaultStore: state.merchantData.defaultStore
     // currency: state.currencyData
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    addToCart: (item, addToast, quantityCount) => {
-      dispatch(addToCart(item, addToast, quantityCount));
+    // addToCart: (item, addToast, quantityCount) => {
+    //   dispatch(addToCart(item, addToast, quantityCount));
+    // },
+    decreaseQuantity: (item, addToast, cartId, quantityCount, defaultStore) => {
+      dispatch(addToCart(item, addToast, cartId, quantityCount, defaultStore));
     },
-    decreaseQuantity: (item, addToast) => {
-      dispatch(decreaseQuantity(item, addToast));
+    increaseQuantity: (item, addToast, cartId, quantityCount, defaultStore) => {
+      dispatch(addToCart(item, addToast, cartId, quantityCount, defaultStore));
     },
-    deleteFromCart: (item, addToast) => {
-      dispatch(deleteFromCart(item, addToast));
+    deleteFromCart: (cartId, item, defaultStore, addToast) => {
+      dispatch(deleteFromCart(cartId, item, defaultStore, addToast));
     },
     deleteAllFromCart: addToast => {
       dispatch(deleteAllFromCart(addToast));

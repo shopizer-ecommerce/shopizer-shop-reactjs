@@ -17,15 +17,18 @@ export const addToCart = (item, addToast, cartId, quantityCount, defaultStore, s
       let action;
       let param;
       let response;
+      let message;
       if (selectedProductColor !== undefined) {
         param = { "attributes": [{ "id": selectedProductColor }], "product": item.id, "quantity": quantityCount }
       } else {
         param = { "product": item.id, "quantity": quantityCount }
       }
       if (cartId) {
+        message = "Updated To Cart"
         action = constant.ACTION.CART + cartId + '?store=' + defaultStore;
         response = await WebService.put(action, param);
       } else {
+        message = "Added To Cart"
         action = constant.ACTION.CART + '?store=' + defaultStore
         response = await WebService.post(action, param);
       }
@@ -34,7 +37,7 @@ export const addToCart = (item, addToast, cartId, quantityCount, defaultStore, s
         dispatch(setShopizerCartID(response.code))
         dispatch(setLoader(false))
         if (addToast) {
-          addToast("Added To Cart", { appearance: "success", autoDismiss: true });
+          addToast(message, { appearance: "success", autoDismiss: true });
         }
         dispatch(getCart(response.code));
 
@@ -72,13 +75,14 @@ export const setShopizerCartID = (id) => {
 //decrease from cart
 export const decreaseQuantity = (item, addToast) => {
   return dispatch => {
-    if (addToast) {
-      addToast("Item Decremented From Cart", {
-        appearance: "warning",
-        autoDismiss: true
-      });
-    }
-    dispatch({ type: DECREASE_QUANTITY, payload: item });
+    console.log(item)
+    // if (addToast) {
+    //   addToast("Item Decremented From Cart", {
+    //     appearance: "warning",
+    //     autoDismiss: true
+    //   });
+    // }
+    // dispatch({ type: DECREASE_QUANTITY, payload: item });
   };
 };
 //delete from cart
