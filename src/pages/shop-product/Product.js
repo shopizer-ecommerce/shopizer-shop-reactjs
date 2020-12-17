@@ -26,7 +26,6 @@ const Product = ({ location, productID, currentLanguageCode, setLoader, defaultS
     let action = constant.ACTION.PRODUCTS + productID + '?lang=' + currentLanguageCode + '&store=' + defaultStore;
     try {
       let response = await WebService.get(action);
-      // console.log(response);
       if (response) {
         setProductDetails(response)
         setLoader(false)
@@ -39,7 +38,6 @@ const Product = ({ location, productID, currentLanguageCode, setLoader, defaultS
     let action = constant.ACTION.PRODUCTS + productID + '/reviews?store=' + defaultStore;
     try {
       let response = await WebService.get(action);
-      // console.log(response);
       if (response) {
         setProductReview(response)
       }
@@ -49,16 +47,16 @@ const Product = ({ location, productID, currentLanguageCode, setLoader, defaultS
   return (
     <Fragment>
       <MetaTags>
-        <title>Shopizer | Product</title>
-        {/* <meta
+        <title>{productDetails && productDetails.description.title}</title>
+        <meta
           name="description"
-          content="Product page of flone react minimalist eCommerce template."
-        /> */}
+          content={productDetails && productDetails.description.metaDescription}
+        />
       </MetaTags>
 
       <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
-        Shop Product
+        {productDetails && productDetails.description.name}
       </BreadcrumbsItem>
 
       <LayoutOne headerContainerClass="container-fluid"
@@ -100,14 +98,14 @@ const Product = ({ location, productID, currentLanguageCode, setLoader, defaultS
 
 Product.propTypes = {
   location: PropTypes.object,
-  productID: PropTypes.string,
+  productID: PropTypes.number,
   currentLanguageCode: PropTypes.string,
 };
 
 const mapStateToProps = (state, ownProps) => {
   const itemId = ownProps.match.params.id;
   return {
-    productID: itemId,
+    productID: state.productData.productid,
     currentLanguageCode: state.multilanguage.currentLanguageCode,
     defaultStore: state.merchantData.defaultStore
   };

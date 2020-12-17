@@ -5,14 +5,14 @@ import { addToCart } from "../../redux/actions/cartActions";
 import { addToWishlist } from "../../redux/actions/wishlistActions";
 import { addToCompare } from "../../redux/actions/compareActions";
 import ProductGridListSingle from "../../components/product/ProductGridListSingle";
-
+import { isValidObject } from "../../util/helper";
 const ProductGrid = ({
   products,
   // currency,
   addToCart,
   // addToWishlist,
   // addToCompare,
-  // cartItems,
+  cartItems,
   // wishlistItems,
   // compareItems,
   sliderClassName,
@@ -28,11 +28,9 @@ const ProductGrid = ({
             product={product}
             // currency={currency}
             addToCart={addToCart}
-            addToWishlist={addToWishlist}
+            // addToWishlist={addToWishlist}
             // addToCompare={addToCompare}
-            // cartItem={
-            //   cartItems.filter(cartItem => cartItem.id === product.id)[0]
-            // }
+            cartItem={cartItems}
             // wishlistItem={
             //   wishlistItems.filter(
             //     wishlistItem => wishlistItem.id === product.id
@@ -66,6 +64,7 @@ ProductGrid.propTypes = {
 
 const mapStateToProps = state => {
   return {
+    cartItems: state.cartData.cartItems
     // currency: state.currencyData,
     // cartItems: state.cartData,
     // wishlistItems: state.wishlistData,
@@ -75,20 +74,24 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+
     addToCart: (
       item,
       addToast,
+      cartData,
       quantityCount,
-      selectedProductColor,
-      selectedProductSize
+      defaultStore,
+      selectedProductColor
     ) => {
+      let index = isValidObject(cartData) ? cartData.products.findIndex(order => order.id === item.id) : -1;
       dispatch(
         addToCart(
           item,
           addToast,
-          quantityCount,
-          selectedProductColor,
-          selectedProductSize
+          cartData.code,
+          index === -1 ? quantityCount : cartData.products[index].quantity + quantityCount,
+          defaultStore,
+          selectedProductColor
         )
       );
     },

@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 // import { getProductCartQuantity } from "../../helpers/product";
@@ -29,41 +29,72 @@ const ProductDescriptionInfo = ({
   // addToWishlist,
   // addToCompare
 }) => {
-  const [selectedProductColor, setSelectedProductColor] = useState("")
-
-  // const [selectedProductSize, setSelectedProductSize] = useState(
-  //   product.variation ? product.variation[0].size[0].name : ""
-  // );
-  // const [productStock, setProductStock] = useState(
-  //   product.variation ? product.variation[0].size[0].stock : product.stock
-  // );
+  const [selectedProductColor, setSelectedProductColor] = useState([])
   const [quantityCount, setQuantityCount] = useState(1);
+  useEffect(() => {
+    getDefualtsOption()
+  }, []);
+  const getDefualtsOption = async () => {
+    let temp = [];
+    if (product.options) {
+      product.options.map(async (item) => {
+        item.optionValues.map(async (data) => {
+          if (data.defaultValue) {
+            temp.push({ 'name': item.name, 'id': data.id });
+          }
+        })
+      })
+      setSelectedProductColor(temp)
 
-  const onChangeOptions = async (value) => {
-    console.log(value)
-
-    setLoader(true)
-    let action = constant.ACTION.PRODUCTS + productID + '/' + constant.ACTION.PRICE;
-    let param = { "options": [{ id: value.id }] }
-    try {
-      let response = await WebService.post(action, param);
-      // console.log(response);
-      if (response) {
-        // setProductDetails(response)
-        setLoader(false)
-      }
-    } catch (error) {
-      setLoader(false)
     }
-    setSelectedProductColor(value.id);
   }
-  // const productCartQty = getProductCartQuantity(
-  //   cartItems,
-  //   product,
-  //   selectedProductColor,
-  //   selectedProductSize
-  // );
 
+
+  const onChangeOptions = async (value, option) => {
+
+
+    let index;
+    if (option.type === 'radio') {
+      index = selectedProductColor.findIndex(a => a.name === option.name);
+    } else {
+      index = selectedProductColor.findIndex(a => a.id === value.id);
+    }
+
+    if (index === -1) {
+      setSelectedProductColor([...selectedProductColor, { 'name': option.name, 'id': value.id }])
+    } else {
+      let temp = [...selectedProductColor]
+      if (option.type === 'radio') {
+        temp[index] = { 'name': option.name, 'id': value.id };
+
+      } else {
+        temp.splice(index, 1);
+      }
+      setSelectedProductColor(temp)
+    }
+
+
+    // setLoader(true)
+    // let action = constant.ACTION.PRODUCTS + productID + '/' + constant.ACTION.PRICE;
+    // let param = { "options": [{ id: value.id }] }
+    // try {
+    //   let response = await WebService.post(action, param);
+    //   if (response) {
+    //     // setProductDetails(response)
+    //     setLoader(false)
+    //   }
+    // } catch (error) {
+    //   setLoader(false)
+    // }
+  }
+  const checkedOrNot = (value) => {
+    let index = selectedProductColor.findIndex(a => a.id === value.id);
+    if (index === -1) {
+      return false
+    } else {
+      return true
+    }
+  }
   return (
     <div className="product-details-content ml-70">
       <h2>{product.description.name}</h2>
@@ -96,9 +127,8 @@ const ProductDescriptionInfo = ({
         <div className="pro-details-size-color">
           {
             product.options.map((option, key) => {
-
               return (
-                // option.code === 'COLOR' &&
+                option.type === 'radio' &&
                 <div className="pro-details-color-wrap" key={key}>
                   <span>{option.name}</span>
                   <div className="pro-details-color-content" style={{ display: 'flex' }}>
@@ -107,21 +137,16 @@ const ProductDescriptionInfo = ({
                       option.optionValues.map((value, index) => {
                         return (
                           <div style={{ flexDirection: 'column', display: 'flex', alignItems: 'center', marginRight: 15 }} key={index}>
-                            <img src={value.image} alt="product-option" />
-                            <label className={`pro-details-color-content--single ${value.code}`} key={index} >
+                            {value.image && <img src={value.image} alt="product-option" />}
+
+                            <label className={`pro-details-color-content--single`} style={{ backgroundColor: value.code }} key={index} >
 
                               <input
                                 type={option.type}
                                 value={value.id}
                                 name={option.name}
-                                checked={selectedProductColor == '' ? value.defaultValue : value.id === selectedProductColor}
-                                onChange={() => onChangeOptions(value)}
-                              //    {
-                              //   setSelectedProductColor(value.id);
-                              //   // setSelectedProductSize(single.size[0].name);
-                              //   // setProductStock(single.size[0].stock);
-                              //   // setQuantityCount(1);
-                              // }}
+                                checked={checkedOrNot(value)}
+                                onChange={() => onChangeOptions(value, option)}
                               />
                               <span className="checkmark"></span>
                             </label>
@@ -136,44 +161,44 @@ const ProductDescriptionInfo = ({
               )
             })
           }
-          {/* {
+          {
 
-            product.options.map((single) => {
+            product.options.map((option, index) => {
               return (
-                single.code === 'SIZE' &&
-                <div className="pro-details-size">
+                option.type === 'select' &&
+                <div className="pro-details-size" key={index}>
                   <span>Size</span>
-                  <div className="pro-details-size-content">
+                  <div className="pro-details-size-content" style={{ display: 'flex' }}>
                     {
-                      single.optionValues.map((singleSize, key) => {
+                      option.optionValues.map((singleSize, key) => {
                         return (
-                          <label
-                            className={`pro-details-size-content--single`}
-                            key={key}
-                          >
-                            <input
-                              type="radio"
-                              value={singleSize.name}
-                            // checked={
-                            //   singleSize.name === selectedProductSize
-                            //     ? "checked"
-                            //     : ""
-                            // }
-                            // onChange={() => {
-                            //   setSelectedProductSize(singleSize.name);
-                            //   setProductStock(singleSize.stock);
-                            //   setQuantityCount(1);
-                            // }}
-                            />
-                            <span className="size-name">{singleSize.name}</span>
-                          </label>
+                          <div style={{ flexDirection: 'column ', display: 'flex', alignItems: 'center', marginRight: 15 }} key={key}>
+                            {singleSize.image && <img src={singleSize.image} alt="product-option" />}
+
+                            <label className={`pro-details-size-content--single`} key={key}  >
+                              <input
+                                type="checkbox"
+                                value={singleSize.description.name}
+                                name={option.name}
+                                checked={checkedOrNot(singleSize)}
+                                onChange={() => {
+                                  onChangeOptions(singleSize, option)
+                                  // setSelectedProductSize(singleSize.name);
+                                  //   setProductStock(singleSize.stock);
+                                  //   setQuantityCount(1);
+                                }}
+                              />
+                              <span className="size-name">{singleSize.description.name}</span>
+                            </label>
+                          </div>
                         );
 
                       })}
                   </div>
                 </div>
               )
-            })} */}
+            })
+          }
         </div>
       ) : (
           ""
@@ -206,16 +231,21 @@ const ProductDescriptionInfo = ({
           <div className="pro-details-cart btn-hover">
             {product.available && product.canBePurchased && product.visible && product.quantity > 0 ? (
               <button
-                onClick={() =>
+                onClick={() => {
+                  let options = [];
+                  selectedProductColor.map((a) => {
+                    options.push({ id: a.id })
+                  })
+
                   addToCart(
                     product,
                     addToast,
                     cartItems,
                     quantityCount,
                     defaultStore,
-                    selectedProductColor
+                    options
                   )
-                }>
+                }}>
                 {" "}
                 Add To Cart{" "}
               </button>
@@ -369,7 +399,6 @@ const mapDispatchToProps = dispatch => {
       defaultStore,
       selectedProductColor
     ) => {
-      // console.log(isValidObject(cartItem));
 
       let index = isValidObject(cartItem) ? cartItem.products.findIndex(cart => cart.id === item.id) : -1;
       dispatch(

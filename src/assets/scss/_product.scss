@@ -287,6 +287,7 @@
     position: relative;
 
     overflow: hidden;
+    height: 300px;
 
     img {
       width: 100%;
@@ -775,7 +776,7 @@
           margin-top: 8px;
           cursor: pointer;
           transition: all 0.4s ease 0s;
-
+          background-color: lightgray;
           border-radius: 50px;
 
           &:last-child {
@@ -802,50 +803,50 @@
             }
           }
 
-          &.blue {
-            border: 1px solid #4798f3;
-            background-color: #4798f3;
-          }
+          // &.blue {
+          //   border: 1px solid #4798f3 !important;
+          //   background-color: #4798f3 !important;
+          // }
 
-          &.maroon {
-            border: 1px solid #736751;
-            background-color: #736751;
-          }
+          // &.maroon {
+          //   border: 1px solid #736751 !important;
+          //   background-color: #736751 !important;
+          // }
 
-          &.gray {
-            border: 1px solid #c0c0c0;
-            background-color: #c0c0c0;
-          }
+          // &.gray {
+          //   border: 1px solid #c0c0c0 !important;
+          //   background-color: #c0c0c0 !important;
+          // }
 
-          &.grey {
-            border: 1px solid grey;
-            background-color: grey;
-          }
+          // &.grey {
+          //   border: 1px solid grey !important;
+          //   background-color: grey !important;
+          // }
 
-          &.green {
-            border: 1px solid #139c57;
-            background-color: #139c57;
-          }
+          // &.green {
+          //   border: 1px solid #139c57 !important;
+          //   background-color: #139c57 !important;
+          // }
 
-          &.yellow {
-            border: 1px solid #e28b37;
-            background-color: #e28b37;
-          }
+          // &.yellow {
+          //   border: 1px solid #e28b37 !important;
+          //   background-color: #e28b37 !important;
+          // }
 
-          &.white {
-            border: 1px solid #333;
-            background-color: #fff;
-          }
+          // &.white {
+          //   border: 1px solid #333 !important;
+          //   background-color: #fff !important;
+          // }
 
-          &.black {
-            border: 1px solid #333;
-            background-color: #333;
-          }
+          // &.black {
+          //   border: 1px solid #333 !important;
+          //   background-color: #333 !important;
+          // }
 
-          &.brown {
-            border: 1px solid brown;
-            background-color: brown;
-          }
+          // &.brown {
+          //   border: 1px solid brown !important;
+          //   background-color: brown !important;
+          // }
 
           .checkmark {
             position: relative;
@@ -854,7 +855,8 @@
 
             width: 14px;
             height: 14px;
-            margin: 0;
+            // margin: 0;
+            margin: 1px 0px -1px 1px;
 
             &:after {
               position: absolute;
@@ -871,6 +873,7 @@
 
               opacity: 0;
               border: 2px solid #333;
+              // background-color: lightgray;
               border-radius: 50%;
             }
           }

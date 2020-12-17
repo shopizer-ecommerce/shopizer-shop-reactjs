@@ -12,7 +12,7 @@ const HomeFashionSeven = () => {
   return (
     <Fragment>
       <MetaTags>
-        <title>Shopizer | Home</title>
+        <title>Importa | Imports from the world</title>
         {/* <meta
           name="description"
           content="Fashion home of flone react minimalist eCommerce template."

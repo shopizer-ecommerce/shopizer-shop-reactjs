@@ -11,7 +11,6 @@ export const DELETE_ALL_FROM_CART = "DELETE_ALL_FROM_CART";
 //add to cart
 export const addToCart = (item, addToast, cartId, quantityCount, defaultStore, selectedProductColor) => {
   return async dispatch => {
-    console.log(selectedProductColor)
     dispatch(setLoader(true))
     try {
       let action;
@@ -19,7 +18,7 @@ export const addToCart = (item, addToast, cartId, quantityCount, defaultStore, s
       let response;
       let message;
       if (selectedProductColor !== undefined) {
-        param = { "attributes": [{ "id": selectedProductColor }], "product": item.id, "quantity": quantityCount }
+        param = { "attributes": selectedProductColor, "product": item.id, "quantity": quantityCount }
       } else {
         param = { "product": item.id, "quantity": quantityCount }
       }
@@ -75,7 +74,6 @@ export const setShopizerCartID = (id) => {
 //decrease from cart
 export const decreaseQuantity = (item, addToast) => {
   return dispatch => {
-    console.log(item)
     // if (addToast) {
     //   addToast("Item Decremented From Cart", {
     //     appearance: "warning",

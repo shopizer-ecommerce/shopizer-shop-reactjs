@@ -12,10 +12,10 @@ const ShopColor = ({ colors, getSortParams }) => {
             <li>
               <div className="sidebar-widget-list-left">
                 <button
-                  onClick={e => {
-                    getSortParams("color", "");
-                    setActiveSort(e);
-                  }}
+                // onClick={e => {
+                //   getSortParams("color", "");
+                //   setActiveSort(e);
+                // }}
                 >
                   <span className="checkmark" /> All Colors{" "}
                 </button>
@@ -39,8 +39,8 @@ const ShopColor = ({ colors, getSortParams }) => {
             })}
           </ul>
         ) : (
-          "No colors found"
-        )}
+            "No colors found"
+          )}
       </div>
     </div>
   );

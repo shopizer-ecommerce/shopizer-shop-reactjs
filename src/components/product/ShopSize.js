@@ -12,10 +12,10 @@ const ShopSize = ({ sizes, getSortParams }) => {
             <li>
               <div className="sidebar-widget-list-left">
                 <button
-                  onClick={e => {
-                    getSortParams("size", "");
-                    setActiveSort(e);
-                  }}
+                // onClick={e => {
+                //   getSortParams("size", "");
+                //   setActiveSort(e);
+                // }}
                 >
                   <span className="checkmark" /> All Sizes{" "}
                 </button>
@@ -42,8 +42,8 @@ const ShopSize = ({ sizes, getSortParams }) => {
             })}
           </ul>
         ) : (
-          "No sizes found"
-        )}
+            "No sizes found"
+          )}
       </div>
     </div>
   );

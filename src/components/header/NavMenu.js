@@ -2,8 +2,14 @@ import PropTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
 import { multilanguage } from "redux-multilanguage";
+import { connect } from "react-redux";
 
-const NavMenu = ({ strings, menuWhiteClass, sidebarMenu, categories, contents }) => {
+import { setCategoryID } from "../../redux/actions/productActions";
+const NavMenu = ({ props, strings, menuWhiteClass, sidebarMenu, categories, contents, setCategoryID }) => {
+
+  const onClickCategory = (item) => {
+    setCategoryID(item.id)
+  }
   return (
     <div
       className={` ${
@@ -24,7 +30,7 @@ const NavMenu = ({ strings, menuWhiteClass, sidebarMenu, categories, contents })
               return (
                 item.visible &&
                 <li key={index}>
-                  <Link to={"/category/" + item.description.friendlyUrl}>{strings[item.description.name]}
+                  <Link to={"/category/" + item.description.friendlyUrl} onClick={() => onClickCategory(item)}>{strings[item.description.name] ? strings[item.description.name] : item.description.name}
                     {item.children && item.children.length > 0 ?
                       sidebarMenu ? (
                         <span>
@@ -43,8 +49,8 @@ const NavMenu = ({ strings, menuWhiteClass, sidebarMenu, categories, contents })
                       {
                         item.children.map((submenu, index) => {
                           return (<li key={index}>
-                            <Link to={"/category/" + submenu.description.friendlyUrl}>
-                              {strings[submenu.description.name]}
+                            <Link to={"/category/" + submenu.description.friendlyUrl} onClick={() => onClickCategory(submenu)} >
+                              {strings[submenu.description.name] ? strings[submenu.description.name] : submenu.description.name}
                             </Link>
                           </li>)
                         })
@@ -60,7 +66,7 @@ const NavMenu = ({ strings, menuWhiteClass, sidebarMenu, categories, contents })
             contents.map((content, index) => {
               return (
                 content.displayedInMenu &&
-                <li key={index}> <Link to={"/content/" + content.slug} >{strings[content.name]}</Link></li>
+                <li key={index}> <Link to={"/content/" + content.slug} >{strings[content.name] ? strings[content.name] : content.name}</Link></li>
               )
             })
           }
@@ -80,5 +86,12 @@ NavMenu.propTypes = {
   sidebarMenu: PropTypes.bool,
   strings: PropTypes.object
 };
-
-export default multilanguage(NavMenu);
+const mapDispatchToProps = dispatch => {
+  return {
+    setCategoryID: (value) => {
+      dispatch(setCategoryID(value));
+    }
+  };
+};
+export default connect(null, mapDispatchToProps)(multilanguage(NavMenu));
+// export default multilanguage(NavMenu);

@@ -33,11 +33,10 @@ const Cart = ({
   const { pathname } = location;
   const cartTotalPrice = cartItems.displaySubTotal;
   const grandTotalPrice = cartItems.displaySubTotal;
-  console.log(cartItems);
   return (
     <Fragment>
       <MetaTags>
-        <title>Shopizer | Cart</title>
+        <title>Importa | Place your order</title>
         {/* <meta
           name="description"
           content="Cart page of flone react minimalist eCommerce template."

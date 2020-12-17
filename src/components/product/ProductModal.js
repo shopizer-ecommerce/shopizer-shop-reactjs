@@ -15,7 +15,7 @@ function ProductModal(props) {
 
   const [gallerySwiper, getGallerySwiper] = useState(null);
   const [thumbnailSwiper, getThumbnailSwiper] = useState(null);
-  const [selectedProductColor, setSelectedProductColor] = useState("");
+  const [selectedProductColor, setSelectedProductColor] = useState([]);
   // const [productStock, setProductStock] = useState();
   const [quantityCount, setQuantityCount] = useState(1);
 
@@ -32,6 +32,7 @@ function ProductModal(props) {
   // const productCartQty = 0
 
   useEffect(() => {
+    getDefualtsOption()
     if (
       gallerySwiper !== null &&
       gallerySwiper.controller &&
@@ -74,6 +75,62 @@ function ProductModal(props) {
       </button>
     )
   };
+  const getDefualtsOption = async () => {
+    let temp = [];
+    if (product.options) {
+      product.options.map(async (item) => {
+        item.optionValues.map(async (data) => {
+          if (data.defaultValue) {
+            temp.push({ 'name': item.name, 'id': data.id });
+          }
+        })
+      })
+      setSelectedProductColor(temp)
+
+    }
+  }
+  const onChangeOptions = async (value, option) => {
+
+    // setLoader(true)
+    // let action = constant.ACTION.PRODUCTS + productID + '/' + constant.ACTION.PRICE;
+    // let param = { "options": [{ id: value.id }] }
+    // try {
+    //   let response = await WebService.post(action, param);
+    //   if (response) {
+    //     // setProductDetails(response)
+    //     setLoader(false)
+    //   }
+    // } catch (error) {
+    //   setLoader(false)
+    // }
+    let index;
+    if (option.type === 'radio') {
+      index = selectedProductColor.findIndex(a => a.name === option.name);
+    } else {
+      index = selectedProductColor.findIndex(a => a.id === value.id);
+    }
+
+    if (index === -1) {
+      setSelectedProductColor([...selectedProductColor, { 'name': option.name, 'id': value.id }])
+    } else {
+      let temp = [...selectedProductColor]
+      if (option.type === 'radio') {
+        temp[index] = { 'name': option.name, 'id': value.id };
+
+      } else {
+        temp.splice(index, 1);
+      }
+      setSelectedProductColor(temp)
+    }
+  }
+  const checkedOrNot = (value) => {
+    let index = selectedProductColor.findIndex(a => a.id === value.id);
+    if (index === -1) {
+      return false
+    } else {
+      return true
+    }
+  }
 
   return (
     <Fragment>
@@ -153,9 +210,8 @@ function ProductModal(props) {
                   <div className="pro-details-size-color">
                     {
                       product.options.map((option, key) => {
-
                         return (
-                          // option.code === 'COLOR' &&
+                          option.type === 'radio' &&
                           <div className="pro-details-color-wrap" key={key}>
                             <span>{option.name}</span>
                             <div className="pro-details-color-content" style={{ display: 'flex' }}>
@@ -164,19 +220,16 @@ function ProductModal(props) {
                                 option.optionValues.map((value, index) => {
                                   return (
                                     <div style={{ flexDirection: 'column', display: 'flex', alignItems: 'center', marginRight: 15 }} key={index}>
-                                      <img src={value.image} alt="product-option" />
-                                      <label className={`pro-details-color-content--single ${value.code}`} key={index} >
+                                      {value.image && <img src={value.image} alt="product-option" />}
+
+                                      <label className={`pro-details-color-content--single`} style={{ backgroundColor: value.code }} key={index} >
+
                                         <input
                                           type={option.type}
                                           value={value.id}
                                           name={option.name}
-                                          checked={selectedProductColor == '' ? value.defaultValue : value.id === selectedProductColor}
-                                          onChange={() => {
-                                            setSelectedProductColor(value.id);
-                                            // setSelectedProductSize(single.size[0].name);
-                                            // setProductStock(single.size[0].stock);
-                                            // setQuantityCount(1);
-                                          }}
+                                          checked={checkedOrNot(value)}
+                                          onChange={() => onChangeOptions(value, option)}
                                         />
                                         <span className="checkmark"></span>
                                       </label>
@@ -191,7 +244,44 @@ function ProductModal(props) {
                         )
                       })
                     }
+                    {
 
+                      product.options.map((option, index) => {
+                        return (
+                          option.type === 'select' &&
+                          <div className="pro-details-size" key={index}>
+                            <span>Size</span>
+                            <div className="pro-details-size-content" style={{ display: 'flex' }}>
+                              {
+                                option.optionValues.map((singleSize, key) => {
+                                  return (
+                                    <div style={{ flexDirection: 'column ', display: 'flex', alignItems: 'center', marginRight: 15 }} key={key}>
+                                      {singleSize.image && <img src={singleSize.image} alt="product-option" />}
+
+                                      <label className={`pro-details-size-content--single`} key={key}  >
+                                        <input
+                                          type="checkbox"
+                                          value={singleSize.description.name}
+                                          name={option.name}
+                                          checked={checkedOrNot(singleSize)}
+                                          onChange={() => {
+                                            onChangeOptions(singleSize, option)
+                                            // setSelectedProductSize(singleSize.name);
+                                            //   setProductStock(singleSize.stock);
+                                            //   setQuantityCount(1);
+                                          }}
+                                        />
+                                        <span className="size-name">{singleSize.description.name}</span>
+                                      </label>
+                                    </div>
+                                  );
+
+                                })}
+                            </div>
+                          </div>
+                        )
+                      })
+                    }
                   </div>
                 ) : (
                     ""
@@ -223,17 +313,22 @@ function ProductModal(props) {
                     <div className="pro-details-cart btn-hover">
                       {product.available && product.canBePurchased && product.visible && product.quantity > 0 ? (
                         <button
-                          onClick={() =>
+                          onClick={() => {
+                            let options = [];
+                            selectedProductColor.map((a) => {
+                              options.push({ id: a.id })
+                            })
                             addToCart(
                               product,
                               addToast,
                               cartData,
                               quantityCount,
                               defaultStore,
-                              selectedProductColor
+                              options
                               // selectedProductColor,
                               // selectedProductSize
                             )
+                          }
                           }>Add To Cart</button>
                       ) : (
                           <button disabled>Out of Stock</button>
