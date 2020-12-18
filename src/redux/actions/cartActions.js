@@ -9,7 +9,7 @@ export const DELETE_FROM_CART = "DELETE_FROM_CART";
 export const DELETE_ALL_FROM_CART = "DELETE_ALL_FROM_CART";
 
 //add to cart
-export const addToCart = (item, addToast, cartId, quantityCount, defaultStore, selectedProductColor) => {
+export const addToCart = (item, addToast, cartId, quantityCount, defaultStore, userData, selectedProductColor) => {
   return async dispatch => {
     dispatch(setLoader(true))
     try {
@@ -17,6 +17,7 @@ export const addToCart = (item, addToast, cartId, quantityCount, defaultStore, s
       let param;
       let response;
       let message;
+      console.log(userData, '************ userData *********')
       if (selectedProductColor !== undefined) {
         param = { "attributes": selectedProductColor, "product": item.id, "quantity": quantityCount }
       } else {
@@ -28,7 +29,11 @@ export const addToCart = (item, addToast, cartId, quantityCount, defaultStore, s
         response = await WebService.put(action, param);
       } else {
         message = "Added To Cart"
-        action = constant.ACTION.CART + '?store=' + defaultStore
+        if (userData) {
+          action = constant.ACTION.CUSTOMERS + userData.id + '/' + constant.ACTION.CART;
+        } else {
+          action = constant.ACTION.CART + '?store=' + defaultStore
+        }
         response = await WebService.post(action, param);
       }
 
@@ -89,7 +94,8 @@ export const deleteFromCart = (cartID, item, defaultStore, addToast) => {
     dispatch(setLoader(true))
     try {
       let action = constant.ACTION.CART + cartID + '/' + constant.ACTION.PRODUCT + item.id + '?store=' + defaultStore;
-      let response = await WebService.delete(action);
+      await WebService.delete(action);
+
       dispatch({
         type: DELETE_FROM_CART,
         payload: item

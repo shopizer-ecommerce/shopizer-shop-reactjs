@@ -1,17 +1,17 @@
 import PropTypes from "prop-types";
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 import MetaTags from "react-meta-tags";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { connect } from "react-redux";
-import { getDiscountPrice } from "../../helpers/product";
+// import { getDiscountPrice } from "../../helpers/product";
 import { isValidObject } from "../../util/helper";
 import {
   addToCart,
   // decreaseQuantity,
   deleteFromCart,
-  cartItemStock,
+  // cartItemStock,
   deleteAllFromCart
 } from "../../redux/actions/cartActions";
 import LayoutOne from "../../layouts/LayoutOne";
@@ -28,7 +28,6 @@ const Cart = ({
   deleteAllFromCart,
 
 }) => {
-  const [quantityCount] = useState(1);
   const { addToast } = useToasts();
   const { pathname } = location;
   const cartTotalPrice = cartItems.displaySubTotal;

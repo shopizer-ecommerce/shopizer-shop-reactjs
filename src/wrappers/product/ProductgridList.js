@@ -2,8 +2,8 @@ import PropTypes from "prop-types";
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import { addToCart } from "../../redux/actions/cartActions";
-import { addToWishlist } from "../../redux/actions/wishlistActions";
-import { addToCompare } from "../../redux/actions/compareActions";
+// import { addToWishlist } from "../../redux/actions/wishlistActions";
+// import { addToCompare } from "../../redux/actions/compareActions";
 import ProductGridListSingle from "../../components/product/ProductGridListSingle";
 import { isValidObject } from "../../util/helper";
 const ProductGrid = ({
@@ -16,7 +16,8 @@ const ProductGrid = ({
   // wishlistItems,
   // compareItems,
   sliderClassName,
-  spaceBottomClass
+  spaceBottomClass,
+  userData
 }) => {
   return (
     <Fragment>
@@ -31,6 +32,7 @@ const ProductGrid = ({
             // addToWishlist={addToWishlist}
             // addToCompare={addToCompare}
             cartItem={cartItems}
+            userData={userData}
             // wishlistItem={
             //   wishlistItems.filter(
             //     wishlistItem => wishlistItem.id === product.id
@@ -64,7 +66,8 @@ ProductGrid.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    cartItems: state.cartData.cartItems
+    cartItems: state.cartData.cartItems,
+    userData: state.userData.userData
     // currency: state.currencyData,
     // cartItems: state.cartData,
     // wishlistItems: state.wishlistData,
@@ -81,6 +84,7 @@ const mapDispatchToProps = dispatch => {
       cartData,
       quantityCount,
       defaultStore,
+      userData,
       selectedProductColor
     ) => {
       let index = isValidObject(cartData) ? cartData.products.findIndex(order => order.id === item.id) : -1;
@@ -91,6 +95,7 @@ const mapDispatchToProps = dispatch => {
           cartData.code,
           index === -1 ? quantityCount : cartData.products[index].quantity + quantityCount,
           defaultStore,
+          userData,
           selectedProductColor
         )
       );

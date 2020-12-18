@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import MenuCart from "./sub-components/MenuCart";
 import { deleteFromCart } from "../../redux/actions/cartActions";
-
+import { setUser } from "../../redux/actions/userAction";
 const IconGroup = ({
   // currency,
   cartData,
@@ -12,7 +12,9 @@ const IconGroup = ({
   // wishlistData,
   // compareData,
   deleteFromCart,
-  iconWhiteClass
+  iconWhiteClass,
+  userData,
+  setUser
 }) => {
   const handleClick = e => {
     e.currentTarget.nextSibling.classList.toggle("active");
@@ -51,19 +53,31 @@ const IconGroup = ({
         </button>
         <div className="account-dropdown">
           <ul>
-            <li>
-              <Link to={process.env.PUBLIC_URL + "/login-register"}>Login</Link>
-            </li>
-            <li>
-              <Link to={process.env.PUBLIC_URL + "/login-register"}>
-                Register
-              </Link>
-            </li>
-            <li>
-              <Link to={process.env.PUBLIC_URL + "/my-account"}>
-                my account
-              </Link>
-            </li>
+            {
+              !userData &&
+              <div>
+                <li>
+                  <Link to={process.env.PUBLIC_URL + "/login-register"}>Login</Link>
+                </li>
+                <li>
+                  <Link to={process.env.PUBLIC_URL + "/login-register"}>Register</Link>
+                </li>
+              </div>
+            }
+            {
+              userData &&
+              <div>
+                <li>
+                  <Link to={process.env.PUBLIC_URL + "/my-account"}>my account</Link>
+                </li>
+                <li>
+                  <Link to={process.env.PUBLIC_URL + "/my-account"}>Recent Orders</Link>
+                </li>
+                <li>
+                  <Link to={process.env.PUBLIC_URL + "/login-register"} onClick={() => setUser('')}>Logout</Link>
+                </li>
+              </div>
+            }
           </ul>
         </div>
       </div>
@@ -130,7 +144,8 @@ const mapStateToProps = state => {
   return {
     // currency: state.currencyData,
     cartData: state.cartData.cartItems,
-    cartCount: state.cartData.cartCount
+    cartCount: state.cartData.cartCount,
+    userData: state.userData.userData
     // wishlistData: state.wishlistData,
     // compareData: state.compareData
   };
@@ -140,6 +155,9 @@ const mapDispatchToProps = dispatch => {
   return {
     deleteFromCart: (cartId, item, defaultStore, addToast) => {
       dispatch(deleteFromCart(cartId, item, defaultStore, addToast));
+    },
+    setUser: (data) => {
+      dispatch(setUser(data));
     }
   };
 };

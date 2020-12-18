@@ -4,7 +4,7 @@ import MetaTags from 'react-meta-tags';
 import Paginator from 'react-hooks-paginator';
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
 import { connect } from 'react-redux';
-import { getSortedProducts } from '../../helpers/product';
+// import { getSortedProducts } from '../../helpers/product';
 import LayoutOne from '../../layouts/LayoutOne';
 import Breadcrumb from '../../wrappers/breadcrumb/Breadcrumb';
 import ShopSidebar from '../../wrappers/product/ShopSidebar';
@@ -12,8 +12,8 @@ import ShopTopbar from '../../wrappers/product/ShopTopbar';
 import ShopProducts from '../../wrappers/product/ShopProducts';
 import WebService from '../../util/webService';
 import constant from '../../util/constant';
-
-const ShopGridStandard = ({ location, defaultStore, currentLanguageCode, categoryID }) => {
+import { setLoader } from "../../redux/actions/loaderActions";
+const ShopGridStandard = ({ location, defaultStore, currentLanguageCode, categoryID, setLoader }) => {
     const [layout, setLayout] = useState('grid three-column');
     // const [sortType, setSortType] = useState('');
     // const [sortValue, setSortValue] = useState('');
@@ -22,7 +22,7 @@ const ShopGridStandard = ({ location, defaultStore, currentLanguageCode, categor
     const [offset, setOffset] = useState(0);
     // const [skip, setSkip] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
-    const [pageLimit, setPageLimit] = useState(12);
+    const pageLimit = 12;
     const [productData, setProductData] = useState([]);
     const [totalProduct, setTotalProduct] = useState(0);
     const [productDetails, setProductDetails] = useState('');
@@ -55,6 +55,7 @@ const ShopGridStandard = ({ location, defaultStore, currentLanguageCode, categor
         // setProductData(sortedProducts.slice(offset, offset + pageLimit));
     }, [categoryID, offset]);
     const getProductList = async () => {
+        setLoader(true)
         let action = constant.ACTION.PRODUCTS + '?store=' + defaultStore + '&lang=' + currentLanguageCode + '&start=' + offset + '&count=' + pageLimit + '&category=' + categoryID;
         try {
             let response = await WebService.get(action);
@@ -62,7 +63,9 @@ const ShopGridStandard = ({ location, defaultStore, currentLanguageCode, categor
                 setProductData(response.products);
                 setTotalProduct(response.recordsTotal)
             }
+            setLoader(false)
         } catch (error) {
+            setLoader(false)
         }
     }
     const getCategoryDetails = async () => {
@@ -144,5 +147,11 @@ const mapStateToProps = state => {
         // products: state.productData.products
     }
 }
-
-export default connect(mapStateToProps, null)(ShopGridStandard);
+const mapDispatchToProps = dispatch => {
+    return {
+        setLoader: (value) => {
+            dispatch(setLoader(value));
+        }
+    };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(ShopGridStandard);

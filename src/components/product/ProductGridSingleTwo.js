@@ -20,7 +20,8 @@ const ProductGridSingleTwo = ({
   colorClass,
   titlePriceClass,
   defaultStore,
-  setProductID
+  setProductID,
+  userData
 }) => {
   const [modalShow, setModalShow] = useState(false);
   const { addToast } = useToasts();
@@ -83,7 +84,7 @@ const ProductGridSingleTwo = ({
               {
                 product.available && product.canBePurchased && product.visible && product.quantity > 0 &&
                 <button
-                  onClick={() => addToCart(product, addToast, cartData, 1, defaultStore)}
+                  onClick={() => addToCart(product, addToast, cartData, 1, defaultStore, userData)}
                   className="active"
                   // disabled={cartItem !== undefined && cartItem.quantity > 0}
                   title="Add to cart">
@@ -170,6 +171,7 @@ const ProductGridSingleTwo = ({
         addtocart={addToCart}
 
         cartData={cartData}
+        userData={userData}
         // addtowishlist={addToWishlist}
         // addtocompare={addToCompare}
         addtoast={addToast}

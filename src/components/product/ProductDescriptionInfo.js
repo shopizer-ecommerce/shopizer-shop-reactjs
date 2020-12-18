@@ -8,8 +8,8 @@ import { addToCart } from "../../redux/actions/cartActions";
 // import { addToWishlist } from "../../redux/actions/wishlistActions";
 // import { addToCompare } from "../../redux/actions/compareActions";
 import Rating from "./sub-components/ProductRating";
-import WebService from '../../util/webService';
-import constant from '../../util/constant';
+// import WebService from '../../util/webService';
+// import constant from '../../util/constant';
 import { setLoader } from "../../redux/actions/loaderActions";
 
 const ProductDescriptionInfo = ({
@@ -25,7 +25,8 @@ const ProductDescriptionInfo = ({
   addToCart,
   setLoader,
   productID,
-  defaultStore
+  defaultStore,
+  userData
   // addToWishlist,
   // addToCompare
 }) => {
@@ -243,6 +244,7 @@ const ProductDescriptionInfo = ({
                     cartItems,
                     quantityCount,
                     defaultStore,
+                    userData,
                     options
                   )
                 }}>
@@ -383,7 +385,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     productID: prodID,
     cartItems: state.cartData.cartItems,
-    defaultStore: state.merchantData.defaultStore
+    defaultStore: state.merchantData.defaultStore,
+    userData: state.userData.userData
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -397,6 +400,7 @@ const mapDispatchToProps = dispatch => {
       cartItem,
       quantityCount,
       defaultStore,
+      userData,
       selectedProductColor
     ) => {
 
@@ -408,6 +412,7 @@ const mapDispatchToProps = dispatch => {
           cartItem.code,
           index === -1 ? quantityCount : cartItem.products[index].quantity + quantityCount,
           defaultStore,
+          userData,
           selectedProductColor
         )
       );

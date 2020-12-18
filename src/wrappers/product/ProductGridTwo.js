@@ -19,7 +19,8 @@ const ProductGridTwo = ({
   sliderClassName,
   spaceBottomClass,
   colorClass,
-  titlePriceClass
+  titlePriceClass,
+  userData
 }) => {
   return (
     <Fragment>
@@ -33,6 +34,7 @@ const ProductGridTwo = ({
             // currency={currency}
             addToCart={addToCart}
             cartData={cartData}
+            userData={userData}
             // addToWishlist={addToWishlist}
             // addToCompare={addToCompare}
             // cartItem={cartItems}
@@ -80,7 +82,8 @@ const mapStateToProps = (state, ownProps) => {
     //   ownProps.limit
     // ),
     // currency: state.currencyData,
-    cartData: state.cartData.cartItems
+    cartData: state.cartData.cartItems,
+    userData: state.userData.userData
     // wishlistItems: state.wishlistData,
     // compareItems: state.compareData
   };
@@ -94,7 +97,8 @@ const mapDispatchToProps = (dispatch) => {
       cartData,
       quantityCount,
       defaultStore,
-      selectedProductColor
+      userData,
+      selectedProductColor,
       // selectedProductColor,
       // selectedProductSize
     ) => {
@@ -107,6 +111,7 @@ const mapDispatchToProps = (dispatch) => {
           cartData.code,
           index === -1 ? quantityCount : cartData.products[index].quantity + quantityCount,
           defaultStore,
+          userData,
           selectedProductColor
         )
       );

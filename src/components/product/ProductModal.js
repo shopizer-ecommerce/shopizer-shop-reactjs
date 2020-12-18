@@ -7,7 +7,7 @@ import Rating from "./sub-components/ProductRating";
 import { connect } from "react-redux";
 
 function ProductModal(props) {
-  const { product, cartData, defaultStore } = props;
+  const { product, cartData, defaultStore, userData } = props;
   // const { currency } = props;
   // const { discountedprice } = props;
   const { finalproductprice } = props;
@@ -324,6 +324,7 @@ function ProductModal(props) {
                               cartData,
                               quantityCount,
                               defaultStore,
+                              userData,
                               options
                               // selectedProductColor,
                               // selectedProductSize

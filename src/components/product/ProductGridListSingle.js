@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
-import { getDiscountPrice } from "../../helpers/product";
+// import { getDiscountPrice } from "../../helpers/product";
 import Rating from "./sub-components/ProductRating";
 import ProductModal from "./ProductModal";
 import { setProductID } from "../../redux/actions/productActions";
@@ -19,7 +19,8 @@ const ProductGridListSingle = ({
   sliderClassName,
   spaceBottomClass,
   setProductID,
-  defaultStore
+  defaultStore,
+  userData
 }) => {
   const [modalShow, setModalShow] = useState(false);
   const { addToast } = useToasts();
@@ -88,7 +89,7 @@ const ProductGridListSingle = ({
                   product.available && product.canBePurchased && product.visible && product.quantity > 0 ?
                     (
                       <button
-                        onClick={() => addToCart(product, addToast, cartItem, 1, defaultStore)}
+                        onClick={() => addToCart(product, addToast, cartItem, 1, defaultStore, userData)}
                         // className="active"
                         // disabled={cartItem !== undefined && cartItem.quantity > 0}
                         title="Add to cart"
@@ -251,7 +252,7 @@ const ProductGridListSingle = ({
                         (
                           // product, addToast, cartItem, 1, defaultStore
                           <button
-                            onClick={() => addToCart(product, addToast, cartItem, 1, defaultStore)}
+                            onClick={() => addToCart(product, addToast, cartItem, 1, defaultStore, userData)}
                             title="Add to cart"> {" "} <i className="pe-7s-cart"></i>{" "} Add to cart
                            </button>
                         )
@@ -316,6 +317,7 @@ const ProductGridListSingle = ({
         addtocart={addToCart}
 
         cartData={cartItem}
+        userData={userData}
         // addtowishlist={addToWishlist}
         // addtocompare={addToCompare}
         addtoast={addToast}

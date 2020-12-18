@@ -5,7 +5,7 @@ import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { connect } from "react-redux";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
-import RelatedProductSlider from "../../wrappers/product/RelatedProductSlider";
+// import RelatedProductSlider from "../../wrappers/product/RelatedProductSlider";
 import ProductDescriptionTab from "../../wrappers/product/ProductDescriptionTab";
 import ProductImageDescription from "../../wrappers/product/ProductImageDescription";
 import WebService from '../../util/webService';
@@ -103,7 +103,7 @@ Product.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const itemId = ownProps.match.params.id;
+  // const itemId = ownProps.match.params.id;
   return {
     productID: state.productData.productid,
     currentLanguageCode: state.multilanguage.currentLanguageCode,
