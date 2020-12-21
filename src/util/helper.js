@@ -20,7 +20,12 @@ export function isValidValue(value) {
   }
   return true
 }
-
+export function isCheckValueAndSetParams(params, value) {
+  if (typeof (value) === "undefined" || value === null || value === "") {
+    return ''
+  }
+  return params + value
+}
 export function hasProperty(object, key) {
   if (Array.isArray(object) || typeof (key) != 'string' || !object) {
     return false

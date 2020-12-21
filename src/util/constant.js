@@ -12,7 +12,9 @@ const Constant = {
         PRICE: 'price/',
         CUSTOMER: 'customer/',
         LOGIN: 'login/',
-        CUSTOMERS: 'customers/'
+        CUSTOMERS: 'customers/',
+        MANUFACTURERS: 'manufacturers/',
+        VARIANTS: 'variants/'
     }
 }
 

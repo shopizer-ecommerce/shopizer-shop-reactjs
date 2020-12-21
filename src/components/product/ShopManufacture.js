@@ -2,39 +2,37 @@ import PropTypes from "prop-types";
 import React from "react";
 import { setActiveSort } from "../../helpers/product";
 
-const ShopSize = ({ sizes, getSortParams }) => {
+const ShopManufacture = ({ manufactures, getSortParams }) => {
   return (
-    <div className="sidebar-widget mt-40">
-      <h4 className="pro-sidebar-title">Size </h4>
+    <div className="sidebar-widget mt-50">
+      <h4 className="pro-sidebar-title">Manufactures</h4>
       <div className="sidebar-widget-list mt-20">
-        {sizes.length > 0 ? (
+        {manufactures.length > 0 ? (
           <ul>
             {/* <li>
               <div className="sidebar-widget-list-left">
                 <button
                 // onClick={e => {
-                //   getSortParams("size", "");
+                //   getSortParams("category", "");
                 //   setActiveSort(e);
                 // }}
                 >
-                  <span className="checkmark" /> All Sizes{" "}
+                  <span className="checkmark" /> All Manufactures
                 </button>
               </div>
             </li> */}
-            {sizes.map((size, key) => {
+            {manufactures.map((category, key) => {
               return (
                 <li key={key}>
                   <div className="sidebar-widget-list-left">
                     <button
-                      className="text-uppercase"
                       onClick={e => {
-                        getSortParams("optionValues", size.value);
+                        getSortParams("manufacturer", category.id);
                         setActiveSort(e);
                       }}
                     >
                       {" "}
-                      <span className="checkmark" />
-                      {size.name}{" "}
+                      <span className="checkmark" /> {category.description.name}{" "}
                     </button>
                   </div>
                 </li>
@@ -42,16 +40,16 @@ const ShopSize = ({ sizes, getSortParams }) => {
             })}
           </ul>
         ) : (
-            "No sizes found"
+            "No manufactures found"
           )}
       </div>
     </div>
   );
 };
 
-ShopSize.propTypes = {
-  getSortParams: PropTypes.func,
-  sizes: PropTypes.array
+ShopManufacture.propTypes = {
+  categories: PropTypes.array,
+  getSortParams: PropTypes.func
 };
 
-export default ShopSize;
+export default ShopManufacture;

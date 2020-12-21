@@ -12,11 +12,13 @@ import ShopTopbar from '../../wrappers/product/ShopTopbar';
 import ShopProducts from '../../wrappers/product/ShopProducts';
 import WebService from '../../util/webService';
 import constant from '../../util/constant';
+import { isCheckValueAndSetParams } from '../../util/helper';
 import { setLoader } from "../../redux/actions/loaderActions";
 const ShopGridStandard = ({ location, defaultStore, currentLanguageCode, categoryID, setLoader }) => {
     const [layout, setLayout] = useState('grid three-column');
+
     // const [sortType, setSortType] = useState('');
-    // const [sortValue, setSortValue] = useState('');
+    const [categoryValue, setCategoryValue] = useState('');
     // const [filterSortType, setFilterSortType] = useState('');
     // const [filterSortValue, setFilterSortValue] = useState('');
     const [offset, setOffset] = useState(0);
@@ -26,6 +28,10 @@ const ShopGridStandard = ({ location, defaultStore, currentLanguageCode, categor
     const [productData, setProductData] = useState([]);
     const [totalProduct, setTotalProduct] = useState(0);
     const [productDetails, setProductDetails] = useState('');
+    const [subCategory, setSubCategory] = useState([]);
+    const [manufacture, setManufacture] = useState([]);
+    const [color, setColor] = useState([]);
+    const [size, setSize] = useState([]);
     // const [sortedProducts, setSortedProducts] = useState([]);
 
     // const pageLimit = 15;
@@ -35,28 +41,28 @@ const ShopGridStandard = ({ location, defaultStore, currentLanguageCode, categor
         setLayout(layout)
     }
 
-    // const getSortParams = (sortType, sortValue) => {
-    //     setSortType(sortType);
-    //     setSortValue(sortValue);
-    // }
+    const getSortParams = (sortType, sortValue) => {
+        getProductList(categoryValue, sortType, sortValue)
+    }
 
-    // const getFilterSortParams = (sortType, sortValue) => {
-    //     setFilterSortType(sortType);
-    //     setFilterSortValue(sortValue);
-    // }
+    const getCategoryParams = (sortType, sortValue) => {
+        setCategoryValue(sortValue)
+        getProductList(sortValue)
+    }
 
     useEffect(() => {
-        getProductList()
-        getCategoryDetails()
-        // let sortedProducts = getSortedProducts(products, sortType, sortValue);
-        // const filterSortedProducts = getSortedProducts(sortedProducts, filterSortType, filterSortValue);
-        // sortedProducts = filterSortedProducts;
-        // setSortedProducts(sortedProducts);
-        // setProductData(sortedProducts.slice(offset, offset + pageLimit));
+
+        setCategoryValue(categoryID)
+        setSubCategory([])
+        setColor([])
+        setManufacture([])
+        setSize([])
+        getProductList(categoryID)
     }, [categoryID, offset]);
-    const getProductList = async () => {
+    const getProductList = async (categoryid, sortType, sortValue) => {
         setLoader(true)
-        let action = constant.ACTION.PRODUCTS + '?store=' + defaultStore + '&lang=' + currentLanguageCode + '&start=' + offset + '&count=' + pageLimit + '&category=' + categoryID;
+        // let action = `${constant.ACTION.PRODUCTS} + '?store=' + defaultStore + '&lang=' + currentLanguageCode + '&start=' + offset + '&count=' + pageLimit + '&category=' + categoryID`;
+        let action = `${constant.ACTION.PRODUCTS}?${isCheckValueAndSetParams('&store=', defaultStore)}${isCheckValueAndSetParams('&lang=', currentLanguageCode)}${isCheckValueAndSetParams('&start=', offset)}${isCheckValueAndSetParams('&count=', pageLimit)}${isCheckValueAndSetParams('&category=', categoryid)}${isCheckValueAndSetParams('&' + sortType + '=', sortValue)}`;
         try {
             let response = await WebService.get(action);
             if (response) {
@@ -67,13 +73,50 @@ const ShopGridStandard = ({ location, defaultStore, currentLanguageCode, categor
         } catch (error) {
             setLoader(false)
         }
+
+        getCategoryDetails(categoryid)
     }
-    const getCategoryDetails = async () => {
-        let action = constant.ACTION.CATEGORY + categoryID + '?store=' + defaultStore;
+    const getCategoryDetails = async (categoryid) => {
+        let action = constant.ACTION.CATEGORY + categoryid + '?store=' + defaultStore;
         try {
             let response = await WebService.get(action);
+            console.log(response.children);
             if (response) {
-                setProductDetails(response)
+                setProductDetails(response);
+                // let temp = response.children;
+                // console.log(temp)
+                setSubCategory(response.children);
+            }
+        } catch (error) {
+        }
+        getManufacturers(categoryid)
+    }
+    const getManufacturers = async (categoryid) => {
+        let action = constant.ACTION.CATEGORY + categoryid + '/' + constant.ACTION.MANUFACTURERS + '?store=' + defaultStore;
+        try {
+            let response = await WebService.get(action);
+            console.log(response);
+            if (response) {
+                setManufacture(response)
+            }
+        } catch (error) {
+        }
+        getVariants(categoryid)
+    }
+    const getVariants = async (categoryid) => {
+        let action = constant.ACTION.CATEGORY + categoryid + '/' + constant.ACTION.VARIANTS + '?store=' + defaultStore;
+        try {
+            let response = await WebService.get(action);
+            console.log(response);
+            if (response) {
+                response.map(variant => {
+                    if (variant.code == 'COLOR') {
+                        setColor(variant.options);
+                    } else if (variant.code == "SIZE") {
+                        setSize(variant.options);
+                    }
+                });
+
             }
         } catch (error) {
         }
@@ -100,7 +143,7 @@ const ShopGridStandard = ({ location, defaultStore, currentLanguageCode, categor
                             <div className="col-lg-3 order-2 order-lg-1">
                                 {/* shop sidebar */}
                                 {/* <ShopSidebar products={products} getSortParams={getSortParams} sideSpaceClass="mr-30" /> */}
-                                <ShopSidebar products={productData} sideSpaceClass="mr-30" />
+                                <ShopSidebar getSortParams={getSortParams} getCategoryParams={getCategoryParams} uniqueCategories={subCategory} uniqueColors={color} uniqueSizes={size} uniqueManufacture={manufacture} sideSpaceClass="mr-30" />
                             </div>
                             <div className="col-lg-9 order-1 order-lg-2">
                                 {/* shop topbar default */}

@@ -8,13 +8,12 @@ import { addToCart } from "../../redux/actions/cartActions";
 // import { addToWishlist } from "../../redux/actions/wishlistActions";
 // import { addToCompare } from "../../redux/actions/compareActions";
 import Rating from "./sub-components/ProductRating";
-// import WebService from '../../util/webService';
-// import constant from '../../util/constant';
+import WebService from '../../util/webService';
+import constant from '../../util/constant';
 import { setLoader } from "../../redux/actions/loaderActions";
 
 const ProductDescriptionInfo = ({
   product,
-  discountedPrice,
   // currency,
   finalDiscountedPrice,
   finalProductPrice,
@@ -30,6 +29,9 @@ const ProductDescriptionInfo = ({
   // addToWishlist,
   // addToCompare
 }) => {
+  const [discountedPrice, setDiscountedPrice] = useState(finalDiscountedPrice)
+  const [productPrice, setProductPrice] = useState(finalProductPrice)
+  const [isDiscount, setIsDiscount] = useState(product.discounted)
   const [selectedProductColor, setSelectedProductColor] = useState([])
   const [quantityCount, setQuantityCount] = useState(1);
   useEffect(() => {
@@ -53,7 +55,7 @@ const ProductDescriptionInfo = ({
 
   const onChangeOptions = async (value, option) => {
 
-
+    let tempSelectedOptions = [];
     let index;
     if (option.type === 'radio') {
       index = selectedProductColor.findIndex(a => a.name === option.name);
@@ -62,7 +64,10 @@ const ProductDescriptionInfo = ({
     }
 
     if (index === -1) {
-      setSelectedProductColor([...selectedProductColor, { 'name': option.name, 'id': value.id }])
+      let temp = [...selectedProductColor, { 'name': option.name, 'id': value.id }]
+      tempSelectedOptions = temp;
+      setSelectedProductColor(temp)
+      // setSelectedProductColor([...selectedProductColor, { 'name': option.name, 'id': value.id }])
     } else {
       let temp = [...selectedProductColor]
       if (option.type === 'radio') {
@@ -71,22 +76,30 @@ const ProductDescriptionInfo = ({
       } else {
         temp.splice(index, 1);
       }
+      tempSelectedOptions = temp;
       setSelectedProductColor(temp)
     }
+    console.log(tempSelectedOptions);
+    getPrice(tempSelectedOptions)
 
-
-    // setLoader(true)
-    // let action = constant.ACTION.PRODUCTS + productID + '/' + constant.ACTION.PRICE;
-    // let param = { "options": [{ id: value.id }] }
-    // try {
-    //   let response = await WebService.post(action, param);
-    //   if (response) {
-    //     // setProductDetails(response)
-    //     setLoader(false)
-    //   }
-    // } catch (error) {
-    //   setLoader(false)
-    // }
+  }
+  const getPrice = async (tempSelectedOptions) => {
+    setLoader(true)
+    let action = constant.ACTION.PRODUCT + productID + '/' + constant.ACTION.PRICE;
+    let param = { "options": tempSelectedOptions }
+    try {
+      let response = await WebService.post(action, param);
+      if (response) {
+        // setProductDetails(response)
+        setDiscountedPrice(response.finalPrice);
+        setProductPrice(response.originalPrice);
+        setIsDiscount(response.discounted);
+        // finalDiscountedPrice = response.originalPrice
+        setLoader(false)
+      }
+    } catch (error) {
+      setLoader(false)
+    }
   }
   const checkedOrNot = (value) => {
     let index = selectedProductColor.findIndex(a => a.id === value.id);
@@ -100,15 +113,15 @@ const ProductDescriptionInfo = ({
     <div className="product-details-content ml-70">
       <h2>{product.description.name}</h2>
       <div className="product-details-price">
-        {product.discounted !== null ? (
+        {isDiscount ? (
           <Fragment>
-            <span>{finalDiscountedPrice}</span>{" "}
+            <span>{discountedPrice}</span>{" "}
             <span className="old">
-              {finalProductPrice}
+              {productPrice}
             </span>
           </Fragment>
         ) : (
-            <span>{finalProductPrice} </span>
+            <span>{productPrice} </span>
           )}
       </div>
       {/* {product.rating && product.rating > 0 ? ( */}
