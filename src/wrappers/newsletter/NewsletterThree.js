@@ -13,7 +13,7 @@ const NewsletterThree = ({
     <div
       className={`subscribe-area-3 ${bgColorClass ? bgColorClass : ""} ${
         spaceTopClass ? spaceTopClass : ""
-      } ${spaceBottomClass ? spaceBottomClass : ""} `}
+        } ${spaceBottomClass ? spaceBottomClass : ""} `}
     >
       <div className="container-fluid">
         <div className="row">
@@ -21,7 +21,7 @@ const NewsletterThree = ({
             <div
               className={`subscribe-style-3 text-center ${
                 subscribeColorClass ? subscribeColorClass : ""
-              }`}
+                }`}
             >
               <h2>Join With Us! </h2>
               <p>Subscribe to our newsletter to receive news on update</p>

@@ -11,6 +11,7 @@ import WebService from '../../util/webService';
 import constant from '../../util/constant';
 // import { setLocalData } from '../../util/helper';
 import { setMerchant } from "../../redux/actions/storeAction";
+import { getCurrentLocation } from "../../redux/actions/userAction";
 const HeaderOne = ({
   setMerchant,
   merchant,
@@ -20,7 +21,8 @@ const HeaderOne = ({
   headerPaddingClass,
   headerPositionClass,
   headerBgClass,
-  defaultStore
+  defaultStore,
+  getCurrentLocation
 }) => {
   const [scroll, setScroll] = useState(0);
   const [headerTop, setHeaderTop] = useState(0);
@@ -29,6 +31,7 @@ const HeaderOne = ({
 
   useEffect(() => {
     setMerchant()
+    getCurrentLocation()
     getCategoryHierarchy();
     getContent();
     const header = document.querySelector(".sticky-bar");
@@ -133,6 +136,9 @@ const mapDispatchToProps = dispatch => {
   return {
     setMerchant: () => {
       dispatch(setMerchant());
+    },
+    getCurrentLocation: () => {
+      dispatch(getCurrentLocation())
     }
   };
 };

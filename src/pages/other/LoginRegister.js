@@ -11,6 +11,7 @@ import { useForm } from "react-hook-form";
 import { useToasts } from "react-toast-notifications";
 import WebService from '../../util/webService';
 import constant from '../../util/constant';
+import { setLocalData } from '../../util/helper';
 import { setLoader } from "../../redux/actions/loaderActions";
 import { setUser } from "../../redux/actions/userAction";
 import { connect } from "react-redux";
@@ -59,6 +60,7 @@ const LoginRegister = ({ props, location, setLoader, setUser }) => {
       if (response) {
         addToast("You have successfully logged in to this website", { appearance: "success", autoDismiss: true });
         setUser(response)
+        setLocalData('token', response.token)
         history.push('my-account')
 
       }

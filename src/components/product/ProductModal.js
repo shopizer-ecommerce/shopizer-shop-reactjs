@@ -5,13 +5,18 @@ import Swiper from "react-id-swiper";
 import { Modal } from "react-bootstrap";
 import Rating from "./sub-components/ProductRating";
 import { connect } from "react-redux";
+import WebService from '../../util/webService';
+import constant from '../../util/constant';
+import { setLoader } from "../../redux/actions/loaderActions";
 
 function ProductModal(props) {
-  const { product, cartData, defaultStore, userData } = props;
-  // const { currency } = props;
-  // const { discountedprice } = props;
-  const { finalproductprice } = props;
-  const { finaldiscountedprice } = props;
+  const { product, cartData, defaultStore, userData, finalproductprice, finaldiscountedprice, setLoader } = props;
+
+
+
+  const [discountedPrice, setDiscountedPrice] = useState(finaldiscountedprice)
+  const [productPrice, setProductPrice] = useState(finalproductprice)
+  const [isDiscount, setIsDiscount] = useState(product.discounted)
 
   const [gallerySwiper, getGallerySwiper] = useState(null);
   const [thumbnailSwiper, getThumbnailSwiper] = useState(null);
@@ -86,23 +91,11 @@ function ProductModal(props) {
         })
       })
       setSelectedProductColor(temp)
-
     }
   }
   const onChangeOptions = async (value, option) => {
 
-    // setLoader(true)
-    // let action = constant.ACTION.PRODUCTS + productID + '/' + constant.ACTION.PRICE;
-    // let param = { "options": [{ id: value.id }] }
-    // try {
-    //   let response = await WebService.post(action, param);
-    //   if (response) {
-    //     // setProductDetails(response)
-    //     setLoader(false)
-    //   }
-    // } catch (error) {
-    //   setLoader(false)
-    // }
+    let tempSelectedOptions = [];
     let index;
     if (option.type === 'radio') {
       index = selectedProductColor.findIndex(a => a.name === option.name);
@@ -111,7 +104,10 @@ function ProductModal(props) {
     }
 
     if (index === -1) {
-      setSelectedProductColor([...selectedProductColor, { 'name': option.name, 'id': value.id }])
+      let temp = [...selectedProductColor, { 'name': option.name, 'id': value.id }]
+      tempSelectedOptions = temp;
+      setSelectedProductColor(temp)
+      // setSelectedProductColor([...selectedProductColor, { 'name': option.name, 'id': value.id }])
     } else {
       let temp = [...selectedProductColor]
       if (option.type === 'radio') {
@@ -120,7 +116,25 @@ function ProductModal(props) {
       } else {
         temp.splice(index, 1);
       }
+      tempSelectedOptions = temp;
       setSelectedProductColor(temp)
+    }
+    getPrice(tempSelectedOptions)
+  }
+  const getPrice = async (tempSelectedOptions) => {
+    setLoader(true)
+    let action = constant.ACTION.PRODUCT + product.id + '/' + constant.ACTION.PRICE;
+    let param = { "options": tempSelectedOptions }
+    try {
+      let response = await WebService.post(action, param);
+      if (response) {
+        setDiscountedPrice(response.finalPrice);
+        setProductPrice(response.originalPrice);
+        setIsDiscount(response.discounted);
+        setLoader(false)
+      }
+    } catch (error) {
+      setLoader(false)
     }
   }
   const checkedOrNot = (value) => {
@@ -185,16 +199,16 @@ function ProductModal(props) {
               <div className="product-details-content quickview-content">
                 <h2>{product.description.name}</h2>
                 <div className="product-details-price">
-                  {product.discounted ? (
+                  {isDiscount ? (
                     <Fragment>
                       <span>
-                        {finaldiscountedprice}
+                        {discountedPrice}
                       </span>{" "}
                       <span className="old">
-                        {finalproductprice}
+                        {productPrice}
                       </span>
                     </Fragment>
-                  ) : (<span>{finalproductprice} </span>)}
+                  ) : (<span>{productPrice} </span>)}
                 </div>
 
                 <div className="pro-details-rating-wrap">
@@ -398,5 +412,11 @@ const mapStateToProps = state => {
     // cartitems: state.cartData
   };
 };
-
-export default connect(mapStateToProps)(ProductModal);
+const mapDispatchToProps = dispatch => {
+  return {
+    setLoader: (value) => {
+      dispatch(setLoader(value));
+    }
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ProductModal);

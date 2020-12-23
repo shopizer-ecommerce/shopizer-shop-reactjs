@@ -12,7 +12,7 @@ import {
   // decreaseQuantity,
   deleteFromCart,
   // cartItemStock,
-  deleteAllFromCart
+  // deleteAllFromCart
 } from "../../redux/actions/cartActions";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
@@ -25,13 +25,22 @@ const Cart = ({
   increaseQuantity,
   // addToCart,
   deleteFromCart,
-  deleteAllFromCart,
+  // deleteAllFromCart,
 
 }) => {
   const { addToast } = useToasts();
   const { pathname } = location;
   const cartTotalPrice = cartItems.displaySubTotal;
   const grandTotalPrice = cartItems.displaySubTotal;
+
+  const deleteAllFromCart = () => {
+    console.log(cartItems);
+    cartItems.products.map((value) => {
+      deleteFromCart(cartItems.code, value, defaultStore, addToast)
+    });
+
+  }
+
   return (
     <Fragment>
       <MetaTags>
@@ -161,7 +170,7 @@ const Cart = ({
                         <Link to="/">Continue Shopping </Link>
                       </div>
                       <div className="cart-clear">
-                        <button onClick={() => deleteAllFromCart(addToast)}>
+                        <button onClick={() => deleteAllFromCart()}>
                           Clear Shopping Cart
                         </button>
                       </div>
@@ -317,9 +326,9 @@ const mapDispatchToProps = dispatch => {
     deleteFromCart: (cartId, item, defaultStore, addToast) => {
       dispatch(deleteFromCart(cartId, item, defaultStore, addToast));
     },
-    deleteAllFromCart: addToast => {
-      dispatch(deleteAllFromCart(addToast));
-    }
+    // deleteAllFromCart: addToast => {
+    //   dispatch(deleteAllFromCart(addToast));
+    // }
   };
 };
 

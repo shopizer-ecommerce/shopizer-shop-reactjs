@@ -1,5 +1,5 @@
 import axios from 'axios';
-// import constant from './constant.js'
+import { getLocalData } from './helper'
 
 const BASE_URL = process.env.REACT_APP_BASE_URL + process.env.REACT_APP_API_VERSION;
 axios.defaults.baseURL = BASE_URL
@@ -31,16 +31,16 @@ export default class WebService {
 
 }
 
-// axios.interceptors.request.use(async (config) => {
-//     // Do something before request is sent
-//     config.baseURL = BASE_URL;
-//     const token = await getStoredData("token");
-//     config.headers.common['Authorization'] = token ? token : '';
-//     return config;
-// }, (error) => {
-//     // Do something with request error
-//     return Promise.reject(error);
-// });  
+axios.interceptors.request.use(async (config) => {
+    // Do something before request is sent
+    config.baseURL = BASE_URL;
+    const token = await getLocalData("token");
+    config.headers.common['Authorization'] = token ? token : '';
+    return config;
+}, (error) => {
+    // Do something with request error
+    return Promise.reject(error);
+});
 
 
 axios.interceptors.response.use((response) => {

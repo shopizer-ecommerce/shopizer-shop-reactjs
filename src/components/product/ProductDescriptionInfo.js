@@ -79,7 +79,7 @@ const ProductDescriptionInfo = ({
       tempSelectedOptions = temp;
       setSelectedProductColor(temp)
     }
-    console.log(tempSelectedOptions);
+    // console.log(tempSelectedOptions);
     getPrice(tempSelectedOptions)
 
   }

@@ -14,7 +14,15 @@ const Constant = {
         LOGIN: 'login/',
         CUSTOMERS: 'customers/',
         MANUFACTURERS: 'manufacturers/',
-        VARIANTS: 'variants/'
+        VARIANTS: 'variants/',
+        CONFIG: 'config/',
+        COUNTRY: 'country/',
+        ZONES: 'zones/',
+        AUTH: 'auth/',
+        PROFILE: 'profile',
+        SHIPPING: 'shipping',
+        TOTAL: 'total/',
+        NEWSLETTER: 'newsletter/'
     }
 }
 
