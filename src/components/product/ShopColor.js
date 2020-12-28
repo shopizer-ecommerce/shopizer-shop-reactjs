@@ -4,35 +4,35 @@ import { setActiveSort } from "../../helpers/product";
 
 const ShopColor = ({ colors, getSortParams }) => {
   return (
-    <div className="sidebar-widget mt-50">
+    <div className="sidebar-widget mt-30">
       <h4 className="pro-sidebar-title">Color </h4>
       <div className="sidebar-widget-list mt-20">
         {colors.length > 0 ? (
           <ul>
-            {/* <li>
-              <div className="sidebar-widget-list-left">
-                <button
-                // onClick={e => {
-                //   getSortParams("color", "");
-                //   setActiveSort(e);
-                // }}
-                >
-                  <span className="checkmark" /> All Colors{" "}
-                </button>
-              </div>
-            </li> */}
             {colors.map((color, key) => {
               return (
                 <li key={key}>
                   <div className="sidebar-widget-list-left">
-                    <button
+                    <label>
+                      <input
+                        type="checkbox"
+                        value={color.value}
+                        name="color"
+                        // checked={checkedOrNot(singleSize)}
+                        onChange={() => {
+                          getSortParams("color", color.value);
+                        }}
+                      />
+                      <span className="checkmark" />{color.name}{" "}
+                    </label>
+                    {/* <button
                       onClick={e => {
                         getSortParams("optionValues", color.value);
                         setActiveSort(e);
                       }}
                     >
                       <span className="checkmark" /> {color.name}{" "}
-                    </button>
+                    </button> */}
                   </div>
                 </li>
               );

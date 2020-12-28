@@ -63,13 +63,15 @@
 
         align-items: center;
 
-        padding: 0 0 15px;
+        // padding: 0 0 15px;
 
         &:last-child {
           padding: 0 0 0;
         }
 
         .sidebar-widget-list-left {
+          padding-left: 30px;
+
           input {
             position: absolute;
             z-index: 999;
@@ -96,7 +98,7 @@
 
             width: 15px;
             height: 15px;
-
+            margin-top: 4px;
             border: 2px solid #888888;
             border-radius: 3px;
             background-color: #fff;

@@ -91,13 +91,14 @@ function ProductModal(props) {
         })
       })
       setSelectedProductColor(temp)
+      getPrice(temp)
     }
   }
   const onChangeOptions = async (value, option) => {
 
     let tempSelectedOptions = [];
     let index;
-    if (option.type === 'radio') {
+    if (option.type === 'radio' || option.type === 'select') {
       index = selectedProductColor.findIndex(a => a.name === option.name);
     } else {
       index = selectedProductColor.findIndex(a => a.id === value.id);
@@ -110,7 +111,7 @@ function ProductModal(props) {
       // setSelectedProductColor([...selectedProductColor, { 'name': option.name, 'id': value.id }])
     } else {
       let temp = [...selectedProductColor]
-      if (option.type === 'radio') {
+      if (option.type === 'radio' || option.type === 'select') {
         temp[index] = { 'name': option.name, 'id': value.id };
 
       } else {
@@ -228,12 +229,12 @@ function ProductModal(props) {
                           option.type === 'radio' &&
                           <div className="pro-details-color-wrap" key={key}>
                             <span>{option.name}</span>
-                            <div className="pro-details-color-content" style={{ display: 'flex' }}>
+                            <div className="pro-details-color-content" style={{ display: 'flex', flexDirection: 'column' }}>
                               {
 
                                 option.optionValues.map((value, index) => {
                                   return (
-                                    <div style={{ flexDirection: 'column', display: 'flex', alignItems: 'center', marginRight: 15 }} key={index}>
+                                    <div style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', margin: 15 }} key={index}>
                                       {value.image && <img src={value.image} alt="product-option" />}
 
                                       <label className={`pro-details-color-content--single`} style={{ backgroundColor: value.code }} key={index} >
@@ -247,6 +248,7 @@ function ProductModal(props) {
                                         />
                                         <span className="checkmark"></span>
                                       </label>
+                                      <label>{value.description.name} {value.price && '(' + value.price + ')'}</label>
                                     </div>
                                   );
                                 })
@@ -264,7 +266,32 @@ function ProductModal(props) {
                         return (
                           option.type === 'select' &&
                           <div className="pro-details-size" key={index}>
-                            <span>Size</span>
+                            <span>{option.name}</span>
+                            <div className="pro-details-size-content">
+                              {
+                                <select onChange={(e) => { onChangeOptions(JSON.parse(e.target.value), option) }}>
+                                  {/* <option>Select a country</option> */}
+                                  {
+
+                                    option.optionValues.map((singleSize, i) => {
+                                      return <option key={i} value={JSON.stringify(singleSize)} selected={checkedOrNot(singleSize)}>{singleSize.description.name} {singleSize.price && '(' + singleSize.price + ')'}</option>
+                                    })
+                                  }
+                                </select>
+
+                              }
+                            </div>
+                          </div>
+                        )
+                      })
+                    }
+                    {
+
+                      product.options.map((option, index) => {
+                        return (
+                          option.type === 'checkbox' &&
+                          <div className="pro-details-size" key={index}>
+                            <span>{option.name}</span>
                             <div className="pro-details-size-content" style={{ display: 'flex' }}>
                               {
                                 option.optionValues.map((singleSize, key) => {
@@ -285,7 +312,7 @@ function ProductModal(props) {
                                             //   setQuantityCount(1);
                                           }}
                                         />
-                                        <span className="size-name">{singleSize.description.name}</span>
+                                        <span className="size-name">{singleSize.description.name} {singleSize.price && '(' + singleSize.price + ')'}</span>
                                       </label>
                                     </div>
                                   );

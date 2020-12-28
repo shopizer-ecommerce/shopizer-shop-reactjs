@@ -70,6 +70,21 @@
           margin-bottom: 30px;
         }
 
+        select {
+          font-size: 14px;
+
+          height: 45px;
+          padding: 2px 15px;
+
+          cursor: pointer;
+
+          color: #333;
+          border: 1px solid #e6e6e6;
+
+          -webkit-appearance: none;
+          -moz-appearance: none;
+        }
+
         .error-msg {
           color: red;
           font-size: 13px;

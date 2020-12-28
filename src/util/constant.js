@@ -22,7 +22,9 @@ const Constant = {
         PROFILE: 'profile',
         SHIPPING: 'shipping',
         TOTAL: 'total/',
-        NEWSLETTER: 'newsletter/'
+        NEWSLETTER: 'newsletter/',
+        REGISTER: 'register',
+        CHECKOUT: 'checkout'
     }
 }
 

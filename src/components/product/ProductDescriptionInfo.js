@@ -48,7 +48,7 @@ const ProductDescriptionInfo = ({
         })
       })
       setSelectedProductColor(temp)
-
+      getPrice(temp)
     }
   }
 
@@ -57,7 +57,7 @@ const ProductDescriptionInfo = ({
 
     let tempSelectedOptions = [];
     let index;
-    if (option.type === 'radio') {
+    if (option.type === 'radio' || option.type === 'select') {
       index = selectedProductColor.findIndex(a => a.name === option.name);
     } else {
       index = selectedProductColor.findIndex(a => a.id === value.id);
@@ -70,7 +70,7 @@ const ProductDescriptionInfo = ({
       // setSelectedProductColor([...selectedProductColor, { 'name': option.name, 'id': value.id }])
     } else {
       let temp = [...selectedProductColor]
-      if (option.type === 'radio') {
+      if (option.type === 'radio' || option.type === 'select') {
         temp[index] = { 'name': option.name, 'id': value.id };
 
       } else {
@@ -145,12 +145,12 @@ const ProductDescriptionInfo = ({
                 option.type === 'radio' &&
                 <div className="pro-details-color-wrap" key={key}>
                   <span>{option.name}</span>
-                  <div className="pro-details-color-content" style={{ display: 'flex' }}>
+                  <div className="pro-details-color-content" style={{ display: 'flex', flexDirection: 'column' }}>
                     {
 
                       option.optionValues.map((value, index) => {
                         return (
-                          <div style={{ flexDirection: 'column', display: 'flex', alignItems: 'center', marginRight: 15 }} key={index}>
+                          <div style={{ flexDirection: 'row', display: 'flex', alignItems: 'center', margin: 15 }} key={index}>
                             {value.image && <img src={value.image} alt="product-option" />}
 
                             <label className={`pro-details-color-content--single`} style={{ backgroundColor: value.code }} key={index} >
@@ -163,7 +163,9 @@ const ProductDescriptionInfo = ({
                                 onChange={() => onChangeOptions(value, option)}
                               />
                               <span className="checkmark"></span>
+
                             </label>
+                            <label>{value.description.name} {value.price && '(' + value.price + ')'}</label>
                           </div>
                         );
                       })
@@ -181,7 +183,32 @@ const ProductDescriptionInfo = ({
               return (
                 option.type === 'select' &&
                 <div className="pro-details-size" key={index}>
-                  <span>Size</span>
+                  <span>{option.name}</span>
+                  <div className="pro-details-size-content">
+                    {
+                      <select onChange={(e) => { onChangeOptions(JSON.parse(e.target.value), option) }}>
+                        {/* <option>Select a country</option> */}
+                        {
+
+                          option.optionValues.map((singleSize, i) => {
+                            return <option key={i} value={JSON.stringify(singleSize)} selected={checkedOrNot(singleSize)}>{singleSize.description.name}  {singleSize.price && '(' + singleSize.price + ')'}</option>
+                          })
+                        }
+                      </select>
+
+                    }
+                  </div>
+                </div>
+              )
+            })
+          }
+          {
+
+            product.options.map((option, index) => {
+              return (
+                option.type === 'checkbox' &&
+                <div className="pro-details-size" key={index}>
+                  <span>{option.name}</span>
                   <div className="pro-details-size-content" style={{ display: 'flex' }}>
                     {
                       option.optionValues.map((singleSize, key) => {
@@ -202,7 +229,7 @@ const ProductDescriptionInfo = ({
                                   //   setQuantityCount(1);
                                 }}
                               />
-                              <span className="size-name">{singleSize.description.name}</span>
+                              <span className="size-name">{singleSize.description.name}  {singleSize.price && '(' + singleSize.price + ')'}</span>
                             </label>
                           </div>
                         );

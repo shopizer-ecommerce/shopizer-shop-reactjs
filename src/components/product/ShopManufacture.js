@@ -4,28 +4,28 @@ import { setActiveSort } from "../../helpers/product";
 
 const ShopManufacture = ({ manufactures, getSortParams }) => {
   return (
-    <div className="sidebar-widget mt-50">
+    <div className="sidebar-widget mt-30">
       <h4 className="pro-sidebar-title">Manufactures</h4>
       <div className="sidebar-widget-list mt-20">
         {manufactures.length > 0 ? (
           <ul>
-            {/* <li>
-              <div className="sidebar-widget-list-left">
-                <button
-                // onClick={e => {
-                //   getSortParams("category", "");
-                //   setActiveSort(e);
-                // }}
-                >
-                  <span className="checkmark" /> All Manufactures
-                </button>
-              </div>
-            </li> */}
             {manufactures.map((category, key) => {
               return (
                 <li key={key}>
                   <div className="sidebar-widget-list-left">
-                    <button
+                    <label>
+                      <input
+                        type="checkbox"
+                        value={category.id}
+                        name="manufacture"
+                        // checked={checkedOrNot(singleSize)}
+                        onChange={() => {
+                          getSortParams("manufacturer", category.id);
+                        }}
+                      />
+                      <span className="checkmark" />{category.description.name}{" "}
+                    </label>
+                    {/* <button
                       onClick={e => {
                         getSortParams("manufacturer", category.id);
                         setActiveSort(e);
@@ -33,7 +33,7 @@ const ShopManufacture = ({ manufactures, getSortParams }) => {
                     >
                       {" "}
                       <span className="checkmark" /> {category.description.name}{" "}
-                    </button>
+                    </button> */}
                   </div>
                 </li>
               );

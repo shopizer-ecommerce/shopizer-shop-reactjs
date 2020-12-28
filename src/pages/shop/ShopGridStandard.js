@@ -32,6 +32,8 @@ const ShopGridStandard = ({ location, defaultStore, currentLanguageCode, categor
     const [manufacture, setManufacture] = useState([]);
     const [color, setColor] = useState([]);
     const [size, setSize] = useState([]);
+    const [selectedOption, setSelectedOption] = useState([]);
+    const [selectedManufature, setSelectedManufature] = useState([]);
     // const [sortedProducts, setSortedProducts] = useState([]);
 
     // const pageLimit = 15;
@@ -42,27 +44,58 @@ const ShopGridStandard = ({ location, defaultStore, currentLanguageCode, categor
     }
 
     const getSortParams = (sortType, sortValue) => {
-        getProductList(categoryValue, sortType, sortValue)
+        console.log(sortType)
+        let tempSelectedOption = selectedOption;
+        let tempSelectedManufature = selectedManufature;
+        if (sortType === 'size' || sortType === 'color') {
+            let index = selectedOption.findIndex(a => a === sortValue);
+            // console.log(index)
+            if (index === -1) {
+                tempSelectedOption = [...selectedOption, sortValue]
+            } else {
+                tempSelectedOption.splice(index, 1);
+            }
+            // console.log(tempSelectedSize)
+            setSelectedOption(tempSelectedOption)
+        }
+        else if (sortType === 'manufacturer') {
+            let index = selectedManufature.findIndex(a => a === sortValue);
+            // console.log(index)
+            if (index === -1) {
+                tempSelectedManufature = [...selectedManufature, sortValue]
+            } else {
+                tempSelectedManufature.splice(index, 1);
+            }
+            // console.log(tempSelectedSize)
+            setSelectedManufature(tempSelectedManufature)
+        }
+        // console.log(categoryValue, tempSelectedOption, selectedManufature)
+        getProductList(categoryValue, tempSelectedOption, tempSelectedManufature)
     }
 
     const getCategoryParams = (sortType, sortValue) => {
+        // console.log(sortType)
+        // console.log(sortValue)
         setCategoryValue(sortValue)
+        getProductList(categoryValue, selectedOption, selectedManufature)
         getProductList(sortValue)
     }
 
     useEffect(() => {
-
+        
         setCategoryValue(categoryID)
         setSubCategory([])
         setColor([])
         setManufacture([])
         setSize([])
-        getProductList(categoryID)
+        setSelectedManufature([])
+        setSelectedOption([])
+        getProductList(categoryID, [], [])
     }, [categoryID, offset]);
-    const getProductList = async (categoryid, sortType, sortValue) => {
+    const getProductList = async (categoryid, size, manufacture) => {
         setLoader(true)
         // let action = `${constant.ACTION.PRODUCTS} + '?store=' + defaultStore + '&lang=' + currentLanguageCode + '&start=' + offset + '&count=' + pageLimit + '&category=' + categoryID`;
-        let action = `${constant.ACTION.PRODUCTS}?${isCheckValueAndSetParams('&store=', defaultStore)}${isCheckValueAndSetParams('&lang=', currentLanguageCode)}${isCheckValueAndSetParams('&start=', offset)}${isCheckValueAndSetParams('&count=', pageLimit)}${isCheckValueAndSetParams('&category=', categoryid)}${isCheckValueAndSetParams('&' + sortType + '=', sortValue)}`;
+        let action = `${constant.ACTION.PRODUCTS}?${isCheckValueAndSetParams('&store=', defaultStore)}${isCheckValueAndSetParams('&lang=', currentLanguageCode)}${isCheckValueAndSetParams('&start=', offset)}${isCheckValueAndSetParams('&count=', pageLimit)}${isCheckValueAndSetParams('&category=', categoryid)}${isCheckValueAndSetParams('&optionValues=', size.join())}${isCheckValueAndSetParams('&manufacturer=', manufacture.join())}`;
         try {
             let response = await WebService.get(action);
             if (response) {
@@ -80,7 +113,7 @@ const ShopGridStandard = ({ location, defaultStore, currentLanguageCode, categor
         let action = constant.ACTION.CATEGORY + categoryid + '?store=' + defaultStore;
         try {
             let response = await WebService.get(action);
-            console.log(response.children);
+            // console.log(response.children);
             if (response) {
                 setProductDetails(response);
                 // let temp = response.children;
@@ -95,7 +128,7 @@ const ShopGridStandard = ({ location, defaultStore, currentLanguageCode, categor
         let action = constant.ACTION.CATEGORY + categoryid + '/' + constant.ACTION.MANUFACTURERS + '?store=' + defaultStore;
         try {
             let response = await WebService.get(action);
-            console.log(response);
+            // console.log(response);
             if (response) {
                 setManufacture(response)
             }
@@ -107,7 +140,7 @@ const ShopGridStandard = ({ location, defaultStore, currentLanguageCode, categor
         let action = constant.ACTION.CATEGORY + categoryid + '/' + constant.ACTION.VARIANTS + '?store=' + defaultStore;
         try {
             let response = await WebService.get(action);
-            console.log(response);
+            // console.log(response);
             if (response) {
                 response.map(variant => {
                     if (variant.code == 'COLOR') {

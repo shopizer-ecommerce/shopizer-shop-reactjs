@@ -12,7 +12,11 @@ import constant from '../../util/constant';
 import WebService from '../../util/webService';
 import { getCountry, getState } from "../../redux/actions/userAction";
 import { useForm, Controller } from "react-hook-form";
-
+import { loadStripe } from '@stripe/stripe-js';
+import { CardElement, Elements, ElementsConsumer } from '@stripe/react-stripe-js';
+import { useToasts } from "react-toast-notifications";
+import { setLoader } from "../../redux/actions/loaderActions";
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 const paymentForm = {
   firstName: {
     name: "firstName",
@@ -172,34 +176,56 @@ const paymentForm = {
       }
     }
   },
-  shipPhone: {
-    name: "shipPhone",
-    validate: {
-      required: {
-        value: true,
-        message: "Phone number is required"
-      },
-      minLength: {
-        value: 10,
-        message: "Enter a 10-digit number"
+  // shipPhone: {
+  //   name: "shipPhone",
+  //   validate: {
+  //     required: {
+  //       value: true,
+  //       message: "Phone number is required"
+  //     },
+  //     minLength: {
+  //       value: 10,
+  //       message: "Enter a 10-digit number"
+  //     }
+  //   }
+  // },
+  // shipEmail: {
+  //   name: "shipEmail",
+  //   validate: {
+  //     required: {
+  //       value: true,
+  //       message: "Email is required"
+  //     },
+  //     pattern: {
+  //       value: /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i,
+  //       message: 'Please entered the valid email id'
+  //     }
+  //   }
+  // }
+}
+const CARD_ELEMENT_OPTIONS = {
+  iconStyle: "solid",
+  hidePostalCode: true,
+  style: {
+    base: {
+      iconColor: "#303238",
+      color: "#303238",
+      fontSize: "16px",
+      fontFamily: '"Open Sans", sans-serif',
+      fontSmoothing: "antialiased",
+      "::placeholder": {
+        color: "#CFD7DF"
       }
-    }
-  },
-  shipEmail: {
-    name: "shipEmail",
-    validate: {
-      required: {
-        value: true,
-        message: "Email is required"
-      },
-      pattern: {
-        value: /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i,
-        message: 'Please entered the valid email id'
+    },
+    invalid: {
+      color: "#e5424d",
+      ":focus": {
+        color: "#e5424d"
       }
     }
   }
-}
-const Checkout = ({ location, cartItems, getCountry, getState, countryData, stateData, currentLocation, userData }) => {
+};
+const Checkout = ({ location, cartItems, getCountry, getState, countryData, stateData, currentLocation, userData, setLoader }) => {
   const { pathname } = location;
   let cartTotalPrice = 0;
   // console.log(cartItems);
@@ -210,10 +236,11 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
   const [note, setNote] = useState('');
   const [shippingOptions, setShippingOptions] = useState();
   const [shippingQuote, setShippingQuote] = useState([]);
-  const { register, control, handleSubmit, errors, setValue, watch } = useForm();
-
+  const [cardElements, setCardElements] = useState('');
+  const { register, control, handleSubmit, errors, setValue, watch, reset } = useForm();
+  const { addToast } = useToasts();
   useEffect(() => {
-    console.log(userData)
+    // console.log(userData)
     if (userData) {
       getProfile()
     } else {
@@ -234,7 +261,7 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
     let action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.PROFILE;
     try {
       let response = await WebService.get(action);
-      console.log(response);
+      // console.log(response);
       if (response) {
         // setConfig(response)
       }
@@ -245,7 +272,7 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
     let action = constant.ACTION.CONFIG;
     try {
       let response = await WebService.get(action);
-      console.log(response);
+      // console.log(response);
       if (response) {
         setConfig(response)
       }
@@ -254,7 +281,7 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
   }
   const onChangeShipAddress = async () => {
     setIsShipping(!isShipping)
-    console.log(currentLocation.find(i => i.types.some(i => i == "country")).address_components[0].short_name)
+    // console.log(currentLocation.find(i => i.types.some(i => i == "country")).address_components[0].short_name)
     setTimeout(() => {
       setValue('shipCountry', currentLocation.find(i => i.types.some(i => i == "country")).address_components[0].short_name)
       setValue('shipCity', currentLocation.find(i => i.types.some(i => i == "locality")).address_components[0].short_name)
@@ -265,7 +292,7 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
 
   }
   const onChangeShipping = async () => {
-    console.log(watch('shipPostalCode'))
+    // console.log(watch('shipPostalCode'))
     let action = constant.ACTION.CART + cartItems.code + '/' + constant.ACTION.SHIPPING;
     let param = {};
     if (isShipping) {
@@ -275,7 +302,7 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
     }
     try {
       let response = await WebService.post(action, param);
-      console.log(response.shippingOptions);
+      // console.log(response.shippingOptions);
       if (response) {
         setShippingOptions(response.shippingOptions)
       }
@@ -289,10 +316,10 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
     } else {
       action = constant.ACTION.CART + cartItems.code + '/' + constant.ACTION.TOTAL;
     }
-    console.log(action)
+    // console.log(action)
     try {
       let response = await WebService.get(action);
-      console.log(response);
+      // console.log(response);
       if (response) {
         setShippingQuote(response.totals)
       }
@@ -300,8 +327,120 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
     }
 
   }
-  const onSubmitOrder = (data) => {
-    console.log(data)
+  const onSubmitOrder = async (data, elements, stripe) => {
+    setLoader(true)
+    let card = elements.getElement(CardElement);
+    let ownerInfo = {
+      owner: {
+        name: data.firstName + ' ' + data.lastName,
+        phone: data.phone,
+        email: data.email
+      },
+    };
+
+    stripe.createSource(card, ownerInfo).then(function (result) {
+      if (result.error) {
+        setLoader(false)
+      } else {
+        onPayment(data, result.source.id)
+      }
+    });
+  }
+  const onPayment = async (data, token) => {
+    let action;
+    let param = {};
+    if (userData) {
+      action = constant.ACTION.AUTH + constant.ACTION.CART + cartItems.code + '/' + constant.ACTION.CHECKOUT
+      param = {
+        // "shippingQuote": 1100,
+        "currency": "CAD",
+        "payment": {
+          "paymentType": "CREDITCARD",
+          "transactionType": "CAPTURE",
+          "paymentModule": "stripe",
+          "paymentToken": token,
+          // "amount": 799.98
+          "amount": cartItems.total
+
+        }
+      }
+    } else {
+      action = constant.ACTION.CART + cartItems.code + '/' + constant.ACTION.CHECKOUT
+      let customer = {};
+      if (isShipping) {
+        customer = {
+          "emailAddress": data.email,
+          "language": "en",
+          "billing": {
+            "address": data.address,
+            "company": data.company,
+            "city": data.city,
+            "postalCode": data.postalCode,
+            "country": data.country,
+            "stateProvince": data.stateProvince,
+            "zone": '',
+            "firstName": data.firstName,
+            "lastName": data.lastName,
+            "phone": data.phone
+          },
+          "delivery": {
+            "address": data.shipAddress,
+            "company": data.shipCompany,
+            "city": data.shipCity,
+            "postalCode": data.shipPostalCode,
+            "country": data.shipCountry,
+            "stateProvince": data.shipStateProvince,
+            "zone": '',
+            "firstName": data.shipFirstName,
+            "lastName": data.shipLastName,
+            // "phone": data.shipPhone
+          }
+        }
+      } else {
+        customer = {
+          "emailAddress": data.email,
+          "language": "en",
+          "billing": {
+            "address": data.address,
+            "company": data.company,
+            "city": data.city,
+            "postalCode": data.postalCode,
+            "country": data.country,
+            "stateProvince": data.stateProvince,
+            "zone": '',
+            "firstName": data.firstName,
+            "lastName": data.lastName,
+            "phone": data.phone
+          }
+        }
+      }
+
+      param = {
+        "currency": "CAD",
+        "payment": {
+          "paymentType": "CREDITCARD",
+          "transactionType": "CAPTURE",
+          "paymentModule": "stripe",
+          "paymentToken": token,
+          "amount": cartItems.total
+        },
+        "customer": customer
+      }
+    }
+    // 
+    try {
+      let response = await WebService.post(action, param);
+      // console.log(response)
+      if (response) {
+        reset({})
+        addToast("Your order has been submitted", { appearance: "success", autoDismiss: true });
+      }
+      setLoader(false)
+    } catch (error) {
+      addToast("Your order submission has been failed", { appearance: "error", autoDismiss: true });
+      setLoader(false)
+    }
+
   }
   return (
     <Fragment>
@@ -324,7 +463,7 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
         <div className="checkout-area pt-95 pb-100">
           <div className="container">
             {isValidObject(cartItems) && cartItems.products.length > 0 ? (
-              <form onSubmit={handleSubmit(onSubmitOrder)} >
+              <form  >
                 <div className="row">
                   <div className="col-lg-7">
                     <div className="billing-info-wrap">
@@ -415,7 +554,7 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
                                         <option>Select a state</option>
                                         {
                                           stateData.map((data, i) => {
-                                            return <option key={i} value={data.id} selected={props.value === data.code}>{data.name}</option>
+                                            return <option key={i} value={data.code} selected={props.value === data.code}>{data.name}</option>
                                           })
                                         }
                                       </select>)
@@ -560,7 +699,7 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
                                             <option>Select a state</option>
                                             {
                                               stateData.map((data, i) => {
-                                                return <option key={i} value={data.id} selected={props.value === data.code}>{data.name}</option>
+                                                return <option key={i} value={data.code} selected={props.value === data.code}>{data.name}</option>
                                               })
                                             }
                                           </select>)
@@ -580,7 +719,7 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
                                 {errors[paymentForm.shipPostalCode.name] && <p className="error-msg">{errors[paymentForm.shipPostalCode.name].message}</p>}
                               </div>
                             </div>
-                            <div className="col-lg-6 col-md-6">
+                            {/* <div className="col-lg-6 col-md-6">
                               <div className="billing-info mb-20">
                                 <label>Phone</label>
                                 <input type="text" name={paymentForm.shipPhone.name} ref={register(paymentForm.shipPhone.validate)} />
@@ -593,7 +732,7 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
                                 <input type="text" name={paymentForm.shipEmail.name} ref={register(paymentForm.shipEmail.validate)} />
                                 {errors[paymentForm.shipEmail.name] && <p className="error-msg">{errors[paymentForm.shipEmail.name].message}</p>}
                               </div>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
                       }
@@ -647,7 +786,7 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
                               shippingQuote.map((quote, i) => {
                                 return (
                                   quote.title != 'Total' &&
-                                  <ul className="mb-20">
+                                  <ul className="mb-20" key={i}>
                                     <li className="order-total">{quote.title}</li>
                                     <li>
                                       {quote.total}
@@ -694,11 +833,33 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
                             </ul>
                           </div>
                         </div>
-                        <div className="payment-method"></div>
+
                       </div>
-                      <div className="place-order mt-25">
-                        <button className="btn-hover">Place Order</button>
+                      <div className="payment-method mt-25">
+
+                        <Elements stripe={stripePromise}>
+                          <ElementsConsumer>
+                            {({ stripe, elements }) => (
+                              <>
+                                <div className="card-info">
+                                  <CardElement options={CARD_ELEMENT_OPTIONS} stripe={stripe} elements={elements} />
+                                </div>
+                                <div className="icon-container">
+                                  <i className="fa fa-cc-visa" style={{ color: 'navy' }}></i>
+                                  <i className="fa fa-cc-amex" style={{ color: 'blue' }}></i>
+                                  <i className="fa fa-cc-mastercard" style={{ color: 'red' }}></i>
+                                  <i className="fa fa-cc-discover" style={{ color: 'orange' }}></i>
+                                </div>
+                                <div className="place-order mt-100">
+                                  <button type="button" onClick={handleSubmit((d) => onSubmitOrder(d, elements, stripe))} className="btn-hover">Place Order</button>
+                                </div>
+                              </>
+                            )}
+                          </ElementsConsumer>
+                        </Elements>
+
                       </div>
+
                     </div>
                   </div>
 
@@ -746,6 +907,9 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
+    setLoader: (value) => {
+      dispatch(setLoader(value));
+    },
     getCountry: () => {
       dispatch(getCountry());
     },

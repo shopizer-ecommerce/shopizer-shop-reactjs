@@ -9,23 +9,25 @@ const ShopCategories = ({ categories, getCategoryParams }) => {
       <div className="sidebar-widget-list mt-20">
         {categories.length > 0 ? (
           <ul>
-            {/* <li>
-              <div className="sidebar-widget-list-left">
-                <button
-                // onClick={e => {
-                //   getCategoryParams("category", "");
-                //   setActiveSort(e);
-                // }}
-                >
-                  <span className="checkmark" /> All Categories
-                </button>
-              </div>
-            </li> */}
+
             {categories.map((category, key) => {
               return (
                 <li key={key}>
                   <div className="sidebar-widget-list-left">
-                    <button
+
+                    <label>
+                      <input
+                        type="checkbox"
+                        value={category.id}
+                        name="category"
+                        // checked={checkedOrNot(singleSize)}
+                        onChange={(e) => {
+                          getCategoryParams("category", category.id);
+                        }}
+                      />
+                      <span className="checkmark" />{category.description.name}{" "}
+                    </label>
+                    {/* <button
                       onClick={e => {
                         getCategoryParams("category", category.id);
                         setActiveSort(e);
@@ -33,7 +35,7 @@ const ShopCategories = ({ categories, getCategoryParams }) => {
                     >
                       {" "}
                       <span className="checkmark" /> {category.description.name}{" "}
-                    </button>
+                    </button> */}
                   </div>
                 </li>
               );

@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import MetaTags from "react-meta-tags";
 import { Link, useHistory } from "react-router-dom";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
@@ -7,13 +7,13 @@ import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useToasts } from "react-toast-notifications";
 import WebService from '../../util/webService';
 import constant from '../../util/constant';
 import { setLocalData } from '../../util/helper';
 import { setLoader } from "../../redux/actions/loaderActions";
-import { setUser } from "../../redux/actions/userAction";
+import { setUser, getCountry, getState } from "../../redux/actions/userAction";
 import { connect } from "react-redux";
 
 const loginForm = {
@@ -40,7 +40,76 @@ const loginForm = {
     }
   }
 };
-const LoginRegister = ({ props, location, setLoader, setUser }) => {
+const registerForm = {
+  email: {
+    name: "email",
+    validate: {
+      required: {
+        value: true,
+        message: "Email is required"
+      },
+      pattern: {
+        value: /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i,
+        message: 'Please entered the valid email id'
+      }
+    }
+  },
+  password: {
+    name: "password",
+    validate: {
+      required: {
+        value: true,
+        message: "Password is required"
+      }
+    }
+  },
+  repeatPassword: {
+    name: "repeatPassword",
+    validate: {
+      required: {
+        value: true,
+        message: "Repeat Password is required"
+      }
+    }
+  },
+  firstName: {
+    name: "firstName",
+    validate: {
+      required: {
+        value: true,
+        message: "Firstname is required"
+      }
+    }
+  },
+  lastName: {
+    name: "lastName",
+    validate: {
+      required: {
+        value: true,
+        message: "Lastname is required"
+      }
+    }
+  },
+  country: {
+    name: "country",
+    validate: {
+      required: {
+        value: true,
+        message: "Country is required"
+      }
+    }
+  },
+  stateProvince: {
+    name: "stateProvince",
+    validate: {
+      required: {
+        value: true,
+        message: "State is required"
+      }
+    }
+  },
+};
+const LoginRegister = ({ props, location, setLoader, setUser, getCountry, getState, countryData, currentLocation, stateData }) => {
   const { pathname } = location;
   const { addToast } = useToasts();
   const history = useHistory();
@@ -50,6 +119,27 @@ const LoginRegister = ({ props, location, setLoader, setUser }) => {
     defaultValues: { username: "", password: "" },
     criteriaMode: "all"
   });
+  const {
+    register: register2,
+    errors: errors2,
+    handleSubmit: handleSubmit2, setValue, control, watch, setError, clearErrors
+  } = useForm({
+    mode: "onChange",
+    defaultValues: { username: "", password: "" },
+    criteriaMode: "all"
+  });
+
+  useEffect(() => {
+    getCountry()
+    setDefualtsValue()
+  }, []);
+  const setDefualtsValue = () => {
+
+    setValue('country', currentLocation.find(i => i.types.some(i => i == "country")).address_components[0].short_name)
+    // // setValue('city', currentLocation.find(i => i.types.some(i => i == "locality")).address_components[0].short_name)
+    setValue('stateProvince', currentLocation.find(i => i.types.some(i => i == "administrative_area_level_1")).address_components[0].long_name)
+
+  }
   const onSubmit = async (data) => {
     setLoader(true)
     try {
@@ -70,6 +160,66 @@ const LoginRegister = ({ props, location, setLoader, setUser }) => {
       setLoader(false)
     }
   };
+  const onConfirmPassword = (e) => {
+    if (watch('password') !== e.target.value) {
+      return setError(
+        registerForm.repeatPassword.name,
+        {
+          type: "notMatch",
+          message: "Repeat Password should be the same as a password"
+        }
+      );
+    }
+
+  }
+  const onPasswordChange = (e) => {
+    if (watch('repeatPassword') !== '' && watch('repeatPassword') !== e.target.value) {
+      return setError(
+        registerForm.repeatPassword.name,
+        {
+          type: "notMatch",
+          message: "Repeat Password should be the same as a password"
+        }
+      );
+
+    } else {
+      clearErrors(registerForm.repeatPassword.name);
+    }
+
+  }
+  const onRegister = async (data) => {
+    // console.log(data)
+    setLoader(true)
+    try {
+      let action = constant.ACTION.CUSTOMER + constant.ACTION.REGISTER;
+      let param = {
+        "userName": data.email,
+        "password": data.password,
+        "emailAddress": data.email,
+        "gender": "M",
+        "language": "en",
+        "billing": {
+          "country": data.country,
+          "stateProvince": data.stateProvince,
+          "firstName": data.firstName,
+          "lastName": data.lastName,
+        }
+      }
+      let response = await WebService.post(action, param);
+      console.log(response)
+      if (response) {
+        addToast("'You have successfully registerd in to this website.", { appearance: "success", autoDismiss: true });
+        setUser(response)
+        setLocalData('token', response.token)
+        history.push('my-account')
+
+      }
+      setLoader(false)
+    } catch (error) {
+      addToast("Registering customer already exist", { appearance: "error", autoDismiss: true });
+      setLoader(false)
+    }
+  }
   return (
     <Fragment>
       <MetaTags>
@@ -149,33 +299,87 @@ const LoginRegister = ({ props, location, setLoader, setUser }) => {
                       <Tab.Pane eventKey="register">
                         <div className="login-form-container">
                           <div className="login-register-form">
-                            <form>
+                            <form onSubmit={handleSubmit2(onRegister)}>
+
+                              <p style={{ fontSize: 16, fontWeight: 500, color: '#fb799c' }}>LOGIN INFORMATION</p>
                               <div className="login-input">
-                                <input
-                                  type="text"
-                                  name="user-name"
-                                  placeholder="Username"
-                                />
+                                <input type="email" name={registerForm.email.name} ref={register2(registerForm.email.validate)} placeholder="Username or email address" />
+                                {errors2[registerForm.email.name] && <p className="error-msg">{errors2[registerForm.email.name].message}</p>}
+
                               </div>
                               <div className="login-input">
-                                <input
-                                  type="password"
-                                  name="user-password"
-                                  placeholder="Password"
-                                />
+                                <input type="password" name={registerForm.password.name} ref={register2(registerForm.password.validate)} placeholder="Password" onChange={(e) => onPasswordChange(e)} />
+                                {errors2[registerForm.password.name] && <p className="error-msg">{errors2[registerForm.password.name].message}</p>}
+
                               </div>
                               <div className="login-input">
-                                <input
-                                  name="user-email"
-                                  placeholder="Email"
-                                  type="email"
+                                <input type="password" name={registerForm.repeatPassword.name} ref={register2(registerForm.repeatPassword.validate)} placeholder="Repeat Password" onChange={(e) => onConfirmPassword(e)} />
+                                {errors2[registerForm.repeatPassword.name] && <p className="error-msg">{errors2[registerForm.repeatPassword.name].message}</p>}
+
+                              </div>
+                              <p style={{ fontSize: 16, fontWeight: 500, color: '#fb799c' }}>PERSONAL INFORMATION</p>
+                              <div className="login-input">
+                                <input type="text" name={registerForm.firstName.name} ref={register2(registerForm.firstName.validate)} placeholder="First Name" />
+                                {errors2[registerForm.firstName.name] && <p className="error-msg">{errors2[registerForm.firstName.name].message}</p>}
+
+                              </div>
+                              <div className="login-input">
+                                <input type="text" name={registerForm.lastName.name} ref={register2(registerForm.lastName.validate)} placeholder="Last Name" />
+                                {errors2[registerForm.lastName.name] && <p className="error-msg">{errors2[registerForm.lastName.name].message}</p>}
+                              </div>
+                              <div className="login-input">
+                                <Controller
+                                  name={registerForm.country.name}
+                                  control={control}
+                                  rules={registerForm.country.validate}
+                                  render={props => {
+                                    return (
+                                      <select onChange={(e) => { getState(e.target.value) }} >
+                                        <option>Select a country</option>
+                                        {
+
+                                          countryData.map((data, i) => {
+                                            return <option key={i} value={data.code} selected={props.value === data.code}>{data.name}</option>
+                                          })
+                                        }
+                                      </select>
+                                    )
+                                  }}
                                 />
+                                {errors2[registerForm.country.name] && <p className="error-msg">{errors2[registerForm.country.name].message}</p>}
+                              </div>
+                              <div className="login-input">
+                                {
+                                  stateData && stateData.length > 0 ?
+                                    <Controller
+                                      name={registerForm.stateProvince.name}
+                                      control={control}
+                                      rules={registerForm.stateProvince.validate}
+                                      render={props => {
+                                        return (
+                                          <select>
+                                            <option>Select a state</option>
+                                            {
+                                              stateData.map((data, i) => {
+                                                return <option key={i} value={data.id} selected={props.value === data.code}>{data.name}</option>
+                                              })
+                                            }
+                                          </select>)
+                                      }}
+                                    />
+                                    :
+                                    <input type="text" name={registerForm.stateProvince.name} ref={register2(registerForm.stateProvince.validate)} placeholder="State" />
+                                }
+                                {errors2[registerForm.stateProvince.name] && <p className="error-msg">{errors2[registerForm.stateProvince.name].message}</p>}
                               </div>
                               <div className="button-box">
                                 <button type="submit">
                                   <span>Register</span>
                                 </button>
                               </div>
+
+
+
                             </form>
                           </div>
                         </div>
@@ -188,7 +392,7 @@ const LoginRegister = ({ props, location, setLoader, setUser }) => {
           </div>
         </div>
       </LayoutOne>
-    </Fragment>
+    </Fragment >
   );
 };
 
@@ -198,6 +402,9 @@ LoginRegister.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
+    countryData: state.userData.country,
+    currentLocation: state.userData.currentAddress,
+    stateData: state.userData.state
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -207,6 +414,12 @@ const mapDispatchToProps = dispatch => {
     },
     setUser: (data) => {
       dispatch(setUser(data));
+    },
+    getCountry: () => {
+      dispatch(getCountry());
+    },
+    getState: (code) => {
+      dispatch(getState(code));
     }
   };
 };

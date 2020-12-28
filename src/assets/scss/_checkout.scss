@@ -315,6 +315,27 @@
     }
   }
 
+  .payment-method {
+    .card-info {
+      padding: 25px 5px 25px 5px;
+      border: 1px solid #e5e5e5;
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.05);
+
+    }
+  }
+
+  .icon-container {
+    float: right;
+    padding-top: 20px;
+
+    i {
+      margin-left: 10px;
+      font-size: 24px;
+    }
+  }
+
   .payment-accordion {
     margin: 0 0 16px;
 

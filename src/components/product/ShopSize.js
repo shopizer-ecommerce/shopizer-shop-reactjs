@@ -4,28 +4,28 @@ import { setActiveSort } from "../../helpers/product";
 
 const ShopSize = ({ sizes, getSortParams }) => {
   return (
-    <div className="sidebar-widget mt-40">
+    <div className="sidebar-widget mt-30">
       <h4 className="pro-sidebar-title">Size </h4>
       <div className="sidebar-widget-list mt-20">
         {sizes.length > 0 ? (
           <ul>
-            {/* <li>
-              <div className="sidebar-widget-list-left">
-                <button
-                // onClick={e => {
-                //   getSortParams("size", "");
-                //   setActiveSort(e);
-                // }}
-                >
-                  <span className="checkmark" /> All Sizes{" "}
-                </button>
-              </div>
-            </li> */}
             {sizes.map((size, key) => {
               return (
                 <li key={key}>
                   <div className="sidebar-widget-list-left">
-                    <button
+                    <label>
+                      <input
+                        type="checkbox"
+                        value={size.value}
+                        name="size"
+                        // checked={checkedOrNot(singleSize)}
+                        onChange={() => {
+                          getSortParams("size", size.value);
+                        }}
+                      />
+                      <span className="checkmark" />{size.name}{" "}
+                    </label>
+                    {/* <button
                       className="text-uppercase"
                       onClick={e => {
                         getSortParams("optionValues", size.value);
@@ -35,7 +35,7 @@ const ShopSize = ({ sizes, getSortParams }) => {
                       {" "}
                       <span className="checkmark" />
                       {size.name}{" "}
-                    </button>
+                    </button> */}
                   </div>
                 </li>
               );

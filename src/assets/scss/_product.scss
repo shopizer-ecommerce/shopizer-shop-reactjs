@@ -687,7 +687,7 @@
   }
 
   .pro-details-size-color {
-    display: flex;
+    // display: flex;
 
     @media #{$xs-layout} {
       display: block;
@@ -735,7 +735,7 @@
             border-radius: 50px;
 
             &:last-child {
-              margin-right: 0;
+              margin-left: 15px;
             }
 
             &.blue {
@@ -773,14 +773,15 @@
           width: 14px;
           height: 14px;
           margin-right: 15px;
-          margin-top: 8px;
+          // margin-top: 8px;
           cursor: pointer;
           transition: all 0.4s ease 0s;
           background-color: lightgray;
           border-radius: 50px;
+          margin-left: 20px;
 
           &:last-child {
-            margin-right: 0;
+            margin-left: 15px;
           }
 
           input {
@@ -894,6 +895,8 @@
     }
 
     .pro-details-size {
+      margin: 15px;
+
       span {
         font-size: 15px;
         font-weight: 500;
@@ -904,6 +907,18 @@
       }
 
       .pro-details-size-content {
+        select {
+          font-size: 14px;
+          width: 50%;
+          color: #333;
+          border: 0 solid #eceff8;
+          background: transparent;
+          box-shadow: none;
+          height: 45px;
+          padding: 0px 15px;
+          border: 1px solid #e6e6e6;
+        }
+
         ul {
           li {
             display: inline-block;
