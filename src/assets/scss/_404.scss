@@ -31,6 +31,15 @@
     font-size: 25px;
     font-weight: 600;
   }
+
+  h3 {
+    font-size: 45px;
+    font-weight: bold;
+    // letter-spacing: 1rem;
+    line-height: 1.1;
+    margin-bottom: 30px;
+    color: #fb799c;
+  }
 }
 
 .error-btn {
@@ -48,16 +57,16 @@
   background-color: #fb799c;
   display: inline-block;
 
-  &:after {
-    position: absolute;
-    content: "";
-    left: 0;
-    bottom: -6px;
-    height: 3px;
-    width: 100%;
-    background-color: #fb799c;
-    transition: all 0.3s;
-  }
+  // &:after {
+  //   position: absolute;
+  //   content: "";
+  //   left: 0;
+  //   bottom: -6px;
+  //   height: 3px;
+  //   width: 100%;
+  //   background-color: #fb799c;
+  //   transition: all 0.3s;
+  // }
 
   &:hover {
     background-color: #111111;

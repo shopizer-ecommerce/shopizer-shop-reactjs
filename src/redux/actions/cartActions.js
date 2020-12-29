@@ -114,12 +114,12 @@ export const deleteFromCart = (cartID, item, defaultStore, addToast) => {
 //delete all from cart
 export const deleteAllFromCart = addToast => {
   return dispatch => {
-    if (addToast) {
-      addToast("Removed All From Cart", {
-        appearance: "error",
-        autoDismiss: true
-      });
-    }
+    // if (addToast) {
+    //   addToast("Removed All From Cart", {
+    //     appearance: "error",
+    //     autoDismiss: true
+    //   });
+    // }
     dispatch({ type: DELETE_ALL_FROM_CART });
   };
 };

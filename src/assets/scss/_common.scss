@@ -243,6 +243,7 @@ a:hover {
 .mt-50 {
   margin-top: 50px;
 }
+
 .mt-55 {
   margin-top: 55px;
 }
@@ -257,6 +258,7 @@ a:hover {
 
 .mt-80 {
   margin-top: 80px;
+
   @media #{$xs-layout} {
     margin-top: 60px;
   }
@@ -289,9 +291,11 @@ a:hover {
 .mt-150 {
   margin-top: 150px;
 }
+
 .mt-195 {
   margin-top: 195px;
 }
+
 .mt-200 {
   margin-top: 200px;
 }
@@ -399,6 +403,7 @@ a:hover {
 .mb-20 {
   margin-bottom: 20px;
 }
+
 .mb-25 {
   margin-bottom: 25px;
 }
@@ -445,6 +450,7 @@ a:hover {
 
 .mb-80 {
   margin-bottom: 80px;
+
   @media #{$xs-layout} {
     margin-bottom: 60px;
   }
@@ -460,6 +466,7 @@ a:hover {
 
 .mb-100 {
   margin-bottom: 100px;
+
   @media #{$xs-layout} {
     margin-bottom: 50px;
   }
@@ -532,6 +539,7 @@ a:hover {
 .ml-70 {
   margin-left: 70px;
 }
+
 .ml-75 {
   margin-left: 75px;
 }
@@ -543,6 +551,7 @@ a:hover {
 .ml-90 {
   margin-left: 90px;
 }
+
 .ml-95 {
   margin-left: 95px;
 }
@@ -566,6 +575,7 @@ a:hover {
 .ml-140 {
   margin-left: 140px;
 }
+
 .ml-145 {
   margin-left: 145px;
 }
@@ -573,6 +583,7 @@ a:hover {
 .ml-150 {
   margin-left: 150px;
 }
+
 .ml-ntv5 {
   margin-left: -5px;
 }
@@ -604,6 +615,7 @@ a:hover {
 .pt-30 {
   padding-top: 30px;
 }
+
 .pt-35 {
   padding-top: 35px;
 }
@@ -630,6 +642,7 @@ a:hover {
 
 .pt-70 {
   padding-top: 70px;
+
   @media #{$xs-layout} {
     padding-top: 60px;
   }
@@ -641,6 +654,7 @@ a:hover {
 
 .pt-80 {
   padding-top: 80px;
+
   @media #{$xs-layout} {
     padding-top: 60px;
   }
@@ -648,6 +662,7 @@ a:hover {
 
 .pt-95 {
   padding-top: 95px;
+
   @media #{$xs-layout} {
     padding-top: 55px;
   }
@@ -655,6 +670,7 @@ a:hover {
 
 .pt-90 {
   padding-top: 90px;
+
   @media #{$xs-layout} {
     padding-top: 50px;
   }
@@ -662,6 +678,7 @@ a:hover {
 
 .pt-100 {
   padding-top: 100px;
+
   @media #{$xs-layout} {
     padding-top: 60px;
   }
@@ -673,6 +690,7 @@ a:hover {
 
 .pt-110 {
   padding-top: 110px;
+
   @media #{$xs-layout} {
     padding-top: 40px;
   }
@@ -680,6 +698,7 @@ a:hover {
 
 .pt-115 {
   padding-top: 115px;
+
   @media #{$xs-layout} {
     padding-top: 60px;
   }
@@ -687,6 +706,7 @@ a:hover {
 
 .pt-120 {
   padding-top: 120px;
+
   @media #{$xs-layout} {
     padding-top: 50px;
   }
@@ -694,9 +714,11 @@ a:hover {
 
 .pt-125 {
   padding-top: 125px;
+
   @media #{$xs-layout} {
     padding-top: 55px;
   }
+
   @media #{$md-layout} {
     padding-top: 75px;
   }
@@ -708,9 +730,11 @@ a:hover {
 
 .pt-130 {
   padding-top: 130px;
+
   @media #{$xs-layout} {
     padding-top: 60px;
   }
+
   @media #{$md-layout} {
     padding-top: 80px;
   }
@@ -738,6 +762,7 @@ a:hover {
 
 .pt-180 {
   padding-top: 180px;
+
   @media #{$xs-layout} {
     padding-top: 60px;
   }
@@ -753,9 +778,11 @@ a:hover {
 
 .pt-270 {
   padding-top: 270px;
+
   @media #{$md-layout} {
     padding-top: 170px;
   }
+
   @media #{$xs-layout} {
     padding-top: 100px;
   }
@@ -880,6 +907,7 @@ a:hover {
 .pb-30 {
   padding-bottom: 30px;
 }
+
 .pb-35 {
   padding-bottom: 35px;
 }
@@ -891,8 +919,10 @@ a:hover {
 .pb-50 {
   padding-bottom: 50px;
 }
+
 .pb-55 {
   padding-bottom: 55px;
+
   @media #{$xs-layout} {
     padding-bottom: 15px;
   }
@@ -900,6 +930,7 @@ a:hover {
 
 .pb-60 {
   padding-bottom: 60px;
+
   @media #{$xs-layout} {
     padding-bottom: 20px;
   }
@@ -911,6 +942,7 @@ a:hover {
 
 .pb-70 {
   padding-bottom: 70px;
+
   @media #{$xs-layout} {
     padding-bottom: 30px;
   }
@@ -918,6 +950,7 @@ a:hover {
 
 .pb-80 {
   padding-bottom: 80px;
+
   @media #{$xs-layout} {
     padding-bottom: 40px;
   }
@@ -929,6 +962,7 @@ a:hover {
 
 .pb-90 {
   padding-bottom: 90px;
+
   @media #{$xs-layout} {
     padding-bottom: 50px;
   }
@@ -936,6 +970,7 @@ a:hover {
 
 .pb-95 {
   padding-bottom: 95px;
+
   @media #{$xs-layout} {
     padding-bottom: 55px;
   }
@@ -943,6 +978,7 @@ a:hover {
 
 .pb-100 {
   padding-bottom: 100px;
+
   @media #{$xs-layout} {
     padding-bottom: 30px;
   }
@@ -958,6 +994,7 @@ a:hover {
 
 .pb-115 {
   padding-bottom: 115px;
+
   @media #{$xs-layout} {
     padding-bottom: 60px;
   }
@@ -965,6 +1002,7 @@ a:hover {
 
 .pb-120 {
   padding-bottom: 120px;
+
   @media #{$xs-layout} {
     padding-bottom: 50px;
   }
@@ -976,9 +1014,11 @@ a:hover {
 
 .pb-130 {
   padding-bottom: 130px;
+
   @media #{$xs-layout} {
     padding-bottom: 60px;
   }
+
   @media #{$md-layout} {
     padding-bottom: 80px;
   }
@@ -986,6 +1026,7 @@ a:hover {
 
 .pb-140 {
   padding-bottom: 140px;
+
   @media #{$xs-layout} {
     padding-bottom: 60px;
   }
@@ -1021,9 +1062,11 @@ a:hover {
 
 .pb-270 {
   padding-bottom: 270px;
+
   @media #{$md-layout} {
     padding-bottom: 170px;
   }
+
   @media #{$xs-layout} {
     padding-bottom: 100px;
   }
@@ -1406,18 +1449,22 @@ textarea:focus {
 
   margin-right: -15px;
   margin-left: -15px;
+
   @media #{$xl-layout} {
     margin-right: -15px;
     margin-left: -15px;
   }
+
   @media #{$lg-layout} {
     margin-right: -15px;
     margin-left: -15px;
   }
+
   @media #{$md-layout} {
     margin-right: -15px;
     margin-left: -15px;
   }
+
   @media #{$xs-layout} {
     margin-right: -15px;
     margin-left: -15px;
@@ -1430,61 +1477,75 @@ textarea:focus {
 
   margin-right: -5px;
   margin-left: -5px;
+
   & div[class^="col-"] {
     padding-right: 5px;
     padding-left: 5px;
+
     @media #{$md-layout} {
       padding-right: 15px;
       padding-left: 15px;
     }
+
     @media #{$xs-layout} {
       padding-right: 15px;
       padding-left: 15px;
     }
   }
+
   @media #{$xl-layout} {
     margin-right: -5px;
     margin-left: -5px;
   }
+
   @media #{$lg-layout} {
     margin-right: -5px;
     margin-left: -5px;
   }
+
   @media #{$md-layout} {
     margin-right: -15px;
     margin-left: -15px;
   }
+
   @media #{$xs-layout} {
     margin-right: -15px;
     margin-left: -15px;
   }
 }
+
 .custom-row-3 {
   display: flex;
   flex-wrap: wrap;
 
   margin-right: -13.6px;
   margin-left: -13.6px;
+
   & div[class^="col-"] {
     padding-right: 13.6px;
     padding-left: 13.6px;
+
     @media #{$xs-layout} {
       padding-right: 15px;
       padding-left: 15px;
     }
   }
+
   @media #{$xl-layout} {
     margin-right: -13.6px;
     margin-left: -13.6px;
   }
+
   @media #{$lg-layout} {
     margin-right: -13.6px;
     margin-left: -13.6px;
   }
+
   @media #{$md-layout} {
     margin-right: -13.6px;
     margin-left: -13.6px;
   }
+
   @media #{$xs-layout} {
     margin-right: -15px;
     margin-left: -15px;
@@ -1501,10 +1562,12 @@ textarea:focus {
   min-height: 1px;
   padding-right: 15px;
   padding-left: 15px;
+
   @media #{$xl-layout} {
     padding-right: 15px;
     padding-left: 15px;
   }
+
   @media #{$lg-layout} {
     flex: 0 0 33.333%;
 
@@ -1512,6 +1575,7 @@ textarea:focus {
     padding-right: 15px;
     padding-left: 15px;
   }
+
   @media #{$md-layout} {
     flex: 0 0 50%;
 
@@ -1519,6 +1583,7 @@ textarea:focus {
     padding-right: 15px;
     padding-left: 15px;
   }
+
   @media #{$xs-layout} {
     flex: 0 0 100%;
 
@@ -1526,6 +1591,7 @@ textarea:focus {
     padding-right: 15px;
     padding-left: 15px;
   }
+
   @media #{$sm-layout} {
     flex: 0 0 50%;
 
@@ -1535,19 +1601,24 @@ textarea:focus {
 
 .mobile-menu-area {
   display: none;
+
   @media #{$md-layout} {
     display: block;
   }
+
   @media #{$xs-layout} {
     display: block;
   }
+
   @media #{$sm-layout} {
     display: block;
   }
+
   &.white-mobile-menu {
     a.meanmenu-reveal {
       color: #fff;
       border: 1px solid #fff;
+
       span {
         background-color: #fff;
       }
@@ -1561,6 +1632,7 @@ textarea:focus {
       a.meanmenu-reveal {
         color: #333;
         border: 1px solid #333;
+
         span {
           background-color: #333;
         }
@@ -1612,25 +1684,30 @@ textarea:focus {
   border-radius: 50px;
   background: none;
   background-color: $theme-color;
+
   &.show {
     visibility: visible;
 
     opacity: 1;
   }
+
   @media #{$xs-layout} {
     width: 40px;
     height: 40px;
   }
+
   & i {
     font-size: 22px;
     line-height: 50px;
 
     display: block;
+
     @media #{$xs-layout} {
       font-size: 16px;
       line-height: 40px;
     }
   }
+
   &:hover {
     & i {
       animation-name: fadeInUp;
@@ -1653,12 +1730,15 @@ textarea:focus {
 .bg-purple {
   background-color: #f0e0ff;
 }
+
 .bg-purple-2 {
   background-color: #cea1f8;
 }
+
 .bg-gray {
   background-color: #f6f6f8;
 }
+
 .bg-gray-2 {
   background-color: #f6f6f6;
 }
@@ -1670,6 +1750,7 @@ textarea:focus {
 .bg-gray-4 {
   background-color: #f1f1f1;
 }
+
 .bg-gray-5 {
   background-color: #f9f9f9;
 }
@@ -1685,18 +1766,22 @@ textarea:focus {
 .bg-black {
   background-color: #000000;
 }
+
 .bg-glaucous {
   background-color: #daedff;
 }
+
 .bg-aqua {
   background-color: #dbfffb;
 }
+
 .bg-white {
   background-color: #fff;
 }
 
 .default-overlay {
   position: relative;
+
   &:before {
     position: absolute;
     top: 0;
@@ -1712,15 +1797,18 @@ textarea:focus {
 }
 
 .btn-hover {
+
   a,
   button {
     position: relative;
 
     transition: all 0.5s ease-in-out 0s;
+
     &:hover {
       color: #fff;
       border: 1px solid $theme-color;
     }
+
     &::before,
     &::after {
       position: absolute;
@@ -1734,6 +1822,7 @@ textarea:focus {
       content: "";
       transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
     }
+
     &::after {
       right: 0;
       left: auto;
@@ -1742,6 +1831,7 @@ textarea:focus {
 
       background: $theme-color;
     }
+
     &:hover::after {
       right: auto;
       left: 0;
@@ -1751,11 +1841,13 @@ textarea:focus {
   }
 
   &--blue {
+
     a,
     button {
       &:hover {
         border-color: #053399 !important;
       }
+
       &::after {
         background: #053399;
       }
@@ -1785,11 +1877,13 @@ a.default-btn {
 
     opacity: 1;
   }
+
   50% {
     transform: translateY(20px);
 
     opacity: 1;
   }
+
   100% {
     transform: translateY(0);
 
@@ -1803,11 +1897,13 @@ a.default-btn {
 
     opacity: 1;
   }
+
   50% {
     transform: translateY(20px);
 
     opacity: 1;
   }
+
   100% {
     transform: translateY(0);
 
@@ -1819,10 +1915,12 @@ a.default-btn {
   0% {
     background-position: 0 0, 0 0, 0 0;
   }
+
   100% {
     background-position: 500px 1000px, 400px 400px, 300px 300px;
   }
 }
+
 .effect-snow {
   animation: snow 20s linear infinite;
 }
@@ -1843,16 +1941,19 @@ a.default-btn {
   .row {
     margin-right: -5px;
     margin-left: -5px;
+
     div[class^="col-"] {
       padding-right: 5px;
       padding-left: 5px;
     }
   }
 }
+
 .padding-20-row-col {
   .row {
     margin-right: -10px;
     margin-left: -10px;
+
     div[class^="col-"] {
       padding-right: 10px;
       padding-left: 10px;
@@ -1875,6 +1976,7 @@ a.default-btn {
     i {
       font-size: 140px;
       line-height: 1;
+
       @media #{$xs-layout} {
         font-size: 100px;
       }
@@ -1883,6 +1985,7 @@ a.default-btn {
 
   &__text {
     font-size: 20px;
+
     a {
       font-size: 14px;
       font-weight: 500;
@@ -1895,7 +1998,8 @@ a.default-btn {
       transition: 0.3s;
 
       color: $white;
-      background-color: #363f4d;
+      background-color: #fb799c;
+
       &:hover {
         color: $white;
         background-color: $theme-color;
@@ -1920,6 +2024,7 @@ a.default-btn {
   overflow: hidden;
 
   border-radius: 50px;
+
   &:before,
   &:after {
     border-radius: 50px;

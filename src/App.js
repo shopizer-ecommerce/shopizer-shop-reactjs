@@ -30,6 +30,7 @@ const Wishlist = lazy(() => import("./pages/other/Wishlist"));
 const Checkout = lazy(() => import("./pages/other/Checkout"));
 
 const NotFound = lazy(() => import("./pages/other/NotFound"));
+const OrderConfirm = lazy(() => import("./pages/other/OrderConfirm"));
 
 const App = (props) => {
   useEffect(() => {
@@ -90,31 +91,35 @@ const App = (props) => {
                 {/* Other pages */}
 
                 <Route
-                  path={process.env.PUBLIC_URL + "/contact"}
+                  path="/contact"
                   component={Contact}
                 />
                 <Route
-                  path={process.env.PUBLIC_URL + "/my-account"}
+                  path="/my-account"
                   component={MyAccount}
                 />
                 <Route
-                  path={process.env.PUBLIC_URL + "/login-register"}
+                  path="/login-register"
                   component={LoginRegister}
                 />
 
                 <Route
-                  path={process.env.PUBLIC_URL + "/cart"}
+                  path="/cart"
                   component={Cart}
                 />
                 <Route
-                  path={process.env.PUBLIC_URL + "/wishlist"}
+                  path="/wishlist"
                   component={Wishlist}
                 />
                 <Route
-                  path={process.env.PUBLIC_URL + "/checkout"}
+                  path="/checkout"
                   component={Checkout}
                 />
 
+                <Route
+                  path="/order-confirm"
+                  component={OrderConfirm}
+                />
                 <Route
                   path={process.env.PUBLIC_URL + "/not-found"}
                   component={NotFound}

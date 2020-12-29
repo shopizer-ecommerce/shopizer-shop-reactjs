@@ -78,11 +78,10 @@ const ShopGridStandard = ({ location, defaultStore, currentLanguageCode, categor
         // console.log(sortValue)
         setCategoryValue(sortValue)
         getProductList(categoryValue, selectedOption, selectedManufature)
-        getProductList(sortValue)
     }
 
     useEffect(() => {
-        
+
         setCategoryValue(categoryID)
         setSubCategory([])
         setColor([])

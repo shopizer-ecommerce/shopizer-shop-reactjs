@@ -125,7 +125,6 @@ const LoginRegister = ({ props, location, setLoader, setUser, getCountry, getSta
     handleSubmit: handleSubmit2, setValue, control, watch, setError, clearErrors
   } = useForm({
     mode: "onChange",
-    defaultValues: { username: "", password: "" },
     criteriaMode: "all"
   });
 
@@ -134,10 +133,12 @@ const LoginRegister = ({ props, location, setLoader, setUser, getCountry, getSta
     setDefualtsValue()
   }, []);
   const setDefualtsValue = () => {
-
-    setValue('country', currentLocation.find(i => i.types.some(i => i == "country")).address_components[0].short_name)
-    // // setValue('city', currentLocation.find(i => i.types.some(i => i == "locality")).address_components[0].short_name)
-    setValue('stateProvince', currentLocation.find(i => i.types.some(i => i == "administrative_area_level_1")).address_components[0].long_name)
+    console.log(currentLocation);
+    if (currentLocation.length > 0) {
+      setValue('country', currentLocation.find(i => i.types.some(i => i == "country")).address_components[0].short_name)
+      // // setValue('city', currentLocation.find(i => i.types.some(i => i == "locality")).address_components[0].short_name)
+      setValue('stateProvince', currentLocation.find(i => i.types.some(i => i == "administrative_area_level_1")).address_components[0].long_name)
+    }
 
   }
   const onSubmit = async (data) => {
@@ -334,7 +335,7 @@ const LoginRegister = ({ props, location, setLoader, setUser, getCountry, getSta
                                   rules={registerForm.country.validate}
                                   render={props => {
                                     return (
-                                      <select onChange={(e) => { getState(e.target.value) }} >
+                                      <select onChange={(e) => { props.onChange(e.target.value); getState(e.target.value) }} >
                                         <option>Select a country</option>
                                         {
 
@@ -357,11 +358,11 @@ const LoginRegister = ({ props, location, setLoader, setUser, getCountry, getSta
                                       rules={registerForm.stateProvince.validate}
                                       render={props => {
                                         return (
-                                          <select>
+                                          <select onChange={(e) => { props.onChange(e.target.value) }}>
                                             <option>Select a state</option>
                                             {
                                               stateData.map((data, i) => {
-                                                return <option key={i} value={data.id} selected={props.value === data.code}>{data.name}</option>
+                                                return <option key={i} value={data.code} selected={props.value === data.code}>{data.name}</option>
                                               })
                                             }
                                           </select>)

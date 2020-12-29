@@ -6,11 +6,11 @@ import MetaTags from "react-meta-tags";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { connect } from "react-redux";
 import { getDiscountPrice } from "../../helpers/product";
-import {
-  addToWishlist,
-  deleteFromWishlist,
-  deleteAllFromWishlist
-} from "../../redux/actions/wishlistActions";
+// import {
+//   addToWishlist,
+//   deleteFromWishlist,
+//   deleteAllFromWishlist
+// } from "../../redux/actions/wishlistActions";
 import { addToCart } from "../../redux/actions/cartActions";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
@@ -19,10 +19,10 @@ const Wishlist = ({
   location,
   cartItems,
   currency,
-  addToCart,
+  // addToCart,
   wishlistItems,
-  deleteFromWishlist,
-  deleteAllFromWishlist
+  // deleteFromWishlist,
+  // deleteAllFromWishlist
 }) => {
   const { addToast } = useToasts();
   const { pathname } = location;
@@ -185,11 +185,7 @@ const Wishlist = ({
                                 </td>
 
                                 <td className="product-remove">
-                                  <button
-                                    onClick={() =>
-                                      deleteFromWishlist(wishlistItem, addToast)
-                                    }
-                                  >
+                                  <button>
                                     <i className="fa fa-times"></i>
                                   </button>
                                 </td>
@@ -213,7 +209,7 @@ const Wishlist = ({
                         </Link>
                       </div>
                       <div className="cart-clear">
-                        <button onClick={() => deleteAllFromWishlist(addToast)}>
+                        <button>
                           Clear Wishlist
                         </button>
                       </div>
@@ -250,8 +246,8 @@ Wishlist.propTypes = {
   cartItems: PropTypes.array,
   currency: PropTypes.object,
   location: PropTypes.object,
-  deleteAllFromWishlist: PropTypes.func,
-  deleteFromWishlist: PropTypes.func,
+  // deleteAllFromWishlist: PropTypes.func,
+  // deleteFromWishlist: PropTypes.func,
   wishlistItems: PropTypes.array
 };
 
@@ -265,18 +261,18 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addToCart: (item, addToast, quantityCount) => {
-      dispatch(addToCart(item, addToast, quantityCount));
-    },
-    addToWishlist: (item, addToast, quantityCount) => {
-      dispatch(addToWishlist(item, addToast, quantityCount));
-    },
-    deleteFromWishlist: (item, addToast, quantityCount) => {
-      dispatch(deleteFromWishlist(item, addToast, quantityCount));
-    },
-    deleteAllFromWishlist: addToast => {
-      dispatch(deleteAllFromWishlist(addToast));
-    }
+    // addToCart: (item, addToast, quantityCount) => {
+    //   dispatch(addToCart(item, addToast, quantityCount));
+    // },
+    // addToWishlist: (item, addToast, quantityCount) => {
+    //   dispatch(addToWishlist(item, addToast, quantityCount));
+    // },
+    // deleteFromWishlist: (item, addToast, quantityCount) => {
+    //   dispatch(deleteFromWishlist(item, addToast, quantityCount));
+    // },
+    // deleteAllFromWishlist: addToast => {
+    //   dispatch(deleteAllFromWishlist(addToast));
+    // }
   };
 };
 

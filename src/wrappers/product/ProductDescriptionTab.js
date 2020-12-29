@@ -1,10 +1,13 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState } from "react";
 import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
-
-const ProductDescriptionTab = ({ spaceBottomClass, product, review }) => {
-
+import { setLoader } from "../../redux/actions/loaderActions";
+import { connect } from "react-redux";
+import Rating from "../../components/product/sub-components/ProductRating";
+import StarRatings from 'react-star-ratings';
+const ProductDescriptionTab = ({ spaceBottomClass, product, review, userData }) => {
+  const [ratingValue, setRatingValue] = useState(0)
   const getRating = (ratingValue) => {
     let rating = [];
     for (let i = 0; i <= ratingValue - 1; i++) {
@@ -70,19 +73,10 @@ const ProductDescriptionTab = ({ spaceBottomClass, product, review }) => {
                                   <div className="review-name">
                                     <h4>{a.customer.firstName} {a.customer.lastName}</h4>
                                   </div>
-                                  <div className="review-rating">
-                                    {
-                                      getRating(a.rating)
-                                        .map((rate, key) => {
-                                          return (<i className="fa fa-star" key={key} />)
-                                        })
-                                    }
-                                    {/* <Rating ratingValue={a.rating} /> */}
-                                    {/* <i className="fa fa-star" />
-                                    <i className="fa fa-star" />
-                                    <i className="fa fa-star" />
-                                    <i className="fa fa-star" />
-                                    <i className="fa fa-star" /> */}
+                                  <div className="pro-details-rating-wrap">
+                                    <div className="pro-details-rating">
+                                      <Rating ratingValue={a.rating} />
+                                    </div>
                                   </div>
                                 </div>
                                 <div className="review-left">
@@ -102,47 +96,60 @@ const ProductDescriptionTab = ({ spaceBottomClass, product, review }) => {
 
                     }
                   </div>
-                  <div className="col-lg-5">
-                    <div className="ratting-form-wrapper pl-50">
-                      <h3>Add a Review</h3>
-                      <div className="ratting-form">
-                        <form action="#">
-                          <div className="star-box">
-                            <span>Your rating:</span>
-                            <div className="ratting-star">
-                              <i className="fa fa-star" />
-                              <i className="fa fa-star" />
-                              <i className="fa fa-star" />
-                              <i className="fa fa-star" />
-                              <i className="fa fa-star" />
-                            </div>
-                          </div>
-                          <div className="row">
-                            <div className="col-md-6">
-                              <div className="rating-form-style mb-10">
-                                <input placeholder="Name" type="text" />
-                              </div>
-                            </div>
-                            <div className="col-md-6">
-                              <div className="rating-form-style mb-10">
-                                <input placeholder="Email" type="email" />
-                              </div>
-                            </div>
-                            <div className="col-md-12">
-                              <div className="rating-form-style form-submit">
-                                <textarea
-                                  name="Your Review"
-                                  placeholder="Message"
-                                  defaultValue={""}
+                  {
+                    userData ?
+                      <div className="col-lg-5">
+                        <div className="ratting-form-wrapper pl-50">
+                          <h3>Add a Review</h3>
+                          <div className="ratting-form">
+                            <form action="#">
+                              <div className="star-box">
+                                <span>Your rating:</span>
+                                {/* <div className="pro-details-rating-wrap">
+                                  <div className="pro-details-rating"> */}
+                                <StarRatings
+                                  rating={ratingValue}
+                                  starRatedColor="#ffa900"
+                                  starDimension="17px"
+                                  starSpacing="1px"
+                                  changeRating={(e) => setRatingValue(e)}
+                                  numberOfStars={5}
+                                  name='rating'
                                 />
-                                <input type="submit" defaultValue="Submit" />
+                                {/* <Rating ratingValue={0} /> */}
+                                {/* </div>
+                                </div> */}
                               </div>
-                            </div>
+                              <div className="row">
+                                {/* <div className="col-md-6">
+                                  <div className="rating-form-style mb-10">
+                                    <input placeholder="Name" type="text" />
+                                  </div>
+                                </div>
+                                <div className="col-md-6">
+                                  <div className="rating-form-style mb-10">
+                                    <input placeholder="Email" type="email" />
+                                  </div>
+                                </div> */}
+                                <div className="col-md-12">
+                                  <div className="rating-form-style form-submit">
+                                    <textarea
+                                      name="Your Review"
+                                      placeholder="Message"
+                                      defaultValue={""}
+                                    />
+                                    <input type="submit" defaultValue="Submit" />
+                                  </div>
+                                </div>
+                              </div>
+                            </form>
                           </div>
-                        </form>
+                        </div>
                       </div>
-                    </div>
-                  </div>
+                      :
+                      <div></div>
+                  }
+
                 </div>
               </Tab.Pane>
             </Tab.Content>
@@ -159,4 +166,19 @@ ProductDescriptionTab.propTypes = {
   spaceBottomClass: PropTypes.string
 };
 
-export default ProductDescriptionTab;
+const mapStateToProps = (state) => {
+  return {
+    userData: state.userData.userData
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    setLoader: (value) => {
+      dispatch(setLoader(value));
+    }
+  };
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDescriptionTab);
+// export default ProductDescriptionTab;

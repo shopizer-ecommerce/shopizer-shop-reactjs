@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React, { Fragment, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import MetaTags from "react-meta-tags";
 import { connect } from "react-redux";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
@@ -16,6 +16,9 @@ import { loadStripe } from '@stripe/stripe-js';
 import { CardElement, Elements, ElementsConsumer } from '@stripe/react-stripe-js';
 import { useToasts } from "react-toast-notifications";
 import { setLoader } from "../../redux/actions/loaderActions";
+import {
+  deleteAllFromCart
+} from "../../redux/actions/cartActions";
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 const paymentForm = {
   firstName: {
@@ -176,32 +179,15 @@ const paymentForm = {
       }
     }
   },
-  // shipPhone: {
-  //   name: "shipPhone",
-  //   validate: {
-  //     required: {
-  //       value: true,
-  //       message: "Phone number is required"
-  //     },
-  //     minLength: {
-  //       value: 10,
-  //       message: "Enter a 10-digit number"
-  //     }
-  //   }
-  // },
-  // shipEmail: {
-  //   name: "shipEmail",
-  //   validate: {
-  //     required: {
-  //       value: true,
-  //       message: "Email is required"
-  //     },
-  //     pattern: {
-  //       value: /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i,
-  //       message: 'Please entered the valid email id'
-  //     }
-  //   }
-  // }
+  isAgree: {
+    name: "isAgree",
+    validate: {
+      required: {
+        value: true,
+        message: "Please agree to our terms and conditions"
+      }
+    }
+  }
 }
 const CARD_ELEMENT_OPTIONS = {
   iconStyle: "solid",
@@ -225,8 +211,10 @@ const CARD_ELEMENT_OPTIONS = {
     }
   }
 };
-const Checkout = ({ location, cartItems, getCountry, getState, countryData, stateData, currentLocation, userData, setLoader }) => {
+const Checkout = ({ location, cartItems, getCountry, getState, countryData, stateData, currentLocation, userData, setLoader, deleteAllFromCart }) => {
   const { pathname } = location;
+  const history = useHistory();
+  const { addToast } = useToasts();
   let cartTotalPrice = 0;
   // console.log(cartItems);
   const [config, setConfig] = useState({});
@@ -238,7 +226,8 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
   const [shippingQuote, setShippingQuote] = useState([]);
   const [cardElements, setCardElements] = useState('');
   const { register, control, handleSubmit, errors, setValue, watch, reset } = useForm();
-  const { addToast } = useToasts();
+
+  const [ref, setRef] = useState(null)
   useEffect(() => {
     // console.log(userData)
     if (userData) {
@@ -251,18 +240,40 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
     shippingQuoteChange('')
   }, []);
   const setDefualtsValue = () => {
-
-    setValue('country', currentLocation.find(i => i.types.some(i => i == "country")).address_components[0].short_name)
-    setValue('city', currentLocation.find(i => i.types.some(i => i == "locality")).address_components[0].short_name)
-    setValue('stateProvince', currentLocation.find(i => i.types.some(i => i == "administrative_area_level_1")).address_components[0].short_name)
-
+    if (currentLocation.length > 0) {
+      setValue('country', currentLocation.find(i => i.types.some(i => i == "country")).address_components[0].short_name)
+      setValue('city', currentLocation.find(i => i.types.some(i => i == "locality")).address_components[0].short_name)
+      setValue('stateProvince', currentLocation.find(i => i.types.some(i => i == "administrative_area_level_1")).address_components[0].short_name)
+    }
   }
   const getProfile = async () => {
     let action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.PROFILE;
     try {
       let response = await WebService.get(action);
-      // console.log(response);
+      console.log(response);
       if (response) {
+        setValue('firstName', response.billing.firstName)
+        setValue('lastName', response.billing.lastName)
+        setValue('company', response.billing.company)
+        setValue('address', response.billing.address)
+        setValue('country', response.billing.country)
+        setValue('city', response.billing.city)
+        setValue('stateProvince', response.billing.stateProvince)
+        setValue('postalCode', response.billing.postalCode)
+        setValue('phone', response.billing.phone)
+        setValue('email', response.emailAddress)
+
+        if (response.delivery) {
+          setValue('shipFirstName', response.delivery.firstName)
+          setValue('shipLastName', response.delivery.lastName)
+          setValue('shipCompany', response.delivery.company)
+          setValue('shipAddress', response.delivery.address)
+          setValue('shipCountry', response.delivery.country)
+          setValue('shipCity', response.delivery.city)
+          setValue('shipStateProvince', response.delivery.stateProvince)
+          setValue('shipPostalCode', response.delivery.postalCode)
+        }
+        onChangeShipping()
         // setConfig(response)
       }
     } catch (error) {
@@ -282,12 +293,14 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
   const onChangeShipAddress = async () => {
     setIsShipping(!isShipping)
     // console.log(currentLocation.find(i => i.types.some(i => i == "country")).address_components[0].short_name)
-    setTimeout(() => {
-      setValue('shipCountry', currentLocation.find(i => i.types.some(i => i == "country")).address_components[0].short_name)
-      setValue('shipCity', currentLocation.find(i => i.types.some(i => i == "locality")).address_components[0].short_name)
-      setValue('shipStateProvince', currentLocation.find(i => i.types.some(i => i == "administrative_area_level_1")).address_components[0].short_name)
-      onChangeShipping()
-    }, 1000);
+    if (currentLocation.length > 0) {
+      setTimeout(() => {
+        setValue('shipCountry', currentLocation.find(i => i.types.some(i => i == "country")).address_components[0].short_name)
+        setValue('shipCity', currentLocation.find(i => i.types.some(i => i == "locality")).address_components[0].short_name)
+        setValue('shipStateProvince', currentLocation.find(i => i.types.some(i => i == "administrative_area_level_1")).address_components[0].short_name)
+        onChangeShipping()
+      }, 1000);
+    }
 
 
   }
@@ -305,6 +318,7 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
       // console.log(response.shippingOptions);
       if (response) {
         setShippingOptions(response.shippingOptions)
+        shippingQuoteChange(response.shippingOptions[response.shippingOptions.length - 1].shippingQuoteOptionId)
       }
     } catch (error) {
     }
@@ -328,7 +342,7 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
 
   }
   const onSubmitOrder = async (data, elements, stripe) => {
-    setLoader(true)
+    // setLoader(true)
     let card = elements.getElement(CardElement);
     let ownerInfo = {
       owner: {
@@ -341,6 +355,7 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
     stripe.createSource(card, ownerInfo).then(function (result) {
       if (result.error) {
         setLoader(false)
+        addToast(result.error.message, { appearance: "error", autoDismiss: true });
       } else {
         onPayment(data, result.source.id)
       }
@@ -433,7 +448,10 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
       // console.log(response)
       if (response) {
         reset({})
+        ref.clear()
+        deleteAllFromCart()
         addToast("Your order has been submitted", { appearance: "success", autoDismiss: true });
+        history.push('my-account')
       }
       setLoader(false)
     } catch (error) {
@@ -461,9 +479,17 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
         {/* breadcrumb */}
         <Breadcrumb />
         <div className="checkout-area pt-95 pb-100">
+
           <div className="container">
+            {
+              !userData &&
+              <div className="checkout-heading">
+                <Link to={"/login-register"}>Returning customer ? Click here to login</Link>
+              </div>
+            }
+
             {isValidObject(cartItems) && cartItems.products.length > 0 ? (
-              <form  >
+              <form>
                 <div className="row">
                   <div className="col-lg-7">
                     <div className="billing-info-wrap">
@@ -589,10 +615,13 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
                           </div>
                         </div>
                       </div>
-                      <div className="login-toggle-btn">
-                        <input type="checkbox" value={isAccount} onChange={() => setIsAccount(!isAccount)} />
-                        <label className="ml-10 mb-20">Create an account</label>
-                      </div>
+                      {
+                        !userData &&
+                        <div className="login-toggle-btn">
+                          <input type="checkbox" value={isAccount} onChange={() => setIsAccount(!isAccount)} />
+                          <label className="ml-10 mb-20">Create an account</label>
+                        </div>
+                      }
                       {
                         isAccount &&
                         <div>
@@ -805,7 +834,7 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
                                   shippingOptions.map((value, i) => {
                                     return (<li key={i}>
                                       <div className="login-toggle-btn">
-                                        <input type="radio" value={value.shippingQuoteOptionId} onChange={() => shippingQuoteChange(value.shippingQuoteOptionId)} />
+                                        <input type="radio" value={value.shippingQuoteOptionId} onChange={() => shippingQuoteChange(value.shippingQuoteOptionId)} checked />
                                         <label className="ml-10 mb-20">{value.optionName} - {value.optionPriceText}</label>
                                       </div>
                                     </li>)
@@ -842,7 +871,7 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
                             {({ stripe, elements }) => (
                               <>
                                 <div className="card-info">
-                                  <CardElement options={CARD_ELEMENT_OPTIONS} stripe={stripe} elements={elements} />
+                                  <CardElement options={CARD_ELEMENT_OPTIONS} stripe={stripe} onReady={e => setRef(e)} />
                                 </div>
                                 <div className="icon-container">
                                   <i className="fa fa-cc-visa" style={{ color: 'navy' }}></i>
@@ -850,7 +879,13 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
                                   <i className="fa fa-cc-mastercard" style={{ color: 'red' }}></i>
                                   <i className="fa fa-cc-discover" style={{ color: 'orange' }}></i>
                                 </div>
+
                                 <div className="place-order mt-100">
+                                  <div className="login-toggle-btn mb-20">
+                                    <input type="checkbox" name={paymentForm.isAgree.name} ref={register(paymentForm.isAgree.validate)} />
+                                    <label className="ml-10 ">I agree with the terms and conditions</label>
+                                    {errors[paymentForm.isAgree.name] && <p className="error-msg">{errors[paymentForm.isAgree.name].message}</p>}
+                                  </div>
                                   <button type="button" onClick={handleSubmit((d) => onSubmitOrder(d, elements, stripe))} className="btn-hover">Place Order</button>
                                 </div>
                               </>
@@ -874,7 +909,7 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
                       </div>
                       <div className="item-empty-area__text">
                         No items found in cart to checkout <br />{" "}
-                        <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
+                        <Link to={"/"}>
                           Shop Now
                       </Link>
                       </div>
@@ -915,7 +950,10 @@ const mapDispatchToProps = dispatch => {
     },
     getState: (code) => {
       dispatch(getState(code));
-    }
+    },
+    deleteAllFromCart: () => {
+      dispatch(deleteAllFromCart());
+    },
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Checkout);

@@ -25,6 +25,7 @@
   }
 
 
+
   .billing-info,
   .billing-select {
     label {
@@ -316,6 +317,14 @@
   }
 
   .payment-method {
+    input[type="checkbox"] {
+      height: 15px;
+      margin: 0;
+      position: relative;
+      top: 1px;
+      width: 17px;
+    }
+
     .card-info {
       padding: 25px 5px 25px 5px;
       border: 1px solid #e5e5e5;
@@ -409,5 +418,17 @@
     &.pb-100 {
       padding-bottom: 60px;
     }
+  }
+
+  .checkout-heading {
+    display: flex;
+    align-items: center;
+    background-color: #f6f6f6;
+    border-top: 5px solid #fb799c;
+    color: #5b5858;
+    min-height: 55px;
+    line-height: 1.6;
+    padding: 5px 30px;
+    margin-bottom: 30px;
   }
 }

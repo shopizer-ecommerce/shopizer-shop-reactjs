@@ -269,15 +269,55 @@
         }
       }
 
-      .review-rating {
-        line-height: 1;
+      .pro-details-rating-wrap {
+        display: flex;
+        align-items: center;
 
-        i {
-          font-size: 12px;
+        margin: 0 0 17px;
 
-          margin-right: 1px;
+        .pro-details-rating {
+          position: relative;
 
-          color: #ffa900;
+          margin-right: 39px;
+
+          &:before {
+            position: absolute;
+            top: 4px;
+            right: -19px;
+
+            display: none;
+
+            width: 2px;
+            height: 15px;
+
+            content: "";
+
+            background-color: #d1d1d1;
+          }
+
+          i {
+            font-size: 17px;
+
+            margin-right: 2px;
+
+            color: #5f5d5d;
+
+            &.yellow {
+              color: #ffa900;
+            }
+          }
+        }
+
+        span {
+          a {
+            font-size: 15px;
+
+            color: $theme-color;
+
+            &:hover {
+              color: #000;
+            }
+          }
         }
       }
 
