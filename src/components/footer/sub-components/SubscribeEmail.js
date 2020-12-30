@@ -22,7 +22,7 @@ const subScribeForm = {
   }
 }
 
-const CustomForm = ({ }) => {
+const CustomForm = () => {
   const [status, setStatus] = useState('');
   const { register, handleSubmit, errors, reset } = useForm({
     mode: "onChange",

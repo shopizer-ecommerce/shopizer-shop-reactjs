@@ -131,13 +131,14 @@ const LoginRegister = ({ props, location, setLoader, setUser, getCountry, getSta
   useEffect(() => {
     getCountry()
     setDefualtsValue()
+    // eslint-disable-next-line react-hooks/exhaustive-deps 
   }, []);
   const setDefualtsValue = () => {
     console.log(currentLocation);
     if (currentLocation.length > 0) {
-      setValue('country', currentLocation.find(i => i.types.some(i => i == "country")).address_components[0].short_name)
+      setValue('country', currentLocation.find(i => i.types.some(i => i === "country")).address_components[0].short_name)
       // // setValue('city', currentLocation.find(i => i.types.some(i => i == "locality")).address_components[0].short_name)
-      setValue('stateProvince', currentLocation.find(i => i.types.some(i => i == "administrative_area_level_1")).address_components[0].long_name)
+      setValue('stateProvince', currentLocation.find(i => i.types.some(i => i === "administrative_area_level_1")).address_components[0].long_name)
     }
 
   }
@@ -335,12 +336,12 @@ const LoginRegister = ({ props, location, setLoader, setUser, getCountry, getSta
                                   rules={registerForm.country.validate}
                                   render={props => {
                                     return (
-                                      <select onChange={(e) => { props.onChange(e.target.value); getState(e.target.value) }} >
+                                      <select onChange={(e) => { props.onChange(e.target.value); getState(e.target.value) }} value={props.value}>
                                         <option>Select a country</option>
                                         {
 
                                           countryData.map((data, i) => {
-                                            return <option key={i} value={data.code} selected={props.value === data.code}>{data.name}</option>
+                                            return <option key={i} value={data.code}>{data.name}</option>
                                           })
                                         }
                                       </select>
@@ -358,11 +359,11 @@ const LoginRegister = ({ props, location, setLoader, setUser, getCountry, getSta
                                       rules={registerForm.stateProvince.validate}
                                       render={props => {
                                         return (
-                                          <select onChange={(e) => { props.onChange(e.target.value) }}>
+                                          <select onChange={(e) => { props.onChange(e.target.value) }} value={props.value}>
                                             <option>Select a state</option>
                                             {
                                               stateData.map((data, i) => {
-                                                return <option key={i} value={data.code} selected={props.value === data.code}>{data.name}</option>
+                                                return <option key={i} value={data.code}>{data.name}</option>
                                               })
                                             }
                                           </select>)

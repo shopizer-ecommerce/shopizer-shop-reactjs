@@ -19,6 +19,7 @@ const Product = ({ location, productID, currentLanguageCode, setLoader, defaultS
   useEffect(() => {
     getProductDetails();
     getReview();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getProductDetails = async () => {

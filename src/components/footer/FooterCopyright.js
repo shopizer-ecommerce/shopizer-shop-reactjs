@@ -22,9 +22,9 @@ const FooterCopyright = ({ footerLogo, spaceBottomClass, colorClass, merchant })
       </div>
       <p>
         Copyright © {new Date(merchant.inBusinessSince).getFullYear()}{" "}
-        <a href={''} rel="noopener noreferrer" target="_blank">
+        <Link to="" rel="noopener noreferrer">
           {merchant.name}
-        </a>
+        </Link>
         .<br /> All Rights Reserved
       </p>
     </div>

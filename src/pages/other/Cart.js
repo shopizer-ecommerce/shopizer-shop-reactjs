@@ -7,6 +7,9 @@ import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { connect } from "react-redux";
 // import { getDiscountPrice } from "../../helpers/product";
 import { isValidObject } from "../../util/helper";
+import { useForm, Controller } from "react-hook-form";
+import { getState } from "../../redux/actions/userAction";
+
 import {
   addToCart,
   // decreaseQuantity,
@@ -17,6 +20,37 @@ import {
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 
+
+const quoteForm = {
+
+  postalCode: {
+    name: "postalCode",
+    validate: {
+      required: {
+        value: true,
+        message: "postalCode is required"
+      }
+    }
+  },
+  country: {
+    name: "country",
+    validate: {
+      required: {
+        value: true,
+        message: "Country is required"
+      }
+    }
+  },
+  stateProvince: {
+    name: "stateProvince",
+    validate: {
+      required: {
+        value: true,
+        message: "State is required"
+      }
+    }
+  },
+};
 const Cart = ({
   location,
   cartItems,
@@ -25,6 +59,9 @@ const Cart = ({
   increaseQuantity,
   // addToCart,
   deleteFromCart,
+  countryData,
+  stateData,
+  getState
   // deleteAllFromCart,
 
 }) => {
@@ -32,15 +69,19 @@ const Cart = ({
   const { pathname } = location;
   const cartTotalPrice = cartItems.displaySubTotal;
   const grandTotalPrice = cartItems.displaySubTotal;
+  const { register, handleSubmit, control, formState } = useForm({ mode: 'onChange' });
+
 
   const deleteAllFromCart = () => {
     console.log(cartItems);
-    cartItems.products.map((value) => {
+    cartItems.products.forEach((value) => {
       deleteFromCart(cartItems.code, value, defaultStore, addToast)
     });
 
   }
+  const getQuote = () => {
 
+  }
   return (
     <Fragment>
       <MetaTags>
@@ -98,19 +139,6 @@ const Cart = ({
                                   <Link to={"/product/" + cartItem.id}>
                                     {cartItem.description.name}
                                   </Link>
-                                  {/* {cartItem.selectedProductColor &&
-                                    cartItem.selectedProductSize ? (
-                                      <div className="cart-item-variation">
-                                        <span>
-                                          Color: {cartItem.selectedProductColor}
-                                        </span>
-                                        <span>
-                                          Size: {cartItem.selectedProductSize}
-                                        </span>
-                                      </div>
-                                    ) : (
-                                      ""
-                                    )} */}
                                 </td>
 
                                 <td className="product-price-cart">
@@ -141,15 +169,6 @@ const Cart = ({
                                   {
                                     cartItem.displaySubTotal
                                   }
-                                  {/* {cartItem.discounte
-                                    ?
-                                    (
-                                      finalDiscountedPrice * cartItem.quantity
-                                    ).toFixed(2)
-                                    :
-                                    (
-                                      finalProductPrice * cartItem.quantity
-                                    ).toFixed(2)} */}
                                 </td>
 
                                 <td className="product-remove">
@@ -191,33 +210,59 @@ const Cart = ({
                           Enter your destination to get a shipping estimate.
                         </p>
                         <div className="tax-select-wrapper">
-                          <div className="tax-select">
-                            <label>* Country</label>
-                            <select className="email s-email s-wid">
-                              <option>Bangladesh</option>
-                              <option>Albania</option>
-                              <option>Åland Islands</option>
-                              <option>Afghanistan</option>
-                              <option>Belgium</option>
-                            </select>
-                          </div>
-                          <div className="tax-select">
-                            <label>* Region / State</label>
-                            <select className="email s-email s-wid">
-                              <option>Bangladesh</option>
-                              <option>Albania</option>
-                              <option>Åland Islands</option>
-                              <option>Afghanistan</option>
-                              <option>Belgium</option>
-                            </select>
-                          </div>
-                          <div className="tax-select">
-                            <label>* Zip/Postal Code</label>
-                            <input type="text" />
-                          </div>
-                          <button className="cart-btn-2" type="submit">
-                            Get A Quote
+                          <form onSubmit={handleSubmit(getQuote)}>
+                            <div className="tax-select">
+                              <Controller
+                                name={quoteForm.country.name}
+                                control={control}
+                                rules={quoteForm.country.validate}
+                                render={props => {
+                                  return (
+                                    <select onChange={(e) => { props.onChange(e.target.value); getState(e.target.value) }} value={props.value}>
+                                      <option>Select a country</option>
+                                      {
+
+                                        countryData.map((data, i) => {
+                                          return <option key={i} value={data.code}>{data.name}</option>
+                                        })
+                                      }
+                                    </select>
+                                  )
+                                }}
+                              />
+                            </div>
+                            <div className="tax-select">
+                              <label>Region / State</label>
+                              {
+                                stateData && stateData.length > 0 ?
+                                  <Controller
+                                    name={quoteForm.stateProvince.name}
+                                    control={control}
+                                    rules={quoteForm.stateProvince.validate}
+                                    render={props => {
+                                      return (
+                                        <select onChange={(e) => { props.onChange(e.target.value) }} value={props.value}>
+                                          <option>Select a state</option>
+                                          {
+                                            stateData.map((data, i) => {
+                                              return <option key={i} value={data.code}>{data.name}</option>
+                                            })
+                                          }
+                                        </select>)
+                                    }}
+                                  />
+                                  :
+                                  <input type="text" name={quoteForm.stateProvince.name} ref={register(quoteForm.stateProvince.validate)} placeholder="Region / State" />
+                              }
+                            </div>
+                            <div className="tax-select">
+                              <label>Postal Code</label>
+                              <input type="text" name={quoteForm.postalCode.name} ref={register(quoteForm.postalCode.validate)} placeholder="Postal Code" />
+                            </div>
+                            <button className="cart-btn-2" type="submit" disabled={!formState.isValid}>
+                              Get A Quote
                           </button>
+                          </form>
                         </div>
                       </div>
                     </div>
@@ -307,8 +352,9 @@ Cart.propTypes = {
 const mapStateToProps = state => {
   return {
     cartItems: state.cartData.cartItems,
-    defaultStore: state.merchantData.defaultStore
-    // currency: state.currencyData
+    defaultStore: state.merchantData.defaultStore,
+    countryData: state.userData.country,
+    stateData: state.userData.state
   };
 };
 
@@ -326,6 +372,9 @@ const mapDispatchToProps = dispatch => {
     deleteFromCart: (cartId, item, defaultStore, addToast) => {
       dispatch(deleteFromCart(cartId, item, defaultStore, addToast));
     },
+    getState: (code) => {
+      dispatch(getState(code));
+    }
     // deleteAllFromCart: addToast => {
     //   dispatch(deleteAllFromCart(addToast));
     // }

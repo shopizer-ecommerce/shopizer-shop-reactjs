@@ -7,7 +7,8 @@ import { isValidObject } from "../../util/helper";
 import { addToCart } from "../../redux/actions/cartActions";
 // import { addToWishlist } from "../../redux/actions/wishlistActions";
 // import { addToCompare } from "../../redux/actions/compareActions";
-import Rating from "./sub-components/ProductRating";
+// import Rating from "./sub-components/ProductRating";
+import StarRatings from 'react-star-ratings';
 import WebService from '../../util/webService';
 import constant from '../../util/constant';
 import { setLoader } from "../../redux/actions/loaderActions";
@@ -36,7 +37,9 @@ const ProductDescriptionInfo = ({
   const [quantityCount, setQuantityCount] = useState(1);
   useEffect(() => {
     getDefualtsOption()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const getDefualtsOption = async () => {
     let temp = [];
     if (product.options) {
@@ -127,7 +130,15 @@ const ProductDescriptionInfo = ({
       {/* {product.rating && product.rating > 0 ? ( */}
       <div className="pro-details-rating-wrap">
         <div className="pro-details-rating">
-          <Rating ratingValue={product.rating} />
+          <StarRatings
+            rating={product.rating}
+            starRatedColor="#ffa900"
+            starDimension="17px"
+            starSpacing="1px"
+            numberOfStars={5}
+            name='view-rating'
+          />
+          {/* <Rating ratingValue={product.rating} /> */}
         </div>
       </div>
       {/* ) : (
@@ -274,7 +285,7 @@ const ProductDescriptionInfo = ({
               <button
                 onClick={() => {
                   let options = [];
-                  selectedProductColor.map((a) => {
+                  selectedProductColor.forEach((a) => {
                     options.push({ id: a.id })
                   })
 

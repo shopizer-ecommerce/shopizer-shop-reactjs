@@ -23,7 +23,7 @@ const TabProductNine = ({
   const [categoryData, setCategoryData] = useState([]);
   useEffect(() => {
     getProductList();
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const getProductList = async () => {
     setLoader(true)
@@ -33,8 +33,8 @@ const TabProductNine = ({
       // console.log(response);
       if (response) {
         let category = [{ 'id': '', 'name': 'All', 'code': 'all', data: response.products }];
-        response.products.map((item) => {
-          item.categories.map((a) => {
+        response.products.forEach((item) => {
+          item.categories.forEach((a) => {
             // console.log(a)
             let index = category.findIndex(value => value.id === a.id);
             // console.log(index);

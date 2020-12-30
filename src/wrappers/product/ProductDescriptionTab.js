@@ -1,19 +1,53 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
 import { setLoader } from "../../redux/actions/loaderActions";
 import { connect } from "react-redux";
-import Rating from "../../components/product/sub-components/ProductRating";
+// import Rating from "../../components/product/sub-components/ProductRating";
 import StarRatings from 'react-star-ratings';
+import WebService from '../../util/webService';
+import constant from '../../util/constant';
+import { useToasts } from "react-toast-notifications";
+import * as moment from 'moment';
+import { Scrollbars } from 'react-custom-scrollbars';
 const ProductDescriptionTab = ({ spaceBottomClass, product, review, userData }) => {
   const [ratingValue, setRatingValue] = useState(0)
-  const getRating = (ratingValue) => {
-    let rating = [];
-    for (let i = 0; i <= ratingValue - 1; i++) {
-      rating.push(i);
+  const [ratingMessage, setRatingMessage] = useState('')
+  const { addToast } = useToasts();
+  // const getRating = (ratingValue) => {
+  //   let rating = [];
+  //   for (let i = 0; i <= ratingValue - 1; i++) {
+  //     rating.push(i);
+  //   }
+  //   return rating;
+  // }
+  const onClickSubmit = async () => {
+    setLoader(true)
+    try {
+      console.log('jaimin')
+      let action = constant.ACTION.AUTH + constant.ACTION.PRODUCTS + product.id + '/reviews'
+      let param = {
+        "customerId": userData.id,
+        "date": moment().format('YYYY-MM-DD'),
+        "description": ratingMessage,
+        'language': 'en',
+        'productId': product.id,
+        'rating': ratingValue
+      }
+      let response = await WebService.post(action, param);
+      console.log(response)
+      if (response) {
+        setRatingMessage('')
+        setRatingValue(0)
+        addToast("Your review has been posted", { appearance: "success", autoDismiss: true });
+      }
+      setLoader(false)
+    } catch (error) {
+      addToast("A review already exist for this customer and product", { appearance: "error", autoDismiss: true });
+      // setLoader(false)
     }
-    return rating;
   }
   return (
     <div className={`description-review-area ${spaceBottomClass}`}>
@@ -30,7 +64,7 @@ const ProductDescriptionTab = ({ spaceBottomClass, product, review, userData }) 
                 <Nav.Link eventKey="productDescription">Description</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="productReviews">Reviews(2)</Nav.Link>
+                <Nav.Link eventKey="productReviews">Reviews({review.length})</Nav.Link>
               </Nav.Item>
             </Nav>
             <Tab.Content className="description-review-bottom">
@@ -60,41 +94,52 @@ const ProductDescriptionTab = ({ spaceBottomClass, product, review, userData }) 
               <Tab.Pane eventKey="productReviews">
                 <div className="row">
                   <div className="col-lg-7">
-                    {
-                      review.map((a, key) => {
-                        return (<div className="review-wrapper" key={key}>
-                          <div className="single-review">
-                            <div className="review-img">
-                              <img src={process.env.PUBLIC_URL + "/assets/img/testimonial/1.jpg"} alt="" />
-                            </div>
-                            <div className="review-content">
-                              <div className="review-top-wrap">
-                                <div className="review-left">
-                                  <div className="review-name">
-                                    <h4>{a.customer.firstName} {a.customer.lastName}</h4>
-                                  </div>
-                                  <div className="pro-details-rating-wrap">
-                                    <div className="pro-details-rating">
-                                      <Rating ratingValue={a.rating} />
+                    <Scrollbars style={{ height: 500 }}>
+                      {
+                        review.map((a, key) => {
+                          return (
+                            <div className="review-wrapper" key={key}>
+                              <div className="single-review">
+                                <div className="review-img">
+                                  <img src={process.env.PUBLIC_URL + "/assets/img/testimonial/1.jpg"} alt="" />
+                                </div>
+                                <div className="review-content">
+                                  <div className="review-top-wrap">
+                                    <div className="review-left">
+                                      <div className="review-name">
+                                        <h4>{a.customer.firstName} {a.customer.lastName}</h4>
+                                      </div>
+                                      <div className="pro-details-rating-wrap">
+                                        <div className="pro-details-rating">
+                                          <StarRatings
+                                            rating={a.rating}
+                                            starRatedColor="#ffa900"
+                                            starDimension="17px"
+                                            starSpacing="1px"
+                                            numberOfStars={5}
+                                            name='view-rating'
+                                          />
+
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div className="review-left">
+                                      <button className="review-date">{a.date}</button>
                                     </div>
                                   </div>
+                                  <div className="review-bottom">
+                                    <p>
+                                      {a.description}
+                                    </p>
+                                  </div>
                                 </div>
-                                <div className="review-left">
-                                  <button>{a.date}</button>
-                                </div>
-                              </div>
-                              <div className="review-bottom">
-                                <p>
-                                  {a.description}
-                                </p>
                               </div>
                             </div>
-                          </div>
-                        </div>
-                        )
-                      })
+                          )
+                        })
 
-                    }
+                      }
+                    </Scrollbars>
                   </div>
                   {
                     userData ?
@@ -102,43 +147,31 @@ const ProductDescriptionTab = ({ spaceBottomClass, product, review, userData }) 
                         <div className="ratting-form-wrapper pl-50">
                           <h3>Add a Review</h3>
                           <div className="ratting-form">
-                            <form action="#">
+                            <form>
                               <div className="star-box">
                                 <span>Your rating:</span>
-                                {/* <div className="pro-details-rating-wrap">
-                                  <div className="pro-details-rating"> */}
                                 <StarRatings
                                   rating={ratingValue}
                                   starRatedColor="#ffa900"
                                   starDimension="17px"
                                   starSpacing="1px"
+                                  starHoverColor="#ffa900"
                                   changeRating={(e) => setRatingValue(e)}
                                   numberOfStars={5}
                                   name='rating'
                                 />
-                                {/* <Rating ratingValue={0} /> */}
-                                {/* </div>
-                                </div> */}
+
                               </div>
                               <div className="row">
-                                {/* <div className="col-md-6">
-                                  <div className="rating-form-style mb-10">
-                                    <input placeholder="Name" type="text" />
-                                  </div>
-                                </div>
-                                <div className="col-md-6">
-                                  <div className="rating-form-style mb-10">
-                                    <input placeholder="Email" type="email" />
-                                  </div>
-                                </div> */}
                                 <div className="col-md-12">
                                   <div className="rating-form-style form-submit">
                                     <textarea
                                       name="Your Review"
                                       placeholder="Message"
                                       defaultValue={""}
+                                      onChange={(e) => setRatingMessage(e.target.value)}
                                     />
-                                    <input type="submit" defaultValue="Submit" />
+                                    <input type="button" defaultValue="Submit" onClick={onClickSubmit} disabled={ratingMessage === '' || ratingValue === 0} />
                                   </div>
                                 </div>
                               </div>
@@ -147,7 +180,12 @@ const ProductDescriptionTab = ({ spaceBottomClass, product, review, userData }) 
                         </div>
                       </div>
                       :
-                      <div></div>
+                      <div className="col-lg-5">
+                        <div className="checkout-heading">
+                          <Link to={"/login-register"}>Returning customer ? Click here to login</Link>
+                        </div>
+                      </div>
+
                   }
 
                 </div>

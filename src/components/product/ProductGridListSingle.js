@@ -3,10 +3,11 @@ import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 // import { getDiscountPrice } from "../../helpers/product";
-import Rating from "./sub-components/ProductRating";
+// import Rating from "./sub-components/ProductRating";
 import ProductModal from "./ProductModal";
 import { setProductID } from "../../redux/actions/productActions";
 import { connect } from "react-redux";
+import StarRatings from 'react-star-ratings';
 const ProductGridListSingle = ({
   product,
   // currency,
@@ -123,7 +124,15 @@ const ProductGridListSingle = ({
               </Link>
             </h3>
             <div className="product-rating">
-              <Rating ratingValue={product.rating} />
+              <StarRatings
+                rating={product.rating}
+                starRatedColor="#ffa900"
+                starDimension="17px"
+                starSpacing="1px"
+                numberOfStars={5}
+                name='view-rating'
+              />
+              {/* <Rating ratingValue={product.rating} /> */}
             </div>
             <div className="product-price">
               {product.discounted ? (
@@ -201,7 +210,15 @@ const ProductGridListSingle = ({
                 </div>
                 <div className="rating-review">
                   <div className="product-list-rating">
-                    <Rating ratingValue={product.rating} />
+                    <StarRatings
+                      rating={product.rating}
+                      starRatedColor="#ffa900"
+                      starDimension="17px"
+                      starSpacing="1px"
+                      numberOfStars={5}
+                      name='view-rating'
+                    />
+                    {/* <Rating ratingValue={product.rating} /> */}
                   </div>
                 </div>
                 <p dangerouslySetInnerHTML={{ __html: product.description.description }}></p>

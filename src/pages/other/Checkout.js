@@ -19,6 +19,8 @@ import { setLoader } from "../../redux/actions/loaderActions";
 import {
   deleteAllFromCart
 } from "../../redux/actions/cartActions";
+import Script from 'react-load-script';
+
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 const paymentForm = {
   firstName: {
@@ -215,16 +217,16 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
   const { pathname } = location;
   const history = useHistory();
   const { addToast } = useToasts();
-  let cartTotalPrice = 0;
+  // let cartTotalPrice = 0;
   // console.log(cartItems);
   const [config, setConfig] = useState({});
   const [isShipping, setIsShipping] = useState(false);
   const [isAccount, setIsAccount] = useState(false);
-  const [password, setPassword] = useState('');
-  const [note, setNote] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [note, setNote] = useState('');
   const [shippingOptions, setShippingOptions] = useState();
   const [shippingQuote, setShippingQuote] = useState([]);
-  const [cardElements, setCardElements] = useState('');
+  // const [cardElements, setCardElements] = useState('');
   const { register, control, handleSubmit, errors, setValue, watch, reset } = useForm();
 
   const [ref, setRef] = useState(null)
@@ -235,15 +237,17 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
     } else {
       setDefualtsValue()
     }
+    getState('')
     getCountry()
     getConfig()
     shippingQuoteChange('')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const setDefualtsValue = () => {
     if (currentLocation.length > 0) {
-      setValue('country', currentLocation.find(i => i.types.some(i => i == "country")).address_components[0].short_name)
-      setValue('city', currentLocation.find(i => i.types.some(i => i == "locality")).address_components[0].short_name)
-      setValue('stateProvince', currentLocation.find(i => i.types.some(i => i == "administrative_area_level_1")).address_components[0].short_name)
+      setValue('country', currentLocation.find(i => i.types.some(i => i === "country")).address_components[0].short_name)
+      setValue('city', currentLocation.find(i => i.types.some(i => i === "locality")).address_components[0].short_name)
+      setValue('stateProvince', currentLocation.find(i => i.types.some(i => i === "administrative_area_level_1")).address_components[0].short_name)
     }
   }
   const getProfile = async () => {
@@ -295,14 +299,65 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
     // console.log(currentLocation.find(i => i.types.some(i => i == "country")).address_components[0].short_name)
     if (currentLocation.length > 0) {
       setTimeout(() => {
-        setValue('shipCountry', currentLocation.find(i => i.types.some(i => i == "country")).address_components[0].short_name)
-        setValue('shipCity', currentLocation.find(i => i.types.some(i => i == "locality")).address_components[0].short_name)
-        setValue('shipStateProvince', currentLocation.find(i => i.types.some(i => i == "administrative_area_level_1")).address_components[0].short_name)
+        setValue('shipCountry', currentLocation.find(i => i.types.some(i => i === "country")).address_components[0].short_name)
+        setValue('shipCity', currentLocation.find(i => i.types.some(i => i === "locality")).address_components[0].short_name)
+        setValue('shipStateProvince', currentLocation.find(i => i.types.some(i => i === "administrative_area_level_1")).address_components[0].short_name)
         onChangeShipping()
       }, 1000);
     }
+  }
+  const handleScriptLoad = () => {
+    // Declare Options For Autocomplete
+    const options = {
+      types: ['address'],
+    };
+    // console.log('fsdfsdfsdfdsf')
+    // Initialize Google Autocomplete
+    /*global google*/ // To disable any eslint 'google not defined' errors
+    let autocomplete = new google.maps.places.Autocomplete(
+      document.getElementById('autocomplete'),
+      options,
+    );
+    // console.log(autocomplete)
+    // Avoid paying for data that you don't need by restricting the set of
+    // place fields that are returned to just the address components and formatted
+    // address.
+    // this.autocomplete.setFields(['address_components', 'formatted_address']);
 
+    // Fire Event when a suggested name is selected
+    autocomplete.addListener('place_changed', () => {
+      let p = autocomplete.getPlace();
+      console.log(p);
+      setValue('country', p.address_components.find(i => i.types.some(i => i === "country")).short_name)
+      getState(p.address_components.find(i => i.types.some(i => i === "country")).short_name)
 
+      setValue('city', p.address_components.find(i => i.types.some(i => i === "locality")).short_name)
+      let pCode = p.address_components.find(i => i.types.some(i => i === "postal_code"))
+      if (pCode !== undefined) {
+        setValue('postalCode', pCode.long_name)
+      }
+
+      var componentForm = {
+        street_number: 'short_name',
+        route: 'long_name',
+        sublocality: 'sublocality'
+      };
+      let array = [];
+      for (var i = 0; i < p.address_components.length; i++) {
+        var addressType = p.address_components[i].types[0];
+        if (componentForm[addressType]) {
+          var val = p.address_components[i][componentForm[addressType]];
+          array.push(val);
+
+        }
+      }
+      setValue('address', array.toString())
+      setTimeout(() => {
+        setValue('stateProvince', p.address_components.find(i => i.types.some(i => i === "administrative_area_level_1")).short_name)
+      }, 2000);
+
+      onChangeShipping()
+    });
   }
   const onChangeShipping = async () => {
     // console.log(watch('shipPostalCode'))
@@ -520,10 +575,15 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
                         <div className="col-lg-12">
                           <div className="billing-info mb-20">
                             <label>Street Address</label>
+                            <Script
+                              url={"https://maps.googleapis.com/maps/api/js?key=" + process.env.REACT_APP_API_KEY + "&libraries=places"}
+                              onLoad={handleScriptLoad}
+                            />
                             <input
                               className="billing-address"
                               placeholder="House number and street name"
                               type="text"
+                              id="autocomplete"
                               name={paymentForm.address.name}
                               ref={register(paymentForm.address.validate)}
                             />
@@ -542,12 +602,12 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
                               render={props => {
                                 return (
                                   // console.log(props) ||
-                                  <select onChange={(e) => { props.onChange(e.target.value); getState(e.target.value); onChangeShipping() }}>
+                                  <select onChange={(e) => { props.onChange(e.target.value); getState(e.target.value); onChangeShipping() }} value={props.value}>
                                     <option>Select a country</option>
                                     {
 
                                       countryData.map((data, i) => {
-                                        return <option key={i} value={data.code} selected={props.value === data.code}>{data.name}</option>
+                                        return <option key={i} value={data.code}>{data.name}</option>
                                       })
                                     }
                                   </select>
@@ -576,11 +636,11 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
                                   rules={paymentForm.stateProvince.validate}
                                   render={props => {
                                     return (
-                                      <select onChange={(e) => props.onChange(e.target.value)}>
+                                      <select onChange={(e) => props.onChange(e.target.value)} value={props.value}>
                                         <option>Select a state</option>
                                         {
                                           stateData.map((data, i) => {
-                                            return <option key={i} value={data.code} selected={props.value === data.code}>{data.name}</option>
+                                            return <option key={i} value={data.code}>{data.name}</option>
                                           })
                                         }
                                       </select>)
@@ -690,12 +750,12 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
                                   rules={paymentForm.shipCountry.validate}
                                   render={props => {
                                     return (
-                                      <select onChange={(e) => { props.onChange(e.target.value); getState(e.target.value); onChangeShipping() }}>
+                                      <select onChange={(e) => { props.onChange(e.target.value); getState(e.target.value); onChangeShipping() }} value={props.value}>
                                         <option>Select a country</option>
                                         {
 
                                           countryData.map((data, i) => {
-                                            return <option key={i} value={data.code} selected={props.value === data.code}>{data.name}</option>
+                                            return <option key={i} value={data.code}>{data.name}</option>
                                           })
                                         }
                                       </select>
@@ -724,11 +784,11 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
                                       rules={paymentForm.shipStateProvince.validate}
                                       render={props => {
                                         return (
-                                          <select onChange={(e) => props.onChange(e.target.value)}>
+                                          <select onChange={(e) => props.onChange(e.target.value)} value={props.value}>
                                             <option>Select a state</option>
                                             {
                                               stateData.map((data, i) => {
-                                                return <option key={i} value={data.code} selected={props.value === data.code}>{data.name}</option>
+                                                return <option key={i} value={data.code}>{data.name}</option>
                                               })
                                             }
                                           </select>)
@@ -814,7 +874,7 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
                               shippingQuote.length > 0 &&
                               shippingQuote.map((quote, i) => {
                                 return (
-                                  quote.title != 'Total' &&
+                                  quote.title !== 'Total' &&
                                   <ul className="mb-20" key={i}>
                                     <li className="order-total">{quote.title}</li>
                                     <li>

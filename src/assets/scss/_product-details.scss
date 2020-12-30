@@ -252,6 +252,10 @@
     .review-left {
       display: flex;
 
+      .review-date {
+        margin-top: -15px;
+      }
+
       .review-name {
         margin-right: 25px;
         width: 180px;
@@ -263,7 +267,7 @@
         h4 {
           font-size: 16px;
           font-weight: 500;
-          line-height: 1;
+          // line-height: 1;
 
           margin: 0;
         }
@@ -436,7 +440,11 @@
         }
       }
     }
+
+
   }
+
+
 }
 
 /* product details 2 */

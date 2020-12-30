@@ -90,6 +90,7 @@ const ShopGridStandard = ({ location, defaultStore, currentLanguageCode, categor
         setSelectedManufature([])
         setSelectedOption([])
         getProductList(categoryID, [], [])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [categoryID, offset]);
     const getProductList = async (categoryid, size, manufacture) => {
         setLoader(true)
@@ -141,10 +142,10 @@ const ShopGridStandard = ({ location, defaultStore, currentLanguageCode, categor
             let response = await WebService.get(action);
             // console.log(response);
             if (response) {
-                response.map(variant => {
-                    if (variant.code == 'COLOR') {
+                response.forEach(variant => {
+                    if (variant.code === 'COLOR') {
                         setColor(variant.options);
-                    } else if (variant.code == "SIZE") {
+                    } else if (variant.code === "SIZE") {
                         setSize(variant.options);
                     }
                 });

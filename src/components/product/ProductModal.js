@@ -3,12 +3,12 @@ import React, { Fragment, useState, useEffect } from "react";
 import Swiper from "react-id-swiper";
 // import { getProductCartQuantity } from "../../helpers/product";
 import { Modal } from "react-bootstrap";
-import Rating from "./sub-components/ProductRating";
+// import Rating from "./sub-components/ProductRating";
 import { connect } from "react-redux";
 import WebService from '../../util/webService';
 import constant from '../../util/constant';
 import { setLoader } from "../../redux/actions/loaderActions";
-
+import StarRatings from 'react-star-ratings';
 function ProductModal(props) {
   const { product, cartData, defaultStore, userData, finalproductprice, finaldiscountedprice, setLoader } = props;
 
@@ -47,6 +47,7 @@ function ProductModal(props) {
       gallerySwiper.controller.control = thumbnailSwiper;
       thumbnailSwiper.controller.control = gallerySwiper;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gallerySwiper, thumbnailSwiper]);
 
   const gallerySwiperParams = {
@@ -214,7 +215,15 @@ function ProductModal(props) {
 
                 <div className="pro-details-rating-wrap">
                   <div className="pro-details-rating">
-                    <Rating ratingValue={product.rating} />
+                    <StarRatings
+                      rating={product.rating}
+                      starRatedColor="#ffa900"
+                      starDimension="17px"
+                      starSpacing="1px"
+                      numberOfStars={5}
+                      name='view-rating'
+                    />
+                    {/* <Rating ratingValue={product.rating} /> */}
                   </div>
                 </div>
                 <div className="pro-details-list">
@@ -356,7 +365,7 @@ function ProductModal(props) {
                         <button
                           onClick={() => {
                             let options = [];
-                            selectedProductColor.map((a) => {
+                            selectedProductColor.forEach((a) => {
                               options.push({ id: a.id })
                             })
                             addToCart(
