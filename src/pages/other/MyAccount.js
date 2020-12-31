@@ -6,10 +6,108 @@ import Card from "react-bootstrap/Card";
 import Accordion from "react-bootstrap/Accordion";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
+import { useForm } from "react-hook-form";
+import WebService from '../../util/webService';
+import constant from '../../util/constant';
+import { setLoader } from "../../redux/actions/loaderActions";
+import { useToasts } from "react-toast-notifications";
+import { connect } from "react-redux";
 
-const MyAccount = ({ location }) => {
+const changePasswordForm = {
+  userName: {
+    name: "userName",
+    validate: {
+      required: {
+        value: true,
+        message: "User Name is required"
+      }
+    }
+  },
+  currentPassword: {
+    name: "currentPassword",
+    validate: {
+      required: {
+        value: true,
+        message: "Current Password is required"
+      }
+    }
+  },
+  password: {
+    name: "password",
+    validate: {
+      required: {
+        value: true,
+        message: "Password is required"
+      },
+      validate: {
+        hasSpecialChar: (value) => (value && value.match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/)) || 'Password must be minimum of 8 characters atleast one number and one special character'
+      }
+    }
+  },
+  repeatPassword: {
+    name: "repeatPassword",
+    validate: {
+      required: {
+        value: true,
+        message: "Repeat Password is required"
+      }
+    }
+  }
+}
+const MyAccount = ({ location, setLoader }) => {
   const { pathname } = location;
+  const { addToast } = useToasts();
+  const { register, handleSubmit, errors, watch, setError, clearErrors, reset } = useForm({
+    mode: "onChange"
+  });
+  const onChangePassword = async (data) => {
+    setLoader(true)
+    try {
+      let action = constant.ACTION.CUSTOMER + constant.ACTION.PASSWORD;
+      let param = {
+        "password": data.password,
+        "repeatPassword": data.repeatPassword,
+        "current": data.currentPassword,
+        "username": data.userName,
+      }
+      let response = await WebService.post(action, param);
+      if (response) {
+        reset({})
+        addToast("Your password has been changed successfully!", { appearance: "success", autoDismiss: true });
+      }
+      setLoader(false)
+    } catch (error) {
+      addToast("Your current password is wrong", { appearance: "error", autoDismiss: true });
+      setLoader(false)
+    }
+  }
+  const onConfirmPassword = (e) => {
+    if (watch('password') !== e.target.value) {
+      return setError(
+        changePasswordForm.repeatPassword.name,
+        {
+          type: "notMatch",
+          message: "Repeat Password should be the same as a password"
+        }
+      );
+    }
 
+  }
+  const onPasswordChange = (e) => {
+    if (watch('repeatPassword') !== '' && watch('repeatPassword') !== e.target.value) {
+      return setError(
+        changePasswordForm.repeatPassword.name,
+        {
+          type: "notMatch",
+          message: "Repeat Password should be the same as a password"
+        }
+      );
+
+    } else {
+      clearErrors(changePasswordForm.repeatPassword.name);
+    }
+
+  }
   return (
     <Fragment>
       <MetaTags>
@@ -249,27 +347,46 @@ const MyAccount = ({ location }) => {
                           <div className="myaccount-info-wrapper">
                             <div className="account-info-wrapper">
                               <h4>Change Password</h4>
-                              <h5>Your Password</h5>
                             </div>
-                            <div className="row">
-                              <div className="col-lg-12 col-md-12">
-                                <div className="billing-info">
-                                  <label>Password</label>
-                                  <input type="password" />
+                            <form onSubmit={handleSubmit(onChangePassword)}>
+                              <div className="row">
+                                <div className="col-lg-12 col-md-12">
+                                  <div className="billing-info">
+                                    <label>User Name</label>
+                                    <input type="text" name={changePasswordForm.userName.name} ref={register(changePasswordForm.userName.validate)} />
+                                    {errors[changePasswordForm.userName.name] && <p className="error-msg">{errors[changePasswordForm.userName.name].message}</p>}
+                                  </div>
+                                </div>
+                                <div className="col-lg-12 col-md-12">
+                                  <div className="billing-info">
+                                    <label>Current Password</label>
+                                    <input type="password" name={changePasswordForm.currentPassword.name} ref={register(changePasswordForm.currentPassword.validate)} />
+                                    {errors[changePasswordForm.currentPassword.name] && <p className="error-msg">{errors[changePasswordForm.currentPassword.name].message}</p>}
+
+                                  </div>
+                                </div>
+                                <div className="col-lg-12 col-md-12">
+                                  <div className="billing-info">
+                                    <label>Password</label>
+                                    <input type="password" onChange={(e) => onPasswordChange(e)} name={changePasswordForm.password.name} ref={register(changePasswordForm.password.validate)} />
+                                    {errors[changePasswordForm.password.name] && <p className="error-msg">{errors[changePasswordForm.password.name].message}</p>}
+                                  </div>
+                                </div>
+                                <div className="col-lg-12 col-md-12">
+                                  <div className="billing-info">
+                                    <label>Repeat Password</label>
+                                    <input type="password" onChange={(e) => onConfirmPassword(e)} name={changePasswordForm.repeatPassword.name} ref={register(changePasswordForm.repeatPassword.validate)} />
+                                    {errors[changePasswordForm.repeatPassword.name] && <p className="error-msg">{errors[changePasswordForm.repeatPassword.name].message}</p>}
+                                  </div>
                                 </div>
                               </div>
-                              <div className="col-lg-12 col-md-12">
-                                <div className="billing-info">
-                                  <label>Password Confirm</label>
-                                  <input type="password" />
+
+                              <div className="billing-back-btn">
+                                <div className="billing-btn">
+                                  <button type="submit">Continue</button>
                                 </div>
                               </div>
-                            </div>
-                            <div className="billing-back-btn">
-                              <div className="billing-btn">
-                                <button type="submit">Continue</button>
-                              </div>
-                            </div>
+                            </form>
                           </div>
                         </Card.Body>
                       </Accordion.Collapse>
@@ -282,12 +399,31 @@ const MyAccount = ({ location }) => {
           </div>
         </div>
       </LayoutOne>
-    </Fragment>
+    </Fragment >
   );
 };
 
 MyAccount.propTypes = {
   location: PropTypes.object
 };
+const mapStateToProps = (state) => {
+  return {
+    // countryData: state.userData.country,
+    // cartItems: state.cartData.cartItems,
+    // currentLocation: state.userData.currentAddress,
+    // stateData: state.userData.state,
+    // defaultStore: state.merchantData.defaultStore,
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    setLoader: (value) => {
+      dispatch(setLoader(value));
+    }
+  };
+};
 
-export default MyAccount;
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyAccount);
+
+// export default MyAccount;

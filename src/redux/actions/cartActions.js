@@ -40,10 +40,18 @@ export const addToCart = (item, addToast, cartId, quantityCount, defaultStore, u
       if (response) {
         dispatch(setShopizerCartID(response.code))
         dispatch(setLoader(false))
+        if (userData) {
+          setTimeout(() => {
+            dispatch(getCart(response.code, userData));
+          }, 2000);
+
+        } else {
+          dispatch(getCart(response.code, userData));
+        }
+
         if (addToast) {
           addToast(message, { appearance: "success", autoDismiss: true });
         }
-        dispatch(getCart(response.code));
 
       }
     } catch (error) {
@@ -55,10 +63,16 @@ export const addToCart = (item, addToast, cartId, quantityCount, defaultStore, u
 
 //Get cart
 
-export const getCart = (cartID) => {
+export const getCart = (cartID, userData) => {
   return async dispatch => {
     try {
-      let action = constant.ACTION.CART + cartID;
+      let action;
+      if (userData) {
+        action = constant.ACTION.CUSTOMERS + userData.id + '/' + constant.ACTION.CART;
+      } else {
+        action = constant.ACTION.CART + cartID;
+      }
+
       let response = await WebService.get(action);
       dispatch({
         type: GET_CART,

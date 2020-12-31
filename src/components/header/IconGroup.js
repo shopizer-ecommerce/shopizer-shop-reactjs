@@ -3,8 +3,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import MenuCart from "./sub-components/MenuCart";
-import { deleteFromCart } from "../../redux/actions/cartActions";
+import { deleteFromCart, deleteAllFromCart } from "../../redux/actions/cartActions";
 import { setUser } from "../../redux/actions/userAction";
+import { setLocalData } from '../../util/helper';
 const IconGroup = ({
   // currency,
   cartData,
@@ -14,7 +15,8 @@ const IconGroup = ({
   deleteFromCart,
   iconWhiteClass,
   userData,
-  setUser
+  setUser,
+  deleteAllFromCart
 }) => {
   const handleClick = e => {
     e.currentTarget.nextSibling.classList.toggle("active");
@@ -26,7 +28,11 @@ const IconGroup = ({
     );
     offcanvasMobileMenu.classList.add("active");
   };
-
+  const logout = () => {
+    setUser('')
+    setLocalData('token', '')
+    deleteAllFromCart()
+  }
   return (
     <div
       className={`header-right-wrap ${iconWhiteClass ? iconWhiteClass : ""}`}
@@ -57,10 +63,10 @@ const IconGroup = ({
               !userData &&
               <div>
                 <li>
-                  <Link to={process.env.PUBLIC_URL + "/login-register"}>Login</Link>
+                  <Link to={"/login"}>Login</Link>
                 </li>
                 <li>
-                  <Link to={process.env.PUBLIC_URL + "/login-register"}>Register</Link>
+                  <Link to={"/register"}>Register</Link>
                 </li>
               </div>
             }
@@ -68,13 +74,13 @@ const IconGroup = ({
               userData &&
               <div>
                 <li>
-                  <Link to={process.env.PUBLIC_URL + "/my-account"}>my account</Link>
+                  <Link to={"/my-account"}>my account</Link>
                 </li>
                 <li>
-                  <Link to={process.env.PUBLIC_URL + "/my-account"}>Recent Orders</Link>
+                  <Link to={"/my-account"}>Recent Orders</Link>
                 </li>
                 <li>
-                  <Link to={process.env.PUBLIC_URL + "/login-register"} onClick={() => setUser('')}>Logout</Link>
+                  <Link to={"/login"} onClick={logout}>Logout</Link>
                 </li>
               </div>
             }
@@ -158,6 +164,9 @@ const mapDispatchToProps = dispatch => {
     },
     setUser: (data) => {
       dispatch(setUser(data));
+    },
+    deleteAllFromCart: () => {
+      dispatch(deleteAllFromCart())
     }
   };
 };

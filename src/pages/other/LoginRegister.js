@@ -11,9 +11,10 @@ import { useForm, Controller } from "react-hook-form";
 import { useToasts } from "react-toast-notifications";
 import WebService from '../../util/webService';
 import constant from '../../util/constant';
-import { setLocalData } from '../../util/helper';
+import { setLocalData, isValidObject } from '../../util/helper';
 import { setLoader } from "../../redux/actions/loaderActions";
 import { setUser, getCountry, getState } from "../../redux/actions/userAction";
+import { addToCart, getCart } from "../../redux/actions/cartActions";
 import { connect } from "react-redux";
 
 const loginForm = {
@@ -30,8 +31,8 @@ const loginForm = {
       }
     }
   },
-  password: {
-    name: "password",
+  loginPassword: {
+    name: "loginPassword",
     validate: {
       required: {
         value: true,
@@ -60,6 +61,10 @@ const registerForm = {
       required: {
         value: true,
         message: "Password is required"
+      },
+
+      validate: {
+        hasSpecialChar: (value) => (value && value.match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/)) || 'Password must be minimum of 8 characters atleast one number and one special character'
       }
     }
   },
@@ -109,11 +114,10 @@ const registerForm = {
     }
   },
 };
-const LoginRegister = ({ props, location, setLoader, setUser, getCountry, getState, countryData, currentLocation, stateData }) => {
+const LoginRegister = ({ props, location, setLoader, setUser, getCart, getCountry, getState, countryData, currentLocation, stateData, cartItems, addToCart, defaultStore }) => {
   const { pathname } = location;
   const { addToast } = useToasts();
   const history = useHistory();
-
   const { register, handleSubmit, errors } = useForm({
     mode: "onChange",
     defaultValues: { username: "", password: "" },
@@ -127,14 +131,14 @@ const LoginRegister = ({ props, location, setLoader, setUser, getCountry, getSta
     mode: "onChange",
     criteriaMode: "all"
   });
-
   useEffect(() => {
+    // console.log(cartItems);
     getCountry()
     setDefualtsValue()
     // eslint-disable-next-line react-hooks/exhaustive-deps 
   }, []);
   const setDefualtsValue = () => {
-    console.log(currentLocation);
+    // console.log(currentLocation);
     if (currentLocation.length > 0) {
       setValue('country', currentLocation.find(i => i.types.some(i => i === "country")).address_components[0].short_name)
       // // setValue('city', currentLocation.find(i => i.types.some(i => i == "locality")).address_components[0].short_name)
@@ -146,10 +150,16 @@ const LoginRegister = ({ props, location, setLoader, setUser, getCountry, getSta
     setLoader(true)
     try {
       let action = constant.ACTION.CUSTOMER + constant.ACTION.LOGIN;
-      let param = { "username": data.username, "password": data.password }
+      let param = { "username": data.username, "password": data.loginPassword }
       let response = await WebService.post(action, param);
-      console.log(response)
       if (response) {
+        if (isValidObject(cartItems)) {
+          cartItems.products.forEach((element) => {
+            addToCart(element, '', cartItems.code, element.quantity, defaultStore, response)
+          });
+        } else {
+          getCart('', response)
+        }
         addToast("You have successfully logged in to this website", { appearance: "success", autoDismiss: true });
         setUser(response)
         setLocalData('token', response.token)
@@ -245,7 +255,7 @@ const LoginRegister = ({ props, location, setLoader, setUser, getCountry, getSta
             <div className="row">
               <div className="col-lg-7 col-md-12 ml-auto mr-auto">
                 <div className="login-register-wrapper">
-                  <Tab.Container defaultActiveKey="login">
+                  <Tab.Container defaultActiveKey={pathname.split("/")[1]}>
                     <Nav variant="pills" className="login-register-tab-list">
                       <Nav.Item>
                         <Nav.Link eventKey="login">
@@ -276,11 +286,11 @@ const LoginRegister = ({ props, location, setLoader, setUser, getCountry, getSta
                               <div className="login-input">
                                 <input
                                   type="password"
-                                  name={loginForm.password.name}
+                                  name={loginForm.loginPassword.name}
                                   placeholder="Password"
-                                  ref={register(loginForm.password.validate)}
+                                  ref={register(loginForm.loginPassword.validate)}
                                 />
-                                {errors[loginForm.password.name] && <p className="error-msg">{errors[loginForm.password.name].message}</p>}
+                                {errors[loginForm.loginPassword.name] && <p className="error-msg">{errors[loginForm.loginPassword.name].message}</p>}
                               </div>
                               <div className="button-box">
                                 <div className="login-toggle-btn">
@@ -405,12 +415,37 @@ LoginRegister.propTypes = {
 const mapStateToProps = (state) => {
   return {
     countryData: state.userData.country,
+    cartItems: state.cartData.cartItems,
     currentLocation: state.userData.currentAddress,
-    stateData: state.userData.state
+    stateData: state.userData.state,
+    defaultStore: state.merchantData.defaultStore,
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
+    addToCart: (
+      item,
+      addToast,
+      cartItem,
+      quantityCount,
+      defaultStore,
+      userData,
+      selectedProductColor
+    ) => {
+
+      // let index = isValidObject(cartItem) ? cartItem.products.findIndex(cart => cart.id === item.id) : -1;
+      dispatch(
+        addToCart(
+          item,
+          addToast,
+          cartItem.code,
+          quantityCount,
+          defaultStore,
+          userData,
+          selectedProductColor
+        )
+      );
+    },
     setLoader: (value) => {
       dispatch(setLoader(value));
     },
@@ -422,6 +457,9 @@ const mapDispatchToProps = dispatch => {
     },
     getState: (code) => {
       dispatch(getState(code));
+    },
+    getCart: (cartID, userData) => {
+      dispatch(getCart(cartID, userData));
     }
   };
 };

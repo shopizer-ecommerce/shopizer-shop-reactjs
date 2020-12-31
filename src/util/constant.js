@@ -24,7 +24,8 @@ const Constant = {
         TOTAL: 'total/',
         NEWSLETTER: 'newsletter/',
         REGISTER: 'register',
-        CHECKOUT: 'checkout'
+        CHECKOUT: 'checkout',
+        PASSWORD: 'password/'
     }
 }
 

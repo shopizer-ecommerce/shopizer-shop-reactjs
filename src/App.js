@@ -99,7 +99,11 @@ const App = (props) => {
                   component={MyAccount}
                 />
                 <Route
-                  path="/login-register"
+                  path="/register"
+                  component={LoginRegister}
+                />
+                <Route
+                  path="/login"
                   component={LoginRegister}
                 />
 
