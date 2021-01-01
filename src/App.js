@@ -31,6 +31,7 @@ const Checkout = lazy(() => import("./pages/other/Checkout"));
 
 const NotFound = lazy(() => import("./pages/other/NotFound"));
 const OrderConfirm = lazy(() => import("./pages/other/OrderConfirm"));
+const Content = lazy(() => import("./pages/content/content"));
 
 const App = (props) => {
   useEffect(() => {
@@ -83,9 +84,10 @@ const App = (props) => {
                 <Route
                   path="/product/:id"
                   component={Product}
-                // render={(routeProps) => (
-                //   <Product {...routeProps} key={routeProps.match.params.id} />
-                // )}
+                />
+                <Route
+                  path="/content/:id"
+                  component={Content}
                 />
 
                 {/* Other pages */}
@@ -124,8 +126,9 @@ const App = (props) => {
                   path="/order-confirm"
                   component={OrderConfirm}
                 />
+
                 <Route
-                  path={process.env.PUBLIC_URL + "/not-found"}
+                  path={"/not-found"}
                   component={NotFound}
                 />
 

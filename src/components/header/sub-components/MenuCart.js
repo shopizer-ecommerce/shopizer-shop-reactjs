@@ -55,7 +55,7 @@ const MenuCart = ({ cartData, deleteFromCart, defaultStore, strings }) => {
           </ul>
           <div className="shopping-cart-total">
             <h4>
-              Total :
+              {strings["Total"]} :
               <span className="shop-total">
                 {cartData.displayTotal}
               </span>
@@ -65,16 +65,13 @@ const MenuCart = ({ cartData, deleteFromCart, defaultStore, strings }) => {
             <Link className="default-btn" to="/cart">
               {strings["View Cart"]}
             </Link>
-            <Link
-              className="default-btn"
-              to="/checkout"
-            >
-              checkout
+            <Link className="default-btn" to="/checkout">
+              {strings["Checkout"]}
             </Link>
           </div>
         </Fragment>
       ) : (
-          <p className="text-center">No items added to cart</p>
+          <p className="text-center">{strings["No items added to cart"]}</p>
         )}
     </div>
   );

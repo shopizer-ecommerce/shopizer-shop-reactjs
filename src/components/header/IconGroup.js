@@ -6,6 +6,7 @@ import MenuCart from "./sub-components/MenuCart";
 import { deleteFromCart, deleteAllFromCart } from "../../redux/actions/cartActions";
 import { setUser } from "../../redux/actions/userAction";
 import { setLocalData } from '../../util/helper';
+import { multilanguage } from "redux-multilanguage";
 const IconGroup = ({
   // currency,
   cartData,
@@ -16,7 +17,8 @@ const IconGroup = ({
   iconWhiteClass,
   userData,
   setUser,
-  deleteAllFromCart
+  deleteAllFromCart,
+  strings
 }) => {
   const handleClick = e => {
     e.currentTarget.nextSibling.classList.toggle("active");
@@ -63,10 +65,10 @@ const IconGroup = ({
               !userData &&
               <div>
                 <li>
-                  <Link to={"/login"}>Login</Link>
+                  <Link to={"/login"}>{strings["Login"]}</Link>
                 </li>
                 <li>
-                  <Link to={"/register"}>Register</Link>
+                  <Link to={"/register"}>{strings["Register"]}</Link>
                 </li>
               </div>
             }
@@ -74,13 +76,13 @@ const IconGroup = ({
               userData &&
               <div>
                 <li>
-                  <Link to={"/my-account"}>my account</Link>
+                  <Link to={"/my-account"}>{strings["My Account"]}</Link>
                 </li>
                 <li>
-                  <Link to={"/my-account"}>Recent Orders</Link>
+                  <Link to={"/my-account"}>{strings["Recent Orders"]}</Link>
                 </li>
                 <li>
-                  <Link to={"/login"} onClick={logout}>Logout</Link>
+                  <Link to={"/login"} onClick={logout}>{strings["Logout"]}</Link>
                 </li>
               </div>
             }
@@ -171,4 +173,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(IconGroup);
+export default connect(mapStateToProps, mapDispatchToProps)(multilanguage(IconGroup));

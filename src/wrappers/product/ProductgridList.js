@@ -17,7 +17,8 @@ const ProductGrid = ({
   // compareItems,
   sliderClassName,
   spaceBottomClass,
-  userData
+  userData,
+  strings
 }) => {
   return (
     <Fragment>
@@ -27,6 +28,7 @@ const ProductGrid = ({
             sliderClassName={sliderClassName}
             spaceBottomClass={spaceBottomClass}
             product={product}
+            strings={strings}
             // currency={currency}
             addToCart={addToCart}
             // addToWishlist={addToWishlist}

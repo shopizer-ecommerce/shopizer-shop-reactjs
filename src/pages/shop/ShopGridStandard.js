@@ -14,7 +14,8 @@ import WebService from '../../util/webService';
 import constant from '../../util/constant';
 import { isCheckValueAndSetParams } from '../../util/helper';
 import { setLoader } from "../../redux/actions/loaderActions";
-const ShopGridStandard = ({ location, defaultStore, currentLanguageCode, categoryID, setLoader }) => {
+import { multilanguage } from "redux-multilanguage";
+const ShopGridStandard = ({ strings, location, defaultStore, currentLanguageCode, categoryID, setLoader }) => {
     const [layout, setLayout] = useState('grid three-column');
 
     // const [sortType, setSortType] = useState('');
@@ -176,15 +177,15 @@ const ShopGridStandard = ({ location, defaultStore, currentLanguageCode, categor
                             <div className="col-lg-3 order-2 order-lg-1">
                                 {/* shop sidebar */}
                                 {/* <ShopSidebar products={products} getSortParams={getSortParams} sideSpaceClass="mr-30" /> */}
-                                <ShopSidebar getSortParams={getSortParams} getCategoryParams={getCategoryParams} uniqueCategories={subCategory} uniqueColors={color} uniqueSizes={size} uniqueManufacture={manufacture} sideSpaceClass="mr-30" />
+                                <ShopSidebar strings={strings} getSortParams={getSortParams} getCategoryParams={getCategoryParams} uniqueCategories={subCategory} uniqueColors={color} uniqueSizes={size} uniqueManufacture={manufacture} sideSpaceClass="mr-30" />
                             </div>
                             <div className="col-lg-9 order-1 order-lg-2">
                                 {/* shop topbar default */}
                                 {/* <ShopTopbar getLayout={getLayout} getFilterSortParams={getFilterSortParams} productCount={products.length} sortedProductCount={productData.length} /> */}
-                                <ShopTopbar getLayout={getLayout} productCount={totalProduct} sortedProductCount={productData.length} />
+                                <ShopTopbar strings={strings} getLayout={getLayout} productCount={totalProduct} sortedProductCount={productData.length} />
 
                                 {/* shop page content default */}
-                                <ShopProducts layout={layout} products={productData} />
+                                <ShopProducts strings={strings} layout={layout} products={productData} />
 
                                 {/* shop product pagination */}
                                 <div className="pro-pagination-style text-center mt-30">
@@ -230,4 +231,4 @@ const mapDispatchToProps = dispatch => {
         }
     };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(ShopGridStandard);
+export default connect(mapStateToProps, mapDispatchToProps)(multilanguage(ShopGridStandard));

@@ -1,13 +1,13 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
-
-const HeroSliderFifteenSingle = ({ data, sliderClass }) => {
+import { multilanguage } from "redux-multilanguage";
+const HeroSliderFifteenSingle = ({ data, sliderClass, strings }) => {
   return (
     <div
       className={`single-slider-2 slider-height-2 d-flex align-items-center bg-img ${
         sliderClass ? sliderClass : ""
-      }`}
+        }`}
       style={{ backgroundImage: `url(${process.env.PUBLIC_URL + data.image})` }}
     >
       <div className="container">
@@ -24,7 +24,7 @@ const HeroSliderFifteenSingle = ({ data, sliderClass }) => {
                   className="animated rounden-btn"
                   to={process.env.PUBLIC_URL + data.url}
                 >
-                  SHOP NOW
+                  {strings["Shop Now"]}
                 </Link>
               </div>
             </div>
@@ -40,4 +40,4 @@ HeroSliderFifteenSingle.propTypes = {
   sliderClass: PropTypes.string
 };
 
-export default HeroSliderFifteenSingle;
+export default multilanguage(HeroSliderFifteenSingle);

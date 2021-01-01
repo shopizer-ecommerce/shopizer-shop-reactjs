@@ -16,7 +16,7 @@ import { setLoader } from "../../redux/actions/loaderActions";
 import { setUser, getCountry, getState } from "../../redux/actions/userAction";
 import { addToCart, getCart } from "../../redux/actions/cartActions";
 import { connect } from "react-redux";
-
+import { multilanguage } from "redux-multilanguage";
 const loginForm = {
   username: {
     name: "username",
@@ -114,7 +114,7 @@ const registerForm = {
     }
   },
 };
-const LoginRegister = ({ props, location, setLoader, setUser, getCart, getCountry, getState, countryData, currentLocation, stateData, cartItems, addToCart, defaultStore }) => {
+const LoginRegister = ({ strings, props, location, setLoader, setUser, getCart, getCountry, getState, countryData, currentLocation, stateData, cartItems, addToCart, defaultStore }) => {
   const { pathname } = location;
   const { addToast } = useToasts();
   const history = useHistory();
@@ -259,12 +259,12 @@ const LoginRegister = ({ props, location, setLoader, setUser, getCart, getCountr
                     <Nav variant="pills" className="login-register-tab-list">
                       <Nav.Item>
                         <Nav.Link eventKey="login">
-                          <h4>Login</h4>
+                          <h4> {strings["Login"]}</h4>
                         </Nav.Link>
                       </Nav.Item>
                       <Nav.Item>
                         <Nav.Link eventKey="register">
-                          <h4>Register</h4>
+                          <h4> {strings["Register"]}</h4>
                         </Nav.Link>
                       </Nav.Item>
                     </Nav>
@@ -277,7 +277,7 @@ const LoginRegister = ({ props, location, setLoader, setUser, getCart, getCountr
                                 <input
                                   type="text"
                                   name={loginForm.username.name}
-                                  placeholder="Email address"
+                                  placeholder={strings["Email address"]}
                                   ref={register(loginForm.username.validate)}
                                 />
 
@@ -287,7 +287,7 @@ const LoginRegister = ({ props, location, setLoader, setUser, getCart, getCountr
                                 <input
                                   type="password"
                                   name={loginForm.loginPassword.name}
-                                  placeholder="Password"
+                                  placeholder={strings["Password"]}
                                   ref={register(loginForm.loginPassword.validate)}
                                 />
                                 {errors[loginForm.loginPassword.name] && <p className="error-msg">{errors[loginForm.loginPassword.name].message}</p>}
@@ -295,13 +295,13 @@ const LoginRegister = ({ props, location, setLoader, setUser, getCart, getCountr
                               <div className="button-box">
                                 <div className="login-toggle-btn">
                                   <input type="checkbox" />
-                                  <label className="ml-10">Remember me</label>
+                                  <label className="ml-10">{strings["Remember me"]}</label>
                                   <Link to={process.env.PUBLIC_URL + "/"}>
-                                    Forgot Password?
+                                    {strings["Forgot Password?"]}
                                   </Link>
                                 </div>
                                 <button type="submit">
-                                  <span>Login</span>
+                                  <span>{strings["Login"]}</span>
                                 </button>
                               </div>
                             </form>
@@ -313,30 +313,30 @@ const LoginRegister = ({ props, location, setLoader, setUser, getCart, getCountr
                           <div className="login-register-form">
                             <form onSubmit={handleSubmit2(onRegister)}>
 
-                              <p style={{ fontSize: 16, fontWeight: 500, color: '#fb799c' }}>LOGIN INFORMATION</p>
+                              <p style={{ fontSize: 16, fontWeight: 500, color: '#fb799c' }}>{strings["Login Information"]}</p>
                               <div className="login-input">
-                                <input type="email" name={registerForm.email.name} ref={register2(registerForm.email.validate)} placeholder="Username or email address" />
+                                <input type="email" name={registerForm.email.name} ref={register2(registerForm.email.validate)} placeholder={strings["Username"]} />
                                 {errors2[registerForm.email.name] && <p className="error-msg">{errors2[registerForm.email.name].message}</p>}
 
                               </div>
                               <div className="login-input">
-                                <input type="password" name={registerForm.password.name} ref={register2(registerForm.password.validate)} placeholder="Password" onChange={(e) => onPasswordChange(e)} />
+                                <input type="password" name={registerForm.password.name} ref={register2(registerForm.password.validate)} placeholder={strings["Password"]} onChange={(e) => onPasswordChange(e)} />
                                 {errors2[registerForm.password.name] && <p className="error-msg">{errors2[registerForm.password.name].message}</p>}
 
                               </div>
                               <div className="login-input">
-                                <input type="password" name={registerForm.repeatPassword.name} ref={register2(registerForm.repeatPassword.validate)} placeholder="Repeat Password" onChange={(e) => onConfirmPassword(e)} />
+                                <input type="password" name={registerForm.repeatPassword.name} ref={register2(registerForm.repeatPassword.validate)} placeholder={strings["Repeat Password"]} onChange={(e) => onConfirmPassword(e)} />
                                 {errors2[registerForm.repeatPassword.name] && <p className="error-msg">{errors2[registerForm.repeatPassword.name].message}</p>}
 
                               </div>
-                              <p style={{ fontSize: 16, fontWeight: 500, color: '#fb799c' }}>PERSONAL INFORMATION</p>
+                              <p style={{ fontSize: 16, fontWeight: 500, color: '#fb799c' }}>{strings["Personal Information"]}</p>
                               <div className="login-input">
-                                <input type="text" name={registerForm.firstName.name} ref={register2(registerForm.firstName.validate)} placeholder="First Name" />
+                                <input type="text" name={registerForm.firstName.name} ref={register2(registerForm.firstName.validate)} placeholder={strings["First Name"]} />
                                 {errors2[registerForm.firstName.name] && <p className="error-msg">{errors2[registerForm.firstName.name].message}</p>}
 
                               </div>
                               <div className="login-input">
-                                <input type="text" name={registerForm.lastName.name} ref={register2(registerForm.lastName.validate)} placeholder="Last Name" />
+                                <input type="text" name={registerForm.lastName.name} ref={register2(registerForm.lastName.validate)} placeholder={strings["Last Name"]} />
                                 {errors2[registerForm.lastName.name] && <p className="error-msg">{errors2[registerForm.lastName.name].message}</p>}
                               </div>
                               <div className="login-input">
@@ -380,13 +380,13 @@ const LoginRegister = ({ props, location, setLoader, setUser, getCart, getCountr
                                       }}
                                     />
                                     :
-                                    <input type="text" name={registerForm.stateProvince.name} ref={register2(registerForm.stateProvince.validate)} placeholder="State" />
+                                    <input type="text" name={registerForm.stateProvince.name} ref={register2(registerForm.stateProvince.validate)} placeholder={strings["State"]} />
                                 }
                                 {errors2[registerForm.stateProvince.name] && <p className="error-msg">{errors2[registerForm.stateProvince.name].message}</p>}
                               </div>
                               <div className="button-box">
                                 <button type="submit">
-                                  <span>Register</span>
+                                  <span>{strings["Register"]}</span>
                                 </button>
                               </div>
 
@@ -465,5 +465,5 @@ const mapDispatchToProps = dispatch => {
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginRegister);
+export default connect(mapStateToProps, mapDispatchToProps)(multilanguage(LoginRegister));
 // export default LoginRegister;

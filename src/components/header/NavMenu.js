@@ -5,10 +5,14 @@ import { multilanguage } from "redux-multilanguage";
 import { connect } from "react-redux";
 
 import { setCategoryID } from "../../redux/actions/productActions";
-const NavMenu = ({ props, strings, menuWhiteClass, sidebarMenu, categories, contents, setCategoryID }) => {
+import { setContent } from "../../redux/actions/contentAction";
+const NavMenu = ({ props, strings, menuWhiteClass, sidebarMenu, categories, contents, setCategoryID, setContent }) => {
 
   const onClickCategory = (item) => {
     setCategoryID(item.id)
+  }
+  const onClickContent = (item) => {
+    setContent(item)
   }
   return (
     <div
@@ -66,7 +70,7 @@ const NavMenu = ({ props, strings, menuWhiteClass, sidebarMenu, categories, cont
             contents.map((content, index) => {
               return (
                 content.displayedInMenu &&
-                <li key={index}> <Link to={"/content/" + content.slug} >{strings[content.name] ? strings[content.name] : content.name}</Link></li>
+                <li key={index}> <Link to={"/content/" + content.slug} onClick={() => onClickContent(content.code)}> {strings[content.name] ? strings[content.name] : content.name}</Link></li>
               )
             })
           }
@@ -90,6 +94,9 @@ const mapDispatchToProps = dispatch => {
   return {
     setCategoryID: (value) => {
       dispatch(setCategoryID(value));
+    },
+    setContent: (value) => {
+      dispatch(setContent(value));
     }
   };
 };

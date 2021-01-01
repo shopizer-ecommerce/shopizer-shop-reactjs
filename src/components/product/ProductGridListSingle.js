@@ -21,7 +21,8 @@ const ProductGridListSingle = ({
   spaceBottomClass,
   setProductID,
   defaultStore,
-  userData
+  userData,
+  strings
 }) => {
   const [modalShow, setModalShow] = useState(false);
   const { addToast } = useToasts();
@@ -93,13 +94,13 @@ const ProductGridListSingle = ({
                         onClick={() => addToCart(product, addToast, cartItem, 1, defaultStore, userData)}
                         // className="active"
                         // disabled={cartItem !== undefined && cartItem.quantity > 0}
-                        title="Add to cart"
-                      > {" "}  <i className="pe-7s-cart"></i>{" "}Add to cart</button>
+                        title={strings["Add to cart"]}
+                      > {" "}  <i className="pe-7s-cart"></i>{" "}{strings["Add to cart"]}</button>
                     )
                     :
                     (
                       <button disabled className="active">
-                        Out of Stock
+                        {strings["Out of Stock"]}
                       </button>
                     )
                 }
@@ -270,13 +271,13 @@ const ProductGridListSingle = ({
                           // product, addToast, cartItem, 1, defaultStore
                           <button
                             onClick={() => addToCart(product, addToast, cartItem, 1, defaultStore, userData)}
-                            title="Add to cart"> {" "} <i className="pe-7s-cart"></i>{" "} Add to cart
-                           </button>
+                            title={strings["Add to cart"]}> {" "} <i className="pe-7s-cart"></i>{" "} {strings["Add to cart"]}
+                          </button>
                         )
                         :
                         (
                           <button disabled className="active">
-                            Out of Stock
+                            {strings["Out of Stock"]}
                           </button>
                         )
                     }

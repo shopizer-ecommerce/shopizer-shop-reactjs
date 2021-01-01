@@ -6,7 +6,8 @@ const ShopTopbar = ({
   getLayout,
   getFilterSortParams,
   productCount,
-  sortedProductCount
+  sortedProductCount,
+  strings
 }) => {
   return (
     <Fragment>
@@ -15,6 +16,7 @@ const ShopTopbar = ({
         getLayout={getLayout}
         getFilterSortParams={getFilterSortParams}
         productCount={productCount}
+        strings={strings}
         sortedProductCount={sortedProductCount}
       />
     </Fragment>

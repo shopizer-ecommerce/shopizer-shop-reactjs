@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import React, { Fragment } from "react";
+import { multilanguage } from "redux-multilanguage";
 import { Link } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 import MetaTags from "react-meta-tags";
@@ -61,7 +62,8 @@ const Cart = ({
   deleteFromCart,
   countryData,
   stateData,
-  getState
+  getState,
+  strings
   // deleteAllFromCart,
 
 }) => {
@@ -106,19 +108,19 @@ const Cart = ({
           <div className="container">
             {isValidObject(cartItems) && cartItems.products.length > 0 ? (
               <Fragment>
-                <h3 className="cart-page-title">Your cart items</h3>
+                <h3 className="cart-page-title">{strings["Your cart items"]}</h3>
                 <div className="row">
                   <div className="col-12">
                     <div className="table-content table-responsive cart-table-content">
                       <table>
                         <thead>
                           <tr>
-                            <th>Image</th>
-                            <th>Product Name</th>
-                            <th>Unit Price</th>
-                            <th>Qty</th>
-                            <th>Subtotal</th>
-                            <th>action</th>
+                            <th>{strings["Image"]}</th>
+                            <th>{strings["Product Name"]}</th>
+                            <th>{strings["Unit Price"]}</th>
+                            <th>{strings["Qty"]}</th>
+                            <th>{strings["Subtotal"]}</th>
+                            <th>{strings["Action"]}</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -186,11 +188,11 @@ const Cart = ({
                   <div className="col-lg-12">
                     <div className="cart-shiping-update-wrapper">
                       <div className="cart-shiping-update">
-                        <Link to="/">Continue Shopping </Link>
+                        <Link to="/">{strings["Continue Shopping"]} </Link>
                       </div>
                       <div className="cart-clear">
                         <button onClick={() => deleteAllFromCart()}>
-                          Clear Shopping Cart
+                          {strings["Clear Shopping Cart"]}
                         </button>
                       </div>
                     </div>
@@ -202,12 +204,12 @@ const Cart = ({
                     <div className="cart-tax">
                       <div className="title-wrap">
                         <h4 className="cart-bottom-title section-bg-gray">
-                          Estimate Shipping And Tax
+                          {strings["Estimate Shipping And Tax"]}
                         </h4>
                       </div>
                       <div className="tax-wrapper">
                         <p>
-                          Enter your destination to get a shipping estimate.
+                          {strings["Enter your destination to get a shipping estimate."]}
                         </p>
                         <div className="tax-select-wrapper">
                           <form onSubmit={handleSubmit(getQuote)}>
@@ -219,7 +221,7 @@ const Cart = ({
                                 render={props => {
                                   return (
                                     <select onChange={(e) => { props.onChange(e.target.value); getState(e.target.value) }} value={props.value}>
-                                      <option>Select a country</option>
+                                      <option>{strings["Select a country"]}</option>
                                       {
 
                                         countryData.map((data, i) => {
@@ -232,7 +234,7 @@ const Cart = ({
                               />
                             </div>
                             <div className="tax-select">
-                              <label>Region / State</label>
+                              {/* <label>Region / State</label> */}
                               {
                                 stateData && stateData.length > 0 ?
                                   <Controller
@@ -242,7 +244,7 @@ const Cart = ({
                                     render={props => {
                                       return (
                                         <select onChange={(e) => { props.onChange(e.target.value) }} value={props.value}>
-                                          <option>Select a state</option>
+                                          <option>{strings["Select a state"]}</option>
                                           {
                                             stateData.map((data, i) => {
                                               return <option key={i} value={data.code}>{data.name}</option>
@@ -252,16 +254,16 @@ const Cart = ({
                                     }}
                                   />
                                   :
-                                  <input type="text" name={quoteForm.stateProvince.name} ref={register(quoteForm.stateProvince.validate)} placeholder="Region / State" />
+                                  <input type="text" name={quoteForm.stateProvince.name} ref={register(quoteForm.stateProvince.validate)} placeholder={strings["State"]} />
                               }
                             </div>
                             <div className="tax-select">
-                              <label>Postal Code</label>
-                              <input type="text" name={quoteForm.postalCode.name} ref={register(quoteForm.postalCode.validate)} placeholder="Postal Code" />
+                              {/* <label>Postal Code</label> */}
+                              <input type="text" name={quoteForm.postalCode.name} ref={register(quoteForm.postalCode.validate)} placeholder={strings["Postcode"]} />
                             </div>
                             <button className="cart-btn-2" type="submit" disabled={!formState.isValid}>
-                              Get A Quote
-                          </button>
+                              {strings["Get A Quote"]}
+                            </button>
                           </form>
                         </div>
                       </div>
@@ -272,15 +274,15 @@ const Cart = ({
                     <div className="discount-code-wrapper">
                       <div className="title-wrap">
                         <h4 className="cart-bottom-title section-bg-gray">
-                          Use Coupon Code
+                          {strings["Use Coupon Code"]}
                         </h4>
                       </div>
                       <div className="discount-code">
-                        <p>Enter your coupon code if you have one.</p>
+                        <p>{strings["Enter your coupon code if you have one."]}</p>
                         <form>
                           <input type="text" required name="name" />
                           <button className="cart-btn-2" type="submit">
-                            Apply Coupon
+                            {strings["Apply Coupon"]}
                           </button>
                         </form>
                       </div>
@@ -291,24 +293,24 @@ const Cart = ({
                     <div className="grand-totall">
                       <div className="title-wrap">
                         <h4 className="cart-bottom-title section-bg-gary-cart">
-                          Cart Total
+                          {strings["Cart Total"]}
                         </h4>
                       </div>
                       <h5>
-                        Total products{" "}
+                        {strings["Total products"]}{" "}
                         <span>
                           {cartTotalPrice}
                         </span>
                       </h5>
 
                       <h4 className="grand-totall-title">
-                        Grand Total{" "}
+                        {strings["Grand Total"]}{" "}
                         <span>
                           {grandTotalPrice}
                         </span>
                       </h4>
                       <Link to={process.env.PUBLIC_URL + "/checkout"}>
-                        Proceed to Checkout
+                        {strings["Proceed to Checkout"]}
                       </Link>
                     </div>
                   </div>
@@ -381,4 +383,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+export default connect(mapStateToProps, mapDispatchToProps)(multilanguage(Cart));

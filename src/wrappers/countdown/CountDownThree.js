@@ -3,18 +3,19 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Countdown from "react-countdown-now";
 import Renderer from "../../components/countdown/Renderer";
-
+import { multilanguage } from "redux-multilanguage";
 const CountDownThree = ({
   spaceTopClass,
   spaceBottomClass,
   dateTime,
-  countDownImage
+  countDownImage,
+  strings
 }) => {
   return (
     <div
       className={`funfact-area ${spaceTopClass ? spaceTopClass : ""} ${
         spaceBottomClass ? spaceBottomClass : ""
-      }`}
+        }`}
     >
       <div className="container">
         <div className="row align-items-center">
@@ -26,7 +27,7 @@ const CountDownThree = ({
               </div>
               <div className="funfact-btn funfact-btn--round-shape funfact-btn-red btn-hover">
                 <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
-                  SHOP NOW
+                  {strings["Shop Now"]}
                 </Link>
               </div>
             </div>
@@ -55,4 +56,4 @@ CountDownThree.propTypes = {
   spaceTopClass: PropTypes.string
 };
 
-export default CountDownThree;
+export default multilanguage(CountDownThree);

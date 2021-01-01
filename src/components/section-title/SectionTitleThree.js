@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-
+import { multilanguage } from "redux-multilanguage";
 const SectionTitleThree = ({
   titleText,
   positionClass,
@@ -11,7 +11,7 @@ const SectionTitleThree = ({
   return (
     <div
       className={`section-title-5 ${positionClass ? positionClass : ""} ${spaceClass ? spaceClass : ""}`} >
-      <h2 className={colorClass ? colorClass : ""}>{titleText}</h2>
+      <h2 className={colorClass ? colorClass : ""}>{strings[titleText]}</h2>
     </div>
   );
 };
@@ -23,4 +23,4 @@ SectionTitleThree.propTypes = {
   strings: PropTypes.object
 };
 
-export default SectionTitleThree;
+export default multilanguage(SectionTitleThree);

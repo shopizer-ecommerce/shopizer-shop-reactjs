@@ -13,7 +13,7 @@ import ShopSize from "../../components/product/ShopSize";
 // import ShopTag from "../../components/product/ShopTag";
 import ShopManufacture from "../../components/product/ShopManufacture";
 
-const ShopSidebar = ({ getCategoryParams, getSortParams, sideSpaceClass, uniqueCategories, uniqueColors, uniqueSizes, uniqueManufacture }) => {
+const ShopSidebar = ({ strings, getCategoryParams, getSortParams, sideSpaceClass, uniqueCategories, uniqueColors, uniqueSizes, uniqueManufacture }) => {
   // const uniqueCategories = getIndividualCategories(products);
   // const uniqueColors = getIndividualColors(products);
   // const uniqueSizes = getProductsIndividualSizes(products);
@@ -22,7 +22,7 @@ const ShopSidebar = ({ getCategoryParams, getSortParams, sideSpaceClass, uniqueC
   return (
     <div className={`sidebar-style ${sideSpaceClass ? sideSpaceClass : ""}`}>
       {/* shop search */}
-      <ShopSearch />
+      <ShopSearch strings={strings} />
 
       {/* filter by categories */}
       {

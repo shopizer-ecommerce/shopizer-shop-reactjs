@@ -1,13 +1,14 @@
 import PropTypes from "prop-types";
 import React from "react";
 import SubscribeEmailTwo from "../../components/newsletter/SubscribeEmailTwo";
-
+import { multilanguage } from "redux-multilanguage";
 const NewsletterThree = ({
   spaceTopClass,
   spaceBottomClass,
   subscribeBtnClass,
   bgColorClass,
-  subscribeColorClass
+  subscribeColorClass,
+  strings
 }) => {
   return (
     <div
@@ -23,12 +24,13 @@ const NewsletterThree = ({
                 subscribeColorClass ? subscribeColorClass : ""
                 }`}
             >
-              <h2>Join With Us! </h2>
-              <p>Subscribe to our newsletter to receive news on update</p>
+              <h2>{strings["Join With Us!"]} </h2>
+              <p>{strings["Subscribe to our newsletter to receive news on update"]}</p>
               {/* subscription form */}
               <SubscribeEmailTwo
                 mailchimpUrl="//devitems.us11.list-manage.com/subscribe/post?u=6bbb9b6f5827bd842d9640c82&amp;id=05d85f18ef"
                 spaceTopClass="mt-35"
+                strings={strings}
                 subscribeBtnClass={subscribeBtnClass}
               />
             </div>
@@ -46,4 +48,4 @@ NewsletterThree.propTypes = {
   subscribeColorClass: PropTypes.string
 };
 
-export default NewsletterThree;
+export default multilanguage(NewsletterThree);

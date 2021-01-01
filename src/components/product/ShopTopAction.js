@@ -6,7 +6,8 @@ const ShopTopAction = ({
   getLayout,
   getFilterSortParams,
   productCount,
-  sortedProductCount
+  sortedProductCount,
+  strings
 }) => {
   return (
     <div className="shop-top-bar mb-35">
@@ -21,7 +22,7 @@ const ShopTopAction = ({
           </select>
         </div> */}
         <p>
-          Showing {sortedProductCount} of {productCount} result
+          {strings["Showing"]} {sortedProductCount} of {productCount} {strings["result"]}
         </p>
       </div>
 

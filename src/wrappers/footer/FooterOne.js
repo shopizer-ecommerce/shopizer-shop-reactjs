@@ -15,7 +15,8 @@ const FooterOne = ({
   containerClass,
   extraFooterClass,
   sideMenu,
-  merchant
+  merchant,
+  strings
 }) => {
   const [scroll, setScroll] = useState(0);
   const [top, setTop] = useState(0);
@@ -58,7 +59,7 @@ const FooterOne = ({
           <div className={sideMenu ? "col-xl-3 col-sm-4" : "col-lg-3 col-sm-4"}>
             <div className="footer-widget mb-30 ml-30">
               <div className="footer-title">
-                <h3>Address</h3>
+                <h3>{strings["Address"]}</h3>
               </div>
               <div className="footer-list">
                 {
@@ -73,12 +74,12 @@ const FooterOne = ({
                     </li>
                     <li>
                       <Link to="">
-                        Tel: {merchant.phone}
+                        {strings["Tel"]}: {merchant.phone}
                       </Link>
                     </li>
                     <li>
                       <Link to="">
-                        E-mail : {merchant.email}
+                        {strings["E-mail"]} : {merchant.email}
                       </Link>
                     </li>
                   </ul>
@@ -89,11 +90,20 @@ const FooterOne = ({
           <div className={sideMenu ? "col-xl-3 col-sm-4" : "col-lg-3 col-sm-4"}>
             <div className={sideMenu ? "footer-widget mb-30 ml-95" : "footer-widget mb-30 ml-50"} >
               <div className="footer-title">
-                <h3>USEFUL LINKS</h3>
+                <h3>{strings["USEFUL LINKS"]}</h3>
               </div>
               <div className="footer-list">
                 <ul>
                   <li>
+                    <Link to={"/contact"}>{strings["Contact"]}</Link>
+                  </li>
+                  <li>
+                    <Link to={"/login"}>{strings["Login"]}</Link>
+                  </li>
+                  <li>
+                    <Link to={"/register"}>{strings["Register"]}</Link>
+                  </li>
+                  {/* <li>
                     <Link to={process.env.PUBLIC_URL + "#/"}>Returns</Link>
                   </li>
                   <li>
@@ -106,7 +116,7 @@ const FooterOne = ({
                   </li>
                   <li>
                     <Link to={process.env.PUBLIC_URL + "#/"}>FAQs</Link>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
             </div>
@@ -171,6 +181,7 @@ const FooterOne = ({
           <div className={sideMenu ? "col-xl-3 col-sm-8" : "col-lg-4 col-sm-6"}>
             {/* footer newsletter */}
             <FooterNewsletter
+              strings={strings}
               spaceBottomClass="mb-30"
               spaceLeftClass="ml-70"
               sideMenu={sideMenu}
