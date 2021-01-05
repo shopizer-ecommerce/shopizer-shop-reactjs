@@ -4,6 +4,14 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+### USING NPM
+
+### `npm i`
+
+### `npm run start`
+
+### USING YARN
+
 ### `yarn start`
 
 Runs the app in the development mode.<br />

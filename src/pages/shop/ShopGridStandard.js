@@ -25,7 +25,7 @@ const ShopGridStandard = ({ strings, location, defaultStore, currentLanguageCode
     const [offset, setOffset] = useState(0);
     // const [skip, setSkip] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
-    const pageLimit = 12;
+    const pageLimit = parseInt(process.env.REACT_APP_PRODUCT_GRID_LIMIT) || 12;
     const [productData, setProductData] = useState([]);
     const [totalProduct, setTotalProduct] = useState(0);
     const [productDetails, setProductDetails] = useState('');
@@ -37,7 +37,6 @@ const ShopGridStandard = ({ strings, location, defaultStore, currentLanguageCode
     const [selectedManufature, setSelectedManufature] = useState([]);
     // const [sortedProducts, setSortedProducts] = useState([]);
 
-    // const pageLimit = 15;
     const { pathname } = location;
 
     const getLayout = (layout) => {
