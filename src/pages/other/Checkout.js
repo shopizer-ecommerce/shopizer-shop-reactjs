@@ -189,6 +189,27 @@ const paymentForm = {
         message: "Please agree to our terms and conditions"
       }
     }
+  },
+  password: {
+    name: "new-password",
+    validate: {
+      required: {
+        value: true,
+        message: "Password is required"
+      },
+      validate: {
+        hasSpecialChar: (value) => (value && value.match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/)) || 'Password must be minimum of 8 characters atleast one number and one special character'
+      }
+    }
+  },
+  repeatPassword: {
+    name: "repeatPassword",
+    validate: {
+      required: {
+        value: true,
+        message: "Repeat Password is required"
+      }
+    }
   }
 }
 const CARD_ELEMENT_OPTIONS = {
@@ -213,25 +234,31 @@ const CARD_ELEMENT_OPTIONS = {
     }
   }
 };
-const Checkout = ({ location, cartItems, getCountry, getState, countryData, stateData, currentLocation, userData, setLoader, deleteAllFromCart }) => {
+const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countryData, stateData, currentLocation, userData, setLoader, deleteAllFromCart }) => {
   const { pathname } = location;
   const history = useHistory();
   const { addToast } = useToasts();
   // let cartTotalPrice = 0;
   // console.log(cartItems);
   const [config, setConfig] = useState({});
+  const [cartItems, setCartItems] = useState([]);
   const [isShipping, setIsShipping] = useState(false);
   const [isAccount, setIsAccount] = useState(false);
+  const [timer, setTimer] = useState('');
   // const [password, setPassword] = useState('');
   // const [note, setNote] = useState('');
   const [shippingOptions, setShippingOptions] = useState();
   const [shippingQuote, setShippingQuote] = useState([]);
-  // const [cardElements, setCardElements] = useState('');
-  const { register, control, handleSubmit, errors, setValue, watch, reset } = useForm();
+  const [selectedOptions, setSelectedOptions] = useState('');
+  const { register, control, handleSubmit, errors, setValue, watch, reset, setError, clearErrors } = useForm({
+    mode: "onChange",
+    criteriaMode: "all"
+  });
 
   const [ref, setRef] = useState(null)
   useEffect(() => {
     // console.log(userData)
+    getSummaryOrder()
     if (userData) {
       getProfile()
     } else {
@@ -243,6 +270,17 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
     shippingQuoteChange('')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const getSummaryOrder = async () => {
+    let action = constant.ACTION.CART + cartID + '?store=' + defaultStore;
+    try {
+      let response = await WebService.get(action);
+      console.log(response);
+      if (response) {
+        setCartItems(response)
+      }
+    } catch (error) {
+    }
+  }
   const setDefualtsValue = () => {
     if (currentLocation.length > 0) {
       setValue('country', currentLocation.find(i => i.types.some(i => i === "country")).address_components[0].short_name)
@@ -361,7 +399,7 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
   }
   const onChangeShipping = async () => {
     // console.log(watch('shipPostalCode'))
-    let action = constant.ACTION.CART + cartItems.code + '/' + constant.ACTION.SHIPPING;
+    let action = constant.ACTION.CART + cartID + '/' + constant.ACTION.SHIPPING;
     let param = {};
     if (isShipping) {
       param = { 'postalCode': watch('shipPostalCode'), 'countryCode': watch('shipCountry') }
@@ -373,6 +411,7 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
       // console.log(response.shippingOptions);
       if (response) {
         setShippingOptions(response.shippingOptions)
+        setSelectedOptions(response.shippingOptions[response.shippingOptions.length - 1].shippingQuoteOptionId)
         shippingQuoteChange(response.shippingOptions[response.shippingOptions.length - 1].shippingQuoteOptionId)
       }
     } catch (error) {
@@ -381,14 +420,14 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
   const shippingQuoteChange = async (quoteID) => {
     let action;
     if (quoteID) {
-      action = constant.ACTION.CART + cartItems.code + '/' + constant.ACTION.TOTAL + '?quote=' + quoteID;
+      action = constant.ACTION.CART + cartID + '/' + constant.ACTION.TOTAL + '?quote=' + quoteID;
     } else {
-      action = constant.ACTION.CART + cartItems.code + '/' + constant.ACTION.TOTAL;
+      action = constant.ACTION.CART + cartID + '/' + constant.ACTION.TOTAL;
     }
     // console.log(action)
     try {
       let response = await WebService.get(action);
-      // console.log(response);
+      console.log(response, '--------------');
       if (response) {
         setShippingQuote(response.totals)
       }
@@ -399,6 +438,7 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
   const onSubmitOrder = async (data, elements, stripe) => {
     // setLoader(true)
     let card = elements.getElement(CardElement);
+    console.log(card);
     let ownerInfo = {
       owner: {
         name: data.firstName + ' ' + data.lastName,
@@ -412,6 +452,7 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
         setLoader(false)
         addToast(result.error.message, { appearance: "error", autoDismiss: true });
       } else {
+        console.log(result);
         onPayment(data, result.source.id)
       }
     });
@@ -420,47 +461,44 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
     let action;
     let param = {};
     if (userData) {
-      action = constant.ACTION.AUTH + constant.ACTION.CART + cartItems.code + '/' + constant.ACTION.CHECKOUT
+      action = constant.ACTION.AUTH + constant.ACTION.CART + cartID + '/' + constant.ACTION.CHECKOUT
       param = {
-        // "shippingQuote": 1100,
-        "currency": "CAD",
+        "shippingQuote": selectedOptions,
+        "currency": "USD",
         "payment": {
           "paymentType": "CREDITCARD",
           "transactionType": "CAPTURE",
           "paymentModule": "stripe",
           "paymentToken": token,
-          // "amount": 799.98
-          "amount": cartItems.total
-
+          "amount": shippingQuote[shippingQuote.length - 1].total
         }
       }
     } else {
-      action = constant.ACTION.CART + cartItems.code + '/' + constant.ACTION.CHECKOUT
+      action = constant.ACTION.CART + cartID + '/' + constant.ACTION.CHECKOUT
       let customer = {};
       if (isShipping) {
         customer = {
           "emailAddress": data.email,
-          "language": "en",
           "billing": {
             "address": data.address,
-            "company": data.company,
+            // "company": data.company,
             "city": data.city,
             "postalCode": data.postalCode,
             "country": data.country,
-            "stateProvince": data.stateProvince,
-            "zone": '',
+            // "stateProvince": data.stateProvince,
+            "zone": data.stateProvince,
             "firstName": data.firstName,
             "lastName": data.lastName,
-            "phone": data.phone
+            // "phone": data.phone
           },
           "delivery": {
             "address": data.shipAddress,
-            "company": data.shipCompany,
+            // "company": data.shipCompany,
             "city": data.shipCity,
             "postalCode": data.shipPostalCode,
             "country": data.shipCountry,
-            "stateProvince": data.shipStateProvince,
-            "zone": '',
+            // "stateProvince": data.shipStateProvince,
+            "zone": data.shipStateProvince,
             "firstName": data.shipFirstName,
             "lastName": data.shipLastName,
             // "phone": data.shipPhone
@@ -469,34 +507,36 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
       } else {
         customer = {
           "emailAddress": data.email,
-          "language": "en",
           "billing": {
             "address": data.address,
-            "company": data.company,
+            // "company": data.company,
             "city": data.city,
             "postalCode": data.postalCode,
             "country": data.country,
-            "stateProvince": data.stateProvince,
-            "zone": '',
+            // "stateProvince": data.stateProvince,
+            "zone": data.stateProvince,
             "firstName": data.firstName,
             "lastName": data.lastName,
-            "phone": data.phone
+            // "phone": data.phone
           }
         }
       }
 
       param = {
-        "currency": "CAD",
+        "shippingQuote": selectedOptions,
+        "currency": "USD",
         "payment": {
           "paymentType": "CREDITCARD",
           "transactionType": "CAPTURE",
           "paymentModule": "stripe",
           "paymentToken": token,
-          "amount": cartItems.total
+          "amount": shippingQuote[shippingQuote.length - 1].total
         },
         "customer": customer
       }
     }
+    console.log(action)
+    console.log(param)
     // 
     try {
       let response = await WebService.post(action, param);
@@ -506,12 +546,43 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
         ref.clear()
         deleteAllFromCart()
         addToast("Your order has been submitted", { appearance: "success", autoDismiss: true });
-        history.push('my-account')
+        history.push('/order-confirm')
       }
       setLoader(false)
     } catch (error) {
       addToast("Your order submission has been failed", { appearance: "error", autoDismiss: true });
       setLoader(false)
+    }
+
+  }
+
+
+  const onConfirmPassword = (e) => {
+    if (watch('new-password') !== e.target.value) {
+      return setError(
+        paymentForm.repeatPassword.name,
+        {
+          type: "notMatch",
+          message: "Repeat Password should be the same as a password"
+        }
+      );
+    }
+
+  }
+  const onPasswordChange = (e) => {
+    console.log(e.target.value)
+    console.log(watch('repeatPassword'))
+    if (watch('repeatPassword') !== '' && watch('repeatPassword') !== e.target.value) {
+      return setError(
+        paymentForm.repeatPassword.name,
+        {
+          type: "notMatch",
+          message: "Repeat Password should be the same as a password"
+        }
+      );
+
+    } else {
+      clearErrors(paymentForm.repeatPassword.name);
     }
 
   }
@@ -546,7 +617,7 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
             {isValidObject(cartItems) && cartItems.products.length > 0 ? (
               <form>
                 <div className="row">
-                  <div className="col-lg-7">
+                  <div className="col-lg-6">
                     <div className="billing-info-wrap">
                       <h3>Billing Details</h3>
                       <div className="row">
@@ -656,7 +727,13 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
                         <div className="col-lg-6 col-md-6">
                           <div className="billing-info mb-20">
                             <label>Postcode / ZIP</label>
-                            <input type="text" name={paymentForm.postalCode.name} ref={register(paymentForm.postalCode.validate)} onChange={() => onChangeShipping()} />
+                            <input type="text" name={paymentForm.postalCode.name} ref={register(paymentForm.postalCode.validate)} onChange={() => {
+
+                              clearTimeout(timer);
+                              setTimer(setTimeout(function () {
+                                onChangeShipping()
+                              }, 500))
+                            }} />
                             {errors[paymentForm.postalCode.name] && <p className="error-msg">{errors[paymentForm.postalCode.name].message}</p>}
                           </div>
                         </div>
@@ -689,8 +766,15 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
                           <div className="col-lg-12">
                             <div className="billing-info mb-20">
                               <label>Account Password</label>
-                              <input type="password" name={paymentForm.phone.name} ref={register(paymentForm.phone.validate)} />
-                              {errors[paymentForm.phone.name] && <p className="error-msg">{errors[paymentForm.phone.name].message}</p>}
+                              <input type="password" name={paymentForm.password.name} ref={register(paymentForm.password.validate)} onChange={(e) => onPasswordChange(e)} />
+                              {errors[paymentForm.password.name] && <p className="error-msg">{errors[paymentForm.password.name].message}</p>}
+                            </div>
+                          </div>
+                          <div className="col-lg-12">
+                            <div className="billing-info mb-20">
+                              <label>Repeat Account Password</label>
+                              <input type="password" name={paymentForm.repeatPassword.name} ref={register(paymentForm.repeatPassword.validate)} onChange={(e) => onConfirmPassword(e)} />
+                              {errors[paymentForm.repeatPassword.name] && <p className="error-msg">{errors[paymentForm.repeatPassword.name].message}</p>}
                             </div>
                           </div>
                         </div>
@@ -804,7 +888,12 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
                             <div className="col-lg-6 col-md-6">
                               <div className="billing-info mb-20">
                                 <label>Postcode / ZIP</label>
-                                <input type="text" name={paymentForm.shipPostalCode.name} ref={register(paymentForm.shipPostalCode.validate)} onChange={() => onChangeShipping()} />
+                                <input type="text" name={paymentForm.shipPostalCode.name} ref={register(paymentForm.shipPostalCode.validate)} onChange={() => {
+                                  clearTimeout(timer);
+                                  setTimer(setTimeout(function () {
+                                    onChangeShipping()
+                                  }, 500))
+                                }} />
                                 {errors[paymentForm.shipPostalCode.name] && <p className="error-msg">{errors[paymentForm.shipPostalCode.name].message}</p>}
                               </div>
                             </div>
@@ -839,7 +928,7 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
                     </div>
                   </div>
 
-                  <div className="col-lg-5">
+                  <div className="col-lg-6">
                     <div className="your-order-area">
                       <h3>Your order</h3>
                       <div className="your-order-wrap gray-bg-4">
@@ -856,12 +945,13 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
 
                                 return (
                                   <li key={key}>
-                                    <span className="order-middle-left">
-                                      {cartItem.description.name} X {cartItem.quantity}
+                                    <span className="order-middle-left" style={{ width: 220 }}>
+                                      {cartItem.description.name}
                                     </span>{" "}
+                                    <span>X {cartItem.quantity}</span>
                                     <span className="order-price">
                                       {
-                                        cartItem.displaySubTotal
+                                        cartItem.finalPrice
                                       }
                                     </span>
                                   </li>
@@ -888,20 +978,27 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
                           <div className="your-order-bottom">
                             {
                               config.displayShipping && shippingOptions &&
-                              <ul>
-                                <li className="your-order-shipping">Shipping Fees</li>
-                                {
-                                  shippingOptions.map((value, i) => {
-                                    return (<li key={i}>
-                                      <div className="login-toggle-btn">
-                                        <input type="radio" value={value.shippingQuoteOptionId} onChange={() => shippingQuoteChange(value.shippingQuoteOptionId)} checked />
-                                        <label className="ml-10 mb-20">{value.optionName} - {value.optionPriceText}</label>
-                                      </div>
-                                    </li>)
-                                  })
-                                }
+                              <div className="shippingRow">
+                                <ul><li className="your-order-shipping">Shipping Fees</li></ul>
 
-                              </ul>
+                                <ul>
+
+                                  {
+                                    shippingOptions.map((value, i) => {
+                                      return (<li key={i}>
+                                        <div className="login-toggle-btn">
+                                          <input type="radio" value={value.shippingQuoteOptionId} onChange={() => { setSelectedOptions(value.shippingQuoteOptionId); shippingQuoteChange(value.shippingQuoteOptionId) }} checked={selectedOptions === value.shippingQuoteOptionId} />
+                                          <label className="ml-10 mb-20">{value.optionName} - {value.optionPriceText}</label>
+                                        </div>
+                                      </li>)
+                                    })
+                                  }
+                                  <li style={{ textAlign: 'center', fontSize: 12, color: 'grey' }}> This option let you reserve you order items through the online system and pick
+                                        up your order by yourself at the store. this option is also offered when no
+                                        other shipping option is available for your region.</li>
+                                </ul>
+                              </div>
+
                             }
 
                             {
@@ -917,7 +1014,13 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
                             <ul>
                               <li className="order-total">Total</li>
                               <li>
-                                {cartItems.displayTotal}
+                                {
+                                  shippingQuote.length > 0 &&
+                                  shippingQuote.map((quote, i) => {
+                                    return quote.title === 'Total' && quote.total
+                                  })
+                                }
+                                {/* {cartItems.displayTotal} */}
                               </li>
                             </ul>
                           </div>
@@ -992,11 +1095,12 @@ Checkout.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    cartItems: state.cartData.cartItems,
+    cartID: state.cartData.cartID,
     countryData: state.userData.country,
     stateData: state.userData.state,
     currentLocation: state.userData.currentAddress,
-    userData: state.userData.userData
+    userData: state.userData.userData,
+    defaultStore: state.merchantData.defaultStore
     // currency: state.currencyData
   };
 };

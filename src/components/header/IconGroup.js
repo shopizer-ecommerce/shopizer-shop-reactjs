@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useRouteMatch } from "react-router-dom";
 import { connect } from "react-redux";
 import MenuCart from "./sub-components/MenuCart";
 import { deleteFromCart, deleteAllFromCart } from "../../redux/actions/cartActions";
@@ -20,10 +20,10 @@ const IconGroup = ({
   deleteAllFromCart,
   strings
 }) => {
+  const pathname = useRouteMatch();
   const handleClick = e => {
     e.currentTarget.nextSibling.classList.toggle("active");
   };
-
   const triggerMobileMenu = () => {
     const offcanvasMobileMenu = document.querySelector(
       "#offcanvas-mobile-menu"
@@ -40,9 +40,13 @@ const IconGroup = ({
       className={`header-right-wrap ${iconWhiteClass ? iconWhiteClass : ""}`}
     >
       <div className="same-style header-search d-none d-lg-block">
-        <button className="search-active" onClick={e => handleClick(e)}>
-          <i className="pe-7s-search" />
-        </button>
+        {
+          pathname.url !== '/checkout' &&
+          <button className="search-active" onClick={e => handleClick(e)}>
+            <i className="pe-7s-search" />
+          </button>
+        }
+
         <div className="search-content">
           <form action="#">
             <input type="text" placeholder="Search" />
@@ -53,12 +57,15 @@ const IconGroup = ({
         </div>
       </div>
       <div className="same-style account-setting d-none d-lg-block">
-        <button
-          className="account-setting-active"
-          onClick={e => handleClick(e)}
-        >
-          <i className="pe-7s-user-female" />
-        </button>
+        {
+          pathname.url !== '/checkout' &&
+          <button
+            className="account-setting-active"
+            onClick={e => handleClick(e)}
+          >
+            <i className="pe-7s-user-female" />
+          </button>
+        }
         <div className="account-dropdown">
           <ul>
             {
@@ -105,20 +112,23 @@ const IconGroup = ({
           </span>
         </Link>
       </div> */}
-      <div className="same-style cart-wrap d-none d-lg-block">
-        <button className="icon-cart" onClick={e => handleClick(e)}>
-          <i className="pe-7s-shopbag" />
-          <span className="count-style">
-            {cartCount}
-          </span>
-        </button>
-        {/* menu cart */}
-        <MenuCart
-          cartData={cartData}
-          // currency={currency}
-          deleteFromCart={deleteFromCart}
-        />
-      </div>
+      {
+        pathname.url !== '/checkout' &&
+        <div className="same-style cart-wrap d-none d-lg-block">
+          <button className="icon-cart" onClick={e => handleClick(e)}>
+            <i className="pe-7s-shopbag" />
+            <span className="count-style">
+              {cartCount}
+            </span>
+          </button>
+          {/* menu cart */}
+          <MenuCart
+            cartData={cartData}
+            // currency={currency}
+            deleteFromCart={deleteFromCart}
+          />
+        </div>
+      }
       <div className="same-style cart-wrap d-block d-lg-none">
         <Link className="icon-cart" to={process.env.PUBLIC_URL + "/cart"}>
           <i className="pe-7s-shopbag" />
