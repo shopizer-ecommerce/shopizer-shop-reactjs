@@ -9,7 +9,6 @@ import { BreadcrumbsProvider } from "react-breadcrumbs-dynamic";
 
 import Loader from "./components/loader/loader"
 // home pages
-
 const HomeFashionSeven = lazy(() => import("./pages/home/HomeFashionSeven"));
 
 // shop pages

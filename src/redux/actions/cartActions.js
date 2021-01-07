@@ -9,7 +9,7 @@ export const DELETE_FROM_CART = "DELETE_FROM_CART";
 export const DELETE_ALL_FROM_CART = "DELETE_ALL_FROM_CART";
 
 //add to cart
-export const addToCart = (item, addToast, cartId, quantityCount, defaultStore, userData, selectedProductColor) => {
+export const addToCart = (item, addToast, cartId, quantityCount, defaultStore, userData, selectedProductOptions) => {
   return async dispatch => {
     dispatch(setLoader(true))
     try {
@@ -18,8 +18,8 @@ export const addToCart = (item, addToast, cartId, quantityCount, defaultStore, u
       let response;
       let message;
       console.log(userData, '************ userData *********')
-      if (selectedProductColor !== undefined) {
-        param = { "attributes": selectedProductColor, "product": item.id, "quantity": quantityCount }
+      if (selectedProductOptions !== undefined) {
+        param = { "attributes": selectedProductOptions, "product": item.id, "quantity": quantityCount }
       } else {
         param = { "product": item.id, "quantity": quantityCount }
       }
@@ -79,6 +79,7 @@ export const getCart = (cartID, userData) => {
         payload: response
       });
     } catch (error) {
+      console.log('Cart action response ' + error);
     }
   }
 }
@@ -121,6 +122,7 @@ export const deleteFromCart = (cartID, item, defaultStore, addToast) => {
 
       // dispatch(getCart(cartID));
     } catch (error) {
+      console.log('Error removing from cart ');
       dispatch(setLoader(false))
     }
   };
