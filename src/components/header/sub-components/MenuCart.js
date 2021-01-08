@@ -14,7 +14,7 @@ const MenuCart = ({ cartData, deleteFromCart, defaultStore, strings }) => {
         <Fragment>
           <ul>
             {cartData.products.map((single, key) => {
-              const finalProductPrice = single.originalPrice;
+              // const finalProductPrice = single.originalPrice;
               const finalDiscountedPrice = single.finalPrice;
               // cartTotalPrice += single.price;
               return (
@@ -32,7 +32,7 @@ const MenuCart = ({ cartData, deleteFromCart, defaultStore, strings }) => {
                     </h4>
                     <h6>Qty: {single.quantity}</h6>
                     <span>
-                      {single.discounted ? finalDiscountedPrice : finalProductPrice}
+                      {finalDiscountedPrice}
                     </span>
                     {/* {single.selectedProductColor &&
                       single.selectedProductSize ? (

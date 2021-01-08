@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React, { Fragment, useState, useEffect } from 'react';
 import MetaTags from 'react-meta-tags';
-import Paginator from 'react-hooks-paginator';
+// import Paginator from 'react-hooks-paginator';
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
 import { connect } from 'react-redux';
 // import { getSortedProducts } from '../../helpers/product';
@@ -15,6 +15,9 @@ import constant from '../../util/constant';
 import { isCheckValueAndSetParams } from '../../util/helper';
 import { setLoader } from "../../redux/actions/loaderActions";
 import { multilanguage } from "redux-multilanguage";
+
+import ReactPaginate from 'react-paginate';
+
 const ShopGridStandard = ({ strings, location, defaultStore, currentLanguageCode, categoryID, setLoader }) => {
     const [layout, setLayout] = useState('grid three-column');
 
@@ -24,7 +27,7 @@ const ShopGridStandard = ({ strings, location, defaultStore, currentLanguageCode
     // const [filterSortValue, setFilterSortValue] = useState('');
     const [offset, setOffset] = useState(0);
     // const [skip, setSkip] = useState(0);
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(0);
     const pageLimit = parseInt(process.env.REACT_APP_PRODUCT_GRID_LIMIT) || 12;
     const [productData, setProductData] = useState([]);
     const [totalProduct, setTotalProduct] = useState(0);
@@ -95,10 +98,11 @@ const ShopGridStandard = ({ strings, location, defaultStore, currentLanguageCode
     const getProductList = async (categoryid, size, manufacture) => {
         setLoader(true)
         // let action = `${constant.ACTION.PRODUCTS} + '?store=' + defaultStore + '&lang=' + currentLanguageCode + '&start=' + offset + '&count=' + pageLimit + '&category=' + categoryID`;
-        let action = `${constant.ACTION.PRODUCTS}?${isCheckValueAndSetParams('&store=', defaultStore)}${isCheckValueAndSetParams('&lang=', currentLanguageCode)}${isCheckValueAndSetParams('&start=', offset)}${isCheckValueAndSetParams('&count=', pageLimit)}${isCheckValueAndSetParams('&category=', categoryid)}${isCheckValueAndSetParams('&optionValues=', size.join())}${isCheckValueAndSetParams('&manufacturer=', manufacture.join())}`;
+        let action = `${constant.ACTION.PRODUCTS}?${isCheckValueAndSetParams('&store=', defaultStore)}${isCheckValueAndSetParams('&lang=', currentLanguageCode)}${isCheckValueAndSetParams('&page=', offset)}${isCheckValueAndSetParams('&count=', pageLimit)}${isCheckValueAndSetParams('&category=', categoryid)}${isCheckValueAndSetParams('&optionValues=', size.join())}${isCheckValueAndSetParams('&manufacturer=', manufacture.join())}`;
         try {
             let response = await WebService.get(action);
             if (response) {
+                setCurrentPage(response.totalPages)
                 setProductData(response.products);
                 setTotalProduct(response.recordsTotal)
             }
@@ -162,6 +166,7 @@ const ShopGridStandard = ({ strings, location, defaultStore, currentLanguageCode
             </MetaTags>
 
             <BreadcrumbsItem to={process.env.PUBLIC_URL + '/'}>Home</BreadcrumbsItem>
+            {productDetails && productDetails.parent !== null && <BreadcrumbsItem to={"parent"}>{productDetails.parent.code}</BreadcrumbsItem>}
             <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>{productDetails && productDetails.description.name}</BreadcrumbsItem>
 
             <LayoutOne headerContainerClass="container-fluid"
@@ -188,17 +193,30 @@ const ShopGridStandard = ({ strings, location, defaultStore, currentLanguageCode
 
                                 {/* shop product pagination */}
                                 <div className="pro-pagination-style text-center mt-30">
-                                    <Paginator
+                                    <ReactPaginate
+                                        previousLabel={'«'}
+                                        nextLabel={'»'}
+                                        breakLabel={'...'}
+                                        breakClassName={'break-me'}
+                                        pageCount={currentPage}
+                                        // marginPagesDisplayed={2}
+                                        // pageRangeDisplayed={currentPage}
+                                        onPageChange={(e) => setOffset(e.selected)}
+                                        containerClassName={'mb-0 mt-0'}
+                                        // subContainerClassName={'pages pagination'}
+                                        activeClassName={'page-item active'}
+                                    />
+                                    {/* <Paginator
                                         totalRecords={totalProduct}
                                         pageLimit={pageLimit}
                                         pageNeighbours={2}
-                                        setOffset={setOffset}
+                                        setOffset={() => { }}
                                         currentPage={currentPage}
                                         setCurrentPage={setCurrentPage}
                                         pageContainerClass="mb-0 mt-0"
                                         pagePrevText="«"
                                         pageNextText="»"
-                                    />
+                                    /> */}
                                 </div>
                             </div>
                         </div>

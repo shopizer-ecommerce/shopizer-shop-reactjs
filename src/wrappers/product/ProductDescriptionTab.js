@@ -26,7 +26,6 @@ const ProductDescriptionTab = ({ spaceBottomClass, product, review, userData }) 
   const onClickSubmit = async () => {
     setLoader(true)
     try {
-      console.log('jaimin')
       let action = constant.ACTION.AUTH + constant.ACTION.PRODUCTS + product.id + '/reviews'
       let param = {
         "customerId": userData.id,
@@ -37,7 +36,6 @@ const ProductDescriptionTab = ({ spaceBottomClass, product, review, userData }) 
         'rating': ratingValue
       }
       let response = await WebService.post(action, param);
-      console.log(response)
       if (response) {
         setRatingMessage('')
         setRatingValue(0)

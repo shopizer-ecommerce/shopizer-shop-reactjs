@@ -47,7 +47,7 @@ export const getCurrentLocation = () => {
         // console.log(location, 'getCurrentLocation')
         if (location) {
             location.getCurrentPosition((position) => {
-                console.log(position)
+                // console.log(position)
                 dispatch(getCurrentAddress(position.coords.latitude, position.coords.longitude))
             }, (error) => {
                 console.log(error)

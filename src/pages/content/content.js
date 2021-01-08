@@ -24,7 +24,7 @@ const Content = ({ contentID, setLoader }) => {
         try {
             let response = await WebService.get(action);
             if (response) {
-                console.log(response)
+                // console.log(response)
                 setContentDetail(response)
             }
             setLoader(false)

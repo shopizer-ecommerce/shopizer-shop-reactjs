@@ -7,12 +7,13 @@ import BannerEleven from "../../wrappers/banner/BannerEleven";
 import CountDownThree from "../../wrappers/countdown/CountDownThree";
 import FeatureIconFour from "../../wrappers/feature-icon/FeatureIconFour";
 import NewsletterThree from "../../wrappers/newsletter/NewsletterThree";
-
-const HomeFashionSeven = () => {
+import { connect } from "react-redux";
+const HomeFashionSeven = ({ merchant }) => {
+  // console.log(merchant);
   return (
     <Fragment>
       <MetaTags>
-        <title>Importa | Imports from the world</title>
+        <title>{merchant.name}</title>
         {/* <meta
           name="description"
           content="Fashion home of flone react minimalist eCommerce template."
@@ -59,4 +60,13 @@ const HomeFashionSeven = () => {
   );
 };
 
-export default HomeFashionSeven;
+
+const mapStateToProps = state => {
+  return {
+    merchant: state.merchantData.merchant
+  };
+};
+
+
+export default connect(mapStateToProps, null)(HomeFashionSeven);
+// export default HomeFashionSeven;

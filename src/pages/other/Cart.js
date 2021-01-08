@@ -75,7 +75,7 @@ const Cart = ({
 
 
   const deleteAllFromCart = () => {
-    console.log(cartItems);
+    // console.log(cartItems);
     cartItems.products.forEach((value) => {
       deleteFromCart(cartItems.code, value, defaultStore, addToast)
     });
@@ -126,7 +126,7 @@ const Cart = ({
                         <tbody>
                           {cartItems.products.map((cartItem, key) => {
 
-                            const finalProductPrice = cartItem.originalPrice;
+                            // const finalProductPrice = cartItem.originalPrice;
                             const finalDiscountedPrice = cartItem.finalPrice;
 
                             return (
@@ -144,7 +144,7 @@ const Cart = ({
                                 </td>
 
                                 <td className="product-price-cart">
-                                  {cartItem.discounted ? (
+                                  {/* {cartItem.discounted ? (
                                     <Fragment>
                                       <span className="amount old">
                                         {finalProductPrice}
@@ -153,11 +153,11 @@ const Cart = ({
                                         {finalDiscountedPrice}
                                       </span>
                                     </Fragment>
-                                  ) : (
-                                      <span className="amount">
-                                        {finalProductPrice}
-                                      </span>
-                                    )}
+                                  ) : ( */}
+                                  <span className="amount">
+                                    {finalDiscountedPrice}
+                                  </span>
+                                  {/* )} */}
                                 </td>
 
                                 <td className="product-quantity">
