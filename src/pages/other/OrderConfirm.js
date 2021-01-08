@@ -5,8 +5,8 @@ import MetaTags from "react-meta-tags";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
-
-const OrderConfirm = ({ location }) => {
+import { connect } from "react-redux";
+const OrderConfirm = ({ location, orderID }) => {
   const { pathname } = location;
 
   return (
@@ -35,7 +35,7 @@ const OrderConfirm = ({ location }) => {
                   <h3>Order Completed</h3>
                   <h2>Thank you for ordering from importa</h2>
                   <p>
-                    Your order id is <b>123456</b> <br />An email with you order details has been sent to test@test.com
+                    Your order id is <b>{orderID}</b> <br />An email with you order details has been sent to test@test.com
                   </p>
                   <p>
                     If you have any comments or suggestions for us. please send us an email with your
@@ -58,4 +58,10 @@ OrderConfirm.propTypes = {
   location: PropTypes.object
 };
 
-export default OrderConfirm;
+const mapStateToProps = state => {
+  return {
+    orderID: state.cartData.orderID
+  };
+};
+export default connect(mapStateToProps, null)(OrderConfirm);
+// export default OrderConfirm;

@@ -75,7 +75,7 @@ const Cart = ({
 
 
   const deleteAllFromCart = () => {
-    console.log(cartItems);
+    // console.log(cartItems);
     cartItems.products.forEach((value) => {
       deleteFromCart(cartItems.code, value, defaultStore, addToast)
     });

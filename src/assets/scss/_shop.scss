@@ -291,6 +291,7 @@
           color: #fff;
           background-color: $theme-color;
         }
+
       }
 
       a.active {
@@ -317,17 +318,32 @@
         }
       }
 
+      &.disabled {
+        a {
+          display: none;
+        }
+      }
+
       &.page-item {
         &.active {
-          .page-link {
+          a {
+            // .page-link {
             border-color: $theme-color;
             background-color: $theme-color;
             box-shadow: 0 0 12px 0.8px rgba(0, 0, 0, 0.1) !important;
+            color: #fff;
 
             &:focus {
               box-shadow: none;
             }
+
+            &:hover {
+              background-color: #333;
+            }
           }
+
+
+          // }
         }
 
         .page-link {

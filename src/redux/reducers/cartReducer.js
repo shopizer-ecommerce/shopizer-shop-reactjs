@@ -11,7 +11,8 @@ import {
 const initState = {
   cartItems: {},
   cartID: '',
-  cartCount: 0
+  cartCount: 0,
+  orderID: ''
 
 };
 
@@ -73,6 +74,7 @@ const cartReducer = (state = initState, action) => {
   if (action.type === DELETE_ALL_FROM_CART) {
     return {
       ...state,
+      orderID: action.payload,
       cartItems: {},
       cartCount: 0,
       cartID: ''

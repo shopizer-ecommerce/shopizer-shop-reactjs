@@ -17,7 +17,7 @@ export const addToCart = (item, addToast, cartId, quantityCount, defaultStore, u
       let param;
       let response;
       let message;
-      console.log(userData, '************ userData *********')
+      // console.log(userData, '************ userData *********')
       if (selectedProductOptions !== undefined) {
         param = { "attributes": selectedProductOptions, "product": item.id, "quantity": quantityCount }
       } else {
@@ -128,7 +128,7 @@ export const deleteFromCart = (cartID, item, defaultStore, addToast) => {
   };
 };
 //delete all from cart
-export const deleteAllFromCart = addToast => {
+export const deleteAllFromCart = (orderID) => {
   return dispatch => {
     // if (addToast) {
     //   addToast("Removed All From Cart", {
@@ -136,7 +136,7 @@ export const deleteAllFromCart = addToast => {
     //     autoDismiss: true
     //   });
     // }
-    dispatch({ type: DELETE_ALL_FROM_CART });
+    dispatch({ type: DELETE_ALL_FROM_CART, payload: orderID });
   };
 };
 

@@ -9,7 +9,7 @@ import FeatureIconFour from "../../wrappers/feature-icon/FeatureIconFour";
 import NewsletterThree from "../../wrappers/newsletter/NewsletterThree";
 import { connect } from "react-redux";
 const HomeFashionSeven = ({ merchant }) => {
-  console.log(merchant);
+  // console.log(merchant);
   return (
     <Fragment>
       <MetaTags>

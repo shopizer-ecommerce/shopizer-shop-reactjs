@@ -13,7 +13,9 @@ import WebService from '../../util/webService';
 import { getCountry, getState } from "../../redux/actions/userAction";
 import { useForm, Controller } from "react-hook-form";
 import { loadStripe } from '@stripe/stripe-js';
-import { CardElement, Elements, ElementsConsumer } from '@stripe/react-stripe-js';
+import {
+  CardElement, Elements, ElementsConsumer
+} from '@stripe/react-stripe-js';
 import { useToasts } from "react-toast-notifications";
 import { setLoader } from "../../redux/actions/loaderActions";
 import {
@@ -238,15 +240,11 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
   const { pathname } = location;
   const history = useHistory();
   const { addToast } = useToasts();
-  // let cartTotalPrice = 0;
-  // console.log(cartItems);
   const [config, setConfig] = useState({});
   const [cartItems, setCartItems] = useState([]);
   const [isShipping, setIsShipping] = useState(false);
   const [isAccount, setIsAccount] = useState(false);
   const [timer, setTimer] = useState('');
-  // const [password, setPassword] = useState('');
-  // const [note, setNote] = useState('');
   const [shippingOptions, setShippingOptions] = useState();
   const [shippingQuote, setShippingQuote] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState('');
@@ -257,7 +255,6 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
 
   const [ref, setRef] = useState(null)
   useEffect(() => {
-    // console.log(userData)
     getSummaryOrder()
     if (userData) {
       getProfile()
@@ -274,7 +271,6 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
     let action = constant.ACTION.CART + cartID + '?store=' + defaultStore;
     try {
       let response = await WebService.get(action);
-      console.log(response);
       if (response) {
         setCartItems(response)
       }
@@ -292,7 +288,6 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
     let action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.PROFILE;
     try {
       let response = await WebService.get(action);
-      console.log(response);
       if (response) {
         setValue('firstName', response.billing.firstName)
         setValue('lastName', response.billing.lastName)
@@ -325,7 +320,6 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
     let action = constant.ACTION.CONFIG;
     try {
       let response = await WebService.get(action);
-      // console.log(response);
       if (response) {
         setConfig(response)
       }
@@ -427,7 +421,7 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
     // console.log(action)
     try {
       let response = await WebService.get(action);
-      console.log(response, '--------------');
+      // console.log(response, '--------------');
       if (response) {
         setShippingQuote(response.totals)
       }
@@ -436,26 +430,27 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
 
   }
   const onSubmitOrder = async (data, elements, stripe) => {
-    // setLoader(true)
+    setLoader(true)
     let card = elements.getElement(CardElement);
-    console.log(card);
-    let ownerInfo = {
-      owner: {
-        name: data.firstName + ' ' + data.lastName,
-        phone: data.phone,
-        email: data.email
-      },
-    };
-
-    stripe.createSource(card, ownerInfo).then(function (result) {
-      if (result.error) {
-        setLoader(false)
-        addToast(result.error.message, { appearance: "error", autoDismiss: true });
-      } else {
-        console.log(result);
-        onPayment(data, result.source.id)
-      }
-    });
+    // console.log(card);
+    // let ownerInfo = {
+    //   owner: {
+    //     name: data.firstName + ' ' + data.lastName,
+    //     phone: data.phone,
+    //     email: data.email
+    //   },
+    // };
+    const result = await stripe.createToken(card);
+    // console.log(result)
+    // stripe.createSource(card, ownerInfo).then(function (result) {
+    if (result.error) {
+      setLoader(false)
+      addToast(result.error.message, { appearance: "error", autoDismiss: true });
+    } else {
+      // console.log(result);
+      onPayment(data, result.token.id)
+    }
+    // });
   }
   const onPayment = async (data, token) => {
     let action;
@@ -470,7 +465,7 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
           "transactionType": "CAPTURE",
           "paymentModule": "stripe",
           "paymentToken": token,
-          "amount": shippingQuote[shippingQuote.length - 1].total
+          "amount": shippingQuote[shippingQuote.length - 1].value
         }
       }
     } else {
@@ -530,13 +525,11 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
           "transactionType": "CAPTURE",
           "paymentModule": "stripe",
           "paymentToken": token,
-          "amount": shippingQuote[shippingQuote.length - 1].total
+          "amount": shippingQuote[shippingQuote.length - 1].value
         },
         "customer": customer
       }
     }
-    console.log(action)
-    console.log(param)
     // 
     try {
       let response = await WebService.post(action, param);
@@ -544,7 +537,7 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
       if (response) {
         reset({})
         ref.clear()
-        deleteAllFromCart()
+        deleteAllFromCart(response.id)
         addToast("Your order has been submitted", { appearance: "success", autoDismiss: true });
         history.push('/order-confirm')
       }
@@ -570,8 +563,8 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
 
   }
   const onPasswordChange = (e) => {
-    console.log(e.target.value)
-    console.log(watch('repeatPassword'))
+    // console.log(e.target.value)
+    // console.log(watch('repeatPassword'))
     if (watch('repeatPassword') !== '' && watch('repeatPassword') !== e.target.value) {
       return setError(
         paymentForm.repeatPassword.name,
@@ -608,13 +601,16 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
 
           <div className="container">
             {
-              !userData &&
+
+              isValidObject(cartItems) && cartItems.products.length > 0 && !userData &&
               <div className="checkout-heading">
                 <Link to={"/login-register"}>Returning customer ? Click here to login</Link>
               </div>
+
             }
 
             {isValidObject(cartItems) && cartItems.products.length > 0 ? (
+
               <form>
                 <div className="row">
                   <div className="col-lg-6">
@@ -1115,8 +1111,8 @@ const mapDispatchToProps = dispatch => {
     getState: (code) => {
       dispatch(getState(code));
     },
-    deleteAllFromCart: () => {
-      dispatch(deleteAllFromCart());
+    deleteAllFromCart: (orderID) => {
+      dispatch(deleteAllFromCart(orderID));
     },
   };
 };

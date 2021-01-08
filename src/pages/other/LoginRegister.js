@@ -218,7 +218,7 @@ const LoginRegister = ({ strings, props, location, setLoader, setUser, getCart, 
         }
       }
       let response = await WebService.post(action, param);
-      console.log(response)
+      // console.log(response)
       if (response) {
         addToast("'You have successfully registerd in to this website.", { appearance: "success", autoDismiss: true });
         setUser(response)
