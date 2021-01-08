@@ -36,7 +36,7 @@ const App = (props) => {
   useEffect(() => {
     props.dispatch(
       loadLanguages({
-        languages: {
+        languages: { //from merchant supported languages
           en: require("./translations/english.json"),
           fr: require("./translations/french.json")
         }

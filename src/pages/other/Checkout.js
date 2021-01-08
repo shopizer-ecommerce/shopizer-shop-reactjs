@@ -937,7 +937,7 @@ const Checkout = ({ location, cartItems, getCountry, getState, countryData, stat
                                   <i className="fa fa-cc-visa" style={{ color: 'navy' }}></i>
                                   <i className="fa fa-cc-amex" style={{ color: 'blue' }}></i>
                                   <i className="fa fa-cc-mastercard" style={{ color: 'red' }}></i>
-                                  <i className="fa fa-cc-discover" style={{ color: 'orange' }}></i>
+                                  {/*<i className="fa fa-cc-discover" style={{ color: 'orange' }}></i>*/}
                                 </div>
 
                                 <div className="place-order mt-100">
