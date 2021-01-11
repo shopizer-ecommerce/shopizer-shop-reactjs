@@ -13,9 +13,9 @@ const ShopCategories = ({ categories, getCategoryParams }) => {
             {categories.map((category, key) => {
               return (
                 <li key={key}>
-                  <div className="sidebar-widget-list-left">
+                  <div>
 
-                    <label>
+                    {/* <label>
                       <input
                         type="checkbox"
                         value={category.id}
@@ -26,16 +26,12 @@ const ShopCategories = ({ categories, getCategoryParams }) => {
                         }}
                       />
                       <span className="checkmark" />{category.description.name}{" "}
-                    </label>
-                    {/* <button
+                    </label> */}
+                    <button
                       onClick={e => {
-                        getCategoryParams("category", category.id);
-                        setActiveSort(e);
-                      }}
-                    >
-                      {" "}
-                      <span className="checkmark" /> {category.description.name}{" "}
-                    </button> */}
+                        getCategoryParams("category", category);
+                      }}> {category.description.name}
+                    </button>
                   </div>
                 </li>
               );

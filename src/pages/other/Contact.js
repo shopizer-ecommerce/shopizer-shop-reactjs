@@ -5,10 +5,83 @@ import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import LocationMap from "../../components/contact/LocationMap";
-
-const Contact = ({ location }) => {
+import { useForm } from "react-hook-form";
+import { connect } from "react-redux";
+import WebService from '../../util/webService';
+import constant from '../../util/constant';
+import { setLoader } from "../../redux/actions/loaderActions";
+import { useToasts } from "react-toast-notifications";
+const contactForm = {
+  email: {
+    name: "email",
+    validate: {
+      required: {
+        value: true,
+        message: "Email is required"
+      },
+      pattern: {
+        value: /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i,
+        message: 'Please entered the valid email id'
+      }
+    }
+  },
+  username: {
+    name: "username",
+    validate: {
+      required: {
+        value: true,
+        message: "Name is required"
+      }
+    }
+  },
+  subject: {
+    name: "subject",
+    validate: {
+      required: {
+        value: true,
+        message: "Subject is required"
+      }
+    }
+  },
+  comment: {
+    name: "comment",
+    validate: {
+      required: {
+        value: true,
+        message: "Message is required"
+      }
+    }
+  }
+};
+const Contact = ({ location, merchant, setLoader }) => {
   const { pathname } = location;
+  const { addToast } = useToasts();
+  const { register, handleSubmit, errors, reset } = useForm({
+    mode: "onChange"
+  });
 
+  const onSubmitContactForm = async (data) => {
+    console.log(data)
+    setLoader(true)
+    try {
+      let action = constant.ACTION.CONTACT;
+      let param = {
+        "comment": data.comment,
+        "email": data.email,
+        "name": data.name,
+        "subject": data.subject,
+      }
+      let response = await WebService.post(action, param);
+      // console.log(response)
+      // if (response) {
+      reset({})
+      addToast("Thank you for getting in touch!", { appearance: "success", autoDismiss: true });
+      // }
+      setLoader(false)
+    } catch (error) {
+      setLoader(false)
+    }
+  }
   return (
     <Fragment>
       <MetaTags>
@@ -40,8 +113,7 @@ const Contact = ({ location }) => {
                       <i className="fa fa-phone" />
                     </div>
                     <div className="contact-info-dec">
-                      <p>+012 345 678 102</p>
-                      <p>+012 345 678 102</p>
+                      <p>{merchant.phone}</p>
                     </div>
                   </div>
                   <div className="single-contact-info">
@@ -50,10 +122,10 @@ const Contact = ({ location }) => {
                     </div>
                     <div className="contact-info-dec">
                       <p>
-                        <a href="mailto:urname@email.com">urname@email.com</a>
+                        <a href="mailto:urname@email.com">{merchant.email}</a>
                       </p>
                       <p>
-                        <a href="//urwebsitenaem.com">urwebsitenaem.com</a>
+                        <a href="https://www.shopizer.com/">www.shopizer.com</a>
                       </p>
                     </div>
                   </div>
@@ -62,8 +134,9 @@ const Contact = ({ location }) => {
                       <i className="fa fa-map-marker" />
                     </div>
                     <div className="contact-info-dec">
-                      <p>Address goes here, </p>
-                      <p>street, Crossroad 123.</p>
+                      <p>{merchant.address.address} </p>
+                      <p>{merchant.address.city}, {merchant.address.stateProvince}, {merchant.address.country}</p>
+                      <p>{merchant.address.postalCode}</p>
                     </div>
                   </div>
                   <div className="contact-social text-center">
@@ -103,28 +176,34 @@ const Contact = ({ location }) => {
                   <div className="contact-title mb-30">
                     <h2>Get In Touch</h2>
                   </div>
-                  <form className="contact-form-style">
+                  <form className="contact-form-style" onSubmit={handleSubmit(onSubmitContactForm)}>
                     <div className="row">
                       <div className="col-lg-6">
-                        <input name="name" placeholder="Name*" type="text" />
+                        <input type="text" name={contactForm.username.name} ref={register(contactForm.username.validate)} placeholder="Name" />
+                        {console.log(errors)}
+                        {errors[contactForm.username.name] && <p className="error-msg">{errors[contactForm.username.name].message}</p>}
                       </div>
                       <div className="col-lg-6">
-                        <input name="email" placeholder="Email*" type="email" />
+                        <input name={contactForm.email.name} ref={register(contactForm.email.validate)} placeholder="Email" type="email" />
+                        {errors[contactForm.email.name] && <p className="error-msg">{errors[contactForm.email.name].message}</p>}
                       </div>
                       <div className="col-lg-12">
                         <input
-                          name="subject"
-                          placeholder="Subject*"
+                          placeholder="Subject"
                           type="text"
+                          name={contactForm.subject.name}
+                          ref={register(contactForm.subject.validate)}
                         />
+                        {errors[contactForm.subject.name] && <p className="error-msg">{errors[contactForm.subject.name].message}</p>}
                       </div>
                       <div className="col-lg-12">
                         <textarea
-                          name="message"
-                          placeholder="Your Message*"
-                          defaultValue={""}
+                          placeholder="Your Message"
+                          name={contactForm.comment.name}
+                          ref={register(contactForm.comment.validate)}
                         />
-                        <button className="submit" type="submit">
+                        {errors[contactForm.comment.name] && <p className="error-msg">{errors[contactForm.comment.name].message}</p>}
+                        <button type="submit" className="submit" >
                           SEND
                         </button>
                       </div>
@@ -145,4 +224,17 @@ Contact.propTypes = {
   location: PropTypes.object
 };
 
-export default Contact;
+const mapStateToProps = state => {
+  return {
+    merchant: state.merchantData.merchant
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    setLoader: (value) => {
+      dispatch(setLoader(value));
+    }
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Contact);
+// export default Contact;

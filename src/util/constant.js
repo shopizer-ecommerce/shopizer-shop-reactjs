@@ -9,6 +9,7 @@ const Constant = {
         PRODUCT: 'product/',
         PRODUCTS: 'products/',
         CART: 'cart/',
+        CARTS: 'cart',
         PRICE: 'price/',
         CUSTOMER: 'customer/',
         LOGIN: 'login/',
@@ -25,7 +26,8 @@ const Constant = {
         NEWSLETTER: 'newsletter/',
         REGISTER: 'register',
         CHECKOUT: 'checkout',
-        PASSWORD: 'password/'
+        PASSWORD: 'password/',
+        CONTACT: 'contact/'
     }
 }
 

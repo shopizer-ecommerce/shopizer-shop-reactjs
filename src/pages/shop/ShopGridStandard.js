@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React, { Fragment, useState, useEffect } from 'react';
 import MetaTags from 'react-meta-tags';
+import { useHistory } from "react-router-dom";
 // import Paginator from 'react-hooks-paginator';
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
 import { connect } from 'react-redux';
@@ -15,12 +16,12 @@ import constant from '../../util/constant';
 import { isCheckValueAndSetParams } from '../../util/helper';
 import { setLoader } from "../../redux/actions/loaderActions";
 import { multilanguage } from "redux-multilanguage";
-
+import { setCategoryID } from "../../redux/actions/productActions";
 import ReactPaginate from 'react-paginate';
 
-const ShopGridStandard = ({ strings, location, defaultStore, currentLanguageCode, categoryID, setLoader }) => {
+const ShopGridStandard = ({ setCategoryID, strings, location, defaultStore, currentLanguageCode, categoryID, setLoader }) => {
     const [layout, setLayout] = useState('grid three-column');
-
+    const history = useHistory();
     // const [sortType, setSortType] = useState('');
     const [categoryValue, setCategoryValue] = useState('');
     // const [filterSortType, setFilterSortType] = useState('');
@@ -78,9 +79,11 @@ const ShopGridStandard = ({ strings, location, defaultStore, currentLanguageCode
 
     const getCategoryParams = (sortType, sortValue) => {
         // console.log(sortType)
-        // console.log(sortValue)
-        setCategoryValue(sortValue)
-        getProductList(categoryValue, selectedOption, selectedManufature)
+        console.log(sortValue)
+        // setCategoryValue(sortValue)
+        setCategoryID(sortValue.id)
+        history.push("/category/" + sortValue.description.friendlyUrl)
+        // getProductList(categoryValue, selectedOption, selectedManufature)
     }
 
     useEffect(() => {
@@ -245,7 +248,10 @@ const mapDispatchToProps = dispatch => {
     return {
         setLoader: (value) => {
             dispatch(setLoader(value));
-        }
+        },
+        setCategoryID: (value) => {
+            dispatch(setCategoryID(value));
+        },
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(multilanguage(ShopGridStandard));

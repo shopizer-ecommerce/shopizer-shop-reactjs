@@ -193,7 +193,7 @@ const paymentForm = {
     }
   },
   password: {
-    name: "new-password",
+    name: "password",
     validate: {
       required: {
         value: true,
@@ -265,6 +265,7 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
     getCountry()
     getConfig()
     shippingQuoteChange('')
+    onChangeShipping()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const getSummaryOrder = async () => {
@@ -430,7 +431,7 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
 
   }
   const onSubmitOrder = async (data, elements, stripe) => {
-    setLoader(true)
+    // setLoader(true)
     let card = elements.getElement(CardElement);
     // console.log(card);
     // let ownerInfo = {
@@ -454,6 +455,7 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
   }
   const onPayment = async (data, token) => {
     let action;
+    console.log(data);
     let param = {};
     if (userData) {
       action = constant.ACTION.AUTH + constant.ACTION.CART + cartID + '/' + constant.ACTION.CHECKOUT
@@ -516,7 +518,10 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
           }
         }
       }
-
+      if (isAccount) {
+        customer['password'] = data.password;
+        customer['repeatPassword'] = data.repeatPassword;
+      }
       param = {
         "shippingQuote": selectedOptions,
         "currency": "USD",
@@ -530,6 +535,7 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
         "customer": customer
       }
     }
+    console.log(param);
     // 
     try {
       let response = await WebService.post(action, param);
@@ -551,7 +557,7 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
 
 
   const onConfirmPassword = (e) => {
-    if (watch('new-password') !== e.target.value) {
+    if (watch('password') !== e.target.value) {
       return setError(
         paymentForm.repeatPassword.name,
         {
@@ -604,7 +610,7 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
 
               isValidObject(cartItems) && cartItems.products.length > 0 && !userData &&
               <div className="checkout-heading">
-                <Link to={"/login-register"}>Returning customer ? Click here to login</Link>
+                <Link to={"/login"}>Returning customer ? Click here to login</Link>
               </div>
 
             }
@@ -642,10 +648,10 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
                         <div className="col-lg-12">
                           <div className="billing-info mb-20">
                             <label>Street Address</label>
-                            <Script
+                            {/* <Script
                               url={"https://maps.googleapis.com/maps/api/js?key=" + process.env.REACT_APP_MAP_API_KEY + "&libraries=places"}
                               onLoad={handleScriptLoad}
-                            />
+                            /> */}
                             <input
                               className="billing-address"
                               placeholder="House number and street name"

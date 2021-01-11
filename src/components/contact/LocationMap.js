@@ -33,5 +33,5 @@ FooterMap.propTypes = {
 };
 
 export default GoogleApiWrapper({
-  apiKey: "AIzaSyB2D8wrWMY3XZnuHO6C31uq90JiuaFzGws"
+  apiKey: process.env.REACT_APP_MAP_API_KEY
 })(FooterMap);

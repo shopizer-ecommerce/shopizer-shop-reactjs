@@ -68,7 +68,7 @@ export const getCart = (cartID, userData) => {
     try {
       let action;
       if (userData) {
-        action = constant.ACTION.CUSTOMERS + userData.id + '/' + constant.ACTION.CART;
+        action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER + userData.id + '/' + constant.ACTION.CARTS + '?cart=' + cartID;
       } else {
         action = constant.ACTION.CART + cartID;
       }
