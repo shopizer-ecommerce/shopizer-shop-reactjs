@@ -24,7 +24,8 @@ const MyAccount = lazy(() => import("./pages/other/MyAccount"));
 const LoginRegister = lazy(() => import("./pages/other/LoginRegister"));
 
 const Cart = lazy(() => import("./pages/other/Cart"));
-const Wishlist = lazy(() => import("./pages/other/Wishlist"));
+const RecentOrder = lazy(() => import("./pages/other/recentOrder"));
+const OrderDetails = lazy(() => import("./pages/other/orderDetails"));
 // const Compare = lazy(() => import("./pages/other/Compare"));
 const Checkout = lazy(() => import("./pages/other/Checkout"));
 
@@ -113,8 +114,12 @@ const App = (props) => {
                   component={Cart}
                 />
                 <Route
-                  path="/wishlist"
-                  component={Wishlist}
+                  path="/recent-order"
+                  component={RecentOrder}
+                />
+                <Route
+                  path="/order-details/:id"
+                  component={OrderDetails}
                 />
                 <Route
                   path="/checkout"

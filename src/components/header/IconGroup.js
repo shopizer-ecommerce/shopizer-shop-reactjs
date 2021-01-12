@@ -86,7 +86,7 @@ const IconGroup = ({
                   <Link to={"/my-account"}>{strings["My Account"]}</Link>
                 </li>
                 <li>
-                  <Link to={"/my-account"}>{strings["Recent Orders"]}</Link>
+                  <Link to={"/recent-order"}>{strings["Recent Orders"]}</Link>
                 </li>
                 <li>
                   <Link to={"/login"} onClick={logout}>{strings["Logout"]}</Link>

@@ -256,11 +256,7 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
   const [ref, setRef] = useState(null)
   useEffect(() => {
     getSummaryOrder()
-    if (userData) {
-      getProfile()
-    } else {
-      setDefualtsValue()
-    }
+
     getState('')
     getCountry()
     getConfig()
@@ -277,6 +273,11 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
       }
     } catch (error) {
     }
+    if (userData) {
+      getProfile()
+    } else {
+      setDefualtsValue()
+    }
   }
   const setDefualtsValue = () => {
     if (currentLocation.length > 0) {
@@ -290,6 +291,7 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
     try {
       let response = await WebService.get(action);
       if (response) {
+        console.log(response.billing.firstName);
         setValue('firstName', response.billing.firstName)
         setValue('lastName', response.billing.lastName)
         setValue('company', response.billing.company)
@@ -364,7 +366,10 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
       setValue('country', p.address_components.find(i => i.types.some(i => i === "country")).short_name)
       getState(p.address_components.find(i => i.types.some(i => i === "country")).short_name)
 
-      setValue('city', p.address_components.find(i => i.types.some(i => i === "locality")).short_name)
+      let city = p.address_components.find(i => i.types.some(i => i === "locality"))
+      if (city !== undefined) {
+        setValue('city', city.short_name)
+      }
       let pCode = p.address_components.find(i => i.types.some(i => i === "postal_code"))
       if (pCode !== undefined) {
         setValue('postalCode', pCode.long_name)
@@ -431,7 +436,7 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
 
   }
   const onSubmitOrder = async (data, elements, stripe) => {
-    // setLoader(true)
+    setLoader(true)
     let card = elements.getElement(CardElement);
     // console.log(card);
     // let ownerInfo = {
@@ -648,10 +653,10 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
                         <div className="col-lg-12">
                           <div className="billing-info mb-20">
                             <label>Street Address</label>
-                            {/* <Script
+                            <Script
                               url={"https://maps.googleapis.com/maps/api/js?key=" + process.env.REACT_APP_MAP_API_KEY + "&libraries=places"}
                               onLoad={handleScriptLoad}
-                            /> */}
+                            />
                             <input
                               className="billing-address"
                               placeholder="House number and street name"

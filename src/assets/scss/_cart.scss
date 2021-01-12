@@ -19,9 +19,19 @@ h3.cart-page-title {
   table {
     border: 1px solid #ebebeb;
 
+    .order-header {
+      background-color: #fb799c !important;
+
+      th {
+        color: #fff
+      }
+    }
+
     thead>tr {
       border: 1px solid #ebebeb;
       background-color: #f9f9f9;
+
+
 
       th {
         font-size: 14px;
@@ -161,6 +171,10 @@ h3.cart-page-title {
             background: transparent none repeat scroll 0 0;
           }
         }
+      }
+
+      td.product-status {
+        color: orange
       }
 
       td.product-remove {

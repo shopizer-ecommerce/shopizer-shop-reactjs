@@ -27,7 +27,8 @@ const Constant = {
         REGISTER: 'register',
         CHECKOUT: 'checkout',
         PASSWORD: 'password/',
-        CONTACT: 'contact/'
+        CONTACT: 'contact/',
+        ORDERS: 'orders/'
     }
 }
 

@@ -11,6 +11,7 @@ import WebService from '../../util/webService';
 import constant from '../../util/constant';
 import { setLoader } from "../../redux/actions/loaderActions";
 import { useToasts } from "react-toast-notifications";
+
 const contactForm = {
   email: {
     name: "email",
@@ -103,7 +104,7 @@ const Contact = ({ location, merchant, setLoader }) => {
         <div className="contact-area pt-100 pb-100">
           <div className="container">
             <div className="contact-map mb-10">
-              <LocationMap latitude="47.444" longitude="-122.176" />
+              <LocationMap merchant={merchant} />
             </div>
             <div className="custom-row-2">
               <div className="col-lg-4 col-md-5">
@@ -180,7 +181,6 @@ const Contact = ({ location, merchant, setLoader }) => {
                     <div className="row">
                       <div className="col-lg-6">
                         <input type="text" name={contactForm.username.name} ref={register(contactForm.username.validate)} placeholder="Name" />
-                        {console.log(errors)}
                         {errors[contactForm.username.name] && <p className="error-msg">{errors[contactForm.username.name].message}</p>}
                       </div>
                       <div className="col-lg-6">

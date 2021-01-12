@@ -132,13 +132,13 @@ const Cart = ({
                             return (
                               <tr key={key}>
                                 <td className="product-thumbnail">
-                                  <Link to={"/product/" + cartItem.id} >
+                                  <Link to={"/product/" + cartItem.description.friendlyUrl} >
                                     <img className="img-fluid" src={cartItem.image.imageUrl} alt="" />
                                   </Link>
                                 </td>
 
                                 <td className="product-name">
-                                  <Link to={"/product/" + cartItem.id}>
+                                  <Link to={"/product/" + cartItem.description.friendlyUrl}>
                                     {cartItem.description.name}
                                   </Link>
                                 </td>
