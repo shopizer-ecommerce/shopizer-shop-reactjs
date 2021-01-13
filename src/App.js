@@ -7,6 +7,7 @@ import { multilanguage, loadLanguages } from "redux-multilanguage";
 import { connect } from "react-redux";
 import { BreadcrumbsProvider } from "react-breadcrumbs-dynamic";
 
+import CookieConsent from "react-cookie-consent";
 import Loader from "./components/loader/loader"
 // home pages
 const HomeFashionSeven = lazy(() => import("./pages/home/HomeFashionSeven"));
@@ -32,7 +33,6 @@ const Checkout = lazy(() => import("./pages/other/Checkout"));
 const NotFound = lazy(() => import("./pages/other/NotFound"));
 const OrderConfirm = lazy(() => import("./pages/other/OrderConfirm"));
 const Content = lazy(() => import("./pages/content/content"));
-
 const App = (props) => {
   useEffect(() => {
     props.dispatch(
@@ -49,6 +49,8 @@ const App = (props) => {
     <ToastProvider placement="bottom-left">
       <BreadcrumbsProvider>
         <Router>
+          <CookieConsent location="bottom" buttonText="ACCEPT" style={{ background: "#fb799c" }}
+            buttonStyle={{ background: "#404040", color: "#fff", fontSize: "14px", padding: '10px 30px' }}>This website uses cookies to enhance the user experience.</CookieConsent>
           <Loader></Loader>
           <ScrollToTop>
             <Suspense

@@ -1,17 +1,18 @@
 import PropTypes from "prop-types";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import MetaTags from "react-meta-tags";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import Card from "react-bootstrap/Card";
 import Accordion from "react-bootstrap/Accordion";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import WebService from '../../util/webService';
 import constant from '../../util/constant';
 import { setLoader } from "../../redux/actions/loaderActions";
 import { useToasts } from "react-toast-notifications";
 import { connect } from "react-redux";
+import { getState } from "../../redux/actions/userAction";
 
 const changePasswordForm = {
   userName: {
@@ -54,12 +55,238 @@ const changePasswordForm = {
     }
   }
 }
-const MyAccount = ({ location, setLoader }) => {
+
+
+const billingForm = {
+  firstName: {
+    name: "firstName",
+    validate: {
+      required: {
+        value: true,
+        message: "Firstname is required"
+      }
+    }
+  },
+  lastName: {
+    name: "lastName",
+    validate: {
+      required: {
+        value: true,
+        message: "Lastname is required"
+      }
+    }
+  },
+  company: {
+    name: "company"
+  },
+  address: {
+    name: "address",
+    validate: {
+      required: {
+        value: true,
+        message: "Address is required"
+      }
+    }
+  },
+  city: {
+    name: "city",
+    validate: {
+      required: {
+        value: true,
+        message: "City is required"
+      }
+    }
+  },
+  country: {
+    name: "country",
+    validate: {
+      required: {
+        value: true,
+        message: "Country is required"
+      }
+    }
+  },
+  stateProvince: {
+    name: "stateProvince",
+    validate: {
+      required: {
+        value: true,
+        message: "State is required"
+      }
+    }
+  },
+  postalCode: {
+    name: "postalCode",
+    validate: {
+      required: {
+        value: true,
+        message: "Postal code is required"
+      }
+    }
+  },
+  phone: {
+    name: "phone",
+    validate: {
+      required: {
+        value: true,
+        message: "Phone number is required"
+      },
+      minLength: {
+        value: 10,
+        message: "Enter a 10-digit number"
+      }
+    }
+  },
+  email: {
+    name: "email",
+    validate: {
+      required: {
+        value: true,
+        message: "Email is required"
+      },
+      pattern: {
+        value: /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i,
+        message: 'Please entered the valid email id'
+      }
+    }
+  },
+  shipPhone: {
+    name: "shipPhone",
+    validate: {
+      required: {
+        value: true,
+        message: "Phone number is required"
+      },
+      minLength: {
+        value: 10,
+        message: "Enter a 10-digit number"
+      }
+    }
+  },
+  shipEmail: {
+    name: "shipEmail",
+    validate: {
+      required: {
+        value: true,
+        message: "Email is required"
+      },
+      pattern: {
+        value: /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i,
+        message: 'Please entered the valid email id'
+      }
+    }
+  },
+  shipFirstName: {
+    name: "shipFirstName",
+    validate: {
+      required: {
+        value: true,
+        message: "Firstname is required"
+      }
+    }
+  },
+  shipLastName: {
+    name: "shipLastName",
+    validate: {
+      required: {
+        value: true,
+        message: "Lastname is required"
+      }
+    }
+  },
+  shipCompany: {
+    name: "shipCompany"
+  },
+  shipAddress: {
+    name: "shipAddress",
+    validate: {
+      required: {
+        value: true,
+        message: "Address is required"
+      }
+    }
+  },
+  shipCity: {
+    name: "shipCity",
+    validate: {
+      required: {
+        value: true,
+        message: "City is required"
+      }
+    }
+  },
+  shipCountry: {
+    name: "shipCountry",
+    validate: {
+      required: {
+        value: true,
+        message: "Country is required"
+      }
+    }
+  },
+  shipStateProvince: {
+    name: "shipStateProvince",
+    validate: {
+      required: {
+        value: true,
+        message: "State is required"
+      }
+    }
+  },
+  shipPostalCode: {
+    name: "shipPostalCode",
+    validate: {
+      required: {
+        value: true,
+        message: "Postal code is required"
+      }
+    }
+  },
+}
+const MyAccount = ({ location, setLoader, getState, countryData, stateData }) => {
   const { pathname } = location;
   const { addToast } = useToasts();
   const { register, handleSubmit, errors, watch, setError, clearErrors, reset } = useForm({
+    mode: "onChange",
+    criteriaMode: "all"
+  });
+  const {
+    register: billingRef,
+    errors: billingErr,
+    handleSubmit: billingSubmit, control, setValue
+  } = useForm({
     mode: "onChange"
   });
+
+  useEffect(() => {
+    getProfile()
+    getState()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  const getProfile = async () => {
+    let action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.PROFILE;
+    try {
+      let response = await WebService.get(action);
+      console.log(response);
+      if (response) {
+        getState(response.billing.country)
+        setValue('firstName', response.billing.firstName)
+        setValue('lastName', response.billing.lastName)
+        setValue('company', response.billing.company)
+        setValue('address', response.billing.address)
+        setValue('country', response.billing.country)
+        setValue('city', response.billing.city)
+        // setValue('stateProvince', response.billing.stateProvince)
+        setValue('stateProvince', response.billing.zone)
+        setValue('postalCode', response.billing.postalCode)
+        setValue('phone', response.billing.phone)
+        setValue('email', response.emailAddress)
+      }
+      //   // setConfig(response)
+    }
+    catch (error) {
+    }
+  }
   const onChangePassword = async (data) => {
     setLoader(true)
     try {
@@ -108,6 +335,9 @@ const MyAccount = ({ location, setLoader }) => {
     }
 
   }
+  const onUpdateBilling = (data) => {
+    console.log(data)
+  }
   return (
     <Fragment>
       <MetaTags>
@@ -147,88 +377,129 @@ const MyAccount = ({ location, setLoader }) => {
                               <h4>Billing Information</h4>
                               {/* <h5>Your Personal Details</h5> */}
                             </div>
-                            <div className="row">
-                              <div className="col-lg-6 col-md-6">
-                                <div className="billing-info">
-                                  <label>First Name</label>
-                                  <input type="text" />
+                            <form onSubmit={billingSubmit(onUpdateBilling)}>
+                              <div className="row">
+                                <div className="col-lg-6 col-md-6">
+                                  <div className="billing-info">
+                                    <label>First Name</label>
+                                    <input type="text" name={billingForm.firstName.name} ref={billingRef(billingForm.firstName.validate)} />
+                                    {billingErr[billingForm.firstName.name] && <p className="error-msg">{billingErr[billingForm.firstName.name].message}</p>}
+                                  </div>
+                                </div>
+                                <div className="col-lg-6 col-md-6">
+                                  <div className="billing-info">
+                                    <label>Last Name</label>
+                                    <input type="text" name={billingForm.lastName.name} ref={billingRef(billingForm.lastName.validate)} />
+                                    {billingErr[billingForm.lastName.name] && <p className="error-msg">{billingErr[billingForm.lastName.name].message}</p>}
+                                  </div>
+                                </div>
+                                <div className="col-lg-12">
+                                  <div className="billing-info mb-20">
+                                    <label>Company Name</label>
+                                    <input type="text" name={billingForm.company.name} ref={billingRef(billingForm.company.validate)} />
+                                  </div>
+                                </div>
+                                <div className="col-lg-12">
+                                  <div className="billing-info mb-20">
+                                    <label>Street Address</label>
+                                    <input
+                                      className="billing-info"
+                                      placeholder="House number and street name"
+                                      type="text"
+                                      name={billingForm.address.name}
+                                      ref={billingRef(billingForm.address.validate)}
+                                    />
+                                    {billingErr[billingForm.address.name] && <p className="error-msg">{billingErr[billingForm.address.name].message}</p>}
+                                  </div>
+                                </div>
+                                <div className="col-lg-6 col-md-6">
+                                  <div className="billing-info mb-20">
+                                    <label>Country</label>
+                                    <Controller
+                                      name={billingForm.country.name}
+                                      control={control}
+                                      rules={billingForm.country.validate}
+                                      render={props => {
+                                        return (
+                                          <select onChange={(e) => { props.onChange(e.target.value); getState(e.target.value); }} value={props.value}>
+                                            <option>Select a country</option>
+                                            {
+
+                                              countryData.map((data, i) => {
+                                                return <option key={i} value={data.code}>{data.name}</option>
+                                              })
+                                            }
+                                          </select>
+                                        )
+                                      }}
+                                    />
+                                    {billingErr[billingForm.country.name] && <p className="error-msg">{billingErr[billingForm.country.name].message}</p>}
+                                  </div>
+                                </div>
+                                <div className="col-lg-6 col-md-6">
+                                  <div className="billing-info mb-20">
+                                    <label>State</label>
+                                    {
+                                      stateData && stateData.length > 0 ?
+                                        <Controller
+                                          name={billingForm.stateProvince.name}
+                                          control={control}
+                                          rules={billingForm.stateProvince.validate}
+                                          render={props => {
+                                            return (
+                                              <select onChange={(e) => props.onChange(e.target.value)} value={props.value}>
+                                                <option>Select a state</option>
+                                                {
+                                                  stateData.map((data, i) => {
+                                                    return <option key={i} value={data.code}>{data.name}</option>
+                                                  })
+                                                }
+                                              </select>)
+                                          }}
+                                        />
+                                        :
+                                        <input type="text" name={billingForm.stateProvince.name} ref={billingRef(billingForm.stateProvince.validate)} />
+                                    }
+                                    {billingErr[billingForm.stateProvince.name] && <p className="error-msg">{billingErr[billingForm.stateProvince.name].message}</p>}
+
+                                    {/* <input type="text" /> */}
+                                  </div>
+                                </div>
+                                <div className="col-lg-6 col-md-6">
+                                  <div className="billing-info mb-20">
+                                    <label>Town / City</label>
+                                    <input type="text" name={billingForm.city.name} ref={billingRef(billingForm.city.validate)} />
+                                    {billingErr[billingForm.city.name] && <p className="error-msg">{billingErr[billingForm.city.name].message}</p>}
+                                  </div>
+                                </div>
+                                <div className="col-lg-6 col-md-6">
+                                  <div className="billing-info mb-20">
+                                    <label>Postcode / ZIP</label>
+                                    <input type="text" name={billingForm.postalCode.name} ref={billingRef(billingForm.postalCode.validate)} />
+                                    {billingErr[billingForm.postalCode.name] && <p className="error-msg">{billingErr[billingForm.postalCode.name].message}</p>}
+                                  </div>
+                                </div>
+                                <div className="col-lg-6 col-md-6">
+                                  <div className="billing-info">
+                                    <label>Email Address</label>
+                                    <input type="email" name={billingForm.email.name} ref={billingRef(billingForm.email.validate)} />
+                                    {billingErr[billingForm.email.name] && <p className="error-msg">{billingErr[billingForm.email.name].message}</p>}
+                                  </div>
+                                </div>
+                                <div className="col-lg-6 col-md-6">
+                                  <div className="billing-info">
+                                    <label>Telephone</label>
+                                    <input type="number" name={billingForm.phone.name} ref={billingRef(billingForm.phone.validate)} />
+                                    {billingErr[billingForm.phone.name] && <p className="error-msg">{billingErr[billingForm.phone.name].message}</p>}
+                                  </div>
                                 </div>
                               </div>
-                              <div className="col-lg-6 col-md-6">
-                                <div className="billing-info">
-                                  <label>Last Name</label>
-                                  <input type="text" />
+                              <div className="billing-back-btn">
+                                <div className="billing-btn">
+                                  <button type="submit">Continue</button>
                                 </div>
                               </div>
-                              <div className="col-lg-12">
-                                <div className="billing-info mb-20">
-                                  <label>Company Name</label>
-                                  <input type="text" />
-                                </div>
-                              </div>
-                              <div className="col-lg-12">
-                                <div className="billing-info mb-20">
-                                  <label>Street Address</label>
-                                  <input
-                                    className="billing-info"
-                                    placeholder="House number and street name"
-                                    type="text"
-                                  />
-                                  <input
-                                    placeholder="Apartment, suite, unit etc."
-                                    type="text"
-                                  />
-                                </div>
-                              </div>
-                              <div className="col-lg-6 col-md-6">
-                                <div className="billing-info mb-20">
-                                  <label>Country</label>
-                                  <select>
-                                    <option>Select a country</option>
-                                    <option>Azerbaijan</option>
-                                    <option>Bahamas</option>
-                                    <option>Bahrain</option>
-                                    <option>Bangladesh</option>
-                                    <option>Barbados</option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div className="col-lg-6 col-md-6">
-                                <div className="billing-info mb-20">
-                                  <label>State</label>
-                                  <input type="text" />
-                                </div>
-                              </div>
-                              <div className="col-lg-6 col-md-6">
-                                <div className="billing-info mb-20">
-                                  <label>Town / City</label>
-                                  <input type="text" />
-                                </div>
-                              </div>
-                              <div className="col-lg-6 col-md-6">
-                                <div className="billing-info mb-20">
-                                  <label>Postcode / ZIP</label>
-                                  <input type="text" />
-                                </div>
-                              </div>
-                              <div className="col-lg-6 col-md-6">
-                                <div className="billing-info">
-                                  <label>Email Address</label>
-                                  <input type="email" />
-                                </div>
-                              </div>
-                              <div className="col-lg-6 col-md-6">
-                                <div className="billing-info">
-                                  <label>Telephone</label>
-                                  <input type="text" />
-                                </div>
-                              </div>
-                            </div>
-                            <div className="billing-back-btn">
-                              <div className="billing-btn">
-                                <button type="submit">Continue</button>
-                              </div>
-                            </div>
+                            </form>
                           </div>
                         </Card.Body>
                       </Accordion.Collapse>
@@ -248,88 +519,129 @@ const MyAccount = ({ location, setLoader }) => {
                               <h4>Delivery Information</h4>
                               {/* <h5>Your Personal Details</h5> */}
                             </div>
-                            <div className="row">
-                              <div className="col-lg-6 col-md-6">
-                                <div className="billing-info">
-                                  <label>First Name</label>
-                                  <input type="text" />
+                            <form onSubmit={billingSubmit(onUpdateBilling)}>
+                              <div className="row">
+                                <div className="col-lg-6 col-md-6">
+                                  <div className="billing-info">
+                                    <label>First Name</label>
+                                    <input type="text" name={billingForm.shipFirstName.name} ref={billingRef(billingForm.shipFirstName.validate)} />
+                                    {billingErr[billingForm.shipFirstName.name] && <p className="error-msg">{billingErr[billingForm.shipFirstName.name].message}</p>}
+                                  </div>
+                                </div>
+                                <div className="col-lg-6 col-md-6">
+                                  <div className="billing-info">
+                                    <label>Last Name</label>
+                                    <input type="text" name={billingForm.shipLastName.name} ref={billingRef(billingForm.shipLastName.validate)} />
+                                    {billingErr[billingForm.shipLastName.name] && <p className="error-msg">{billingErr[billingForm.shipLastName.name].message}</p>}
+                                  </div>
+                                </div>
+                                <div className="col-lg-12">
+                                  <div className="billing-info mb-20">
+                                    <label>Company Name</label>
+                                    <input type="text" name={billingForm.shipCompany.name} ref={billingRef(billingForm.shipCompany.validate)} />
+                                  </div>
+                                </div>
+                                <div className="col-lg-12">
+                                  <div className="billing-info mb-20">
+                                    <label>Street Address</label>
+                                    <input
+                                      className="billing-info"
+                                      placeholder="House number and street name"
+                                      type="text"
+                                      name={billingForm.shipAddress.name}
+                                      ref={billingRef(billingForm.shipAddress.validate)}
+                                    />
+                                    {billingErr[billingForm.shipAddress.name] && <p className="error-msg">{billingErr[billingForm.shipAddress.name].message}</p>}
+                                  </div>
+                                </div>
+                                <div className="col-lg-6 col-md-6">
+                                  <div className="billing-info mb-20">
+                                    <label>Country</label>
+                                    <Controller
+                                      name={billingForm.shipCountry.name}
+                                      control={control}
+                                      rules={billingForm.shipCountry.validate}
+                                      render={props => {
+                                        return (
+                                          <select onChange={(e) => { props.onChange(e.target.value); getState(e.target.value); }} value={props.value}>
+                                            <option>Select a country</option>
+                                            {
+
+                                              countryData.map((data, i) => {
+                                                return <option key={i} value={data.code}>{data.name}</option>
+                                              })
+                                            }
+                                          </select>
+                                        )
+                                      }}
+                                    />
+                                    {billingErr[billingForm.shipCountry.name] && <p className="error-msg">{billingErr[billingForm.shipCountry.name].message}</p>}
+                                  </div>
+                                </div>
+                                <div className="col-lg-6 col-md-6">
+                                  <div className="billing-info mb-20">
+                                    <label>State</label>
+                                    {
+                                      stateData && stateData.length > 0 ?
+                                        <Controller
+                                          name={billingForm.shipStateProvince.name}
+                                          control={control}
+                                          rules={billingForm.shipStateProvince.validate}
+                                          render={props => {
+                                            return (
+                                              <select onChange={(e) => props.onChange(e.target.value)} value={props.value}>
+                                                <option>Select a state</option>
+                                                {
+                                                  stateData.map((data, i) => {
+                                                    return <option key={i} value={data.code}>{data.name}</option>
+                                                  })
+                                                }
+                                              </select>)
+                                          }}
+                                        />
+                                        :
+                                        <input type="text" name={billingForm.shipStateProvince.name} ref={billingRef(billingForm.shipStateProvince.validate)} />
+                                    }
+                                    {billingErr[billingForm.shipStateProvince.name] && <p className="error-msg">{billingErr[billingForm.shipStateProvince.name].message}</p>}
+
+                                    {/* <input type="text" /> */}
+                                  </div>
+                                </div>
+                                <div className="col-lg-6 col-md-6">
+                                  <div className="billing-info mb-20">
+                                    <label>Town / City</label>
+                                    <input type="text" name={billingForm.shipCity.name} ref={billingRef(billingForm.shipCity.validate)} />
+                                    {billingErr[billingForm.shipCity.name] && <p className="error-msg">{billingErr[billingForm.shipCity.name].message}</p>}
+                                  </div>
+                                </div>
+                                <div className="col-lg-6 col-md-6">
+                                  <div className="billing-info mb-20">
+                                    <label>Postcode / ZIP</label>
+                                    <input type="text" name={billingForm.shipPostalCode.name} ref={billingRef(billingForm.shipPostalCode.validate)} />
+                                    {billingErr[billingForm.shipPostalCode.name] && <p className="error-msg">{billingErr[billingForm.shipPostalCode.name].message}</p>}
+                                  </div>
+                                </div>
+                                <div className="col-lg-6 col-md-6">
+                                  <div className="billing-info">
+                                    <label>Email Address</label>
+                                    <input type="email" name={billingForm.shipEmail.name} ref={billingRef(billingForm.shipEmail.validate)} />
+                                    {billingErr[billingForm.shipEmail.name] && <p className="error-msg">{billingErr[billingForm.shipEmail.name].message}</p>}
+                                  </div>
+                                </div>
+                                <div className="col-lg-6 col-md-6">
+                                  <div className="billing-info">
+                                    <label>Telephone</label>
+                                    <input type="number" name={billingForm.shipPhone.name} ref={billingRef(billingForm.shipPhone.validate)} />
+                                    {billingErr[billingForm.shipPhone.name] && <p className="error-msg">{billingErr[billingForm.shipPhone.name].message}</p>}
+                                  </div>
                                 </div>
                               </div>
-                              <div className="col-lg-6 col-md-6">
-                                <div className="billing-info">
-                                  <label>Last Name</label>
-                                  <input type="text" />
+                              <div className="billing-back-btn">
+                                <div className="billing-btn">
+                                  <button type="submit">Continue</button>
                                 </div>
                               </div>
-                              <div className="col-lg-12">
-                                <div className="billing-info mb-20">
-                                  <label>Company Name</label>
-                                  <input type="text" />
-                                </div>
-                              </div>
-                              <div className="col-lg-12">
-                                <div className="billing-info mb-20">
-                                  <label>Street Address</label>
-                                  <input
-                                    className="billing-info"
-                                    placeholder="House number and street name"
-                                    type="text"
-                                  />
-                                  <input
-                                    placeholder="Apartment, suite, unit etc."
-                                    type="text"
-                                  />
-                                </div>
-                              </div>
-                              <div className="col-lg-6 col-md-6">
-                                <div className="billing-info mb-20">
-                                  <label>Country</label>
-                                  <select>
-                                    <option>Select a country</option>
-                                    <option>Azerbaijan</option>
-                                    <option>Bahamas</option>
-                                    <option>Bahrain</option>
-                                    <option>Bangladesh</option>
-                                    <option>Barbados</option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div className="col-lg-6 col-md-6">
-                                <div className="billing-info mb-20">
-                                  <label>State</label>
-                                  <input type="text" />
-                                </div>
-                              </div>
-                              <div className="col-lg-6 col-md-6">
-                                <div className="billing-info mb-20">
-                                  <label>Town / City</label>
-                                  <input type="text" />
-                                </div>
-                              </div>
-                              <div className="col-lg-6 col-md-6">
-                                <div className="billing-info mb-20">
-                                  <label>Postcode / ZIP</label>
-                                  <input type="text" />
-                                </div>
-                              </div>
-                              <div className="col-lg-6 col-md-6">
-                                <div className="billing-info">
-                                  <label>Email Address</label>
-                                  <input type="email" />
-                                </div>
-                              </div>
-                              <div className="col-lg-6 col-md-6">
-                                <div className="billing-info">
-                                  <label>Telephone</label>
-                                  <input type="text" />
-                                </div>
-                              </div>
-                            </div>
-                            <div className="billing-back-btn">
-                              <div className="billing-btn">
-                                <button type="submit">Continue</button>
-                              </div>
-                            </div>
+                            </form>
                           </div>
                         </Card.Body>
                       </Accordion.Collapse>
@@ -408,10 +720,10 @@ MyAccount.propTypes = {
 };
 const mapStateToProps = (state) => {
   return {
-    // countryData: state.userData.country,
+    countryData: state.userData.country,
     // cartItems: state.cartData.cartItems,
     // currentLocation: state.userData.currentAddress,
-    // stateData: state.userData.state,
+    stateData: state.userData.state
     // defaultStore: state.merchantData.defaultStore,
   };
 };
@@ -419,7 +731,10 @@ const mapDispatchToProps = dispatch => {
   return {
     setLoader: (value) => {
       dispatch(setLoader(value));
-    }
+    },
+    getState: (code) => {
+      dispatch(getState(code));
+    },
   };
 };
 

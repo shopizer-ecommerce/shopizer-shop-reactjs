@@ -72,7 +72,7 @@ const Contact = ({ location, merchant, setLoader }) => {
         "name": data.name,
         "subject": data.subject,
       }
-      let response = await WebService.post(action, param);
+      await WebService.post(action, param);
       // console.log(response)
       // if (response) {
       reset({})

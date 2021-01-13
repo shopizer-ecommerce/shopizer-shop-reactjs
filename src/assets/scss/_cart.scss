@@ -16,6 +16,8 @@ h3.cart-page-title {
 }
 
 .cart-table-content {
+
+
   table {
     border: 1px solid #ebebeb;
 
@@ -234,6 +236,30 @@ h3.cart-page-title {
 
         color: #333;
       }
+    }
+  }
+}
+
+.order-details-total {
+  background-color: #fff2f0;
+  border-radius: 25px;
+  padding: 35px 20px 40px 20px;
+
+  .amount_type {
+    margin: 38px 20px;
+    text-transform: uppercase;
+
+    .amount_module {
+      font-weight: 600;
+
+    }
+
+    .amount {
+      float: right;
+    }
+
+    &:last-child {
+      color: red;
     }
   }
 }
