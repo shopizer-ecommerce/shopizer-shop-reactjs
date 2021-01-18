@@ -14,11 +14,13 @@ import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { isValidObject } from "../../util/helper";
 import { multilanguage } from "redux-multilanguage";
 import { setLoader } from "../../redux/actions/loaderActions";
+import { setProductID } from "../../redux/actions/productActions";
 const OrderDetails = ({
     location,
     orderID,
     strings,
-    setLoader
+    setLoader,
+    setProductID
 
 }) => {
     // const { addToast } = useToasts();
@@ -43,6 +45,10 @@ const OrderDetails = ({
             setLoader(false)
             console.log(error, '------------')
         }
+    }
+    const onClickItem = (product) => {
+        console.log(product);
+        setProductID(product.id)
     }
     return (
         <Fragment>
@@ -92,13 +98,13 @@ const OrderDetails = ({
                                                         return (
                                                             <tr key={key} className="customTrRow">
                                                                 <td className="product-thumbnail">
-                                                                    <Link to={"/product/" + orderItem.product.description.friendlyUrl}>
+                                                                    <Link onClick={() => onClickItem(orderItem.product)} to={"/product/" + orderItem.product.description.friendlyUrl}>
                                                                         <img className="img-fluid" src={orderItem.product.image.imageUrl} alt="" />
                                                                     </Link>
                                                                 </td>
 
                                                                 <td className="product-name text-center">
-                                                                    <Link to={"/product/" + orderItem.product.description.friendlyUrl}>
+                                                                    <Link onClick={() => onClickItem(orderItem.product)} to={"/product/" + orderItem.product.description.friendlyUrl}>
                                                                         {orderItem.productName}
                                                                     </Link>
                                                                     <br />
@@ -209,6 +215,9 @@ const mapDispatchToProps = dispatch => {
     return {
         setLoader: (value) => {
             dispatch(setLoader(value));
+        },
+        setProductID: (value) => {
+            dispatch(setProductID(value));
         }
     };
 };

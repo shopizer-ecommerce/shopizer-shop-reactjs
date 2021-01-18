@@ -13,7 +13,7 @@ import { setLoader } from "../../redux/actions/loaderActions";
 import { useToasts } from "react-toast-notifications";
 import { connect } from "react-redux";
 import { getState } from "../../redux/actions/userAction";
-
+import Script from 'react-load-script';
 const changePasswordForm = {
   userName: {
     name: "userName",
@@ -243,7 +243,7 @@ const billingForm = {
     }
   },
 }
-const MyAccount = ({ location, setLoader, getState, countryData, stateData }) => {
+const MyAccount = ({ location, setLoader, getState, countryData, stateData, userData }) => {
   const { pathname } = location;
   const { addToast } = useToasts();
   const { register, handleSubmit, errors, watch, setError, clearErrors, reset } = useForm({
@@ -253,7 +253,18 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData }) =>
   const {
     register: billingRef,
     errors: billingErr,
-    handleSubmit: billingSubmit, control, setValue
+    handleSubmit: billingSubmit,
+    watch: billingWatch, control, setValue
+  } = useForm({
+    mode: "onChange"
+  });
+  const {
+    register: deliveryRef,
+    errors: deliveryErr,
+    handleSubmit: deliverySubmit,
+    control: deliveryControl,
+    setValue: setDeliveryValue,
+    watch: deliveryWatch,
   } = useForm({
     mode: "onChange"
   });
@@ -281,6 +292,19 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData }) =>
         setValue('postalCode', response.billing.postalCode)
         setValue('phone', response.billing.phone)
         setValue('email', response.emailAddress)
+        if (response.delivery) {
+          setDeliveryValue('shipFirstName', response.delivery.firstName)
+          setDeliveryValue('shipLastName', response.delivery.lastName)
+          setDeliveryValue('shipCompany', response.delivery.company)
+          setDeliveryValue('shipAddress', response.delivery.address)
+          setDeliveryValue('shipCountry', response.delivery.country)
+          setDeliveryValue('shipCity', response.delivery.city)
+          // setValue('stateProvince', response.billing.stateProvince)
+          setDeliveryValue('shipStateProvince', response.delivery.zone)
+          setDeliveryValue('shipPostalCode', response.delivery.postalCode)
+          setDeliveryValue('shipPhone', response.delivery.phone)
+          // setValue('email', response.emailAddress)
+        }
       }
       //   // setConfig(response)
     }
@@ -335,8 +359,203 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData }) =>
     }
 
   }
-  const onUpdateBilling = (data) => {
-    console.log(data)
+
+  const handleScriptLoad = () => {
+    // Declare Options For Autocomplete
+    const options = {
+      types: ['address'],
+    };
+    // console.log('fsdfsdfsdfdsf')
+    // Initialize Google Autocomplete
+    /*global google*/ // To disable any eslint 'google not defined' errors
+    let autocomplete = new google.maps.places.Autocomplete(
+      document.getElementById('autocomplete'),
+      options,
+    );
+    // console.log(autocomplete)
+    // Avoid paying for data that you don't need by restricting the set of
+    // place fields that are returned to just the address components and formatted
+    // address.
+    // this.autocomplete.setFields(['address_components', 'formatted_address']);
+
+    // Fire Event when a suggested name is selected
+    autocomplete.addListener('place_changed', () => {
+      let p = autocomplete.getPlace();
+      // console.log(p);
+      setValue('country', p.address_components.find(i => i.types.some(i => i === "country")).short_name)
+      getState(p.address_components.find(i => i.types.some(i => i === "country")).short_name)
+
+      let city = p.address_components.find(i => i.types.some(i => i === "locality"))
+      if (city !== undefined) {
+        setValue('city', city.short_name)
+      }
+      let pCode = p.address_components.find(i => i.types.some(i => i === "postal_code"))
+      if (pCode !== undefined) {
+        setValue('postalCode', pCode.long_name)
+      }
+
+      var componentForm = {
+        street_number: 'short_name',
+        route: 'long_name',
+        sublocality: 'sublocality'
+      };
+      let array = [];
+      for (var i = 0; i < p.address_components.length; i++) {
+        var addressType = p.address_components[i].types[0];
+        if (componentForm[addressType]) {
+          var val = p.address_components[i][componentForm[addressType]];
+          array.push(val);
+
+        }
+      }
+      setValue('address', array.toString())
+      setTimeout(() => {
+        setValue('stateProvince', p.address_components.find(i => i.types.some(i => i === "administrative_area_level_1")).short_name)
+      }, 2000);
+
+    });
+  }
+  const handleDeliveryScriptLoad = () => {
+    // Declare Options For Autocomplete
+    const options = {
+      types: ['address'],
+    };
+    // console.log('fsdfsdfsdfdsf')
+    // Initialize Google Autocomplete
+
+    let autocomplete = new google.maps.places.Autocomplete(
+      document.getElementById('autocomplete1'),
+      options,
+    );
+    // console.log(autocomplete)
+    // Avoid paying for data that you don't need by restricting the set of
+    // place fields that are returned to just the address components and formatted
+    // address.
+    // this.autocomplete.setFields(['address_components', 'formatted_address']);
+
+    // Fire Event when a suggested name is selected
+    autocomplete.addListener('place_changed', () => {
+      let p = autocomplete.getPlace();
+      console.log(p);
+      setDeliveryValue('shipCountry', p.address_components.find(i => i.types.some(i => i === "country")).short_name)
+      getState(p.address_components.find(i => i.types.some(i => i === "country")).short_name)
+
+      let city = p.address_components.find(i => i.types.some(i => i === "locality"))
+      if (city !== undefined) {
+        setDeliveryValue('shipCity', city.short_name)
+      }
+      let pCode = p.address_components.find(i => i.types.some(i => i === "postal_code"))
+      if (pCode !== undefined) {
+        setDeliveryValue('shipPostalCode', pCode.long_name)
+      }
+
+      var componentForm = {
+        street_number: 'short_name',
+        route: 'long_name',
+        sublocality: 'sublocality'
+      };
+      let array = [];
+      for (var i = 0; i < p.address_components.length; i++) {
+        var addressType = p.address_components[i].types[0];
+        if (componentForm[addressType]) {
+          var val = p.address_components[i][componentForm[addressType]];
+          array.push(val);
+
+        }
+      }
+      setDeliveryValue('shipAddress', array.toString())
+      setTimeout(() => {
+        setDeliveryValue('shipStateProvince', p.address_components.find(i => i.types.some(i => i === "administrative_area_level_1")).short_name)
+      }, 2000);
+    });
+  }
+
+  const onUpdateBilling = async (data) => {
+    // console.log(data)
+    setLoader(true)
+    try {
+      let action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.ADDRESS;
+      let param = {
+        "id": userData.id,
+        "billing": {
+          "company": data.company,
+          "address": data.address,
+          "city": data.city,
+          "postalCode": data.postalCode,
+          "stateProvince": data.stateProvince,
+          "country": data.country,
+          "zone": data.stateProvince,
+          "firstName": data.firstName,
+          "lastName": data.lastName,
+          "phone": data.phone
+        },
+        "delivery": {
+          "company": deliveryWatch('shipCompany'),
+          "address": deliveryWatch('shipAddress'),
+          "city": deliveryWatch('shipCity'),
+          "postalCode": deliveryWatch('shipPostalCode'),
+          "stateProvince": deliveryWatch('shipStateProvince'),
+          "country": deliveryWatch('shipCountry'),
+          "zone": deliveryWatch('shipStateProvince'),
+          "firstName": deliveryWatch('shipFirstName'),
+          "lastName": deliveryWatch('shipLastName'),
+          "phone": deliveryWatch('shipPhone')
+        }
+      }
+      // console.log(param);
+      let response = await WebService.patch(action, param);
+      if (response) {
+        // reset({})
+        addToast("Your billing address has been updated successfully.", { appearance: "success", autoDismiss: true });
+      }
+      setLoader(false)
+    } catch (error) {
+      addToast("Your billing address has been updated fail.", { appearance: "error", autoDismiss: true });
+      setLoader(false)
+    }
+  }
+  const onUpdateDelivery = async (data) => {
+    setLoader(true)
+    try {
+      let action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.ADDRESS;
+      let param = {
+        "id": userData.id,
+        "billing": {
+          "company": billingWatch('company'),
+          "address": billingWatch('address'),
+          "city": billingWatch('city'),
+          "postalCode": billingWatch('postalCode'),
+          "stateProvince": billingWatch('stateProvince'),
+          "country": billingWatch('country'),
+          "zone": billingWatch('stateProvince'),
+          "firstName": billingWatch('firstName'),
+          "lastName": billingWatch('lastName'),
+          "phone": billingWatch('phone')
+        },
+        "delivery": {
+          "company": data.shipCompany,
+          "address": data.shipAddress,
+          "city": data.shipCity,
+          "postalCode": data.shipPostalCode,
+          "stateProvince": data.shipStateProvince,
+          "country": data.shipCountry,
+          "zone": data.shipStateProvince,
+          "firstName": data.shipFirstName,
+          "lastName": data.shipLastName,
+          "phone": data.shipPhone
+        }
+      }
+      console.log(param);
+      let response = await WebService.patch(action, param);
+      if (response) {
+        // reset({})
+        addToast("Your delivery address has been updated successfully.", { appearance: "success", autoDismiss: true });
+      }
+      setLoader(false)
+    } catch (error) {
+      addToast("Your delivery address has been updated fail.", { appearance: "error", autoDismiss: true });
+      setLoader(false)
+    }
   }
   return (
     <Fragment>
@@ -401,11 +620,16 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData }) =>
                                 </div>
                                 <div className="col-lg-12">
                                   <div className="billing-info mb-20">
+                                    <Script
+                                      url={"https://maps.googleapis.com/maps/api/js?key=" + process.env.REACT_APP_MAP_API_KEY + "&libraries=places"}
+                                      onLoad={handleScriptLoad}
+                                    />
                                     <label>Street Address</label>
                                     <input
                                       className="billing-info"
                                       placeholder="House number and street name"
                                       type="text"
+                                      id="autocomplete"
                                       name={billingForm.address.name}
                                       ref={billingRef(billingForm.address.validate)}
                                     />
@@ -479,13 +703,13 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData }) =>
                                     {billingErr[billingForm.postalCode.name] && <p className="error-msg">{billingErr[billingForm.postalCode.name].message}</p>}
                                   </div>
                                 </div>
-                                <div className="col-lg-6 col-md-6">
+                                {/* <div className="col-lg-6 col-md-6">
                                   <div className="billing-info">
                                     <label>Email Address</label>
                                     <input type="email" name={billingForm.email.name} ref={billingRef(billingForm.email.validate)} />
                                     {billingErr[billingForm.email.name] && <p className="error-msg">{billingErr[billingForm.email.name].message}</p>}
                                   </div>
-                                </div>
+                                </div> */}
                                 <div className="col-lg-6 col-md-6">
                                   <div className="billing-info">
                                     <label>Telephone</label>
@@ -519,39 +743,44 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData }) =>
                               <h4>Delivery Information</h4>
                               {/* <h5>Your Personal Details</h5> */}
                             </div>
-                            <form onSubmit={billingSubmit(onUpdateBilling)}>
+                            <form onSubmit={deliverySubmit(onUpdateDelivery)}>
                               <div className="row">
                                 <div className="col-lg-6 col-md-6">
                                   <div className="billing-info">
                                     <label>First Name</label>
-                                    <input type="text" name={billingForm.shipFirstName.name} ref={billingRef(billingForm.shipFirstName.validate)} />
-                                    {billingErr[billingForm.shipFirstName.name] && <p className="error-msg">{billingErr[billingForm.shipFirstName.name].message}</p>}
+                                    <input type="text" name={billingForm.shipFirstName.name} ref={deliveryRef(billingForm.shipFirstName.validate)} />
+                                    {deliveryErr[billingForm.shipFirstName.name] && <p className="error-msg">{deliveryErr[billingForm.shipFirstName.name].message}</p>}
                                   </div>
                                 </div>
                                 <div className="col-lg-6 col-md-6">
                                   <div className="billing-info">
                                     <label>Last Name</label>
-                                    <input type="text" name={billingForm.shipLastName.name} ref={billingRef(billingForm.shipLastName.validate)} />
-                                    {billingErr[billingForm.shipLastName.name] && <p className="error-msg">{billingErr[billingForm.shipLastName.name].message}</p>}
+                                    <input type="text" name={billingForm.shipLastName.name} ref={deliveryRef(billingForm.shipLastName.validate)} />
+                                    {deliveryErr[billingForm.shipLastName.name] && <p className="error-msg">{deliveryErr[billingForm.shipLastName.name].message}</p>}
                                   </div>
                                 </div>
                                 <div className="col-lg-12">
                                   <div className="billing-info mb-20">
                                     <label>Company Name</label>
-                                    <input type="text" name={billingForm.shipCompany.name} ref={billingRef(billingForm.shipCompany.validate)} />
+                                    <input type="text" name={billingForm.shipCompany.name} ref={deliveryRef(billingForm.shipCompany.validate)} />
                                   </div>
                                 </div>
                                 <div className="col-lg-12">
                                   <div className="billing-info mb-20">
+                                    <Script
+                                      url={"https://maps.googleapis.com/maps/api/js?key=" + process.env.REACT_APP_MAP_API_KEY + "&libraries=places"}
+                                      onLoad={handleDeliveryScriptLoad}
+                                    />
                                     <label>Street Address</label>
                                     <input
                                       className="billing-info"
                                       placeholder="House number and street name"
                                       type="text"
+                                      id="autocomplete1"
                                       name={billingForm.shipAddress.name}
-                                      ref={billingRef(billingForm.shipAddress.validate)}
+                                      ref={deliveryRef(billingForm.shipAddress.validate)}
                                     />
-                                    {billingErr[billingForm.shipAddress.name] && <p className="error-msg">{billingErr[billingForm.shipAddress.name].message}</p>}
+                                    {deliveryErr[billingForm.shipAddress.name] && <p className="error-msg">{deliveryErr[billingForm.shipAddress.name].message}</p>}
                                   </div>
                                 </div>
                                 <div className="col-lg-6 col-md-6">
@@ -559,7 +788,7 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData }) =>
                                     <label>Country</label>
                                     <Controller
                                       name={billingForm.shipCountry.name}
-                                      control={control}
+                                      control={deliveryControl}
                                       rules={billingForm.shipCountry.validate}
                                       render={props => {
                                         return (
@@ -575,7 +804,7 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData }) =>
                                         )
                                       }}
                                     />
-                                    {billingErr[billingForm.shipCountry.name] && <p className="error-msg">{billingErr[billingForm.shipCountry.name].message}</p>}
+                                    {deliveryErr[billingForm.shipCountry.name] && <p className="error-msg">{deliveryErr[billingForm.shipCountry.name].message}</p>}
                                   </div>
                                 </div>
                                 <div className="col-lg-6 col-md-6">
@@ -585,7 +814,7 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData }) =>
                                       stateData && stateData.length > 0 ?
                                         <Controller
                                           name={billingForm.shipStateProvince.name}
-                                          control={control}
+                                          control={deliveryControl}
                                           rules={billingForm.shipStateProvince.validate}
                                           render={props => {
                                             return (
@@ -600,9 +829,9 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData }) =>
                                           }}
                                         />
                                         :
-                                        <input type="text" name={billingForm.shipStateProvince.name} ref={billingRef(billingForm.shipStateProvince.validate)} />
+                                        <input type="text" name={billingForm.shipStateProvince.name} ref={deliveryRef(billingForm.shipStateProvince.validate)} />
                                     }
-                                    {billingErr[billingForm.shipStateProvince.name] && <p className="error-msg">{billingErr[billingForm.shipStateProvince.name].message}</p>}
+                                    {deliveryErr[billingForm.shipStateProvince.name] && <p className="error-msg">{deliveryErr[billingForm.shipStateProvince.name].message}</p>}
 
                                     {/* <input type="text" /> */}
                                   </div>
@@ -610,29 +839,29 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData }) =>
                                 <div className="col-lg-6 col-md-6">
                                   <div className="billing-info mb-20">
                                     <label>Town / City</label>
-                                    <input type="text" name={billingForm.shipCity.name} ref={billingRef(billingForm.shipCity.validate)} />
-                                    {billingErr[billingForm.shipCity.name] && <p className="error-msg">{billingErr[billingForm.shipCity.name].message}</p>}
+                                    <input type="text" name={billingForm.shipCity.name} ref={deliveryRef(billingForm.shipCity.validate)} />
+                                    {deliveryErr[billingForm.shipCity.name] && <p className="error-msg">{deliveryErr[billingForm.shipCity.name].message}</p>}
                                   </div>
                                 </div>
                                 <div className="col-lg-6 col-md-6">
                                   <div className="billing-info mb-20">
                                     <label>Postcode / ZIP</label>
-                                    <input type="text" name={billingForm.shipPostalCode.name} ref={billingRef(billingForm.shipPostalCode.validate)} />
-                                    {billingErr[billingForm.shipPostalCode.name] && <p className="error-msg">{billingErr[billingForm.shipPostalCode.name].message}</p>}
+                                    <input type="text" name={billingForm.shipPostalCode.name} ref={deliveryRef(billingForm.shipPostalCode.validate)} />
+                                    {deliveryErr[billingForm.shipPostalCode.name] && <p className="error-msg">{deliveryErr[billingForm.shipPostalCode.name].message}</p>}
                                   </div>
                                 </div>
-                                <div className="col-lg-6 col-md-6">
+                                {/* <div className="col-lg-6 col-md-6">
                                   <div className="billing-info">
                                     <label>Email Address</label>
                                     <input type="email" name={billingForm.shipEmail.name} ref={billingRef(billingForm.shipEmail.validate)} />
                                     {billingErr[billingForm.shipEmail.name] && <p className="error-msg">{billingErr[billingForm.shipEmail.name].message}</p>}
                                   </div>
-                                </div>
+                                </div> */}
                                 <div className="col-lg-6 col-md-6">
                                   <div className="billing-info">
                                     <label>Telephone</label>
-                                    <input type="number" name={billingForm.shipPhone.name} ref={billingRef(billingForm.shipPhone.validate)} />
-                                    {billingErr[billingForm.shipPhone.name] && <p className="error-msg">{billingErr[billingForm.shipPhone.name].message}</p>}
+                                    <input type="number" name={billingForm.shipPhone.name} ref={deliveryRef(billingForm.shipPhone.validate)} />
+                                    {deliveryErr[billingForm.shipPhone.name] && <p className="error-msg">{deliveryErr[billingForm.shipPhone.name].message}</p>}
                                   </div>
                                 </div>
                               </div>
@@ -721,6 +950,7 @@ MyAccount.propTypes = {
 const mapStateToProps = (state) => {
   return {
     countryData: state.userData.country,
+    userData: state.userData.userData,
     // cartItems: state.cartData.cartItems,
     // currentLocation: state.userData.currentAddress,
     stateData: state.userData.state

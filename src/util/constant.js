@@ -28,7 +28,8 @@ const Constant = {
         CHECKOUT: 'checkout',
         PASSWORD: 'password/',
         CONTACT: 'contact/',
-        ORDERS: 'orders/'
+        ORDERS: 'orders/',
+        ADDRESS: 'address'
     }
 }
 

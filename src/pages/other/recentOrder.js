@@ -13,9 +13,11 @@ import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { isValidObject } from "../../util/helper";
 import { setLoader } from "../../redux/actions/loaderActions";
+import { setProductID } from "../../redux/actions/productActions";
 const RecentOrder = ({
   location,
-  setLoader
+  setLoader,
+  setProductID
   // cartItems,
   // currency,
   // addToCart,
@@ -44,6 +46,10 @@ const RecentOrder = ({
       setLoader(false)
       console.log(error, '------------')
     }
+  }
+  const onClickItem = (product) => {
+    console.log(product);
+    setProductID(product.id)
   }
   return (
     <Fragment>
@@ -94,7 +100,7 @@ const RecentOrder = ({
                                   return (
                                     <tr key={key}>
                                       <td className="product-thumbnail">
-                                        <Link to={"/product/" + orderItem.product.description.friendlyUrl}>
+                                        <Link onClick={() => onClickItem(orderItem.product)} to={"/product/" + orderItem.product.description.friendlyUrl}>
                                           <img
                                             style={{ width: 140 }}
                                             className="img-fluid"
@@ -105,7 +111,7 @@ const RecentOrder = ({
                                       </td>
 
                                       <td className="product-name">
-                                        <Link to={"/product/" + orderItem.product.description.friendlyUrl}>
+                                        <Link onClick={() => onClickItem(orderItem.product)} to={"/product/" + orderItem.product.description.friendlyUrl}>
                                           {orderItem.productName}
                                         </Link>
                                         <br />
@@ -183,6 +189,9 @@ const mapDispatchToProps = dispatch => {
   return {
     setLoader: (value) => {
       dispatch(setLoader(value));
+    },
+    setProductID: (value) => {
+      dispatch(setProductID(value));
     }
   };
 };

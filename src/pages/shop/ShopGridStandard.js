@@ -19,7 +19,7 @@ import { multilanguage } from "redux-multilanguage";
 import { setCategoryID } from "../../redux/actions/productActions";
 import ReactPaginate from 'react-paginate';
 
-const ShopGridStandard = ({ setCategoryID, strings, location, defaultStore, currentLanguageCode, categoryID, setLoader }) => {
+const ShopGridStandard = ({ setCategoryID, strings, location, defaultStore, currentLanguageCode, categoryID, setLoader, }) => {
     const [layout, setLayout] = useState('grid three-column');
     const history = useHistory();
     // const [sortType, setSortType] = useState('');
@@ -169,7 +169,7 @@ const ShopGridStandard = ({ setCategoryID, strings, location, defaultStore, curr
             </MetaTags>
 
             <BreadcrumbsItem to={process.env.PUBLIC_URL + '/'}>Home</BreadcrumbsItem>
-            {productDetails && productDetails.parent !== null && <BreadcrumbsItem to={"parent"}>{productDetails.parent.code}</BreadcrumbsItem>}
+            {productDetails && productDetails.parent !== null && <BreadcrumbsItem onClick={() => setCategoryID(productDetails.parent.id)} to={"/category/" + productDetails.parent.code}>{productDetails.parent.code}</BreadcrumbsItem>}
             <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>{productDetails && productDetails.description.name}</BreadcrumbsItem>
 
             <LayoutOne headerContainerClass="container-fluid"
