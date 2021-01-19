@@ -9,6 +9,7 @@ import { BreadcrumbsProvider } from "react-breadcrumbs-dynamic";
 
 import CookieConsent from "react-cookie-consent";
 import Loader from "./components/loader/loader"
+var sha512 = require('js-sha512').sha512;
 // home pages
 const HomeFashionSeven = lazy(() => import("./pages/home/HomeFashionSeven"));
 
@@ -43,6 +44,10 @@ const App = (props) => {
         }
       })
     );
+
+    // const has = sha512('TERMINALID: 1064398:ORDERID:3211:AMOUNT:DATETIME:10:19-1-2021:10:43:01:673');
+    const has = sha512('678002:300145858:325.56:15-3-2006:10:43:01:673:x4n35c32RT');
+    console.log(has)
   });
 
   return (
