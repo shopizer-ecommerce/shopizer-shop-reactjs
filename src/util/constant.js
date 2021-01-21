@@ -29,7 +29,9 @@ const Constant = {
         PASSWORD: 'password/',
         CONTACT: 'contact/',
         ORDERS: 'orders/',
-        ADDRESS: 'address'
+        ADDRESS: 'address',
+        RESET: 'reset/',
+        REQUEST: 'request/',
     }
 }
 

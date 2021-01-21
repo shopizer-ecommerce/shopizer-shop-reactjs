@@ -24,6 +24,8 @@ const Product = lazy(() => import("./pages/shop-product/Product"));
 const Contact = lazy(() => import("./pages/other/Contact"));
 const MyAccount = lazy(() => import("./pages/other/MyAccount"));
 const LoginRegister = lazy(() => import("./pages/other/LoginRegister"));
+const ForgotPassword = lazy(() => import("./pages/other/ForgotPassword"));
+const ResetPassword = lazy(() => import("./pages/other/ResetPassword"));
 
 const Cart = lazy(() => import("./pages/other/Cart"));
 const RecentOrder = lazy(() => import("./pages/other/recentOrder"));
@@ -45,8 +47,9 @@ const App = (props) => {
       })
     );
 
-    // const has = sha512('TERMINALID: 1064398:ORDERID:3211:AMOUNT:DATETIME:10:19-1-2021:10:43:01:673');
-    const has = sha512('678002:300145858:325.56:15-3-2006:10:43:01:673:x4n35c32RT');
+    let date = new Date();
+    console.log(date)
+    const has = sha512('1064398:001:10:22-01-2021:10:43:01:673:123456789G1');
     console.log(has)
   });
 
@@ -114,6 +117,14 @@ const App = (props) => {
                 <Route
                   path="/login"
                   component={LoginRegister}
+                />
+                <Route
+                  path="/forgot-password"
+                  component={ForgotPassword}
+                />
+                <Route
+                  path="/customer/:code/reset/:id"
+                  component={ResetPassword}
                 />
 
                 <Route
