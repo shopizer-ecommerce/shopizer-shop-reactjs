@@ -74,22 +74,22 @@ const OrderDetails = ({
                     <div className="container">
                         {isValidObject(orderDetails) ? (
                             <Fragment>
-                                <h3 className="cart-page-title" style={{ marginBottom: 60 }}>Your orders details</h3>
+                                <h3 className="cart-page-title" style={{ marginBottom: 60 }}>{strings["Your orders details"]}</h3>
                                 <div className="row">
                                     <div className="col-12" style={{ marginBottom: 30 }}>
                                         <div style={{ padding: 15 }}>
-                                            <span style={{ fontSize: 15 }}><b>Order No.</b> #{orderDetails.id}</span>
-                                            <span style={{ fontSize: 15, float: "right" }}><b>Order Date</b> {orderDetails.datePurchased}</span>
+                                            <span style={{ fontSize: 15 }}><b>{strings["Order No"]}</b> #{orderDetails.id}</span>
+                                            <span style={{ fontSize: 15, float: "right" }}><b>{strings["Order Date"]}</b> {orderDetails.datePurchased}</span>
                                         </div>
                                         <div className="table-content table-responsive cart-table-content order-details">
                                             <table>
                                                 <thead>
                                                     <tr>
-                                                        <th>Image</th>
-                                                        <th>Product Name</th>
-                                                        <th>Qty</th>
-                                                        <th>Unit Price</th>
-                                                        <th>Subtotal</th>
+                                                        <th>{strings["Image"]}</th>
+                                                        <th>{strings["Product Name"]}</th>
+                                                        <th>{strings["Qty"]}</th>
+                                                        <th>{strings["Unit Price"]}</th>
+                                                        <th>{strings["Subtotal"]}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -142,19 +142,19 @@ const OrderDetails = ({
 
                                     </div>
                                     <div className="col-7">
-                                        <h3 className="cart-page-title" style={{ marginBottom: 40 }}>Payment & Shipping details</h3>
+                                        <h3 className="cart-page-title" style={{ marginBottom: 40 }}>{strings["Payment & Shipping details"]}</h3>
                                         <div style={{ marginBottom: 20 }}>
-                                            <span><b >Payment Methods</b>{"    "} </span><span style={{ marginLeft: 20 }}>{orderDetails.paymentType}</span>
+                                            <span><b >{strings["Payment Methods"]}</b>{"    "} </span><span style={{ marginLeft: 20 }}>{orderDetails.paymentType}</span>
                                         </div>
                                         <div style={{ marginBottom: 20 }}>
-                                            <span><b>Order Status</b>{" "}</span><span style={{ marginLeft: 60 }}>{orderDetails.orderStatus}</span>
+                                            <span><b>{strings["Order Status"]}</b>{" "}</span><span style={{ marginLeft: 60 }}>{orderDetails.orderStatus}</span>
                                         </div>
                                         <div style={{ marginBottom: 20 }}>
-                                            <span><b >Billing Address</b>{" "}</span><span style={{ marginLeft: 44 }}>{orderDetails.billing.address},  {orderDetails.billing.city} {orderDetails.billing.zone} {orderDetails.billing.country}, {orderDetails.billing.postalCode}</span>
+                                            <span><b >{strings["Billing Address"]}</b>{" "}</span><span style={{ marginLeft: 44 }}>{orderDetails.billing.address},  {orderDetails.billing.city} {orderDetails.billing.zone} {orderDetails.billing.country}, {orderDetails.billing.postalCode}</span>
                                         </div>
                                         {orderDetails.shipping !== null &&
                                             <div style={{ marginBottom: 20 }}>
-                                                <span><b >Delivery Address</b>{" "}</span> <span style={{ marginLeft: 30 }}>{orderDetails.delivery.address},  {orderDetails.delivery.city} {orderDetails.delivery.zone} {orderDetails.delivery.country}, {orderDetails.delivery.postalCode}</span>
+                                                <span><b >{strings["Delivery Address"]}</b>{" "}</span> <span style={{ marginLeft: 30 }}>{orderDetails.delivery.address},  {orderDetails.delivery.city} {orderDetails.delivery.zone} {orderDetails.delivery.country}, {orderDetails.delivery.postalCode}</span>
                                             </div>
                                         }
                                     </div>
@@ -184,9 +184,9 @@ const OrderDetails = ({
                                                 <i className="pe-7s-shopbag"></i>
                                             </div>
                                             <div className="item-empty-area__text">
-                                                No items found  <br />{" "}
+                                                {strings["No items found"]} <br />{" "}
                                                 <Link to={"/"}>
-                                                    Shop Now
+                                                    {strings["Shop Now"]}
                                                 </Link>
                                             </div>
                                         </div>

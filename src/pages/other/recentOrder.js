@@ -14,7 +14,9 @@ import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { isValidObject } from "../../util/helper";
 import { setLoader } from "../../redux/actions/loaderActions";
 import { setProductID } from "../../redux/actions/productActions";
+import { multilanguage } from "redux-multilanguage";
 const RecentOrder = ({
+  strings,
   location,
   setLoader,
   setProductID
@@ -75,7 +77,7 @@ const RecentOrder = ({
           <div className="container">
             {isValidObject(orderData) && orderData.orders.length > 0 ? (
               <Fragment>
-                <h3 className="cart-page-title">Your orders items</h3>
+                <h3 className="cart-page-title">{strings["Your orders items"]}</h3>
                 <div className="row">
                   <div className="col-12">
                     <div className="table-content table-responsive cart-table-content">
@@ -87,11 +89,11 @@ const RecentOrder = ({
                             <table key={i}>
                               <thead>
                                 <tr className="order-header">
-                                  <th>Order Id :  {order.id}</th>
+                                  <th>{strings["Order Id"]} :  {order.id}</th>
                                   <th></th>
                                   <th></th>
                                   <th></th>
-                                  <th onClick={() => history.push("/order-details/" + order.id)}>View Details</th>
+                                  <th onClick={() => history.push("/order-details/" + order.id)}>{strings["View Details"]}</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -137,11 +139,11 @@ const RecentOrder = ({
                               </tbody>
                               <thead>
                                 <tr>
-                                  <th>Ordered on {order.datePurchased}</th>
+                                  <th>{strings["Ordered on"]} {order.datePurchased}</th>
                                   <th></th>
                                   <th></th>
                                   <th></th>
-                                  <th>Order Total :  US${order.totals[order.totals.length - 1].value}</th>
+                                  <th>{strings["Order Total"]} :  US${order.totals[order.totals.length - 1].value}</th>
                                 </tr>
                               </thead>
                             </table>
@@ -160,10 +162,10 @@ const RecentOrder = ({
                         <i className="pe-7s-shopbag"></i>
                       </div>
                       <div className="item-empty-area__text">
-                        No items found in recent order <br />{" "}
+                        {strings["No items found in recent order"]} <br />{" "}
                         <Link to={"/"}>
-                          Shop Now
-                      </Link>
+                          {strings["Shop Now"]}
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -196,4 +198,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RecentOrder);
+export default connect(mapStateToProps, mapDispatchToProps)(multilanguage(RecentOrder));

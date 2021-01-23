@@ -22,7 +22,7 @@ import {
   deleteAllFromCart
 } from "../../redux/actions/cartActions";
 import Script from 'react-load-script';
-
+import { multilanguage } from "redux-multilanguage";
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 const paymentForm = {
   firstName: {
@@ -236,7 +236,7 @@ const CARD_ELEMENT_OPTIONS = {
     }
   }
 };
-const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countryData, stateData, currentLocation, userData, setLoader, deleteAllFromCart }) => {
+const Checkout = ({ strings, location, cartID, defaultStore, getCountry, getState, countryData, stateData, currentLocation, userData, setLoader, deleteAllFromCart }) => {
   const { pathname } = location;
   const history = useHistory();
   const { addToast } = useToasts();
@@ -615,7 +615,7 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
 
               isValidObject(cartItems) && cartItems.products.length > 0 && !userData &&
               <div className="checkout-heading">
-                <Link to={"/login"}>Returning customer ? Click here to login</Link>
+                <Link to={"/login"}>{strings["Returning customer ? Click here to login"]}</Link>
               </div>
 
             }
@@ -626,40 +626,40 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
                 <div className="row">
                   <div className="col-lg-6">
                     <div className="billing-info-wrap">
-                      <h3>Billing Details</h3>
+                      <h3>{strings["Billing Details"]}</h3>
                       <div className="row">
 
                         <div className="col-lg-6 col-md-6">
                           <div className="billing-info mb-20">
-                            <label>First Name</label>
+                            <label>{strings["First Name"]}</label>
                             <input type="text" name={paymentForm.firstName.name} ref={register(paymentForm.firstName.validate)} />
                             {errors[paymentForm.firstName.name] && <p className="error-msg">{errors[paymentForm.firstName.name].message}</p>}
                           </div>
                         </div>
                         <div className="col-lg-6 col-md-6">
                           <div className="billing-info mb-20">
-                            <label>Last Name</label>
+                            <label>{strings["Last Name"]}</label>
                             <input type="text" name={paymentForm.lastName.name} ref={register(paymentForm.lastName.validate)} />
                             {errors[paymentForm.lastName.name] && <p className="error-msg">{errors[paymentForm.lastName.name].message}</p>}
                           </div>
                         </div>
                         <div className="col-lg-12">
                           <div className="billing-info mb-20">
-                            <label>Company Name</label>
+                            <label>{strings["Company Name"]}</label>
                             <input type="text" name={paymentForm.company.name} ref={register(paymentForm.company.validate)} />
                           </div>
                         </div>
 
                         <div className="col-lg-12">
                           <div className="billing-info mb-20">
-                            <label>Street Address</label>
+                            <label>{strings["Street Address"]}</label>
                             <Script
                               url={"https://maps.googleapis.com/maps/api/js?key=" + process.env.REACT_APP_MAP_API_KEY + "&libraries=places"}
                               onLoad={handleScriptLoad}
                             />
                             <input
                               className="billing-address"
-                              placeholder="House number and street name"
+                              placeholder={strings["House number and street name"]}
                               type="text"
                               id="autocomplete"
                               name={paymentForm.address.name}
@@ -671,7 +671,7 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
                         </div>
                         <div className="col-lg-12">
                           <div className="billing-select mb-20">
-                            <label>Country</label>
+                            <label>{strings["Country"]}</label>
 
                             <Controller
                               name={paymentForm.country.name}
@@ -681,7 +681,7 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
                                 return (
                                   // console.log(props) ||
                                   <select onChange={(e) => { props.onChange(e.target.value); getState(e.target.value); onChangeShipping() }} value={props.value}>
-                                    <option>Select a country</option>
+                                    <option>{strings["Select a country"]}</option>
                                     {
 
                                       countryData.map((data, i) => {
@@ -698,14 +698,14 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
                         </div>
                         <div className="col-lg-12">
                           <div className="billing-info mb-20">
-                            <label>Town / City</label>
+                            <label>{strings["Town/City"]}</label>
                             <input type="text" name={paymentForm.city.name} ref={register(paymentForm.city.validate)} />
                             {errors[paymentForm.city.name] && <p className="error-msg">{errors[paymentForm.city.name].message}</p>}
                           </div>
                         </div>
                         <div className="col-lg-6 col-md-6">
                           <div className="billing-select mb-20">
-                            <label>State</label>
+                            <label>{strings["State"]}</label>
                             {
                               stateData && stateData.length > 0 ?
                                 <Controller
@@ -715,7 +715,7 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
                                   render={props => {
                                     return (
                                       <select onChange={(e) => props.onChange(e.target.value)} value={props.value}>
-                                        <option>Select a state</option>
+                                        <option>{strings["Select a state"]}</option>
                                         {
                                           stateData.map((data, i) => {
                                             return <option key={i} value={data.code}>{data.name}</option>
@@ -733,7 +733,7 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
                         </div>
                         <div className="col-lg-6 col-md-6">
                           <div className="billing-info mb-20">
-                            <label>Postcode / ZIP</label>
+                            <label>{strings["Postcode"]}</label>
                             <input type="text" name={paymentForm.postalCode.name} ref={register(paymentForm.postalCode.validate)} onChange={() => {
 
                               clearTimeout(timer);
@@ -746,14 +746,14 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
                         </div>
                         <div className="col-lg-6 col-md-6">
                           <div className="billing-info mb-20">
-                            <label>Phone</label>
+                            <label>{strings["Phone"]}</label>
                             <input type="text" name={paymentForm.phone.name} ref={register(paymentForm.phone.validate)} />
                             {errors[paymentForm.phone.name] && <p className="error-msg">{errors[paymentForm.phone.name].message}</p>}
                           </div>
                         </div>
                         <div className="col-lg-6 col-md-6">
                           <div className="billing-info mb-20">
-                            <label>Email Address</label>
+                            <label>{strings["Email address"]}</label>
                             <input type="text" name={paymentForm.email.name} ref={register(paymentForm.email.validate)} />
                             {errors[paymentForm.email.name] && <p className="error-msg">{errors[paymentForm.email.name].message}</p>}
                           </div>
@@ -763,7 +763,7 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
                         !userData &&
                         <div className="login-toggle-btn">
                           <input type="checkbox" value={isAccount} onChange={() => setIsAccount(!isAccount)} />
-                          <label className="ml-10 mb-20">Create an account</label>
+                          <label className="ml-10 mb-20">{strings["Create an account"]}</label>
                         </div>
                       }
                       {
@@ -788,41 +788,41 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
                       }
                       <div className="login-toggle-btn">
                         <input type="checkbox" value={isShipping} onChange={onChangeShipAddress} />
-                        <label className="ml-10 mb-20">SHIP TO A DIFFERENT ADDRESS?</label>
+                        <label className="ml-10 mb-20">{strings["SHIP TO A DIFFERENT ADDRESS?"]}</label>
                       </div>
                       {
                         isShipping &&
                         <div className="billing-info-wrap">
-                          <h3>Shipping Details</h3>
+                          <h3>{strings["Shipping Details"]}</h3>
                           <div className="row">
 
                             <div className="col-lg-6 col-md-6">
                               <div className="billing-info mb-20">
-                                <label>First Name</label>
+                                <label>{strings["First Name"]}</label>
                                 <input type="text" name={paymentForm.shipFirstName.name} ref={register(paymentForm.shipFirstName.validate)} />
                                 {errors[paymentForm.shipFirstName.name] && <p className="error-msg">{errors[paymentForm.shipFirstName.name].message}</p>}
                               </div>
                             </div>
                             <div className="col-lg-6 col-md-6">
                               <div className="billing-info mb-20">
-                                <label>Last Name</label>
+                                <label>{strings["Last Name"]}</label>
                                 <input type="text" name={paymentForm.shipLastName.name} ref={register(paymentForm.shipLastName.validate)} />
                                 {errors[paymentForm.shipLastName.name] && <p className="error-msg">{errors[paymentForm.shipLastName.name].message}</p>}
                               </div>
                             </div>
                             <div className="col-lg-12">
                               <div className="billing-info mb-20">
-                                <label>Company Name</label>
+                                <label>{strings["Company Name"]}</label>
                                 <input type="text" name={paymentForm.shipCompany.name} ref={register(paymentForm.shipCompany.validate)} />
                               </div>
                             </div>
 
                             <div className="col-lg-12">
                               <div className="billing-info mb-20">
-                                <label>Street Address</label>
+                                <label>{strings["Street Address"]}</label>
                                 <input
                                   className="billing-address"
-                                  placeholder="House number and street name"
+                                  placeholder={strings["House number and street name"]}
                                   type="text"
                                   name={paymentForm.shipAddress.name}
                                   ref={register(paymentForm.shipAddress.validate)}
@@ -833,7 +833,7 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
                             </div>
                             <div className="col-lg-12">
                               <div className="billing-select mb-20">
-                                <label>Country</label>
+                                <label>{strings["Country"]}</label>
 
                                 <Controller
                                   name={paymentForm.shipCountry.name}
@@ -842,7 +842,7 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
                                   render={props => {
                                     return (
                                       <select onChange={(e) => { props.onChange(e.target.value); getState(e.target.value); onChangeShipping() }} value={props.value}>
-                                        <option>Select a country</option>
+                                        <option>{strings["Select a country"]}</option>
                                         {
 
                                           countryData.map((data, i) => {
@@ -859,14 +859,14 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
                             </div>
                             <div className="col-lg-12">
                               <div className="billing-info mb-20">
-                                <label>Town / City</label>
+                                <label>{strings["Town/City"]}</label>
                                 <input type="text" name={paymentForm.shipCity.name} ref={register(paymentForm.shipCity.validate)} />
                                 {errors[paymentForm.shipCity.name] && <p className="error-msg">{errors[paymentForm.shipCity.name].message}</p>}
                               </div>
                             </div>
                             <div className="col-lg-6 col-md-6">
                               <div className="billing-select mb-20">
-                                <label>State</label>
+                                <label>{strings["State"]}</label>
                                 {
                                   stateData && stateData.length > 0 ?
                                     <Controller
@@ -876,7 +876,7 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
                                       render={props => {
                                         return (
                                           <select onChange={(e) => props.onChange(e.target.value)} value={props.value}>
-                                            <option>Select a state</option>
+                                            <option>{strings["Select a state"]}</option>
                                             {
                                               stateData.map((data, i) => {
                                                 return <option key={i} value={data.code}>{data.name}</option>
@@ -894,7 +894,7 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
                             </div>
                             <div className="col-lg-6 col-md-6">
                               <div className="billing-info mb-20">
-                                <label>Postcode / ZIP</label>
+                                <label>{strings["Postcode"]}</label>
                                 <input type="text" name={paymentForm.shipPostalCode.name} ref={register(paymentForm.shipPostalCode.validate)} onChange={() => {
                                   clearTimeout(timer);
                                   setTimer(setTimeout(function () {
@@ -922,11 +922,11 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
                         </div>
                       }
                       <div className="additional-info-wrap">
-                        <h4>Additional information</h4>
+                        <h4>{strings["Additional information"]}</h4>
                         <div className="additional-info">
-                          <label>Order notes</label>
+                          <label>{strings["Order notes"]}</label>
                           <textarea
-                            placeholder="Notes about your order, e.g. special notes for delivery. "
+                            placeholder={strings["Notes about your order, e.g. special notes for delivery."]}
                             name="message"
                             defaultValue={""}
                           />
@@ -937,13 +937,13 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
 
                   <div className="col-lg-6">
                     <div className="your-order-area">
-                      <h3>Your order</h3>
+                      <h3>{strings["Your order"]}</h3>
                       <div className="your-order-wrap gray-bg-4">
                         <div className="your-order-product-info">
                           <div className="your-order-top">
                             <ul>
-                              <li>Product</li>
-                              <li>Total</li>
+                              <li>{strings["Product"]}</li>
+                              <li>{strings["Total"]}</li>
                             </ul>
                           </div>
                           <div className="your-order-middle">
@@ -1053,7 +1053,7 @@ const Checkout = ({ location, cartID, defaultStore, getCountry, getState, countr
                                 <div className="place-order mt-100">
                                   <div className="login-toggle-btn mb-20">
                                     <input type="checkbox" name={paymentForm.isAgree.name} ref={register(paymentForm.isAgree.validate)} />
-                                    <label className="ml-10 ">I agree with the terms and conditions</label>
+                                    <label className="ml-10 ">{strings["I agree with the terms and conditions"]}</label>
                                     {errors[paymentForm.isAgree.name] && <p className="error-msg">{errors[paymentForm.isAgree.name].message}</p>}
                                   </div>
                                   <button type="button" onClick={handleSubmit((d) => onSubmitOrder(d, elements, stripe))} className="btn-hover">Place Order</button>
@@ -1127,4 +1127,4 @@ const mapDispatchToProps = dispatch => {
     },
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Checkout);
+export default connect(mapStateToProps, mapDispatchToProps)(multilanguage(Checkout));

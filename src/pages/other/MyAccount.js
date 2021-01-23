@@ -14,6 +14,7 @@ import { useToasts } from "react-toast-notifications";
 import { connect } from "react-redux";
 import { getState } from "../../redux/actions/userAction";
 import Script from 'react-load-script';
+import { multilanguage } from "redux-multilanguage";
 const changePasswordForm = {
   userName: {
     name: "userName",
@@ -243,7 +244,7 @@ const billingForm = {
     }
   },
 }
-const MyAccount = ({ location, setLoader, getState, countryData, stateData, userData }) => {
+const MyAccount = ({ strings, location, setLoader, getState, countryData, stateData, userData }) => {
   const { pathname } = location;
   const { addToast } = useToasts();
   const { register, handleSubmit, errors, watch, setError, clearErrors, reset } = useForm({
@@ -585,7 +586,7 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData, user
                       <Card.Header className="panel-heading">
                         <Accordion.Toggle variant="link" eventKey="0">
                           <h3 className="panel-title">
-                            <span>1 .</span> Billing Address{" "}
+                            <span>1 .</span> {strings["Billing Address"]}{" "}
                           </h3>
                         </Accordion.Toggle>
                       </Card.Header>
@@ -593,28 +594,28 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData, user
                         <Card.Body>
                           <div className="myaccount-info-wrapper">
                             <div className="account-info-wrapper">
-                              <h4>Billing Information</h4>
+                              <h4>{strings["Billing Information"]}</h4>
                               {/* <h5>Your Personal Details</h5> */}
                             </div>
                             <form onSubmit={billingSubmit(onUpdateBilling)}>
                               <div className="row">
                                 <div className="col-lg-6 col-md-6">
                                   <div className="billing-info">
-                                    <label>First Name</label>
+                                    <label>{strings["First Name"]}</label>
                                     <input type="text" name={billingForm.firstName.name} ref={billingRef(billingForm.firstName.validate)} />
                                     {billingErr[billingForm.firstName.name] && <p className="error-msg">{billingErr[billingForm.firstName.name].message}</p>}
                                   </div>
                                 </div>
                                 <div className="col-lg-6 col-md-6">
                                   <div className="billing-info">
-                                    <label>Last Name</label>
+                                    <label>{strings["Last Name"]}</label>
                                     <input type="text" name={billingForm.lastName.name} ref={billingRef(billingForm.lastName.validate)} />
                                     {billingErr[billingForm.lastName.name] && <p className="error-msg">{billingErr[billingForm.lastName.name].message}</p>}
                                   </div>
                                 </div>
                                 <div className="col-lg-12">
                                   <div className="billing-info mb-20">
-                                    <label>Company Name</label>
+                                    <label>{strings["Company Name"]}</label>
                                     <input type="text" name={billingForm.company.name} ref={billingRef(billingForm.company.validate)} />
                                   </div>
                                 </div>
@@ -624,10 +625,10 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData, user
                                       url={"https://maps.googleapis.com/maps/api/js?key=" + process.env.REACT_APP_MAP_API_KEY + "&libraries=places"}
                                       onLoad={handleScriptLoad}
                                     />
-                                    <label>Street Address</label>
+                                    <label>{strings["Street Address"]}</label>
                                     <input
                                       className="billing-info"
-                                      placeholder="House number and street name"
+                                      placeholder={strings["House number and street name"]}
                                       type="text"
                                       id="autocomplete"
                                       name={billingForm.address.name}
@@ -638,7 +639,7 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData, user
                                 </div>
                                 <div className="col-lg-6 col-md-6">
                                   <div className="billing-info mb-20">
-                                    <label>Country</label>
+                                    <label>{strings["Country"]}</label>
                                     <Controller
                                       name={billingForm.country.name}
                                       control={control}
@@ -646,7 +647,7 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData, user
                                       render={props => {
                                         return (
                                           <select onChange={(e) => { props.onChange(e.target.value); getState(e.target.value); }} value={props.value}>
-                                            <option>Select a country</option>
+                                            <option>{strings["Select a country"]}</option>
                                             {
 
                                               countryData.map((data, i) => {
@@ -662,7 +663,7 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData, user
                                 </div>
                                 <div className="col-lg-6 col-md-6">
                                   <div className="billing-info mb-20">
-                                    <label>State</label>
+                                    <label>{strings["State"]}</label>
                                     {
                                       stateData && stateData.length > 0 ?
                                         <Controller
@@ -672,7 +673,7 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData, user
                                           render={props => {
                                             return (
                                               <select onChange={(e) => props.onChange(e.target.value)} value={props.value}>
-                                                <option>Select a state</option>
+                                                <option>{strings["Select a state"]}</option>
                                                 {
                                                   stateData.map((data, i) => {
                                                     return <option key={i} value={data.code}>{data.name}</option>
@@ -691,14 +692,14 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData, user
                                 </div>
                                 <div className="col-lg-6 col-md-6">
                                   <div className="billing-info mb-20">
-                                    <label>Town / City</label>
+                                    <label>{strings["Town/City"]}</label>
                                     <input type="text" name={billingForm.city.name} ref={billingRef(billingForm.city.validate)} />
                                     {billingErr[billingForm.city.name] && <p className="error-msg">{billingErr[billingForm.city.name].message}</p>}
                                   </div>
                                 </div>
                                 <div className="col-lg-6 col-md-6">
                                   <div className="billing-info mb-20">
-                                    <label>Postcode / ZIP</label>
+                                    <label>{strings["Postcode"]}</label>
                                     <input type="text" name={billingForm.postalCode.name} ref={billingRef(billingForm.postalCode.validate)} />
                                     {billingErr[billingForm.postalCode.name] && <p className="error-msg">{billingErr[billingForm.postalCode.name].message}</p>}
                                   </div>
@@ -712,7 +713,7 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData, user
                                 </div> */}
                                 <div className="col-lg-6 col-md-6">
                                   <div className="billing-info">
-                                    <label>Telephone</label>
+                                    <label>{strings["Phone"]}</label>
                                     <input type="number" name={billingForm.phone.name} ref={billingRef(billingForm.phone.validate)} />
                                     {billingErr[billingForm.phone.name] && <p className="error-msg">{billingErr[billingForm.phone.name].message}</p>}
                                   </div>
@@ -720,7 +721,7 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData, user
                               </div>
                               <div className="billing-back-btn">
                                 <div className="billing-btn">
-                                  <button type="submit">Continue</button>
+                                  <button type="submit">{strings["Continue"]}</button>
                                 </div>
                               </div>
                             </form>
@@ -732,7 +733,7 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData, user
                       <Card.Header className="panel-heading">
                         <Accordion.Toggle variant="link" eventKey="1">
                           <h3 className="panel-title">
-                            <span>2 .</span> Delivery Address{" "}
+                            <span>2 .</span> {strings["Delivery Address"]}{" "}
                           </h3>
                         </Accordion.Toggle>
                       </Card.Header>
@@ -740,28 +741,28 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData, user
                         <Card.Body>
                           <div className="myaccount-info-wrapper">
                             <div className="account-info-wrapper">
-                              <h4>Delivery Information</h4>
+                              <h4>{strings["Delivery Information"]}</h4>
                               {/* <h5>Your Personal Details</h5> */}
                             </div>
                             <form onSubmit={deliverySubmit(onUpdateDelivery)}>
                               <div className="row">
                                 <div className="col-lg-6 col-md-6">
                                   <div className="billing-info">
-                                    <label>First Name</label>
+                                    <label>{strings["First Name"]}</label>
                                     <input type="text" name={billingForm.shipFirstName.name} ref={deliveryRef(billingForm.shipFirstName.validate)} />
                                     {deliveryErr[billingForm.shipFirstName.name] && <p className="error-msg">{deliveryErr[billingForm.shipFirstName.name].message}</p>}
                                   </div>
                                 </div>
                                 <div className="col-lg-6 col-md-6">
                                   <div className="billing-info">
-                                    <label>Last Name</label>
+                                    <label>{strings["Last Name"]}</label>
                                     <input type="text" name={billingForm.shipLastName.name} ref={deliveryRef(billingForm.shipLastName.validate)} />
                                     {deliveryErr[billingForm.shipLastName.name] && <p className="error-msg">{deliveryErr[billingForm.shipLastName.name].message}</p>}
                                   </div>
                                 </div>
                                 <div className="col-lg-12">
                                   <div className="billing-info mb-20">
-                                    <label>Company Name</label>
+                                    <label>{strings["Company Name"]}</label>
                                     <input type="text" name={billingForm.shipCompany.name} ref={deliveryRef(billingForm.shipCompany.validate)} />
                                   </div>
                                 </div>
@@ -771,7 +772,7 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData, user
                                       url={"https://maps.googleapis.com/maps/api/js?key=" + process.env.REACT_APP_MAP_API_KEY + "&libraries=places"}
                                       onLoad={handleDeliveryScriptLoad}
                                     />
-                                    <label>Street Address</label>
+                                    <label>{strings["Street Address"]}</label>
                                     <input
                                       className="billing-info"
                                       placeholder="House number and street name"
@@ -785,7 +786,7 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData, user
                                 </div>
                                 <div className="col-lg-6 col-md-6">
                                   <div className="billing-info mb-20">
-                                    <label>Country</label>
+                                    <label>{strings["Country"]}</label>
                                     <Controller
                                       name={billingForm.shipCountry.name}
                                       control={deliveryControl}
@@ -793,7 +794,7 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData, user
                                       render={props => {
                                         return (
                                           <select onChange={(e) => { props.onChange(e.target.value); getState(e.target.value); }} value={props.value}>
-                                            <option>Select a country</option>
+                                            <option>{strings["Select a country"]}</option>
                                             {
 
                                               countryData.map((data, i) => {
@@ -809,7 +810,7 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData, user
                                 </div>
                                 <div className="col-lg-6 col-md-6">
                                   <div className="billing-info mb-20">
-                                    <label>State</label>
+                                    <label>{strings["State"]}</label>
                                     {
                                       stateData && stateData.length > 0 ?
                                         <Controller
@@ -819,7 +820,7 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData, user
                                           render={props => {
                                             return (
                                               <select onChange={(e) => props.onChange(e.target.value)} value={props.value}>
-                                                <option>Select a state</option>
+                                                <option>{strings["Select a state"]}</option>
                                                 {
                                                   stateData.map((data, i) => {
                                                     return <option key={i} value={data.code}>{data.name}</option>
@@ -838,14 +839,14 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData, user
                                 </div>
                                 <div className="col-lg-6 col-md-6">
                                   <div className="billing-info mb-20">
-                                    <label>Town / City</label>
+                                    <label>{strings["Town/City"]}</label>
                                     <input type="text" name={billingForm.shipCity.name} ref={deliveryRef(billingForm.shipCity.validate)} />
                                     {deliveryErr[billingForm.shipCity.name] && <p className="error-msg">{deliveryErr[billingForm.shipCity.name].message}</p>}
                                   </div>
                                 </div>
                                 <div className="col-lg-6 col-md-6">
                                   <div className="billing-info mb-20">
-                                    <label>Postcode / ZIP</label>
+                                    <label>{strings["Postcode"]}</label>
                                     <input type="text" name={billingForm.shipPostalCode.name} ref={deliveryRef(billingForm.shipPostalCode.validate)} />
                                     {deliveryErr[billingForm.shipPostalCode.name] && <p className="error-msg">{deliveryErr[billingForm.shipPostalCode.name].message}</p>}
                                   </div>
@@ -859,7 +860,7 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData, user
                                 </div> */}
                                 <div className="col-lg-6 col-md-6">
                                   <div className="billing-info">
-                                    <label>Telephone</label>
+                                    <label>{strings["Phone"]}</label>
                                     <input type="number" name={billingForm.shipPhone.name} ref={deliveryRef(billingForm.shipPhone.validate)} />
                                     {deliveryErr[billingForm.shipPhone.name] && <p className="error-msg">{deliveryErr[billingForm.shipPhone.name].message}</p>}
                                   </div>
@@ -867,7 +868,7 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData, user
                               </div>
                               <div className="billing-back-btn">
                                 <div className="billing-btn">
-                                  <button type="submit">Continue</button>
+                                  <button type="submit">{strings["Continue"]}</button>
                                 </div>
                               </div>
                             </form>
@@ -879,7 +880,7 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData, user
                       <Card.Header className="panel-heading">
                         <Accordion.Toggle variant="link" eventKey="2">
                           <h3 className="panel-title">
-                            <span>3 .</span> Change your password
+                            <span>3 .</span> {strings["Change your password"]}
                           </h3>
                         </Accordion.Toggle>
                       </Card.Header>
@@ -887,20 +888,20 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData, user
                         <Card.Body>
                           <div className="myaccount-info-wrapper">
                             <div className="account-info-wrapper">
-                              <h4>Change Password</h4>
+                              <h4>{strings["Change Password"]}</h4>
                             </div>
                             <form onSubmit={handleSubmit(onChangePassword)}>
                               <div className="row">
                                 <div className="col-lg-12 col-md-12">
                                   <div className="billing-info">
-                                    <label>User Name</label>
+                                    <label>{strings["User Name"]}</label>
                                     <input type="text" name={changePasswordForm.userName.name} ref={register(changePasswordForm.userName.validate)} />
                                     {errors[changePasswordForm.userName.name] && <p className="error-msg">{errors[changePasswordForm.userName.name].message}</p>}
                                   </div>
                                 </div>
                                 <div className="col-lg-12 col-md-12">
                                   <div className="billing-info">
-                                    <label>Current Password</label>
+                                    <label>{strings["Current Password"]}</label>
                                     <input type="password" name={changePasswordForm.currentPassword.name} ref={register(changePasswordForm.currentPassword.validate)} />
                                     {errors[changePasswordForm.currentPassword.name] && <p className="error-msg">{errors[changePasswordForm.currentPassword.name].message}</p>}
 
@@ -908,14 +909,14 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData, user
                                 </div>
                                 <div className="col-lg-12 col-md-12">
                                   <div className="billing-info">
-                                    <label>Password</label>
+                                    <label>{strings["Password"]}</label>
                                     <input type="password" onChange={(e) => onPasswordChange(e)} name={changePasswordForm.password.name} ref={register(changePasswordForm.password.validate)} />
                                     {errors[changePasswordForm.password.name] && <p className="error-msg">{errors[changePasswordForm.password.name].message}</p>}
                                   </div>
                                 </div>
                                 <div className="col-lg-12 col-md-12">
                                   <div className="billing-info">
-                                    <label>Repeat Password</label>
+                                    <label>{strings["Repeat Password"]}Repeat Password</label>
                                     <input type="password" onChange={(e) => onConfirmPassword(e)} name={changePasswordForm.repeatPassword.name} ref={register(changePasswordForm.repeatPassword.validate)} />
                                     {errors[changePasswordForm.repeatPassword.name] && <p className="error-msg">{errors[changePasswordForm.repeatPassword.name].message}</p>}
                                   </div>
@@ -924,7 +925,7 @@ const MyAccount = ({ location, setLoader, getState, countryData, stateData, user
 
                               <div className="billing-back-btn">
                                 <div className="billing-btn">
-                                  <button type="submit">Continue</button>
+                                  <button type="submit">{strings["Continue"]}</button>
                                 </div>
                               </div>
                             </form>
@@ -969,6 +970,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(MyAccount);
+export default connect(mapStateToProps, mapDispatchToProps)(multilanguage(MyAccount));
 
 // export default MyAccount;

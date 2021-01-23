@@ -347,7 +347,7 @@ const LoginRegister = ({ strings, props, location, setLoader, setUser, getCart, 
                                   render={props => {
                                     return (
                                       <select onChange={(e) => { props.onChange(e.target.value); getState(e.target.value) }} value={props.value}>
-                                        <option>Select a country</option>
+                                        <option>{strings["Select a country"]}</option>
                                         {
 
                                           countryData.map((data, i) => {
@@ -370,7 +370,7 @@ const LoginRegister = ({ strings, props, location, setLoader, setUser, getCart, 
                                       render={props => {
                                         return (
                                           <select onChange={(e) => { props.onChange(e.target.value) }} value={props.value}>
-                                            <option>Select a state</option>
+                                            <option>{strings["Select a state"]}</option>
                                             {
                                               stateData.map((data, i) => {
                                                 return <option key={i} value={data.code}>{data.name}</option>

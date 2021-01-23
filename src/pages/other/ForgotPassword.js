@@ -85,7 +85,7 @@ const ForgotPassword = ({ strings, props, location, setLoader, defaultStore }) =
                                         <Nav variant="pills" className="login-register-tab-list">
                                             <Nav.Item>
                                                 <Nav.Link eventKey="forgot-password">
-                                                    <h4>Forgot Password</h4>
+                                                    <h4>{strings["Forgot Password"]}</h4>
                                                 </Nav.Link>
                                             </Nav.Item>
                                         </Nav>
@@ -94,7 +94,7 @@ const ForgotPassword = ({ strings, props, location, setLoader, defaultStore }) =
                                                 <div className="login-form-container">
                                                     <div className="login-register-form">
                                                         <form onSubmit={handleSubmit(onSubmit)} >
-                                                            <p>Lost your password? Please enter your username or email address. You will receive a link to create a new password via email.</p>
+                                                            <p>{strings["Forgot Password Note"]}</p>
                                                             <div className="login-input">
                                                                 <input
                                                                     type="text"
@@ -110,11 +110,11 @@ const ForgotPassword = ({ strings, props, location, setLoader, defaultStore }) =
                                                                     {/* <input type="checkbox" /> */}
                                                                     <label className="ml-30"></label>
                                                                     <Link to={"/login"}>
-                                                                        Go to login
+                                                                        {strings["Go to login"]}
                                                                     </Link>
                                                                 </div>
                                                                 <button type="submit">
-                                                                    <span>Reset Password</span>
+                                                                    <span>{strings["Reset Password"]}</span>
                                                                 </button>
                                                             </div>
                                                         </form>

@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React, { Fragment, useEffect, useState } from "react";
 import MetaTags from "react-meta-tags";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
@@ -45,8 +45,8 @@ const resetForm = {
 const ResetPassword = ({ strings, props, location, setLoader, defaultStore, storeCode, resetID }) => {
     // const { pathname } = location;
     const { addToast } = useToasts();
-    // const history = useHistory();
-    const [isValid, setIsValid] = useState(false);
+    const history = useHistory();
+    const [isValid, setIsValid] = useState(true);
     const { register, handleSubmit, errors, watch, setError, clearErrors, reset } = useForm({
         mode: "onChange",
         defaultValues: { password: "", repeatPassword: "" },
@@ -109,6 +109,7 @@ const ResetPassword = ({ strings, props, location, setLoader, defaultStore, stor
             let response = await WebService.post(action, param);
             // if (response) {
             reset({})
+            history.push('/login')
             addToast("You have successfully reset your password. you can now login as usual with your email address and your new password.", { appearance: "success", autoDismiss: true });
             // }
             setLoader(false)
@@ -147,7 +148,7 @@ const ResetPassword = ({ strings, props, location, setLoader, defaultStore, stor
                                             <Nav variant="pills" className="login-register-tab-list">
                                                 <Nav.Item>
                                                     <Nav.Link eventKey="forgot-password">
-                                                        <h4>Reset Password</h4>
+                                                        <h4>{strings["Reset Password"]}</h4>
                                                     </Nav.Link>
                                                 </Nav.Item>
                                             </Nav>
@@ -156,7 +157,7 @@ const ResetPassword = ({ strings, props, location, setLoader, defaultStore, stor
                                                     <div className="login-form-container">
                                                         <div className="login-register-form">
                                                             <form onSubmit={handleSubmit(onSubmit)} >
-                                                                <p>Your new password must be diffrent from previous used passwords.</p>
+                                                                <p>{strings["Reset Password Note"]}</p>
                                                                 <div className="login-input">
                                                                     <input type="password" name={resetForm.password.name} ref={register(resetForm.password.validate)} placeholder={strings["Password"]} onChange={(e) => onPasswordChange(e)} />
                                                                     {errors[resetForm.password.name] && <p className="error-msg">{errors[resetForm.password.name].message}</p>}
@@ -176,7 +177,7 @@ const ResetPassword = ({ strings, props, location, setLoader, defaultStore, stor
                                                                     </Link> */}
                                                                     </div>
                                                                     <button type="submit">
-                                                                        <span>Update Password</span>
+                                                                        <span>{strings["Update Password"]}</span>
                                                                     </button>
                                                                 </div>
                                                             </form>
@@ -201,14 +202,14 @@ const ResetPassword = ({ strings, props, location, setLoader, defaultStore, stor
                                 <div className="col-xl-7 col-lg-8 text-center">
                                     <div className="error">
                                         <h1>400</h1>
-                                        <h2>Your reset password link is invalid.</h2>
+                                        <h2>{strings["Link Invalid"]}</h2>
                                         <p>
-                                            To reset your password, return to the login page and select "Forgot Password" to send a new email
+                                            {strings["To Your Reset Password"]}
                                         </p>
 
                                         <Link to={"/login"} className="error-btn">
-                                            Back to login page
-                                    </Link>
+                                            {strings["Back to login page"]}
+                                        </Link>
                                     </div>
                                 </div>
                             </div>

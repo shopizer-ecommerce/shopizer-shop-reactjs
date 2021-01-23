@@ -11,7 +11,7 @@ import WebService from '../../util/webService';
 import constant from '../../util/constant';
 import { setLoader } from "../../redux/actions/loaderActions";
 import { useToasts } from "react-toast-notifications";
-
+import { multilanguage } from "redux-multilanguage";
 const contactForm = {
   email: {
     name: "email",
@@ -54,7 +54,7 @@ const contactForm = {
     }
   }
 };
-const Contact = ({ location, merchant, setLoader }) => {
+const Contact = ({ strings, location, merchant, setLoader }) => {
   const { pathname } = location;
   const { addToast } = useToasts();
   const { register, handleSubmit, errors, reset } = useForm({
@@ -175,21 +175,21 @@ const Contact = ({ location, merchant, setLoader }) => {
               <div className="col-lg-8 col-md-7">
                 <div className="contact-form">
                   <div className="contact-title mb-30">
-                    <h2>Get In Touch</h2>
+                    <h2>{strings["Get In Touch"]}</h2>
                   </div>
                   <form className="contact-form-style" onSubmit={handleSubmit(onSubmitContactForm)}>
                     <div className="row">
                       <div className="col-lg-6">
-                        <input type="text" name={contactForm.username.name} ref={register(contactForm.username.validate)} placeholder="Name" />
+                        <input type="text" name={contactForm.username.name} ref={register(contactForm.username.validate)} placeholder={strings["Name"]} />
                         {errors[contactForm.username.name] && <p className="error-msg">{errors[contactForm.username.name].message}</p>}
                       </div>
                       <div className="col-lg-6">
-                        <input name={contactForm.email.name} ref={register(contactForm.email.validate)} placeholder="Email" type="email" />
+                        <input name={contactForm.email.name} ref={register(contactForm.email.validate)} placeholder={strings["Email address"]} type="email" />
                         {errors[contactForm.email.name] && <p className="error-msg">{errors[contactForm.email.name].message}</p>}
                       </div>
                       <div className="col-lg-12">
                         <input
-                          placeholder="Subject"
+                          placeholder={strings["Subject"]}
                           type="text"
                           name={contactForm.subject.name}
                           ref={register(contactForm.subject.validate)}
@@ -198,13 +198,13 @@ const Contact = ({ location, merchant, setLoader }) => {
                       </div>
                       <div className="col-lg-12">
                         <textarea
-                          placeholder="Your Message"
+                          placeholder={strings["Your Message"]}
                           name={contactForm.comment.name}
                           ref={register(contactForm.comment.validate)}
                         />
                         {errors[contactForm.comment.name] && <p className="error-msg">{errors[contactForm.comment.name].message}</p>}
                         <button type="submit" className="submit" >
-                          SEND
+                          {strings["Send"]}
                         </button>
                       </div>
                     </div>
@@ -236,5 +236,5 @@ const mapDispatchToProps = dispatch => {
     }
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Contact);
+export default connect(mapStateToProps, mapDispatchToProps)(multilanguage(Contact));
 // export default Contact;
