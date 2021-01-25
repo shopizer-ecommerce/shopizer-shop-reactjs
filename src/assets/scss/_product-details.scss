@@ -218,7 +218,9 @@
 .single-review {
   display: flex;
 
-  margin: 0 0 50px;
+  // margin: 0 0 50px;
+  margin: 0 0 23px;
+  border-bottom: 1px dotted grey;
 
   @media #{$xs-layout} {
     display: block;
@@ -343,11 +345,13 @@
 
   .review-bottom {
     width: 550px;
+
   }
 
   .review-bottom p {
     width: 93%;
     margin: 0;
+    margin-bottom: 21px;
   }
 }
 

@@ -9,7 +9,7 @@ import { BreadcrumbsProvider } from "react-breadcrumbs-dynamic";
 
 import CookieConsent from "react-cookie-consent";
 import Loader from "./components/loader/loader"
-var sha512 = require('js-sha512').sha512;
+// var sha512 = require('js-sha512').sha512;
 // home pages
 const HomeFashionSeven = lazy(() => import("./pages/home/HomeFashionSeven"));
 
@@ -47,10 +47,10 @@ const App = (props) => {
       })
     );
 
-    let date = new Date();
-    console.log(date)
-    const has = sha512('1064398:001:USD:10.00:22-01-2021:10:43:01:200:123456789G1');
-    console.log(has)
+    // let date = new Date();
+    // console.log(date)
+    // const has = sha512('1064398:8756321480:10.00:22-01-2021:10:43:01:200:123456789G1');
+    // console.log(has)
   });
 
   return (

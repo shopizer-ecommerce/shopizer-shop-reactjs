@@ -11,10 +11,7 @@ import { useForm } from "react-hook-form";
 import { useToasts } from "react-toast-notifications";
 import WebService from '../../util/webService';
 import constant from '../../util/constant';
-// import { setLocalData, isValidObject } from '../../util/helper';
 import { setLoader } from "../../redux/actions/loaderActions";
-// import { setUser, getCountry, getState } from "../../redux/actions/userAction";
-// import { addToCart, getCart } from "../../redux/actions/cartActions";
 import { connect } from "react-redux";
 import { multilanguage } from "redux-multilanguage";
 const forgotForm = {

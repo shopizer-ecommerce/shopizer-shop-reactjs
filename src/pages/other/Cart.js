@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { multilanguage } from "redux-multilanguage";
 import { Link } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
@@ -20,7 +20,8 @@ import {
 } from "../../redux/actions/cartActions";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
-
+import constant from '../../util/constant';
+import WebService from '../../util/webService';
 
 const quoteForm = {
 
@@ -71,9 +72,9 @@ const Cart = ({
   const { pathname } = location;
   const cartTotalPrice = cartItems.displaySubTotal;
   const grandTotalPrice = cartItems.displaySubTotal;
-  const { register, handleSubmit, control, formState } = useForm({ mode: 'onChange' });
+  const { register, handleSubmit, control, formState, errors } = useForm({ mode: 'onChange' });
 
-
+  const [shippingOptions, setShippingOptions] = useState();
   const deleteAllFromCart = () => {
     // console.log(cartItems);
     cartItems.products.forEach((value) => {
@@ -81,8 +82,18 @@ const Cart = ({
     });
 
   }
-  const getQuote = () => {
-
+  const getQuote = async (data) => {
+    let action = constant.ACTION.CART + cartItems.code + '/' + constant.ACTION.SHIPPING;
+    let param = {};
+    param = { 'postalCode': data.postalCode, 'countryCode': data.country }
+    try {
+      let response = await WebService.post(action, param);
+      console.log(response.shippingOptions);
+      if (response) {
+        setShippingOptions(response.shippingOptions)
+      }
+    } catch (error) {
+    }
   }
   return (
     <Fragment>
@@ -187,13 +198,14 @@ const Cart = ({
                 <div className="row">
                   <div className="col-lg-12">
                     <div className="cart-shiping-update-wrapper">
-                      <div className="cart-shiping-update">
-                        <Link to="/">{strings["Continue Shopping"]} </Link>
-                      </div>
+
                       <div className="cart-clear">
                         <button onClick={() => deleteAllFromCart()}>
                           {strings["Clear Shopping Cart"]}
                         </button>
+                      </div>
+                      <div className="cart-shiping-update">
+                        <Link to="/">{strings["Continue Shopping"]} </Link>
                       </div>
                     </div>
                   </div>
@@ -232,6 +244,7 @@ const Cart = ({
                                   )
                                 }}
                               />
+                              {errors[quoteForm.country.name] && <p className="error-msg">{errors[quoteForm.country.name].message}</p>}
                             </div>
                             <div className="tax-select">
                               {/* <label>Region / State</label> */}
@@ -256,12 +269,14 @@ const Cart = ({
                                   :
                                   <input type="text" name={quoteForm.stateProvince.name} ref={register(quoteForm.stateProvince.validate)} placeholder={strings["State"]} />
                               }
+                              {errors[quoteForm.stateProvince.name] && <p className="error-msg">{errors[quoteForm.stateProvince.name].message}</p>}
                             </div>
                             <div className="tax-select">
                               {/* <label>Postal Code</label> */}
                               <input type="text" name={quoteForm.postalCode.name} ref={register(quoteForm.postalCode.validate)} placeholder={strings["Postcode"]} />
+                              {errors[quoteForm.postalCode.name] && <p className="error-msg">{errors[quoteForm.postalCode.name].message}</p>}
                             </div>
-                            <button className="cart-btn-2" type="submit" disabled={!formState.isValid}>
+                            <button className="cart-btn-2" type="submit" >
                               {strings["Get A Quote"]}
                             </button>
                           </form>
@@ -287,6 +302,26 @@ const Cart = ({
                         </form>
                       </div>
                     </div>
+                    {
+                      shippingOptions &&
+                      <div className="grand-totall" style={{ marginTop: 30 }}>
+                        <div className="title-wrap">
+                          <h4 className="cart-bottom-title section-bg-gary-cart">
+                            {"Shipping and tax"}
+                          </h4>
+                        </div>
+                        {
+                          shippingOptions.map((value, i) => {
+                            return (<h5>
+                              {value.optionName}{" "}
+                              <span>
+                                {value.optionPriceText}
+                              </span>
+                            </h5>)
+                          })
+                        }
+                      </div>
+                    }
                   </div>
 
                   <div className="col-lg-4 col-md-12">
@@ -302,7 +337,17 @@ const Cart = ({
                           {cartTotalPrice}
                         </span>
                       </h5>
-
+                      {/* {
+                        shippingOptions &&
+                        shippingOptions.map((value, i) => {
+                          return (<h5>
+                            {value.optionName}{" "}
+                            <span>
+                              {value.optionPriceText}
+                            </span>
+                          </h5>)
+                        })
+                      } */}
                       <h4 className="grand-totall-title">
                         {strings["Grand Total"]}{" "}
                         <span>

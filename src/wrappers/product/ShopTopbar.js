@@ -7,7 +7,8 @@ const ShopTopbar = ({
   getFilterSortParams,
   productCount,
   sortedProductCount,
-  strings
+  strings,
+  offset
 }) => {
   return (
     <Fragment>
@@ -17,6 +18,7 @@ const ShopTopbar = ({
         getFilterSortParams={getFilterSortParams}
         productCount={productCount}
         strings={strings}
+        offset={offset}
         sortedProductCount={sortedProductCount}
       />
     </Fragment>

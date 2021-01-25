@@ -189,7 +189,7 @@ const ShopGridStandard = ({ setCategoryID, strings, location, defaultStore, curr
                             <div className="col-lg-9 order-1 order-lg-2">
                                 {/* shop topbar default */}
                                 {/* <ShopTopbar getLayout={getLayout} getFilterSortParams={getFilterSortParams} productCount={products.length} sortedProductCount={productData.length} /> */}
-                                <ShopTopbar strings={strings} getLayout={getLayout} productCount={totalProduct} sortedProductCount={productData.length} />
+                                <ShopTopbar strings={strings} getLayout={getLayout} productCount={totalProduct} offset={offset + 1} sortedProductCount={productData.length} />
 
                                 {/* shop page content default */}
                                 <ShopProducts strings={strings} layout={layout} products={productData} />
@@ -202,24 +202,10 @@ const ShopGridStandard = ({ setCategoryID, strings, location, defaultStore, curr
                                         breakLabel={'...'}
                                         breakClassName={'break-me'}
                                         pageCount={currentPage}
-                                        // marginPagesDisplayed={2}
-                                        // pageRangeDisplayed={currentPage}
                                         onPageChange={(e) => setOffset(e.selected)}
                                         containerClassName={'mb-0 mt-0'}
-                                        // subContainerClassName={'pages pagination'}
                                         activeClassName={'page-item active'}
                                     />
-                                    {/* <Paginator
-                                        totalRecords={totalProduct}
-                                        pageLimit={pageLimit}
-                                        pageNeighbours={2}
-                                        setOffset={() => { }}
-                                        currentPage={currentPage}
-                                        setCurrentPage={setCurrentPage}
-                                        pageContainerClass="mb-0 mt-0"
-                                        pagePrevText="«"
-                                        pageNextText="»"
-                                    /> */}
                                 </div>
                             </div>
                         </div>

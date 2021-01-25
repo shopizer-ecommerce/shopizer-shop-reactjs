@@ -7,7 +7,8 @@ const ShopTopAction = ({
   getFilterSortParams,
   productCount,
   sortedProductCount,
-  strings
+  strings,
+  offset
 }) => {
   return (
     <div className="shop-top-bar mb-35">
@@ -22,7 +23,7 @@ const ShopTopAction = ({
           </select>
         </div> */}
         <p>
-          {strings["Showing"]} {sortedProductCount} of {productCount} {strings["result"]}
+          {strings["Showing"]} {sortedProductCount * offset} of {productCount} {strings["result"]}
         </p>
       </div>
 

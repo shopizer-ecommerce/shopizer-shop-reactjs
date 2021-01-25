@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
@@ -12,9 +12,13 @@ import constant from '../../util/constant';
 import { useToasts } from "react-toast-notifications";
 import * as moment from 'moment';
 import { Scrollbars } from 'react-custom-scrollbars';
+import ReactPaginate from 'react-paginate';
 const ProductDescriptionTab = ({ spaceBottomClass, product, review, userData }) => {
   const [ratingValue, setRatingValue] = useState(0)
   const [ratingMessage, setRatingMessage] = useState('')
+  const [offset, setOffset] = useState(1);
+  // const [tempReview, setTempReview] = useState([])
+  const pageLimit = 5;
   const { addToast } = useToasts();
   // const getRating = (ratingValue) => {
   //   let rating = [];
@@ -23,6 +27,9 @@ const ProductDescriptionTab = ({ spaceBottomClass, product, review, userData }) 
   //   }
   //   return rating;
   // }
+  useEffect(() => {
+
+  }, [offset])
   const onClickSubmit = async () => {
     setLoader(true)
     try {
@@ -92,52 +99,64 @@ const ProductDescriptionTab = ({ spaceBottomClass, product, review, userData }) 
               <Tab.Pane eventKey="productReviews">
                 <div className="row">
                   <div className="col-lg-7">
-                    <Scrollbars style={{ height: 500 }}>
-                      {
-                        review.map((a, key) => {
-                          return (
-                            <div className="review-wrapper" key={key}>
-                              <div className="single-review">
-                                <div className="review-img">
+                    {/* <Scrollbars style={{ height: 500 }}> */}
+                    {
+                      review.slice((offset - 1) * pageLimit, offset * pageLimit).map((a, key) => {
+                        return (
+                          <div className="review-wrapper" key={key}>
+                            <div className="single-review">
+                              {/* <div className="review-img">
                                   <img src={process.env.PUBLIC_URL + "/assets/img/testimonial/1.jpg"} alt="" />
-                                </div>
-                                <div className="review-content">
-                                  <div className="review-top-wrap">
-                                    <div className="review-left">
-                                      <div className="review-name">
-                                        <h4>{a.customer.firstName} {a.customer.lastName}</h4>
-                                      </div>
-                                      <div className="pro-details-rating-wrap">
-                                        <div className="pro-details-rating">
-                                          <StarRatings
-                                            rating={a.rating}
-                                            starRatedColor="#ffa900"
-                                            starDimension="17px"
-                                            starSpacing="1px"
-                                            numberOfStars={5}
-                                            name='view-rating'
-                                          />
+                                </div> */}
+                              <div className="review-content">
+                                <div className="review-top-wrap">
+                                  <div className="review-left">
+                                    <div className="review-name">
+                                      <h4>{a.customer.firstName} {a.customer.lastName}</h4>
+                                    </div>
+                                    <div className="pro-details-rating-wrap">
+                                      <div className="pro-details-rating">
+                                        <StarRatings
+                                          rating={a.rating}
+                                          starRatedColor="#ffa900"
+                                          starDimension="17px"
+                                          starSpacing="1px"
+                                          numberOfStars={5}
+                                          name='view-rating'
+                                        />
 
-                                        </div>
                                       </div>
                                     </div>
-                                    <div className="review-left">
-                                      <button className="review-date">{a.date}</button>
-                                    </div>
                                   </div>
-                                  <div className="review-bottom">
-                                    <p>
-                                      {a.description}
-                                    </p>
+                                  <div className="review-left">
+                                    <button className="review-date">{a.date}</button>
                                   </div>
+                                </div>
+                                <div className="review-bottom">
+                                  <p>
+                                    {a.description}
+                                  </p>
                                 </div>
                               </div>
                             </div>
-                          )
-                        })
+                          </div>
+                        )
+                      })
 
-                      }
-                    </Scrollbars>
+                    }
+                    <div className="pro-pagination-style text-center mt-30">
+                      <ReactPaginate
+                        previousLabel={'«'}
+                        nextLabel={'»'}
+                        breakLabel={'...'}
+                        breakClassName={'break-me'}
+                        pageCount={review.length / 5}
+                        onPageChange={(e) => setOffset(e.selected + 1)}
+                        containerClassName={'mb-0 mt-0'}
+                        activeClassName={'page-item active'}
+                      />
+                    </div>
+                    {/* </Scrollbars> */}
                   </div>
                   {
                     userData ?

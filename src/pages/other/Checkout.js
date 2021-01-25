@@ -554,7 +554,12 @@ const Checkout = ({ strings, location, cartID, defaultStore, getCountry, getStat
       }
       setLoader(false)
     } catch (error) {
-      addToast("Your order submission has been failed", { appearance: "error", autoDismiss: true });
+      if (isAccount) {
+        addToast("Registering customer already exist", { appearance: "error", autoDismiss: true });
+
+      } else {
+        addToast("Your order submission has been failed", { appearance: "error", autoDismiss: true });
+      }
       setLoader(false)
     }
 
