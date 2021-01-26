@@ -25,6 +25,7 @@
     "react-geocode": "^0.2.2",
     "react-hook-form": "^6.13.1",
     "react-id-swiper": "2.4.0",
+    "react-idle-timer": "^4.5.2",
     "react-lightgallery": "0.6.3",
     "react-load-script": "0.0.6",
     "react-mailchimp-subscribe": "^2.1.0",

@@ -189,7 +189,7 @@ const ShopGridStandard = ({ setCategoryID, strings, location, defaultStore, curr
                             <div className="col-lg-9 order-1 order-lg-2">
                                 {/* shop topbar default */}
                                 {/* <ShopTopbar getLayout={getLayout} getFilterSortParams={getFilterSortParams} productCount={products.length} sortedProductCount={productData.length} /> */}
-                                <ShopTopbar strings={strings} getLayout={getLayout} productCount={totalProduct} offset={offset + 1} sortedProductCount={productData.length} />
+                                <ShopTopbar strings={strings} getLayout={getLayout} productCount={totalProduct} offset={offset + 1} pageLimit={pageLimit} sortedProductCount={productData.length} />
 
                                 {/* shop page content default */}
                                 <ShopProducts strings={strings} layout={layout} products={productData} />

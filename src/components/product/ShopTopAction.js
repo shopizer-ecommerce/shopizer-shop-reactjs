@@ -8,7 +8,8 @@ const ShopTopAction = ({
   productCount,
   sortedProductCount,
   strings,
-  offset
+  offset,
+  pageLimit
 }) => {
   return (
     <div className="shop-top-bar mb-35">
@@ -23,7 +24,7 @@ const ShopTopAction = ({
           </select>
         </div> */}
         <p>
-          {strings["Showing"]} {sortedProductCount * offset} of {productCount} {strings["result"]}
+          {strings["Showing"]} {sortedProductCount < pageLimit ? productCount : sortedProductCount * offset} of {productCount} {strings["result"]}
         </p>
       </div>
 

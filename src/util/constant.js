@@ -32,6 +32,8 @@ const Constant = {
         ADDRESS: 'address',
         RESET: 'reset/',
         REQUEST: 'request/',
+        SEARCH: 'search/',
+        AUTOCOMPLETE: 'autocomplete/'
     }
 }
 

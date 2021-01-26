@@ -517,7 +517,16 @@
 
 
 
+.autoComplete {
+  margin-top: 20px;
+  border-top: 1px dotted grey;
 
+  p {
+    font-size: 13px;
+    line-height: 40px;
+    border-bottom: 1px dotted grey;
+  }
+}
 
 .header-right-wrap {
   display: flex;

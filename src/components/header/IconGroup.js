@@ -1,12 +1,16 @@
 import PropTypes from "prop-types";
-import React from "react";
-import { Link, useRouteMatch } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useRouteMatch, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import MenuCart from "./sub-components/MenuCart";
 import { deleteFromCart, deleteAllFromCart } from "../../redux/actions/cartActions";
 import { setUser } from "../../redux/actions/userAction";
+import { getCart } from "../../redux/actions/cartActions";
 import { setLocalData } from '../../util/helper';
 import { multilanguage } from "redux-multilanguage";
+import IdleTimer from 'react-idle-timer';
+import constant from '../../util/constant';
+import WebService from '../../util/webService';
 const IconGroup = ({
   // currency,
   cartData,
@@ -18,9 +22,30 @@ const IconGroup = ({
   userData,
   setUser,
   deleteAllFromCart,
-  strings
+  strings,
+  getCart
 }) => {
   const pathname = useRouteMatch();
+  const history = useHistory();
+  const timeout = 1000 * 60 * 30;
+  const [idleTimer, setIdleTimer] = useState(null);
+  const [searchData, setSearchData] = useState([]);
+  const [searchText, setSearchText] = useState('');
+  useEffect(() => {
+    getCart(cartData.code, userData)
+    let startTime = new Date(localStorage.getItem('session'));
+    let endTime = new Date();
+    // console.log(startTime)
+    // console.log(endTime)
+    var diffMs = (endTime - startTime);
+    // console.log(diffMs);
+    var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000);
+    console.log(diffMins);
+    if (diffMins > 30) {
+      logout()
+    }
+    // var duration = moment.duration(endTime.diff(startTime));
+  }, [])
   const handleClick = e => {
     e.currentTarget.nextSibling.classList.toggle("active");
   };
@@ -35,10 +60,61 @@ const IconGroup = ({
     setLocalData('token', '')
     deleteAllFromCart()
   }
+  const onAction = (e) => {
+
+    localStorage.setItem('session', new Date())
+  }
+
+  const onActive = (e) => {
+
+    localStorage.setItem('session', new Date())
+  }
+
+  const onIdle = (e) => {
+    logout()
+  }
+
+  const onSearch = async (e) => {
+    setSearchText(e.target.value)
+    if (e.target.value.length >= 3) {
+
+      let action = constant.ACTION.SEARCH + constant.ACTION.AUTOCOMPLETE;
+      let param = { "query": e.target.value }
+      try {
+        let response = await WebService.post(action, param);
+        if (response) {
+          setSearchData(response.values)
+          console.log(response)
+        }
+      } catch (error) {
+        console.log(error, '------------')
+      }
+    }
+  }
+  const onSelectedSearch = (data) => {
+    setSearchText(data)
+    setSearchData([])
+  }
+  const keyDownFunction = (e) => {
+    if (e.keyCode === 13) {
+      onSearchClick()
+    }
+  }
+  const onSearchClick = () => {
+    history.push('/search/' + searchText)
+  }
   return (
     <div
       className={`header-right-wrap ${iconWhiteClass ? iconWhiteClass : ""}`}
     >
+      <IdleTimer
+        ref={ref => { setIdleTimer(ref) }}
+        element={document}
+        onActive={onActive}
+        onIdle={onIdle}
+        onAction={onAction}
+        debounce={250}
+        timeout={timeout} />
       <div className="same-style header-search d-none d-lg-block">
         {
           pathname.url !== '/checkout' &&
@@ -48,13 +124,37 @@ const IconGroup = ({
         }
 
         <div className="search-content">
-          <form action="#">
-            <input type="text" placeholder="Search" />
-            <button className="button-search">
+          <form >
+            <input type="text" placeholder="Search" value={searchText} onKeyDown={(e) => keyDownFunction(e)} onChange={e => onSearch(e)} />
+            <button className="button-search" onClick={onSearchClick}>
               <i className="pe-7s-search" />
             </button>
+
           </form>
+          {
+            searchData.length > 0 &&
+            <div className="autoComplete" >
+              <div className="shopping-cart-content">
+
+                <ul>
+                  {
+                    searchData.map((value, index) => {
+                      return (
+                        <li className="single-shopping-cart" key={index} >
+                          <p onClick={() => onSelectedSearch(value)}>{value}</p>
+                        </li>
+                      )
+                    })
+                  }
+
+                </ul>
+              </div>
+              {/* <SearchAutoComplete searchData={searchData} /> */}
+            </div>
+          }
         </div>
+
+
       </div>
       <div className="same-style account-setting d-none d-lg-block">
         {
@@ -179,6 +279,9 @@ const mapDispatchToProps = dispatch => {
     },
     deleteAllFromCart: () => {
       dispatch(deleteAllFromCart())
+    },
+    getCart: (cartID, userData) => {
+      dispatch(getCart(cartID, userData));
     }
   };
 };

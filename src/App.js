@@ -36,6 +36,7 @@ const Checkout = lazy(() => import("./pages/other/Checkout"));
 const NotFound = lazy(() => import("./pages/other/NotFound"));
 const OrderConfirm = lazy(() => import("./pages/other/OrderConfirm"));
 const Content = lazy(() => import("./pages/content/content"));
+const SearchProduct = lazy(() => import("./pages/search-product/SearchProduct"));
 const App = (props) => {
   useEffect(() => {
     props.dispatch(
@@ -98,6 +99,10 @@ const App = (props) => {
                 <Route
                   path="/content/:id"
                   component={Content}
+                />
+                <Route
+                  path="/search/:id"
+                  component={SearchProduct}
                 />
 
                 {/* Other pages */}

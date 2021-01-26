@@ -8,7 +8,8 @@ const ShopTopbar = ({
   productCount,
   sortedProductCount,
   strings,
-  offset
+  offset,
+  pageLimit
 }) => {
   return (
     <Fragment>
@@ -19,6 +20,7 @@ const ShopTopbar = ({
         productCount={productCount}
         strings={strings}
         offset={offset}
+        pageLimit={pageLimit}
         sortedProductCount={sortedProductCount}
       />
     </Fragment>
