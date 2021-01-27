@@ -2,32 +2,61 @@ import PropTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
 import { multilanguage } from "redux-multilanguage";
-
-const MobileNavMenu = ({ strings }) => {
+import { connect } from "react-redux";
+import { setCategoryID } from "../../../redux/actions/productActions";
+import { setContent } from "../../../redux/actions/contentAction";
+const MobileNavMenu = ({ strings, categories, contents, setCategoryID, setContent }) => {
+  const onClickCategory = (item) => {
+    setCategoryID(item.id)
+  }
+  const onClickContent = (item) => {
+    setContent(item)
+  }
+  console.log(contents);
   return (
     <nav className="offcanvas-navigation" id="offcanvas-navigation">
       <ul>
         <li className="menu-item">
           <Link to={"/"}>Home</Link>
         </li>
-        {/* <li className="menu-item">
-          <Link to={"/contact"}>Contact</Link>
-        </li> */}
-        <li className="menu-item-has-children">
-          <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
-            {strings["shop"]}
-          </Link>
-          <ul className="sub-menu">
-            <li className="menu-item-has-children">
-              <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
-                {strings["shop_layout"]}
+
+        {
+          categories.map((item, index) => {
+
+            return item.visible && <li className="menu-item-has-children" key={index}>
+              <Link to={"/category/" + item.description.friendlyUrl} onClick={() => onClickCategory(item)}>
+                {item.description.name}
               </Link>
+              {
+                item.children && item.children.length > 0 &&
+                <ul className="sub-menu">
+                  {
+                    item.children.map((submenu, index) => {
+                      return (
+                        <li className="menu-item-has-children">
+                          <Link to={"/category/" + submenu.description.friendlyUrl} onClick={() => onClickCategory(submenu)}>
+                            {strings[submenu.description.name] ? strings[submenu.description.name] : submenu.description.name}
+                          </Link>
+                        </li>
+                      )
+                    })
+                  }
+                </ul>
+              }
             </li>
 
-          </ul>
-        </li>
+          })
+        }
+        {
+          contents.map((content, index) => {
+            return (
+              content.displayedInMenu &&
+              <li key={index}> <Link to={"/content/" + content.slug} onClick={() => onClickContent(content.code)}> {strings[content.name] ? strings[content.name] : content.name}</Link></li>
+            )
+          })
+        }
         <li>
-          <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
+          <Link to={"/contact"}>
             Contact
           </Link>
         </li>
@@ -40,5 +69,15 @@ const MobileNavMenu = ({ strings }) => {
 MobileNavMenu.propTypes = {
   strings: PropTypes.object
 };
-
-export default multilanguage(MobileNavMenu);
+const mapDispatchToProps = dispatch => {
+  return {
+    setCategoryID: (value) => {
+      dispatch(setCategoryID(value));
+    },
+    setContent: (value) => {
+      dispatch(setContent(value));
+    }
+  };
+};
+export default connect(null, mapDispatchToProps)(multilanguage(MobileNavMenu));
+// export default multilanguage(MobileNavMenu);

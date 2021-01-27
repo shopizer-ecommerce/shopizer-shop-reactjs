@@ -34,16 +34,18 @@ const TabProductNine = ({
       if (response) {
         let category = [{ 'id': '', 'name': 'All', 'code': 'all', data: response.products }];
         response.products.forEach((item) => {
-          item.categories.forEach((a) => {
-            // console.log(a)
-            let index = category.findIndex(value => value.id === a.id);
-            // console.log(index);
-            if (index === -1) {
-              category.push({ 'id': a.description.id, 'name': a.description.name, 'code': a.code, data: [item] })
-            } else {
-              category[index].data.push(item)
-            }
-          })
+          if (item.categories !== null) {
+            item.categories.forEach((a) => {
+              // console.log(a)
+              let index = category.findIndex(value => value.id === a.id);
+              // console.log(index);
+              if (index === -1) {
+                category.push({ 'id': a.description.id, 'name': a.description.name, 'code': a.code, data: [item] })
+              } else {
+                category[index].data.push(item)
+              }
+            })
+          }
         });
         // setFeaturedData(response.products)
         setCategoryData(category)

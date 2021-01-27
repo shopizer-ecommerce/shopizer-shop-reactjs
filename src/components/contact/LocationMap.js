@@ -18,8 +18,8 @@ const FooterMap = props => {
       'address': address
     }, function (results, status) {
       if (status === google.maps.GeocoderStatus.OK) {
-        console.log(results[0].geometry.location.lat())
-        console.log(results[0].geometry.location.lng())
+        // console.log(results[0].geometry.location.lat())
+        // console.log(results[0].geometry.location.lng())
         setLatitude(results[0].geometry.location.lat());
         setLongitude(results[0].geometry.location.lng());
       } else {

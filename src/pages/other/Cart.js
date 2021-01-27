@@ -72,7 +72,7 @@ const Cart = ({
   const { pathname } = location;
   const cartTotalPrice = cartItems.displaySubTotal;
   const grandTotalPrice = cartItems.displaySubTotal;
-  const { register, handleSubmit, control, formState, errors } = useForm({ mode: 'onChange' });
+  const { register, handleSubmit, control, errors } = useForm({ mode: 'onChange' });
 
   const [shippingOptions, setShippingOptions] = useState();
   const deleteAllFromCart = () => {

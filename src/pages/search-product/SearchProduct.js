@@ -80,31 +80,17 @@ const SearchProduct = ({ strings, location, defaultStore, currentLanguageCode, s
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-3 order-2 order-lg-1">
-                                {/* shop sidebar */}
-                                {/* <ShopSidebar products={products} getSortParams={getSortParams} sideSpaceClass="mr-30" /> */}
+
                                 <ShopSidebar strings={strings} getCategoryParams={getCategoryParams} uniqueCategories={subCategory} uniqueColors={[]} uniqueSizes={[]} uniqueManufacture={[]} sideSpaceClass="mr-30" />
                             </div>
                             <div className="col-lg-9 order-1 order-lg-2">
-                                {/* shop topbar default */}
-                                {/* <ShopTopbar getLayout={getLayout} getFilterSortParams={getFilterSortParams} productCount={products.length} sortedProductCount={productData.length} /> */}
+
                                 <ShopTopbar strings={strings} getLayout={getLayout} productCount={totalProduct} offset={1} sortedProductCount={productData.length} />
 
                                 {/* shop page content default */}
                                 <ShopProducts strings={strings} layout={layout} products={productData} />
 
-                                {/* shop product pagination */}
-                                {/* <div className="pro-pagination-style text-center mt-30">
-                                    <ReactPaginate
-                                        previousLabel={'«'}
-                                        nextLabel={'»'}
-                                        breakLabel={'...'}
-                                        breakClassName={'break-me'}
-                                        pageCount={currentPage}
-                                        onPageChange={(e) => setOffset(e.selected)}
-                                        containerClassName={'mb-0 mt-0'}
-                                        activeClassName={'page-item active'}
-                                    />
-                                </div> */}
+
                             </div>
                         </div>
                     </div>

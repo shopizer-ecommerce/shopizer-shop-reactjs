@@ -11,7 +11,7 @@ import WebService from '../../util/webService';
 import constant from '../../util/constant';
 import { useToasts } from "react-toast-notifications";
 import * as moment from 'moment';
-import { Scrollbars } from 'react-custom-scrollbars';
+// import { Scrollbars } from 'react-custom-scrollbars';
 import ReactPaginate from 'react-paginate';
 const ProductDescriptionTab = ({ spaceBottomClass, product, review, userData }) => {
   const [ratingValue, setRatingValue] = useState(0)
@@ -77,11 +77,11 @@ const ProductDescriptionTab = ({ spaceBottomClass, product, review, userData }) 
                 <div className="product-anotherinfo-wrapper">
                   <ul>
                     <li>
-                      <span>Weight</span> {product.productSpecifications.weight} kg
+                      <span>Weight</span> {product.productSpecifications.weight} Pounds
                     </li>
                     <li>
                       <span>Dimensions</span>{product.productSpecifications.length}{" "} x {product.productSpecifications.width}{" "}
-                      x {product.productSpecifications.height} cm{" "}
+                      x {product.productSpecifications.height} Inches{" "}
                     </li>
                     {/* <li>
                       <span>Materials</span> 60% cotton, 40% polyester
@@ -98,67 +98,75 @@ const ProductDescriptionTab = ({ spaceBottomClass, product, review, userData }) 
               </Tab.Pane>
               <Tab.Pane eventKey="productReviews">
                 <div className="row">
-                  <div className="col-lg-7">
-                    {/* <Scrollbars style={{ height: 500 }}> */}
-                    {
-                      review.slice((offset - 1) * pageLimit, offset * pageLimit).map((a, key) => {
-                        return (
-                          <div className="review-wrapper" key={key}>
-                            <div className="single-review">
-                              {/* <div className="review-img">
-                                  <img src={process.env.PUBLIC_URL + "/assets/img/testimonial/1.jpg"} alt="" />
-                                </div> */}
-                              <div className="review-content">
-                                <div className="review-top-wrap">
-                                  <div className="review-left">
-                                    <div className="review-name">
-                                      <h4>{a.customer.firstName} {a.customer.lastName}</h4>
-                                    </div>
-                                    <div className="pro-details-rating-wrap">
-                                      <div className="pro-details-rating">
-                                        <StarRatings
-                                          rating={a.rating}
-                                          starRatedColor="#ffa900"
-                                          starDimension="17px"
-                                          starSpacing="1px"
-                                          numberOfStars={5}
-                                          name='view-rating'
-                                        />
+                  {
+                    review.length > 0 ?
+                      <div className="col-lg-7">
+                        {
+                          review.slice((offset - 1) * pageLimit, offset * pageLimit).map((a, key) => {
+                            return (
+                              <div className="review-wrapper" key={key}>
+                                <div className="single-review">
+                                  <div className="review-content">
+                                    <div className="review-top-wrap">
+                                      <div className="review-left">
+                                        <div className="review-name">
+                                          <h4>{a.customer.firstName} {a.customer.lastName}</h4>
+                                        </div>
+                                        <div className="pro-details-rating-wrap">
+                                          <div className="pro-details-rating">
+                                            <StarRatings
+                                              rating={a.rating}
+                                              starRatedColor="#ffa900"
+                                              starDimension="17px"
+                                              starSpacing="1px"
+                                              numberOfStars={5}
+                                              name='view-rating'
+                                            />
 
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div className="review-left">
+                                        <button className="review-date">{a.date}</button>
                                       </div>
                                     </div>
+                                    <div className="review-bottom">
+                                      <p>
+                                        {a.description}
+                                      </p>
+                                    </div>
                                   </div>
-                                  <div className="review-left">
-                                    <button className="review-date">{a.date}</button>
-                                  </div>
-                                </div>
-                                <div className="review-bottom">
-                                  <p>
-                                    {a.description}
-                                  </p>
                                 </div>
                               </div>
-                            </div>
-                          </div>
-                        )
-                      })
+                            )
+                          })
 
-                    }
-                    <div className="pro-pagination-style text-center mt-30">
-                      <ReactPaginate
-                        previousLabel={'«'}
-                        nextLabel={'»'}
-                        breakLabel={'...'}
-                        breakClassName={'break-me'}
-                        pageCount={review.length / 5}
-                        onPageChange={(e) => setOffset(e.selected + 1)}
-                        containerClassName={'mb-0 mt-0'}
-                        activeClassName={'page-item active'}
-                      />
-                    </div>
-                    {/* </Scrollbars> */}
-                  </div>
-                  {
+                        }
+                        <div className="pro-pagination-style text-center mt-30">
+                          <ReactPaginate
+                            previousLabel={'«'}
+                            nextLabel={'»'}
+                            breakLabel={'...'}
+                            breakClassName={'break-me'}
+                            pageCount={review.length / 5}
+                            onPageChange={(e) => setOffset(e.selected + 1)}
+                            containerClassName={'mb-0 mt-0'}
+                            activeClassName={'page-item active'}
+                          />
+                        </div>
+                        {/* </Scrollbars> */}
+                      </div>
+                      : <div className="col-lg-7">
+                        <div className="item-empty-area text-center">
+                          <div className="item-empty-area__icon mb-30">
+                            <i className="pe-7s-star"></i>
+                          </div>
+                          <div className="item-empty-area__text">
+                            No items found in reviews<br />{" "}
+                          </div>
+                        </div>
+                      </div>
+                  } {
                     userData ?
                       <div className="col-lg-5">
                         <div className="ratting-form-wrapper pl-50">

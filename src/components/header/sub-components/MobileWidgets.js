@@ -1,6 +1,6 @@
 import React from "react";
-
-const MobileWidgets = () => {
+import { connect } from "react-redux";
+const MobileWidgets = ({ merchant }) => {
   return (
     <div className="offcanvas-widget-area">
       <div className="off-canvas-contact-widget">
@@ -8,33 +8,28 @@ const MobileWidgets = () => {
           <ul className="header-contact-info__list">
             <li>
               <i className="fa fa-phone"></i>{" "}
-              <a href="tel://12452456012">888-988-8888</a>
+              <a href="tel://12452456012">{merchant.phone}</a>
             </li>
             <li>
               <i className="fa fa-envelope"></i>{" "}
-              <a href="mailto:info@yourdomain.com">carl@shopizer.com</a>
+              <a href="mailto:info@yourdomain.com">{merchant.email}</a>
             </li>
           </ul>
         </div>
       </div>
-      {/*Off Canvas Widget Social Start*/}
-      {/* <div className="off-canvas-widget-social">
-        <a href="//twitter.com" title="Twitter">
-          <i className="fa fa-twitter"></i>
-        </a>
-        <a href="//instagram.com" title="Instagram">
-          <i className="fa fa-instagram"></i>
-        </a>
-        <a href="//facebook.com" title="Facebook">
-          <i className="fa fa-facebook"></i>
-        </a>
-        <a href="//pinterest.com" title="Pinterest">
-          <i className="fa fa-pinterest"></i>
-        </a>
-      </div> */}
-      {/*Off Canvas Widget Social End*/}
     </div>
   );
 };
+const mapStateToProps = state => {
+  return {
+    merchant: state.merchantData.merchant
+  };
+};
 
-export default MobileWidgets;
+
+
+export default connect(
+  mapStateToProps,
+  null
+)(MobileWidgets);
+// export default MobileWidgets;

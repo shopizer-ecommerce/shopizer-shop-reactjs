@@ -1,8 +1,6 @@
 import WebService from '../../util/webService';
 import constant from '../../util/constant';
-import { setLocalData } from '../../util/helper';
 import { setLoader } from "../actions/loaderActions";
-import { setUser } from "../actions/userAction";
 export const GET_SHOPIZER_CART_ID = "GET_SHOPIZER_CART_ID";
 export const GET_CART = "GET_CART";
 export const ADD_TO_CART = "ADD_TO_CART";
@@ -81,13 +79,7 @@ export const getCart = (cartID, userData) => {
         payload: response
       });
     } catch (error) {
-
-
-      dispatch(deleteAllFromCart());
-      dispatch(setUser(''));
-      setLocalData('token', '')
-
-      // console.log('Cart action response ' + error);
+      console.log('Cart action response ' + error);
     }
   }
 }

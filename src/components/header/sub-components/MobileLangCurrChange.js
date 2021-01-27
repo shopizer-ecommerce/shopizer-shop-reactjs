@@ -7,18 +7,16 @@ import { connect } from "react-redux";
 const MobileLangCurrChange = ({
   // currency,
   // setCurrency,
+  strings,
   currentLanguageCode,
-  dispatch
+  dispatch,
+  merchant
 }) => {
   const changeLanguageTrigger = e => {
     const languageCode = e.target.value;
     dispatch(changeLanguage(languageCode));
   };
 
-  // const setCurrencyTrigger = e => {
-  //   const currencyName = e.target.value;
-  //   setCurrency(currencyName);
-  // };
 
   const closeMobileMenu = () => {
     const offcanvasMobileMenu = document.querySelector(
@@ -38,39 +36,29 @@ const MobileLangCurrChange = ({
             closeMobileMenu();
           }}
         >
-          <option value="en">English</option>
-          <option value="fn">French</option>
-          <option value="de">Germany</option>
+          {merchant &&
+            merchant.supportedLanguages.map((value, i) => {
+              return (
+                <option value={value.code}>{strings[value.code]}</option>
+              )
+            })
+          }
+
         </select>
       </div>
-      {/* <div className="lang-curr-style">
-        <span className="title mb-2">Choose Currency</span>
-        <select
-          value={currency.currencyName}
-          onChange={e => {
-            setCurrencyTrigger(e);
-            closeMobileMenu();
-          }}
-        >
-          <option value="USD">USD</option>
-          <option value="EUR">EUR</option>
-          <option value="GBP">GBP</option>
-        </select>
-      </div> */}
     </div>
   );
 };
 
 MobileLangCurrChange.propTypes = {
-  // setCurrency: PropTypes.func,
-  // currency: PropTypes.object,
+  strings: PropTypes.object,
   currentLanguageCode: PropTypes.string,
   dispatch: PropTypes.func
 };
 
 const mapStateToProps = state => {
   return {
-    // currency: state.currencyData
+    merchant: state.merchantData.merchant
   };
 };
 

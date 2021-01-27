@@ -47,7 +47,7 @@ const OrderDetails = ({
         }
     }
     const onClickItem = (product) => {
-        console.log(product);
+        // console.log(product);
         setProductID(product.id)
     }
     return (

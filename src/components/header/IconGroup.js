@@ -28,23 +28,27 @@ const IconGroup = ({
   const pathname = useRouteMatch();
   const history = useHistory();
   const timeout = 1000 * 60 * 30;
-  const [idleTimer, setIdleTimer] = useState(null);
+  // const [idleTimer, setIdleTimer] = useState(null);
   const [searchData, setSearchData] = useState([]);
   const [searchText, setSearchText] = useState('');
   useEffect(() => {
     getCart(cartData.code, userData)
+    // console.log(localStorage.getItem('thekey'))
+    // console.log(process.env.REACT_APP_BASE_URL)
+    if (localStorage.getItem('thekey') === process.env.REACT_APP_BASE_URL) {
+      localStorage.setItem('thekey', process.env.REACT_APP_BASE_URL)
+    } else {
+      logout()
+      localStorage.setItem('thekey', process.env.REACT_APP_BASE_URL)
+    }
     let startTime = new Date(localStorage.getItem('session'));
     let endTime = new Date();
-    // console.log(startTime)
-    // console.log(endTime)
     var diffMs = (endTime - startTime);
-    // console.log(diffMs);
     var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000);
-    console.log(diffMins);
     if (diffMins > 30) {
       logout()
     }
-    // var duration = moment.duration(endTime.diff(startTime));
+    // eslint-disable-next-line react-hooks/exhaustive-deps 
   }, [])
   const handleClick = e => {
     e.currentTarget.nextSibling.classList.toggle("active");
@@ -84,7 +88,7 @@ const IconGroup = ({
         let response = await WebService.post(action, param);
         if (response) {
           setSearchData(response.values)
-          console.log(response)
+          // console.log(response)
         }
       } catch (error) {
         console.log(error, '------------')
@@ -108,14 +112,13 @@ const IconGroup = ({
       className={`header-right-wrap ${iconWhiteClass ? iconWhiteClass : ""}`}
     >
       <IdleTimer
-        ref={ref => { setIdleTimer(ref) }}
         element={document}
         onActive={onActive}
         onIdle={onIdle}
         onAction={onAction}
         debounce={250}
         timeout={timeout} />
-      <div className="same-style header-search d-none d-lg-block">
+      <div className="same-style header-search">
         {
           pathname.url !== '/checkout' &&
           <button className="search-active" onClick={e => handleClick(e)}>

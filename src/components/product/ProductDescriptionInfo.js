@@ -347,7 +347,7 @@ const ProductDescriptionInfo = ({
           </li>
         </ul>
       </div>
-      {product.categories.length > 0 ? (
+      {product.categories && product.categories.length > 0 ? (
         <div className="pro-details-meta">
           <span>Categories :</span>
           <ul>

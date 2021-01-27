@@ -34,8 +34,8 @@ const CustomForm = () => {
     try {
       let action = constant.ACTION.NEWSLETTER;
       let param = { "email": data.email }
-      let response = await WebService.post(action, param);
-      console.log(response)
+      await WebService.post(action, param);
+      // console.log(response)
       // if (response) {
       reset({ email: '' })
       setStatus('success')

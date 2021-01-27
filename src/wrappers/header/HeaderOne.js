@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { multilanguage } from "redux-multilanguage";
 import { connect } from "react-redux";
 import Logo from "../../components/header/Logo";
@@ -24,6 +25,7 @@ const HeaderOne = ({
   defaultStore,
   getCurrentLocation
 }) => {
+  const history = useHistory();
   const [scroll, setScroll] = useState(0);
   const [headerTop, setHeaderTop] = useState(0);
   const [categoryData, setCategoryData] = useState([]);
@@ -51,6 +53,9 @@ const HeaderOne = ({
         setCategoryData(response.categories);
       }
     } catch (error) {
+      // console.log(error.messages)
+      // console.log(error)
+      history.push('/not-found')
     }
 
 
@@ -109,7 +114,7 @@ const HeaderOne = ({
           </div>
         </div>
         {/* mobile menu */}
-        <MobileMenu />
+        <MobileMenu categories={categoryData} contents={contentData} />
       </div>
     </header>
   );

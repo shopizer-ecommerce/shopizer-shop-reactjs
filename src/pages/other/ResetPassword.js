@@ -11,10 +11,7 @@ import { useForm } from "react-hook-form";
 import { useToasts } from "react-toast-notifications";
 import WebService from '../../util/webService';
 import constant from '../../util/constant';
-// import { setLocalData, isValidObject } from '../../util/helper';
 import { setLoader } from "../../redux/actions/loaderActions";
-// import { setUser, getCountry, getState } from "../../redux/actions/userAction";
-// import { addToCart, getCart } from "../../redux/actions/cartActions";
 import { connect } from "react-redux";
 import { multilanguage } from "redux-multilanguage";
 const resetForm = {
@@ -106,7 +103,7 @@ const ResetPassword = ({ strings, props, location, setLoader, defaultStore, stor
         try {
             let action = constant.ACTION.CUSTOMER + storeCode + '/' + constant.ACTION.PASSWORD + resetID;
             let param = { "password": data.password, "repeatPassword": data.repeatPassword }
-            let response = await WebService.post(action, param);
+            await WebService.post(action, param);
             // if (response) {
             reset({})
             history.push('/login')

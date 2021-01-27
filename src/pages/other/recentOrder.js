@@ -50,7 +50,7 @@ const RecentOrder = ({
     }
   }
   const onClickItem = (product) => {
-    console.log(product);
+    // console.log(product);
     setProductID(product.id)
   }
   return (

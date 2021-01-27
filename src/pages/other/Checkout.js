@@ -291,7 +291,7 @@ const Checkout = ({ strings, location, cartID, defaultStore, getCountry, getStat
     try {
       let response = await WebService.get(action);
       if (response) {
-        console.log(response.billing.firstName);
+        // console.log(response.billing.firstName);
         setValue('firstName', response.billing.firstName)
         setValue('lastName', response.billing.lastName)
         setValue('company', response.billing.company)
@@ -362,7 +362,7 @@ const Checkout = ({ strings, location, cartID, defaultStore, getCountry, getStat
     // Fire Event when a suggested name is selected
     autocomplete.addListener('place_changed', () => {
       let p = autocomplete.getPlace();
-      console.log(p);
+      // console.log(p);
       setValue('country', p.address_components.find(i => i.types.some(i => i === "country")).short_name)
       getState(p.address_components.find(i => i.types.some(i => i === "country")).short_name)
 
@@ -460,7 +460,7 @@ const Checkout = ({ strings, location, cartID, defaultStore, getCountry, getStat
   }
   const onPayment = async (data, token) => {
     let action;
-    console.log(data);
+    // console.log(data);
     let param = {};
     if (userData) {
       action = constant.ACTION.AUTH + constant.ACTION.CART + cartID + '/' + constant.ACTION.CHECKOUT
@@ -540,7 +540,7 @@ const Checkout = ({ strings, location, cartID, defaultStore, getCountry, getStat
         "customer": customer
       }
     }
-    console.log(param);
+    // console.log(param);
     // 
     try {
       let response = await WebService.post(action, param);
