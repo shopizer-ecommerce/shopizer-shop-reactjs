@@ -24,7 +24,7 @@ const NewsletterThree = ({
                 subscribeColorClass ? subscribeColorClass : ""
                 }`}
             >
-              <h2>{strings["Join With Us!"]} </h2>
+              <h2>{strings["Subscribe to our newsletter"]} </h2>
               <p>{strings["Subscribe to our newsletter to receive news on update"]}</p>
               {/* subscription form */}
               <SubscribeEmailTwo

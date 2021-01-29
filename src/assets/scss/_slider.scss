@@ -95,7 +95,7 @@
 
       margin: 6px 0 37px;
 
-      color: #010101;
+     color: #010101;
 
       @media #{$lg-layout} {
         font-size: 52px;
@@ -568,7 +568,8 @@
     margin-bottom: 0;
     margin-left: 135px;
 
-    color: #000000;
+    /**color: #000000;**/
+    color:#ffffff;
 
     @media #{$xs-layout} {
       margin-left: 0;
@@ -617,12 +618,13 @@
   }
 
   h1 {
-    font-size: 72px;
+    font-size: 76px;
     line-height: 97px;
 
     margin: 6px 0 37px;
 
-    color: #010101;
+    /**color: #010101;**/
+    color: #ffffff;
 
     @media #{$xl-layout} {
       font-size: 60px;
