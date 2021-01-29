@@ -358,7 +358,7 @@
     }
 
     .card-info {
-      padding: 25px 5px 25px 5px;
+      padding: 25px 5px 40px 5px;
       border: 1px solid #e5e5e5;
       width: 100%;
       border-radius: 10px;
@@ -463,4 +463,13 @@
     padding: 5px 30px;
     margin-bottom: 30px;
   }
+}
+
+iframe {
+
+  margin: none;
+  padding: none;
+  border: none;
+  line-height: 0;
+  float: left;
 }

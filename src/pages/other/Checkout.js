@@ -5,6 +5,8 @@ import MetaTags from "react-meta-tags";
 import { connect } from "react-redux";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 // import { getDiscountPrice } from "../../helpers/product";
+import Tab from "react-bootstrap/Tab";
+import Nav from "react-bootstrap/Nav";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { isValidObject } from "../../util/helper";
@@ -23,6 +25,7 @@ import {
 } from "../../redux/actions/cartActions";
 import Script from 'react-load-script';
 import { multilanguage } from "redux-multilanguage";
+
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 const paymentForm = {
   firstName: {
@@ -256,7 +259,7 @@ const Checkout = ({ strings, location, cartID, defaultStore, getCountry, getStat
   const [ref, setRef] = useState(null)
   useEffect(() => {
     getSummaryOrder()
-
+    // getNuviePayment()
     getState('')
     getCountry()
     getConfig()
@@ -264,6 +267,22 @@ const Checkout = ({ strings, location, cartID, defaultStore, getCountry, getStat
     onChangeShipping()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  // const getNuviePayment = async () => {
+  //   let action = 'https://testpayments.nuvei.com/merchant/paymentpage';
+  //   let param = {
+  //     "TERMINALID": '1064398',
+  //     "ORDERID": '8756321480',
+  //     "CURRENCY": 'USD',
+  //     "AMOUNT": '10.00',
+  //     "DATETIME": '22-01-2021:10:43:01:200',
+  //     "HASH": '8636622c1dd4039783cd0fbcffd53a6ce2ceab7d0e183e8ce1b8043e3cdedebe3b6665c5e87d3b268e85217f6c11f15f09f86764d82b0bd923c8c19e9209296d',
+  //   }
+  //   try {
+  //     let response = await axios.post(action, param)
+  //     console.log(response)
+  //   } catch (error) {
+  //   }
+  // }
   const getSummaryOrder = async () => {
     let action = constant.ACTION.CART + cartID + '?store=' + defaultStore;
     try {
@@ -1039,34 +1058,81 @@ const Checkout = ({ strings, location, cartID, defaultStore, getCountry, getStat
                         </div>
 
                       </div>
+
+
                       <div className="payment-method mt-25">
+                        <div className="login-register-wrapper">
+                          <Tab.Container defaultActiveKey={'login'}>
+                            <Nav variant="pills" className="login-register-tab-list">
+                              <Nav.Item>
+                                <Nav.Link eventKey="login">
+                                  <h4>Credit Card</h4>
+                                </Nav.Link>
+                              </Nav.Item>
+                              <Nav.Item>
+                                <Nav.Link eventKey="register">
+                                  <h4>Nuvei Payment</h4>
+                                </Nav.Link>
+                              </Nav.Item>
+                            </Nav>
+                            <Tab.Content>
+                              <Tab.Pane eventKey="login">
+                                <Elements stripe={stripePromise}>
+                                  <ElementsConsumer>
+                                    {({ stripe, elements }) => (
+                                      <>
+                                        <div className="card-info">
+                                          <CardElement options={CARD_ELEMENT_OPTIONS} stripe={stripe} onReady={e => setRef(e)} />
+                                        </div>
+                                        <div className="icon-container">
+                                          <i className="fa fa-cc-visa" style={{ color: 'navy' }}></i>
+                                          <i className="fa fa-cc-amex" style={{ color: 'blue' }}></i>
+                                          <i className="fa fa-cc-mastercard" style={{ color: 'red' }}></i>
+                                          {/*<i className="fa fa-cc-discover" style={{ color: 'orange' }}></i>*/}
+                                        </div>
 
-                        <Elements stripe={stripePromise}>
-                          <ElementsConsumer>
-                            {({ stripe, elements }) => (
-                              <>
-                                <div className="card-info">
-                                  <CardElement options={CARD_ELEMENT_OPTIONS} stripe={stripe} onReady={e => setRef(e)} />
-                                </div>
-                                <div className="icon-container">
-                                  <i className="fa fa-cc-visa" style={{ color: 'navy' }}></i>
-                                  <i className="fa fa-cc-amex" style={{ color: 'blue' }}></i>
-                                  <i className="fa fa-cc-mastercard" style={{ color: 'red' }}></i>
-                                  {/*<i className="fa fa-cc-discover" style={{ color: 'orange' }}></i>*/}
-                                </div>
+                                        <div className="place-order mt-100">
+                                          <div className="login-toggle-btn mb-20">
+                                            <input type="checkbox" name={paymentForm.isAgree.name} ref={register(paymentForm.isAgree.validate)} />
+                                            <label className="ml-10 ">{strings["I agree with the terms and conditions"]}</label>
+                                            {errors[paymentForm.isAgree.name] && <p className="error-msg">{errors[paymentForm.isAgree.name].message}</p>}
+                                          </div>
+                                          <button type="button" onClick={handleSubmit((d) => onSubmitOrder(d, elements, stripe))} className="btn-hover">Place Order</button>
+                                        </div>
+                                      </>
+                                    )}
+                                  </ElementsConsumer>
+                                </Elements>
+                              </Tab.Pane>
+                              <Tab.Pane eventKey="register">
+                                <iframe height={"1150"} width="570" srcDoc='<form action="https://testpayments.nuvei.com/merchant/paymentpage" method="post">
+    <input type="hidden" name="TERMINALID" value="1064398" />
+    <input type="hidden" name="ORDERID" value="8756321480" />
+    <input type="hidden" name="CURRENCY" value="USD" />
+    <input type="hidden" name="AMOUNT" value="10.00" />
+    <input type="hidden" name="DATETIME" value="22-01-2021:10:43:01:200" />
+    <input type="hidden" name="HASH" value="8636622c1dd4039783cd0fbcffd53a6ce2ceab7d0e183e8ce1b8043e3cdedebe3b6665c5e87d3b268e85217f6c11f15f09f86764d82b0bd923c8c19e9209296d" />
+    
+    <button type="submit"  style="font-weight: 500;
+    line-height: 1;
+    z-index: 9;
+    display: block;
+    width: 100%;
+    padding: 18px 20px;
+    text-align: center;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    background: none;
+    background-color: #fb799c;"className="btn-hover">Pay now</button>
+  </form>'></iframe>
+                              </Tab.Pane>
+                            </Tab.Content>
+                          </Tab.Container>
+                        </div>
 
-                                <div className="place-order mt-100">
-                                  <div className="login-toggle-btn mb-20">
-                                    <input type="checkbox" name={paymentForm.isAgree.name} ref={register(paymentForm.isAgree.validate)} />
-                                    <label className="ml-10 ">{strings["I agree with the terms and conditions"]}</label>
-                                    {errors[paymentForm.isAgree.name] && <p className="error-msg">{errors[paymentForm.isAgree.name].message}</p>}
-                                  </div>
-                                  <button type="button" onClick={handleSubmit((d) => onSubmitOrder(d, elements, stripe))} className="btn-hover">Place Order</button>
-                                </div>
-                              </>
-                            )}
-                          </ElementsConsumer>
-                        </Elements>
 
                       </div>
 

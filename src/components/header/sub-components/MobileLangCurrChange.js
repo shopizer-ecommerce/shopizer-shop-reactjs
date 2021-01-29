@@ -39,7 +39,7 @@ const MobileLangCurrChange = ({
           {merchant &&
             merchant.supportedLanguages.map((value, i) => {
               return (
-                <option value={value.code}>{strings[value.code]}</option>
+                <option value={value.code} key={i}>{strings[value.code]}</option>
               )
             })
           }

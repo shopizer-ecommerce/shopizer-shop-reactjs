@@ -31,9 +31,9 @@ const MobileNavMenu = ({ strings, categories, contents, setCategoryID, setConten
                 item.children && item.children.length > 0 &&
                 <ul className="sub-menu">
                   {
-                    item.children.map((submenu, index) => {
+                    item.children.map((submenu, j) => {
                       return (
-                        <li className="menu-item-has-children">
+                        <li className="menu-item-has-children" key={j}>
                           <Link to={"/category/" + submenu.description.friendlyUrl} onClick={() => onClickCategory(submenu)}>
                             {strings[submenu.description.name] ? strings[submenu.description.name] : submenu.description.name}
                           </Link>
