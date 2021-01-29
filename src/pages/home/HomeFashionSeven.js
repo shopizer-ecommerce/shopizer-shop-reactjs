@@ -33,14 +33,18 @@ const HomeFashionSeven = ({ merchant }) => {
           spaceTopClass="pt-100"
         />
         {/* banner */}
+        {/*
         <BannerEleven />
+        */}
         {/* countdown */}
+        {/*
         <CountDownThree
           spaceTopClass="pt-100"
           spaceBottomClass="pb-100"
           dateTime="November 13, 2020 12:12:00"
           countDownImage="/assets/img/banner/deal-2.png"
         />
+        */}
         {/* feature icon */}
         <FeatureIconFour
           bgImg="/assets/img/bg/shape.png"

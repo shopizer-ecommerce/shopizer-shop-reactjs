@@ -29,7 +29,7 @@ const HeaderTop = ({
         <p>
           {strings['Free delivery on order over']} {" "}
           <span>
-            {'US$999.99'}
+            {'US$79.99'}
           </span>
         </p>
       </div>
