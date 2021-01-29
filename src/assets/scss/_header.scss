@@ -596,7 +596,7 @@
 
       visibility: hidden;
 
-      width: 175px;
+      width: 210px;
       padding: 8px 12px 10px;
 
       transition: all 0.5s ease 0s;
@@ -614,6 +614,28 @@
         transform: rotateX(0deg);
 
         opacity: 1;
+      }
+
+      .user-name {
+        font-size: 14px;
+        color: #fb799c;
+      }
+
+      .user-email {
+        font-size: 11px;
+        color: #999999;
+      }
+
+      .user-profile {
+        margin-top: 12px
+      }
+
+      .border-line {
+        border-bottom: 1px solid #f4f5f8;
+        margin-left: -13px;
+        margin-right: -13px;
+        margin-top: 12px;
+        display: list-item !important;
       }
 
       @media #{$xs-layout} {

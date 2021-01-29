@@ -26,9 +26,9 @@ const LanguageCurrencyChanger = ({
       <div className="same-language-currency language-style">
         <span>
           {currentLanguageCode === "en"
-            ? "English"
+            ? strings["en"]
             : currentLanguageCode === "fr"
-              ? "French"
+              ? strings["fr"]
 
               : ""}{" "}
           <i className="fa fa-angle-down" />

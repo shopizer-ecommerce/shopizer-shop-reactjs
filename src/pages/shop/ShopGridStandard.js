@@ -100,6 +100,7 @@ const ShopGridStandard = ({ setCategoryID, strings, location, defaultStore, curr
     }, [categoryID, offset]);
     const getProductList = async (categoryid, size, manufacture) => {
         setLoader(true)
+        setProductData([]);
         // let action = `${constant.ACTION.PRODUCTS} + '?store=' + defaultStore + '&lang=' + currentLanguageCode + '&start=' + offset + '&count=' + pageLimit + '&category=' + categoryID`;
         let action = `${constant.ACTION.PRODUCTS}?${isCheckValueAndSetParams('&store=', defaultStore)}${isCheckValueAndSetParams('&lang=', currentLanguageCode)}${isCheckValueAndSetParams('&page=', offset)}${isCheckValueAndSetParams('&count=', pageLimit)}${isCheckValueAndSetParams('&category=', categoryid)}${isCheckValueAndSetParams('&optionValues=', size.join())}${isCheckValueAndSetParams('&manufacturer=', manufacture.join())}`;
         try {
@@ -221,7 +222,7 @@ const ShopGridStandard = ({ setCategoryID, strings, location, defaultStore, curr
                                             <i className="pe-7s-shopbag"></i>
                                         </div>
                                         <div className="item-empty-area__text">
-                                            No items found in {productDetails && productDetails.parent !== null && productDetails.parent.code} <br />{" "}
+                                            No items found in category <br />{" "}
 
                                         </div>
                                     </div>

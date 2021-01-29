@@ -29,11 +29,11 @@ export const addToCart = (item, addToast, cartId, quantityCount, defaultStore, u
         response = await WebService.put(action, param);
       } else {
         message = "Added To Cart"
-        if (userData) {
-          action = constant.ACTION.CUSTOMERS + userData.id + '/' + constant.ACTION.CART;
-        } else {
-          action = constant.ACTION.CART + '?store=' + defaultStore
-        }
+        // if (userData) {
+        //   action = constant.ACTION.CUSTOMERS + userData.id + '/' + constant.ACTION.CART;
+        // } else {
+        action = constant.ACTION.CART + '?store=' + defaultStore
+        // }
         response = await WebService.post(action, param);
       }
 
@@ -68,12 +68,13 @@ export const getCart = (cartID, userData) => {
     try {
       let action;
       if (userData) {
-        action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER + userData.id + '/' + constant.ACTION.CARTS + '?cart=' + cartID;
+        action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.CARTS + '?cart=' + cartID;
       } else {
         action = constant.ACTION.CART + cartID;
       }
 
       let response = await WebService.get(action);
+      dispatch(setShopizerCartID(response.code))
       dispatch({
         type: GET_CART,
         payload: response

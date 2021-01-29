@@ -315,12 +315,12 @@ const LoginRegister = ({ strings, props, location, setLoader, setUser, getCart, 
 
                               <p style={{ fontSize: 16, fontWeight: 500, color: '#fb799c' }}>{strings["Login Information"]}</p>
                               <div className="login-input">
-                                <input type="email" name={registerForm.email.name} ref={register2(registerForm.email.validate)} placeholder={strings["Username"]} />
+                                <input type="email" autoComplete="Email" name={registerForm.email.name} ref={register2(registerForm.email.validate)} placeholder={strings["Username"]} />
                                 {errors2[registerForm.email.name] && <p className="error-msg">{errors2[registerForm.email.name].message}</p>}
 
                               </div>
                               <div className="login-input">
-                                <input type="password" name={registerForm.password.name} ref={register2(registerForm.password.validate)} placeholder={strings["Password"]} onChange={(e) => onPasswordChange(e)} />
+                                <input type="password" autoComplete="new-password" name={registerForm.password.name} ref={register2(registerForm.password.validate)} placeholder={strings["Password"]} onChange={(e) => onPasswordChange(e)} />
                                 {errors2[registerForm.password.name] && <p className="error-msg">{errors2[registerForm.password.name].message}</p>}
 
                               </div>

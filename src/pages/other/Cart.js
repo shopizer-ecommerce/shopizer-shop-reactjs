@@ -285,21 +285,46 @@ const Cart = ({
                     </div>
                   </div>
 
-                  <div className="col-lg-4 col-md-6">
-                    <div className="discount-code-wrapper">
-                      <div className="title-wrap">
-                        <h4 className="cart-bottom-title section-bg-gray">
-                          {strings["Use Coupon Code"]}
-                        </h4>
+                  <div className="col-lg-8 col-md-6 cart-total">
+                    <div className="box-custom">
+                      <div className="discount-code-wrapper coupon-code">
+                        <div className="title-wrap">
+                          <h4 className="cart-bottom-title section-bg-gray">
+                            {strings["Use Coupon Code"]}
+                          </h4>
+                        </div>
+                        <div className="discount-code">
+                          <p>{strings["Enter your coupon code if you have one."]}</p>
+                          <form>
+                            <input type="text" required name="name" />
+                            <button className="cart-btn-2" type="submit">
+                              {strings["Apply Coupon"]}
+                            </button>
+                          </form>
+                        </div>
                       </div>
-                      <div className="discount-code">
-                        <p>{strings["Enter your coupon code if you have one."]}</p>
-                        <form>
-                          <input type="text" required name="name" />
-                          <button className="cart-btn-2" type="submit">
-                            {strings["Apply Coupon"]}
-                          </button>
-                        </form>
+
+                      <div className="grand-totall cart-total-box">
+                        <div className="title-wrap">
+                          <h4 className="cart-bottom-title section-bg-gary-cart">
+                            {strings["Cart Total"]}
+                          </h4>
+                        </div>
+                        <h5>
+                          {strings["Total products"]}{" "}
+                          <span>
+                            {cartTotalPrice}
+                          </span>
+                        </h5>
+                        <h4 className="grand-totall-title">
+                          {strings["Grand Total"]}{" "}
+                          <span>
+                            {grandTotalPrice}
+                          </span>
+                        </h4>
+                        <Link to={process.env.PUBLIC_URL + "/checkout"}>
+                          {strings["Proceed to Checkout"]}
+                        </Link>
                       </div>
                     </div>
                     {
@@ -312,7 +337,7 @@ const Cart = ({
                         </div>
                         {
                           shippingOptions.map((value, i) => {
-                            return (<h5>
+                            return (<h5 key={i}>
                               {value.optionName}{" "}
                               <span>
                                 {value.optionPriceText}
@@ -324,7 +349,7 @@ const Cart = ({
                     }
                   </div>
 
-                  <div className="col-lg-4 col-md-12">
+                  {/* <div className="col-lg-4 col-md-12">
                     <div className="grand-totall">
                       <div className="title-wrap">
                         <h4 className="cart-bottom-title section-bg-gary-cart">
@@ -337,17 +362,6 @@ const Cart = ({
                           {cartTotalPrice}
                         </span>
                       </h5>
-                      {/* {
-                        shippingOptions &&
-                        shippingOptions.map((value, i) => {
-                          return (<h5>
-                            {value.optionName}{" "}
-                            <span>
-                              {value.optionPriceText}
-                            </span>
-                          </h5>)
-                        })
-                      } */}
                       <h4 className="grand-totall-title">
                         {strings["Grand Total"]}{" "}
                         <span>
@@ -358,7 +372,7 @@ const Cart = ({
                         {strings["Proceed to Checkout"]}
                       </Link>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </Fragment>
             ) : (

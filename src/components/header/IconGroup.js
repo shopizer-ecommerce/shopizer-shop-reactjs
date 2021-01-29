@@ -31,6 +31,7 @@ const IconGroup = ({
   // const [idleTimer, setIdleTimer] = useState(null);
   const [searchData, setSearchData] = useState([]);
   const [searchText, setSearchText] = useState('');
+  const [useDetails, setUseDetails] = useState({});
   useEffect(() => {
     getCart(cartData.code, userData)
     // console.log(localStorage.getItem('thekey'))
@@ -48,8 +49,21 @@ const IconGroup = ({
     if (diffMins > 30) {
       logout()
     }
+    getProfile()
     // eslint-disable-next-line react-hooks/exhaustive-deps 
   }, [])
+  const getProfile = async () => {
+    let action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.PROFILE;
+    try {
+      let response = await WebService.get(action);
+      console.log(response);
+      if (response) {
+        setUseDetails(response)
+      }
+    }
+    catch (error) {
+    }
+  }
   const handleClick = e => {
     e.currentTarget.nextSibling.classList.toggle("active");
   };
@@ -120,8 +134,8 @@ const IconGroup = ({
         timeout={timeout} />
       <div className="same-style header-search">
         {
-          pathname.url !== '/checkout' &&
-          <button className="search-active" onClick={e => handleClick(e)}>
+          pathname.url !== '/checkout' && pathname.path !== '/category/:id' &&
+          < button className="search-active" onClick={e => handleClick(e)}>
             <i className="pe-7s-search" />
           </button>
         }
@@ -184,7 +198,21 @@ const IconGroup = ({
             }
             {
               userData &&
-              <div>
+              <div className="user-profile">
+                <div className="user-name">
+                  Welcome {useDetails.firstName} {useDetails.lastName}
+                </div>
+                <span className="user-email">{useDetails.emailAddress}</span>
+
+              </div>
+            }
+            {
+              userData &&
+              <li className="border-line"></li>
+            }
+            {
+              userData &&
+              <div style={{ marginTop: 12 }}>
                 <li>
                   <Link to={"/my-account"}>{strings["My Account"]}</Link>
                 </li>
@@ -248,7 +276,7 @@ const IconGroup = ({
           <i className="pe-7s-menu" />
         </button>
       </div>
-    </div>
+    </div >
   );
 };
 

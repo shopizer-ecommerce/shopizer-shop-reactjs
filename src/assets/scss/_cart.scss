@@ -328,6 +328,14 @@ h3.cart-page-title {
   }
 }
 
+.cart-total {
+  .box-custom {
+    display: flex;
+    justify-content: space-between;
+  }
+
+}
+
 .cart-tax,
 .discount-code-wrapper {
   padding: 45px 30px 50px;
@@ -335,6 +343,11 @@ h3.cart-page-title {
   border: 1px solid #ebebeb;
   border-radius: 5px;
   background-color: #f9f9f9;
+
+  &.coupon-code {
+    width: 48%;
+  }
+
 
   @media #{$lg-layout} {
     padding: 45px 18px 50px;
@@ -493,12 +506,16 @@ h3.cart-page-title {
   }
 }
 
+
 .grand-totall {
   padding: 45px 30px 50px;
-
   border: 1px solid #ebebeb;
   border-radius: 5px;
   background-color: #f9f9f9;
+
+  &.cart-total-box {
+    width: 48%;
+  }
 
   @media #{$lg-layout} {
     padding: 45px 18px 50px;
