@@ -133,16 +133,14 @@ const IconGroup = ({
         debounce={250}
         timeout={timeout} />
       <div className="same-style header-search">
-        {
-          pathname.url !== '/checkout' && pathname.path !== '/category/:id' &&
-          < button className="search-active" onClick={e => handleClick(e)}>
-            <i className="pe-7s-search" />
-          </button>
-        }
+
+        < button className="search-active" onClick={e => handleClick(e)}>
+          <i className="pe-7s-search" />
+        </button>
 
         <div className="search-content">
           <form >
-            <input type="text" placeholder="Search" value={searchText} onKeyDown={(e) => keyDownFunction(e)} onChange={e => onSearch(e)} />
+            <input type="text" placeholder={strings["Search"]} value={searchText} onKeyDown={(e) => keyDownFunction(e)} onChange={e => onSearch(e)} />
             <button className="button-search" onClick={onSearchClick}>
               <i className="pe-7s-search" />
             </button>

@@ -6,14 +6,14 @@ import React from "react";
 //   getIndividualColors,
 //   getProductsIndividualSizes
 // } from "../../helpers/product";
-import ShopSearch from "../../components/product/ShopSearch";
+// import ShopSearch from "../../components/product/ShopSearch";
 import ShopCategories from "../../components/product/ShopCategories";
 import ShopColor from "../../components/product/ShopColor";
 import ShopSize from "../../components/product/ShopSize";
 // import ShopTag from "../../components/product/ShopTag";
 import ShopManufacture from "../../components/product/ShopManufacture";
 
-const ShopSidebar = ({ strings, getCategoryParams, getSortParams, sideSpaceClass, uniqueCategories, uniqueColors, uniqueSizes, uniqueManufacture }) => {
+const ShopSidebar = ({ string, getCategoryParams, getSortParams, sideSpaceClass, uniqueCategories, uniqueColors, uniqueSizes, uniqueManufacture }) => {
   // const uniqueCategories = getIndividualCategories(products);
   // const uniqueColors = getIndividualColors(products);
   // const uniqueSizes = getProductsIndividualSizes(products);
@@ -22,33 +22,33 @@ const ShopSidebar = ({ strings, getCategoryParams, getSortParams, sideSpaceClass
   return (
     <div className={`sidebar-style ${sideSpaceClass ? sideSpaceClass : ""}`}>
       {/* shop search */}
-      <ShopSearch strings={strings} />
+      {/* <ShopSearch strings={strings} /> */}
 
       {/* filter by categories */}
       {
         uniqueCategories.length > 0 &&
-        <ShopCategories categories={uniqueCategories} getCategoryParams={getCategoryParams} />
+        <ShopCategories string={string} categories={uniqueCategories} getCategoryParams={getCategoryParams} />
       }
 
 
       {/* filter by manufacture */}
       {
         uniqueManufacture.length > 0 &&
-        <ShopManufacture manufactures={uniqueManufacture} getSortParams={getSortParams} />
+        <ShopManufacture string={string} manufactures={uniqueManufacture} getSortParams={getSortParams} />
       }
 
 
       {/* filter by color */}
       {
         uniqueColors.length > 0 &&
-        <ShopColor colors={uniqueColors} getSortParams={getSortParams} />
+        <ShopColor string={string} colors={uniqueColors} getSortParams={getSortParams} />
       }
 
 
       {/* filter by size */}
       {
         uniqueSizes.length > 0 &&
-        <ShopSize sizes={uniqueSizes} getSortParams={getSortParams} />
+        <ShopSize string={string} sizes={uniqueSizes} getSortParams={getSortParams} />
       }
 
 

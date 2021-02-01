@@ -100,7 +100,7 @@ const ShopGridStandard = ({ setCategoryID, strings, location, defaultStore, curr
     }, [categoryID, offset]);
     const getProductList = async (categoryid, size, manufacture) => {
         setLoader(true)
-        setProductData([]);
+        // setProductData([]);
         // let action = `${constant.ACTION.PRODUCTS} + '?store=' + defaultStore + '&lang=' + currentLanguageCode + '&start=' + offset + '&count=' + pageLimit + '&category=' + categoryID`;
         let action = `${constant.ACTION.PRODUCTS}?${isCheckValueAndSetParams('&store=', defaultStore)}${isCheckValueAndSetParams('&lang=', currentLanguageCode)}${isCheckValueAndSetParams('&page=', offset)}${isCheckValueAndSetParams('&count=', pageLimit)}${isCheckValueAndSetParams('&category=', categoryid)}${isCheckValueAndSetParams('&optionValues=', size.join())}${isCheckValueAndSetParams('&manufacturer=', manufacture.join())}`;
         try {
@@ -118,7 +118,7 @@ const ShopGridStandard = ({ setCategoryID, strings, location, defaultStore, curr
         getCategoryDetails(categoryid)
     }
     const getCategoryDetails = async (categoryid) => {
-        let action = constant.ACTION.CATEGORY + categoryid + '?store=' + defaultStore;
+        let action = constant.ACTION.CATEGORY + categoryid + '?store=' + defaultStore + '&lang=' + currentLanguageCode;
         try {
             let response = await WebService.get(action);
             // console.log(response.children);
@@ -133,7 +133,7 @@ const ShopGridStandard = ({ setCategoryID, strings, location, defaultStore, curr
         getManufacturers(categoryid)
     }
     const getManufacturers = async (categoryid) => {
-        let action = constant.ACTION.CATEGORY + categoryid + '/' + constant.ACTION.MANUFACTURERS + '?store=' + defaultStore;
+        let action = constant.ACTION.CATEGORY + categoryid + '/' + constant.ACTION.MANUFACTURERS + '?store=' + defaultStore + '&lang=' + currentLanguageCode
         try {
             let response = await WebService.get(action);
             // console.log(response);
@@ -145,7 +145,7 @@ const ShopGridStandard = ({ setCategoryID, strings, location, defaultStore, curr
         getVariants(categoryid)
     }
     const getVariants = async (categoryid) => {
-        let action = constant.ACTION.CATEGORY + categoryid + '/' + constant.ACTION.VARIANTS + '?store=' + defaultStore;
+        let action = constant.ACTION.CATEGORY + categoryid + '/' + constant.ACTION.VARIANTS + '?store=' + defaultStore + '&lang=' + currentLanguageCode;
         try {
             let response = await WebService.get(action);
             // console.log(response);
@@ -169,7 +169,7 @@ const ShopGridStandard = ({ setCategoryID, strings, location, defaultStore, curr
                 <meta name="description" content={productDetails && productDetails.description.metaDescription} />
             </MetaTags>
 
-            <BreadcrumbsItem to={process.env.PUBLIC_URL + '/'}>Home</BreadcrumbsItem>
+            <BreadcrumbsItem to={process.env.PUBLIC_URL + '/'}>{strings["Home"]}</BreadcrumbsItem>
             {productDetails && productDetails.parent !== null && <BreadcrumbsItem onClick={() => setCategoryID(productDetails.parent.id)} to={"/category/" + productDetails.parent.code}>{productDetails.parent.code}</BreadcrumbsItem>}
             <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>{productDetails && productDetails.description.name}</BreadcrumbsItem>
 
@@ -187,7 +187,7 @@ const ShopGridStandard = ({ setCategoryID, strings, location, defaultStore, curr
                                     <div className="col-lg-3 order-2 order-lg-1">
                                         {/* shop sidebar */}
                                         {/* <ShopSidebar products={products} getSortParams={getSortParams} sideSpaceClass="mr-30" /> */}
-                                        <ShopSidebar strings={strings} getSortParams={getSortParams} getCategoryParams={getCategoryParams} uniqueCategories={subCategory} uniqueColors={color} uniqueSizes={size} uniqueManufacture={manufacture} sideSpaceClass="mr-30" />
+                                        <ShopSidebar string={strings} getSortParams={getSortParams} getCategoryParams={getCategoryParams} uniqueCategories={subCategory} uniqueColors={color} uniqueSizes={size} uniqueManufacture={manufacture} sideSpaceClass="mr-30" />
                                     </div>
                                     <div className="col-lg-9 order-1 order-lg-2">
                                         {/* shop topbar default */}
@@ -222,7 +222,7 @@ const ShopGridStandard = ({ setCategoryID, strings, location, defaultStore, curr
                                             <i className="pe-7s-shopbag"></i>
                                         </div>
                                         <div className="item-empty-area__text">
-                                            No items found in category <br />{" "}
+                                            {strings["No items found in category"]}<br />{" "}
 
                                         </div>
                                     </div>

@@ -114,7 +114,7 @@ const registerForm = {
     }
   },
 };
-const LoginRegister = ({ strings, props, location, setLoader, setUser, getCart, getCountry, getState, countryData, currentLocation, stateData, cartItems, addToCart, defaultStore }) => {
+const LoginRegister = ({ merchant, strings, props, location, setLoader, setUser, getCart, getCountry, getState, countryData, currentLocation, stateData, cartItems, addToCart, defaultStore }) => {
   const { pathname } = location;
   const { addToast } = useToasts();
   const history = useHistory();
@@ -235,15 +235,15 @@ const LoginRegister = ({ strings, props, location, setLoader, setUser, getCart, 
   return (
     <Fragment>
       <MetaTags>
-        <title>Shopizer | Login</title>
+        <title>{merchant.name} | {strings["Login"]}</title>
         {/* <meta
           name="description"
           content="Compare page of flone react minimalist eCommerce template."
         /> */}
       </MetaTags>
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>{strings["Home"]}</BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
-        Login Register
+        {strings["Login"]}
       </BreadcrumbsItem>
       <LayoutOne headerContainerClass="container-fluid"
         headerPaddingClass="header-padding-2"
@@ -419,6 +419,7 @@ const mapStateToProps = (state) => {
     currentLocation: state.userData.currentAddress,
     stateData: state.userData.state,
     defaultStore: state.merchantData.defaultStore,
+    merchant: state.merchantData.merchant
   };
 };
 const mapDispatchToProps = dispatch => {

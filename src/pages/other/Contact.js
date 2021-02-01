@@ -86,15 +86,15 @@ const Contact = ({ strings, location, merchant, setLoader }) => {
   return (
     <Fragment>
       <MetaTags>
-        <title>Shopizer | Contact</title>
+        <title>{merchant.name} | {strings["Contact"]}</title>
         {/* <meta
           name="description"
           content="Contact of flone react minimalist eCommerce template."
         /> */}
       </MetaTags>
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>{strings["Home"]}</BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
-        Contact
+        {strings["Contact"]}
       </BreadcrumbsItem>
       <LayoutOne headerContainerClass="container-fluid"
         headerPaddingClass="header-padding-2"

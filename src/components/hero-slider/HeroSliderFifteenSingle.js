@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { multilanguage } from "redux-multilanguage";
 const HeroSliderFifteenSingle = ({ data, sliderClass, strings }) => {
   return (
@@ -20,12 +20,12 @@ const HeroSliderFifteenSingle = ({ data, sliderClass, strings }) => {
                 dangerouslySetInnerHTML={{ __html: data.subtitle }}
               />
               <div className="slider-btn btn-hover">
-                <Link
+                {/* <Link
                   className="animated rounden-btn"
                   to={process.env.PUBLIC_URL + data.url}
                 >
                   {strings["Shop Now"]}
-                </Link>
+                </Link> */}
               </div>
             </div>
           </div>

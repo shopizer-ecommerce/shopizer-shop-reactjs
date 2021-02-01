@@ -20,8 +20,8 @@ const OrderDetails = ({
     orderID,
     strings,
     setLoader,
-    setProductID
-
+    setProductID,
+    merchant
 }) => {
     // const { addToast } = useToasts();
     const { pathname } = location;
@@ -53,16 +53,16 @@ const OrderDetails = ({
     return (
         <Fragment>
             <MetaTags>
-                <title>Importa | Order Details</title>
+                <title>{merchant.name} | {strings["Order Details"]}</title>
                 {/* <meta
           name="description"
           content="Wishlist page of flone react minimalist eCommerce template."
         /> */}
             </MetaTags>
 
-            <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
+            <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>{strings["Home"]}</BreadcrumbsItem>
             <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
-                Order Details
+                {strings["Order Details"]}
             </BreadcrumbsItem>
 
             <LayoutOne headerContainerClass="container-fluid"
@@ -207,7 +207,8 @@ OrderDetails.propTypes = {
 const mapStateToProps = (state, ownProps) => {
     const order_id = ownProps.match.params.id;
     return {
-        orderID: order_id
+        orderID: order_id,
+        merchant: state.merchantData.merchant
     };
 };
 

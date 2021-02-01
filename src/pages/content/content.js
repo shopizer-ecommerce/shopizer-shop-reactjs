@@ -8,9 +8,9 @@ import { setLoader } from "../../redux/actions/loaderActions";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { connect } from 'react-redux';
+import { multilanguage } from "redux-multilanguage";
 
-
-const Content = ({ contentID, setLoader }) => {
+const Content = ({ strings, contentID, setLoader }) => {
 
     const [contentDetails, setContentDetail] = useState('');
     useEffect(() => {
@@ -42,7 +42,7 @@ const Content = ({ contentID, setLoader }) => {
                 />
             </MetaTags>
 
-            <BreadcrumbsItem to="/">Home</BreadcrumbsItem>
+            <BreadcrumbsItem to="/">{strings["Home"]}</BreadcrumbsItem>
             <BreadcrumbsItem to="/content">{contentDetails.name} </BreadcrumbsItem>
 
             <LayoutOne headerContainerClass="container-fluid"
@@ -74,4 +74,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Content);
+export default connect(mapStateToProps, mapDispatchToProps)(multilanguage(Content));

@@ -5,22 +5,23 @@ import MetaTags from "react-meta-tags";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
-
-const NotFound = ({ location }) => {
+import { multilanguage } from "redux-multilanguage";
+const NotFound = ({ location, strings }) => {
   const { pathname } = location;
 
   return (
     <Fragment>
       <MetaTags>
-        <title>Shopizer | Not Found</title>
+        <title>Importa | {strings["Page Not Found"]}</title>
         {/* <meta
           name="description"
           content="404 page of flone react minimalist eCommerce template."
         /> */}
       </MetaTags>
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
-        404 page
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>{strings["Home"]}</BreadcrumbsItem>
+      <BreadcrumbsItem to={"/login"}>
+
+        {strings["Page Not Found"]}
       </BreadcrumbsItem>
       <LayoutOne headerContainerClass="container-fluid"
         headerPaddingClass="header-padding-2"
@@ -33,23 +34,22 @@ const NotFound = ({ location }) => {
               <div className="col-xl-7 col-lg-8 text-center">
                 <div className="error">
                   <h1>404</h1>
-                  <h2>OPPS! PAGE NOT FOUND</h2>
+                  <h2>OPPS! {strings["Page Not Found"]}</h2>
                   <p>
-                    Sorry but the page you are looking for does not exist, have
-                    been removed, name changed or is temporarity unavailable.
+                    {strings["404 Page Note"]}
                   </p>
-                  <form className="searchform mb-50">
-                    <input
+                  {/* <form className="searchform mb-50"> */}
+                  {/* <input
                       type="text"
                       name="search"
                       id="error_search"
                       placeholder="Search..."
                       className="searchform__input"
-                    />
-                    <button type="submit" className="searchform__submit">
+                    /> */}
+                  {/* <button type="submit" className="searchform__submit">
                       <i className="fa fa-search" />
-                    </button>
-                  </form>
+                    </button> */}
+                  {/* </form> */}
                   <Link to={process.env.PUBLIC_URL + "/"} className="error-btn">
                     Back to home page
                   </Link>
@@ -67,4 +67,4 @@ NotFound.propTypes = {
   location: PropTypes.object
 };
 
-export default NotFound;
+export default multilanguage(NotFound);

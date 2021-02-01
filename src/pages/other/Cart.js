@@ -64,7 +64,8 @@ const Cart = ({
   countryData,
   stateData,
   getState,
-  strings
+  strings,
+  merchant
   // deleteAllFromCart,
 
 }) => {
@@ -98,16 +99,16 @@ const Cart = ({
   return (
     <Fragment>
       <MetaTags>
-        <title>Importa | Place your order</title>
+        <title>{merchant.name} | {strings["Place your order"]}</title>
         {/* <meta
           name="description"
           content="Cart page of flone react minimalist eCommerce template."
         /> */}
       </MetaTags>
 
-      <BreadcrumbsItem to="/">Home</BreadcrumbsItem>
+      <BreadcrumbsItem to="/">{strings["Home"]}</BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
-        Cart
+        {strings["Cart"]}
       </BreadcrumbsItem>
 
       <LayoutOne headerContainerClass="container-fluid"
@@ -383,7 +384,7 @@ const Cart = ({
                         <i className="pe-7s-cart"></i>
                       </div>
                       <div className="item-empty-area__text">
-                        No items found in cart <br />{" "}
+                        {strings["No items found in cart"]} <br />{" "}
                         <Link to="/">
                           Shop Now
                       </Link>
@@ -415,7 +416,8 @@ const mapStateToProps = state => {
     cartItems: state.cartData.cartItems,
     defaultStore: state.merchantData.defaultStore,
     countryData: state.userData.country,
-    stateData: state.userData.state
+    stateData: state.userData.state,
+    merchant: state.merchantData.merchant
   };
 };
 

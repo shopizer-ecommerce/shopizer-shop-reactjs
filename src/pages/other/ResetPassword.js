@@ -39,7 +39,7 @@ const resetForm = {
     },
 };
 
-const ResetPassword = ({ strings, props, location, setLoader, defaultStore, storeCode, resetID }) => {
+const ResetPassword = ({ merchant, strings, props, location, setLoader, defaultStore, storeCode, resetID }) => {
     // const { pathname } = location;
     const { addToast } = useToasts();
     const history = useHistory();
@@ -119,16 +119,16 @@ const ResetPassword = ({ strings, props, location, setLoader, defaultStore, stor
     return (
         <Fragment>
             <MetaTags>
-                <title>Shopizer | Reset Password</title>
+                <title>{merchant.name} | {strings["Reset Password"]}</title>
                 {/* <meta
           name="description"
           content="Compare page of flone react minimalist eCommerce template."
         /> */}
             </MetaTags>
-            <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
+            <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>{strings["Home"]}</BreadcrumbsItem>
             <BreadcrumbsItem to={"/login"}>
-                Reset Password
-                 </BreadcrumbsItem>
+                {strings["Reset Password"]}
+            </BreadcrumbsItem>
             <LayoutOne headerContainerClass="container-fluid"
                 headerPaddingClass="header-padding-2"
                 headerTop="visible">
@@ -229,6 +229,7 @@ const mapStateToProps = (state, ownProps) => {
         defaultStore: state.merchantData.defaultStore,
         storeCode: ownProps.match.params.code,
         resetID: ownProps.match.params.id,
+        merchant: state.merchantData.merchant
     };
 };
 const mapDispatchToProps = dispatch => {

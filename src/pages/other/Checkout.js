@@ -239,7 +239,7 @@ const CARD_ELEMENT_OPTIONS = {
     }
   }
 };
-const Checkout = ({ strings, location, cartID, defaultStore, getCountry, getState, countryData, stateData, currentLocation, userData, setLoader, deleteAllFromCart }) => {
+const Checkout = ({ merchant, strings, location, cartID, defaultStore, getCountry, getState, countryData, stateData, currentLocation, userData, setLoader, deleteAllFromCart }) => {
   const { pathname } = location;
   const history = useHistory();
   const { addToast } = useToasts();
@@ -617,15 +617,15 @@ console.log(process.env.REACT_APP_PAYMENT_TYPE);
   return (
     <Fragment>
       <MetaTags>
-        <title>Importa | Checkout</title>
+        <title>{merchant.name} | {strings["Checkout"]}</title>
         {/* <meta
           name="description"
           content="Checkout page of flone react minimalist eCommerce template."
         /> */}
       </MetaTags>
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>{strings["Home"]}</BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
-        Checkout
+      {strings["Checkout"]}
       </BreadcrumbsItem>
       <LayoutOne headerContainerClass="container-fluid"
         headerPaddingClass="header-padding-2"
@@ -1127,7 +1127,7 @@ console.log(process.env.REACT_APP_PAYMENT_TYPE);
                         <i className="pe-7s-cash"></i>
                       </div>
                       <div className="item-empty-area__text">
-                        No items found in cart to checkout <br />{" "}
+                      {strings["No items found in checkout"]} <br />{" "}
                         <Link to={"/"}>
                           Shop Now
                       </Link>
@@ -1156,7 +1156,8 @@ const mapStateToProps = state => {
     stateData: state.userData.state,
     currentLocation: state.userData.currentAddress,
     userData: state.userData.userData,
-    defaultStore: state.merchantData.defaultStore
+    defaultStore: state.merchantData.defaultStore,
+    merchant: state.merchantData.merchant
     // currency: state.currencyData
   };
 };

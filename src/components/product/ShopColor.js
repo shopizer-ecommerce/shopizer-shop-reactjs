@@ -2,10 +2,10 @@ import PropTypes from "prop-types";
 import React from "react";
 // import { setActiveSort } from "../../helpers/product";
 
-const ShopColor = ({ colors, getSortParams }) => {
+const ShopColor = ({ string, colors, getSortParams }) => {
   return (
     <div className="sidebar-widget mt-30">
-      <h4 className="pro-sidebar-title">Color </h4>
+      <h4 className="pro-sidebar-title">{string["Color"]}</h4>
       <div className="sidebar-widget-list mt-20">
         {colors.length > 0 ? (
           <ul>

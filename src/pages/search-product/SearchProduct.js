@@ -15,7 +15,7 @@ import { setLoader } from "../../redux/actions/loaderActions";
 import { setCategoryID } from "../../redux/actions/productActions";
 import { multilanguage } from "redux-multilanguage";
 
-const SearchProduct = ({ strings, location, defaultStore, currentLanguageCode, setLoader, searchID, setCategoryID }) => {
+const SearchProduct = ({ strings, location, defaultStore, currentLanguageCode, setLoader, searchID, setCategoryID, merchant }) => {
     const [layout, setLayout] = useState('grid three-column');
 
     const [productData, setProductData] = useState([]);
@@ -63,12 +63,12 @@ const SearchProduct = ({ strings, location, defaultStore, currentLanguageCode, s
     return (
         <Fragment>
             <MetaTags>
-                <title>Importa | Search</title>
+                <title>{merchant.name} | {strings["Search"]}</title>
                 <meta name="description" content="" />
             </MetaTags>
 
-            <BreadcrumbsItem to={process.env.PUBLIC_URL + '/'}>Home</BreadcrumbsItem>
-            <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>Search</BreadcrumbsItem>
+            <BreadcrumbsItem to={process.env.PUBLIC_URL + '/'}>{strings["Home"]}</BreadcrumbsItem>
+            <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>{strings["Search"]}</BreadcrumbsItem>
 
             <LayoutOne headerContainerClass="container-fluid"
                 headerPaddingClass="header-padding-2"
@@ -110,7 +110,8 @@ const mapStateToProps = (state, ownProps) => {
     return {
         currentLanguageCode: state.multilanguage.currentLanguageCode,
         defaultStore: state.merchantData.defaultStore,
-        searchID: searchID
+        searchID: searchID,
+        merchant: state.merchantData.merchant
     }
 }
 const mapDispatchToProps = dispatch => {

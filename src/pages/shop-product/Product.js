@@ -11,7 +11,8 @@ import ProductImageDescription from "../../wrappers/product/ProductImageDescript
 import WebService from '../../util/webService';
 import constant from '../../util/constant';
 import { setLoader } from "../../redux/actions/loaderActions";
-const Product = ({ location, productID, currentLanguageCode, setLoader, defaultStore }) => {
+import { multilanguage } from "redux-multilanguage";
+const Product = ({ strings, location, productID, currentLanguageCode, setLoader, defaultStore }) => {
   const { pathname } = location;
   const [productDetails, setProductDetails] = useState();
   const [productReview, setProductReview] = useState([]);
@@ -55,7 +56,7 @@ const Product = ({ location, productID, currentLanguageCode, setLoader, defaultS
         />
       </MetaTags>
 
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>{strings["Home"]}</BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
         {productDetails && productDetails.description.name}
       </BreadcrumbsItem>
@@ -120,4 +121,4 @@ const mapDispatchToProps = dispatch => {
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Product);
+export default connect(mapStateToProps, mapDispatchToProps)(multilanguage(Product));

@@ -244,7 +244,7 @@ const billingForm = {
     }
   },
 }
-const MyAccount = ({ strings, location, setLoader, getState, countryData, stateData, userData }) => {
+const MyAccount = ({ merchant, strings, location, setLoader, getState, countryData, stateData, userData }) => {
   const { pathname } = location;
   const { addToast } = useToasts();
   const { register, handleSubmit, errors, watch, setError, clearErrors, reset } = useForm({
@@ -561,15 +561,15 @@ const MyAccount = ({ strings, location, setLoader, getState, countryData, stateD
   return (
     <Fragment>
       <MetaTags>
-        <title>Shopizer | My Account</title>
+        <title>{merchant.name} | {strings["My Account"]}</title>
         {/* <meta
           name="description"
           content="Compare page of flone react minimalist eCommerce template."
         /> */}
       </MetaTags>
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>{strings["Home"]}</BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
-        My Account
+        {strings["My Account"]}
       </BreadcrumbsItem>
       <LayoutOne headerContainerClass="container-fluid"
         headerPaddingClass="header-padding-2"
@@ -954,7 +954,8 @@ const mapStateToProps = (state) => {
     userData: state.userData.userData,
     // cartItems: state.cartData.cartItems,
     // currentLocation: state.userData.currentAddress,
-    stateData: state.userData.state
+    stateData: state.userData.state,
+    merchant: state.merchantData.merchant
     // defaultStore: state.merchantData.defaultStore,
   };
 };

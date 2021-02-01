@@ -19,7 +19,8 @@ const RecentOrder = ({
   strings,
   location,
   setLoader,
-  setProductID
+  setProductID,
+  merchant
   // cartItems,
   // currency,
   // addToCart,
@@ -32,7 +33,8 @@ const RecentOrder = ({
   const [orderData, setOrderData] = useState({});
   useEffect(() => {
     getOrder();
-  })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const getOrder = async () => {
     setLoader(true)
@@ -56,16 +58,16 @@ const RecentOrder = ({
   return (
     <Fragment>
       <MetaTags>
-        <title>Importa | Recent Order</title>
+        <title>{merchant.name} | {strings["Recent Orders"]}</title>
         {/* <meta
           name="description"
           content="Wishlist page of flone react minimalist eCommerce template."
         /> */}
       </MetaTags>
 
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>{strings["Home"]}</BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
-        Recent Order
+        {strings["Recent Orders"]}
       </BreadcrumbsItem>
 
       <LayoutOne headerContainerClass="container-fluid"
@@ -184,6 +186,7 @@ RecentOrder.propTypes = {
 
 const mapStateToProps = state => {
   return {
+    merchant: state.merchantData.merchant
   };
 };
 

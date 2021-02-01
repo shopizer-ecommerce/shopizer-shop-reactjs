@@ -30,7 +30,7 @@ const forgotForm = {
     },
 };
 
-const ForgotPassword = ({ strings, props, location, setLoader, defaultStore }) => {
+const ForgotPassword = ({ merchant, strings, props, location, setLoader, defaultStore }) => {
     // const { pathname } = location;
     const { addToast } = useToasts();
     // const history = useHistory();
@@ -58,16 +58,16 @@ const ForgotPassword = ({ strings, props, location, setLoader, defaultStore }) =
     return (
         <Fragment>
             <MetaTags>
-                <title>Shopizer | My Account</title>
+                <title>{merchant.name} | {strings["Forgot Password"]}</title>
                 {/* <meta
           name="description"
           content="Compare page of flone react minimalist eCommerce template."
         /> */}
             </MetaTags>
-            <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
+            <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>{strings["Home"]}</BreadcrumbsItem>
             <BreadcrumbsItem to={"/login"}>
-                My Account
-                 </BreadcrumbsItem>
+                {strings["Forgot Password"]}
+            </BreadcrumbsItem>
             <LayoutOne headerContainerClass="container-fluid"
                 headerPaddingClass="header-padding-2"
                 headerTop="visible">
@@ -139,6 +139,7 @@ ForgotPassword.propTypes = {
 const mapStateToProps = (state) => {
     return {
         defaultStore: state.merchantData.defaultStore,
+        merchant: state.merchantData.merchant
     };
 };
 const mapDispatchToProps = dispatch => {

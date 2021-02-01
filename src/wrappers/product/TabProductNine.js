@@ -17,7 +17,8 @@ const TabProductNine = ({
   category,
   containerClass,
   extraClass,
-  defaultStore
+  defaultStore,
+  currentLanguageCode
 }) => {
   // const [featuredData, setFeaturedData] = useState([]);
   const [categoryData, setCategoryData] = useState([]);
@@ -27,7 +28,7 @@ const TabProductNine = ({
   }, []);
   const getProductList = async () => {
     setLoader(true)
-    let action = constant.ACTION.PRODUCT_GROUP + 'FEATURED_ITEM?store=' + defaultStore;
+    let action = constant.ACTION.PRODUCT_GROUP + 'FEATURED_ITEM?store=' + defaultStore + '&lang=' + currentLanguageCode;
     try {
       let response = await WebService.get(action);
       // console.log(response);
@@ -112,6 +113,7 @@ TabProductNine.propTypes = {
 
 const mapStateToProps = state => {
   return {
+    currentLanguageCode: state.multilanguage.currentLanguageCode,
     defaultStore: state.merchantData.defaultStore
   };
 };

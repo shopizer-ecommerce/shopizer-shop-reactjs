@@ -68,9 +68,9 @@ export const getCart = (cartID, userData) => {
     try {
       let action;
       if (userData) {
-        action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.CARTS + '?cart=' + cartID;
+        action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.CARTS + '?cart=' + cartID + '&lang=' + JSON.parse(localStorage.getItem('redux_localstorage_simple')).multilanguage.currentLanguageCode;
       } else {
-        action = constant.ACTION.CART + cartID;
+        action = constant.ACTION.CART + cartID + '?lang=' + JSON.parse(localStorage.getItem('redux_localstorage_simple')).multilanguage.currentLanguageCode
       }
 
       let response = await WebService.get(action);

@@ -23,7 +23,8 @@ const HeaderOne = ({
   headerPositionClass,
   headerBgClass,
   defaultStore,
-  getCurrentLocation
+  getCurrentLocation,
+  currentLanguageCode
 }) => {
   const history = useHistory();
   const [scroll, setScroll] = useState(0);
@@ -42,11 +43,13 @@ const HeaderOne = ({
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
+
+    // localStorage.setItem('selectedLang', currentLanguageCode)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getCategoryHierarchy = async () => {
-    let action = constant.ACTION.CATEGORY + '?count=20&page=0&store=' + defaultStore;
+    let action = constant.ACTION.CATEGORY + '?count=20&page=0&store=' + defaultStore + '&lang=' + currentLanguageCode;
     try {
       let response = await WebService.get(action);
       if (response) {
@@ -61,7 +64,7 @@ const HeaderOne = ({
 
   }
   const getContent = async () => {
-    let action = constant.ACTION.CONTENT + constant.ACTION.PAGES + '?&store=' + defaultStore;
+    let action = constant.ACTION.CONTENT + constant.ACTION.PAGES + '?&store=' + defaultStore + '&lang=' + currentLanguageCode;
     try {
       let response = await WebService.get(action);
       if (response) {
@@ -133,6 +136,7 @@ HeaderOne.propTypes = {
 const mapStateToProps = state => {
   return {
     merchant: state.merchantData.merchant,
+    currentLanguageCode: state.multilanguage.currentLanguageCode,
     defaultStore: state.merchantData.defaultStore
   };
 };

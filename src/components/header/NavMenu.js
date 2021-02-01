@@ -34,7 +34,7 @@ const NavMenu = ({ props, strings, menuWhiteClass, sidebarMenu, categories, cont
               return (
                 item.visible &&
                 <li key={index}>
-                  <Link to={"/category/" + item.description.friendlyUrl} onClick={() => onClickCategory(item)}>{strings[item.description.name] ? strings[item.description.name] : item.description.name}
+                  <Link to={"/category/" + item.description.friendlyUrl} onClick={() => onClickCategory(item)}>{item.description.name}
                     {item.children && item.children.length > 0 ?
                       sidebarMenu ? (
                         <span>
@@ -54,7 +54,7 @@ const NavMenu = ({ props, strings, menuWhiteClass, sidebarMenu, categories, cont
                         item.children.map((submenu, index) => {
                           return (<li key={index}>
                             <Link to={"/category/" + submenu.description.friendlyUrl} onClick={() => onClickCategory(submenu)} >
-                              {strings[submenu.description.name] ? strings[submenu.description.name] : submenu.description.name}
+                              {submenu.description.name}
                             </Link>
                           </li>)
                         })
@@ -70,7 +70,7 @@ const NavMenu = ({ props, strings, menuWhiteClass, sidebarMenu, categories, cont
             contents.map((content, index) => {
               return (
                 content.displayedInMenu &&
-                <li key={index}> <Link to={"/content/" + content.slug} onClick={() => onClickContent(content.code)}> {strings[content.name] ? strings[content.name] : content.name}</Link></li>
+                <li key={index}> <Link to={"/content/" + content.slug} onClick={() => onClickContent(content.code)}> {content.name}</Link></li>
               )
             })
           }
