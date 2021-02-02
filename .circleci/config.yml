@@ -29,13 +29,10 @@ jobs:
            docker push shopizerecomm/shopizer-shop-reactjs:latest
        - slack/notify:
           channel: team-nimblechapps
-          event: fail
-          template: basic_fail_1
 
 
 # Orchestrate our job run sequence
 workflows:
   build_and_deploy:
     jobs:
-      - deploys: 
-          context: slack-secrets
+      - deploy
