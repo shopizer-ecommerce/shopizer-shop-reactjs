@@ -83,7 +83,9 @@ docker run -e "REACT_APP_BASE_URL=http://localhost:8080" \
 -e "REACT_APP_MERCHANT=DEFAULT" \
 -it shopizerecomm/shopizer-shop
 
-docker run 
+docker run \
 -e "REACT_APP_MERCHANT=DEFAULT" \
 -e "REACT_APP_BASE_URL=http://localhost:8080" \
--it --rm -p 8787:80 shopizerecomm/shopizer-shop
+-it --rm -p 8787:80 shopizerecomm/shopizer-shop-reactjs
+
+http://localhost:8787
