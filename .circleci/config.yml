@@ -25,15 +25,17 @@ jobs:
            docker login -u shopizerecomm -p $DOCKERHUB_PASSWORD
        - run: |
            docker build . -t shopizerecomm/shopizer-shop-reactjs:latest
+       - run: |
+           docker push shopizerecomm/shopizer-shop-reactjs:latest
        - slack/notify:
           channel: team-nimblechapps
           event: fail
           template: basic_fail_1
-       - run: |
-           docker push shopizerecomm/shopizer-shop-reactjs:latest
+
 
 # Orchestrate our job run sequence
 workflows:
   build_and_deploy:
     jobs:
-      - deploy
+      - deploys: 
+          context: slack-secrets
