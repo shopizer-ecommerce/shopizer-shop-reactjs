@@ -27,8 +27,9 @@ jobs:
            docker build . -t shopizerecomm/shopizer-shop-reactjs:latest
        - run: |
            docker push shopizerecomm/shopizer-shop-reactjs:latest
-       - slack/notify:
-          channel: team-nimblechapps
+       - slack/status:
+           fail_only: true
+           webhook: $SLACK_SHOP_WEBHOOK
 
 
 # Orchestrate our job run sequence
