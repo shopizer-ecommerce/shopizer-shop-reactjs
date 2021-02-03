@@ -7,7 +7,7 @@ import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { multilanguage } from "redux-multilanguage";
 const NotFound = ({ location, strings }) => {
-  const { pathname } = location;
+  // const { pathname } = location;
 
   return (
     <Fragment>

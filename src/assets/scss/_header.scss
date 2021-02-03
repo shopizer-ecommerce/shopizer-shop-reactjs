@@ -107,7 +107,11 @@
 }
 
 .logo {
-  margin-top: 13px;
+  margin-top: 14px;
+
+  img {
+    max-width: 100%;
+  }
 
   @media #{$md-layout} {
     margin-top: 0;
@@ -182,7 +186,7 @@
 
         display: inline-block;
 
-        padding: 0 15px;
+        padding: 0 12px;
 
         ul.submenu {
           position: absolute;
@@ -479,7 +483,11 @@
 }
 
 .stick .logo {
-  margin-top: 2px;
+  // margin-top: 2px;
+
+  img {
+    max-width: 100%;
+  }
 }
 
 .stick .header-right-wrap {
@@ -2141,6 +2149,10 @@
   }
 
   .logo {
+    img {
+      max-width: 100%
+    }
+
     margin-top: 22px;
     margin-bottom: 18px;
 
@@ -2906,6 +2918,34 @@
           }
         }
       }
+    }
+  }
+}
+
+@media only screen and (min-width:1025px) and (max-width:1225px) {
+  .logo {
+    margin-top: 20px;
+  }
+
+  .main-menu nav ul li {
+    padding: 0 7px;
+
+    a {
+      font-size: 12px;
+    }
+  }
+}
+
+@media only screen and (min-width:992px) and (max-width:1024px) {
+  .logo {
+    margin-top: 24px;
+  }
+
+  .main-menu nav ul li {
+    padding: 0 7px;
+
+    a {
+      font-size: 12px;
     }
   }
 }

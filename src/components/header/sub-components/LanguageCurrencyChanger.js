@@ -13,6 +13,7 @@ const LanguageCurrencyChanger = ({
 }) => {
   const changeLanguageTrigger = e => {
     const languageCode = e.target.value;
+    window.location.reload(false)
     dispatch(changeLanguage(languageCode));
   };
 

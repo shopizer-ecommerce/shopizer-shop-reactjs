@@ -49,15 +49,15 @@ const FooterOne = ({
     >
       <div className={`${containerClass ? containerClass : "container"}`}>
         <div className="row">
-          <div className={sideMenu ? "col-xl-3 col-sm-4" : "col-lg-2 col-sm-4"}>
+          <div className={sideMenu ? "col-xl-3 col-sm-3" : "col-lg-2 col-sm-3"}>
             {/* footer copyright */}
             <FooterCopyright
               footerLogo="/assets/img/logo/logo.png"
               spaceBottomClass="mb-30"
             />
           </div>
-          <div className={sideMenu ? "col-xl-3 col-sm-4" : "col-lg-3 col-sm-4"}>
-            <div className="footer-widget mb-30 ml-30">
+          <div className={sideMenu ? "col-xl-3 col-sm-3" : "col-lg-3 col-sm-3"}>
+            <div className="footer-widget mb-30">
               <div className="footer-title">
                 <h3>{strings["Address"]}</h3>
               </div>
@@ -87,8 +87,8 @@ const FooterOne = ({
               </div>
             </div>
           </div>
-          <div className={sideMenu ? "col-xl-3 col-sm-4" : "col-lg-3 col-sm-4"}>
-            <div className={sideMenu ? "footer-widget mb-30 ml-95" : "footer-widget mb-30 ml-50"} >
+          <div className={sideMenu ? "col-xl-3 col-sm-3" : "col-lg-3 col-sm-3"}>
+            <div className={sideMenu ? "footer-widget mb-30" : "footer-widget mb-30"} >
               <div className="footer-title">
                 <h3>{strings["USEFUL LINKS"]}</h3>
               </div>
@@ -178,12 +178,12 @@ const FooterOne = ({
               </div>
             </div>
           </div> */}
-          <div className={sideMenu ? "col-xl-3 col-sm-8" : "col-lg-4 col-sm-6"}>
+          <div className={sideMenu ? "col-xl-3 col-sm-8" : "col-lg-4 col-sm-3"}>
             {/* footer newsletter */}
             <FooterNewsletter
               strings={strings}
               spaceBottomClass="mb-30"
-              spaceLeftClass="ml-70"
+              // spaceLeftClass="ml-70"
               sideMenu={sideMenu}
             />
           </div>
