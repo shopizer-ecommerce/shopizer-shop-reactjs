@@ -116,12 +116,12 @@ const OrderDetails = ({
                                                                         {orderItem.orderedQuantity}
                                                                     </span>
                                                                 </td>
-                                                                <td className="product-price-cart">
+                                                                <td className="product-quantity">
                                                                     <span className="amount">
                                                                         {orderItem.price}
                                                                     </span>
                                                                 </td>
-                                                                <td className="product-price-cart">
+                                                                <td className="product-subtotal">
                                                                     <span className="amount">
                                                                         {orderItem.subTotal}
                                                                     </span>
@@ -141,38 +141,40 @@ const OrderDetails = ({
                                         </div>
 
                                     </div>
-                                    <div className="col-7">
-                                        <h3 className="cart-page-title" style={{ marginBottom: 40 }}>{strings["Payment & Shipping details"]}</h3>
-                                        <div style={{ marginBottom: 20 }}>
-                                            <span><b >{strings["Payment Methods"]}</b>{"    "} </span><span style={{ marginLeft: 20 }}>{orderDetails.paymentType}</span>
-                                        </div>
-                                        <div style={{ marginBottom: 20 }}>
-                                            <span><b>{strings["Order Status"]}</b>{" "}</span><span style={{ marginLeft: 60 }}>{orderDetails.orderStatus}</span>
-                                        </div>
-                                        <div style={{ marginBottom: 20 }}>
-                                            <span><b >{strings["Billing Address"]}</b>{" "}</span><span style={{ marginLeft: 44 }}>{orderDetails.billing.address},  {orderDetails.billing.city} {orderDetails.billing.zone} {orderDetails.billing.country}, {orderDetails.billing.postalCode}</span>
-                                        </div>
-                                        {orderDetails.shipping !== null &&
+                                    <div className="custom-payment-shipping-details">
+                                        <div className="col-7">
+                                            <h3 className="cart-page-title" style={{ marginBottom: 40 }}>{strings["Payment & Shipping details"]}</h3>
                                             <div style={{ marginBottom: 20 }}>
-                                                <span><b >{strings["Delivery Address"]}</b>{" "}</span> <span style={{ marginLeft: 30 }}>{orderDetails.delivery.address},  {orderDetails.delivery.city} {orderDetails.delivery.zone} {orderDetails.delivery.country}, {orderDetails.delivery.postalCode}</span>
+                                                <span><b >{strings["Payment Methods"]}</b>{"    "} </span><span style={{ marginLeft: 20 }}>{orderDetails.paymentType}</span>
                                             </div>
-                                        }
-                                    </div>
-                                    <div className="col-5 order-details-total">
-                                        {
-                                            orderDetails.totals.map((value, i) => {
-                                                return (
-                                                    <h4 className="amount_type">
-                                                        <span className="amount_module">{value.module}</span>
-                                                        <span className="amount">
-                                                            US${value.value}
-                                                        </span>
-                                                    </h4>
-                                                )
-                                            })
+                                            <div style={{ marginBottom: 20 }}>
+                                                <span><b>{strings["Order Status"]}</b>{" "}</span><span style={{ marginLeft: 60 }}>{orderDetails.orderStatus}</span>
+                                            </div>
+                                            <div style={{ marginBottom: 20 }}>
+                                                <span><b >{strings["Billing Address"]}</b>{" "}</span><span style={{ marginLeft: 44 }}>{orderDetails.billing.address},  {orderDetails.billing.city} {orderDetails.billing.zone} {orderDetails.billing.country}, {orderDetails.billing.postalCode}</span>
+                                            </div>
+                                            {orderDetails.shipping !== null &&
+                                                <div style={{ marginBottom: 20 }}>
+                                                    <span><b >{strings["Delivery Address"]}</b>{" "}</span> <span style={{ marginLeft: 30 }}>{orderDetails.delivery.address},  {orderDetails.delivery.city} {orderDetails.delivery.zone} {orderDetails.delivery.country}, {orderDetails.delivery.postalCode}</span>
+                                                </div>
+                                            }
+                                        </div>
+                                        <div className="col-5 order-details-total">
+                                            {
+                                                orderDetails.totals.map((value, i) => {
+                                                    return (
+                                                        <h4 className="amount_type">
+                                                            <span className="amount_module">{value.module}</span>
+                                                            <span className="amount">
+                                                                US${value.value}
+                                                            </span>
+                                                        </h4>
+                                                    )
+                                                })
 
-                                        }
+                                            }
 
+                                        </div>
                                     </div>
                                 </div>
                             </Fragment>

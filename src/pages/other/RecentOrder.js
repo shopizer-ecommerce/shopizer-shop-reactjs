@@ -136,7 +136,7 @@ const RecentOrder = ({
                                   );
                                 })}
                               </tbody>
-                              <thead>
+                              <thead className="footer-table-row">
                                 <tr>
                                   <th>{strings["Ordered on"]} {order.datePurchased}</th>
                                   <th>{strings["Order Total"]} :  US${order.totals[order.totals.length - 1].value}</th>
