@@ -28,7 +28,7 @@ jobs:
        - run: |
            docker push shopizerecomm/shopizer-shop-reactjs:latest
        - slack/status:
-           fail_only: true
+           fail_only: false
            webhook: $SLACK_SHOP_WEBHOOK
 
 
