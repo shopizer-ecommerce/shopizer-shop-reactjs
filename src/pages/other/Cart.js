@@ -121,7 +121,7 @@ const Cart = ({
             {isValidObject(cartItems) && cartItems.products.length > 0 ? (
               <Fragment>
                 <h3 className="cart-page-title">{strings["Your cart items"]}</h3>
-                <div className="row">
+                <div className="row custom-cart-item">
                   <div className="col-12">
                     <div className="table-content table-responsive cart-table-content">
                       <table>
@@ -212,7 +212,7 @@ const Cart = ({
                   </div>
                 </div>
 
-                <div className="row">
+                <div className="row cart-custom-row">
                   <div className="col-lg-4 col-md-6">
                     <div className="cart-tax">
                       <div className="title-wrap">
