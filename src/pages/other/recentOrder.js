@@ -80,7 +80,7 @@ const RecentOrder = ({
             {isValidObject(orderData) && orderData.orders.length > 0 ? (
               <Fragment>
                 <h3 className="cart-page-title">{strings["Your orders items"]}</h3>
-                <div className="row">
+                <div className="row custom-recent-order">
                   <div className="col-12">
                     <div className="table-content table-responsive cart-table-content">
                       {
@@ -92,9 +92,6 @@ const RecentOrder = ({
                               <thead>
                                 <tr className="order-header">
                                   <th>{strings["Order Id"]} :  {order.id}</th>
-                                  <th></th>
-                                  <th></th>
-                                  <th></th>
                                   <th onClick={() => history.push("/order-details/" + order.id)}>{strings["View Details"]}</th>
                                 </tr>
                               </thead>
@@ -142,9 +139,6 @@ const RecentOrder = ({
                               <thead>
                                 <tr>
                                   <th>{strings["Ordered on"]} {order.datePurchased}</th>
-                                  <th></th>
-                                  <th></th>
-                                  <th></th>
                                   <th>{strings["Order Total"]} :  US${order.totals[order.totals.length - 1].value}</th>
                                 </tr>
                               </thead>
