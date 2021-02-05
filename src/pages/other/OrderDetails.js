@@ -21,14 +21,16 @@ const OrderDetails = ({
     strings,
     setLoader,
     setProductID,
-    merchant
+    merchant,
+    isLoading
 }) => {
     // const { addToast } = useToasts();
     const { pathname } = location;
     const [orderDetails, setorderDetails] = useState({});
     useEffect(() => {
         getOrderDetails();
-    })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     const getOrderDetails = async () => {
         setLoader(true)
@@ -179,7 +181,7 @@ const OrderDetails = ({
                                 </div>
                             </Fragment>
                         ) : (
-                                <div className="row">
+                                !isLoading && <div className="row">
                                     <div className="col-lg-12">
                                         <div className="item-empty-area text-center">
                                             <div className="item-empty-area__icon mb-30">
@@ -210,7 +212,8 @@ const mapStateToProps = (state, ownProps) => {
     const order_id = ownProps.match.params.id;
     return {
         orderID: order_id,
-        merchant: state.merchantData.merchant
+        merchant: state.merchantData.merchant,
+        isLoading: state.loading.isLoading
     };
 };
 

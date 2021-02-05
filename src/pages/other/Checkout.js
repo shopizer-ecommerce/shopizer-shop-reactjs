@@ -239,7 +239,7 @@ const CARD_ELEMENT_OPTIONS = {
     }
   }
 };
-const Checkout = ({ merchant, strings, location, cartID, defaultStore, getCountry, getState, countryData, stateData, currentLocation, userData, setLoader, deleteAllFromCart }) => {
+const Checkout = ({isLoading,  merchant, strings, location, cartID, defaultStore, getCountry, getState, countryData, stateData, currentLocation, userData, setLoader, deleteAllFromCart }) => {
   const { pathname } = location;
   const history = useHistory();
   const { addToast } = useToasts();
@@ -255,7 +255,7 @@ const Checkout = ({ merchant, strings, location, cartID, defaultStore, getCountr
     mode: "onChange",
     criteriaMode: "all"
   });
-console.log(process.env.REACT_APP_PAYMENT_TYPE);
+// console.log(process.env.REACT_APP_PAYMENT_TYPE);
   const [ref, setRef] = useState(null)
   useEffect(() => {
     getSummaryOrder()
@@ -284,13 +284,16 @@ console.log(process.env.REACT_APP_PAYMENT_TYPE);
   //   }
   // }
   const getSummaryOrder = async () => {
+    setLoader(true)
     let action = constant.ACTION.CART + cartID + '?store=' + defaultStore;
     try {
       let response = await WebService.get(action);
       if (response) {
+        setLoader(false)
         setCartItems(response)
       }
     } catch (error) {
+      setLoader(true) 
     }
     if (userData) {
       getProfile()
@@ -310,6 +313,7 @@ console.log(process.env.REACT_APP_PAYMENT_TYPE);
     try {
       let response = await WebService.get(action);
       if (response) {
+        getState(response.billing.country)
         // console.log(response.billing.firstName);
         setValue('firstName', response.billing.firstName)
         setValue('lastName', response.billing.lastName)
@@ -317,7 +321,9 @@ console.log(process.env.REACT_APP_PAYMENT_TYPE);
         setValue('address', response.billing.address)
         setValue('country', response.billing.country)
         setValue('city', response.billing.city)
-        setValue('stateProvince', response.billing.stateProvince)
+        setTimeout(() => {
+          setValue('stateProvince', response.billing.zone)
+        }, 1000)
         setValue('postalCode', response.billing.postalCode)
         setValue('phone', response.billing.phone)
         setValue('email', response.emailAddress)
@@ -329,7 +335,10 @@ console.log(process.env.REACT_APP_PAYMENT_TYPE);
           setValue('shipAddress', response.delivery.address)
           setValue('shipCountry', response.delivery.country)
           setValue('shipCity', response.delivery.city)
-          setValue('shipStateProvince', response.delivery.stateProvince)
+          setTimeout(() => {
+            setValue('shipStateProvince', response.delivery.zone)
+          }, 1000)
+          // setValue('shipStateProvince', response.delivery.stateProvince)
           setValue('shipPostalCode', response.delivery.postalCode)
         }
         onChangeShipping()
@@ -427,11 +436,16 @@ console.log(process.env.REACT_APP_PAYMENT_TYPE);
     }
     try {
       let response = await WebService.post(action, param);
-      // console.log(response.shippingOptions);
       if (response) {
+        if(response.shippingOptions === "null" || response.shippingOptions === null){
+          console.log('if')
+          shippingQuoteChange('')
+        }else{
+          shippingQuoteChange(response.shippingOptions[response.shippingOptions.length - 1].shippingQuoteOptionId)
+        }
         setShippingOptions(response.shippingOptions)
         setSelectedOptions(response.shippingOptions[response.shippingOptions.length - 1].shippingQuoteOptionId)
-        shippingQuoteChange(response.shippingOptions[response.shippingOptions.length - 1].shippingQuoteOptionId)
+        
       }
     } catch (error) {
     }
@@ -1006,9 +1020,10 @@ console.log(process.env.REACT_APP_PAYMENT_TYPE);
                             }
 
                           </div>
+                          {
+                            config.displayShipping && shippingOptions &&
                           <div className="your-order-bottom">
-                            {
-                              config.displayShipping && shippingOptions &&
+                            { 
                               <div className="shippingRow">
                                 <ul><li className="your-order-shipping">Shipping Fees</li></ul>
 
@@ -1032,15 +1047,16 @@ console.log(process.env.REACT_APP_PAYMENT_TYPE);
 
                             }
 
-                            {
+                            {/* {
                               config.displayShipping && !shippingOptions &&
                               <ul>
                                 <li className="your-order-shipping">Shipping Fees</li>
                                 <li>Free shipping</li>
                               </ul>
-                            }
+                            } */}
 
                           </div>
+                          }
                           <div className="your-order-total">
                             <ul>
                               <li className="order-total">Total</li>
@@ -1120,7 +1136,7 @@ console.log(process.env.REACT_APP_PAYMENT_TYPE);
                 </div>
               </form>
             ) : (
-                <div className="row">
+                !isLoading && <div className="row">
                   <div className="col-lg-12">
                     <div className="item-empty-area text-center">
                       <div className="item-empty-area__icon mb-30">
@@ -1157,7 +1173,8 @@ const mapStateToProps = state => {
     currentLocation: state.userData.currentAddress,
     userData: state.userData.userData,
     defaultStore: state.merchantData.defaultStore,
-    merchant: state.merchantData.merchant
+    merchant: state.merchantData.merchant,
+    isLoading: state.loading.isLoading
     // currency: state.currencyData
   };
 };

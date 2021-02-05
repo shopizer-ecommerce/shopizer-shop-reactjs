@@ -20,13 +20,8 @@ const RecentOrder = ({
   location,
   setLoader,
   setProductID,
-  merchant
-  // cartItems,
-  // currency,
-  // addToCart,
-  // wishlistItems,
-  // deleteFromWishlist,
-  // deleteAllFromWishlist
+  merchant,
+  isLoading
 }) => {
   const history = useHistory();
   const { pathname } = location;
@@ -151,7 +146,7 @@ const RecentOrder = ({
                 </div>
               </Fragment>
             ) : (
-                <div className="row">
+                !isLoading && <div className="row">
                   <div className="col-lg-12">
                     <div className="item-empty-area text-center">
                       <div className="item-empty-area__icon mb-30">
@@ -180,7 +175,8 @@ RecentOrder.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    merchant: state.merchantData.merchant
+    merchant: state.merchantData.merchant,
+    isLoading: state.loading.isLoading
   };
 };
 

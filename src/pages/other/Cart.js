@@ -65,7 +65,8 @@ const Cart = ({
   stateData,
   getState,
   strings,
-  merchant
+  merchant,
+  isLoading
   // deleteAllFromCart,
 
 }) => {
@@ -377,7 +378,7 @@ const Cart = ({
                 </div>
               </Fragment>
             ) : (
-                <div className="row">
+                !isLoading && <div className="row">
                   <div className="col-lg-12">
                     <div className="item-empty-area text-center">
                       <div className="item-empty-area__icon mb-30">
@@ -417,7 +418,8 @@ const mapStateToProps = state => {
     defaultStore: state.merchantData.defaultStore,
     countryData: state.userData.country,
     stateData: state.userData.state,
-    merchant: state.merchantData.merchant
+    merchant: state.merchantData.merchant,
+    isLoading: state.loading.isLoading
   };
 };
 

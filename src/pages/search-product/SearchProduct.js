@@ -47,7 +47,7 @@ const SearchProduct = ({ strings, location, defaultStore, currentLanguageCode, s
             let response = await WebService.post(action, param);
             if (response) {
                 console.log(response)
-                // setCurrentPage(response.totalPages)
+                console.log(response.categoryFacets)
                 setProductData(response.products);
                 setTotalProduct(response.productCount);
                 setSubCategory(response.categoryFacets)
@@ -81,7 +81,7 @@ const SearchProduct = ({ strings, location, defaultStore, currentLanguageCode, s
                         <div className="row">
                             <div className="col-lg-3 order-2 order-lg-1">
 
-                                <ShopSidebar strings={strings} getCategoryParams={getCategoryParams} uniqueCategories={subCategory} uniqueColors={[]} uniqueSizes={[]} uniqueManufacture={[]} sideSpaceClass="mr-30" />
+                                <ShopSidebar string={strings} getCategoryParams={getCategoryParams} uniqueCategories={subCategory} uniqueColors={[]} uniqueSizes={[]} uniqueManufacture={[]} sideSpaceClass="mr-30" />
                             </div>
                             <div className="col-lg-9 order-1 order-lg-2">
 

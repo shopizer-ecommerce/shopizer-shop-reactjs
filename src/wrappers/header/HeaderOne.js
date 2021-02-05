@@ -33,10 +33,8 @@ const HeaderOne = ({
   const [contentData, setContentData] = useState([]);
 
   useEffect(() => {
-    setMerchant()
-    getCurrentLocation()
-    getCategoryHierarchy();
-    getContent();
+    checkServerHealth();
+
     const header = document.querySelector(".sticky-bar");
     setHeaderTop(header.offsetTop);
     window.addEventListener("scroll", handleScroll);
@@ -47,7 +45,28 @@ const HeaderOne = ({
     // localStorage.setItem('selectedLang', currentLanguageCode)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const checkServerHealth = async () => {
 
+    // let action = 'actuator/health/ping';
+    try {
+      let response = await WebService.get('http://aws-demo.shopizer.com:8080/actuator/health/ping');
+      if (response) {
+        console.log(response)
+        if (response.status === 'UP') {
+          setMerchant()
+          getCurrentLocation();
+          getCategoryHierarchy();
+          getContent();
+        } else {
+          history.push('/not-found')
+        }
+      }
+    } catch (error) {
+      history.push('/not-found')
+    }
+
+
+  }
   const getCategoryHierarchy = async () => {
     let action = constant.ACTION.CATEGORY + '?count=20&page=0&store=' + defaultStore + '&lang=' + currentLanguageCode;
     try {
@@ -58,7 +77,7 @@ const HeaderOne = ({
     } catch (error) {
       // console.log(error.messages)
       // console.log(error)
-      history.push('/not-found')
+      // history.push('/not-found')
     }
 
 

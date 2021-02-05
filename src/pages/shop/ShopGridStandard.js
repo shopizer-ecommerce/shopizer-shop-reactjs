@@ -19,7 +19,7 @@ import { multilanguage } from "redux-multilanguage";
 import { setCategoryID } from "../../redux/actions/productActions";
 import ReactPaginate from 'react-paginate';
 
-const ShopGridStandard = ({ setCategoryID, strings, location, defaultStore, currentLanguageCode, categoryID, setLoader, }) => {
+const ShopGridStandard = ({ setCategoryID, isLoading, strings, location, defaultStore, currentLanguageCode, categoryID, setLoader, }) => {
     const [layout, setLayout] = useState('grid three-column');
     const history = useHistory();
     // const [sortType, setSortType] = useState('');
@@ -216,17 +216,18 @@ const ShopGridStandard = ({ setCategoryID, strings, location, defaultStore, curr
                                     </div>
                                 </div>)
                                 :
-                                (<div className="col-lg-12">
-                                    <div className="item-empty-area text-center">
-                                        <div className="item-empty-area__icon mb-30">
-                                            <i className="pe-7s-shopbag"></i>
-                                        </div>
-                                        <div className="item-empty-area__text">
-                                            {strings["No items found in category"]}<br />{" "}
+                                (
+                                    !isLoading && <div className="col-lg-12">
+                                        <div className="item-empty-area text-center">
+                                            <div className="item-empty-area__icon mb-30">
+                                                <i className="pe-7s-shopbag"></i>
+                                            </div>
+                                            <div className="item-empty-area__text">
+                                                {strings["No items found in category"]}<br />{" "}
 
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>)
+                                    </div>)
 
                         }
                     </div>
@@ -246,7 +247,8 @@ const mapStateToProps = state => {
     return {
         currentLanguageCode: state.multilanguage.currentLanguageCode,
         defaultStore: state.merchantData.defaultStore,
-        categoryID: state.productData.categoryid
+        categoryID: state.productData.categoryid,
+        isLoading: state.loading.isLoading
         // products: state.productData.products
     }
 }

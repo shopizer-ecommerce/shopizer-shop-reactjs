@@ -289,7 +289,9 @@ const MyAccount = ({ merchant, strings, location, setLoader, getState, countryDa
         setValue('country', response.billing.country)
         setValue('city', response.billing.city)
         // setValue('stateProvince', response.billing.stateProvince)
-        setValue('stateProvince', response.billing.zone)
+        setTimeout(() => {
+          setValue('stateProvince', response.billing.zone)
+        }, 1000)
         setValue('postalCode', response.billing.postalCode)
         setValue('phone', response.billing.phone)
         setValue('email', response.emailAddress)
@@ -301,7 +303,10 @@ const MyAccount = ({ merchant, strings, location, setLoader, getState, countryDa
           setDeliveryValue('shipCountry', response.delivery.country)
           setDeliveryValue('shipCity', response.delivery.city)
           // setValue('stateProvince', response.billing.stateProvince)
-          setDeliveryValue('shipStateProvince', response.delivery.zone)
+          setTimeout(() => {
+            setDeliveryValue('shipStateProvince', response.delivery.zone)
+          }, 1000)
+
           setDeliveryValue('shipPostalCode', response.delivery.postalCode)
           setDeliveryValue('shipPhone', response.delivery.phone)
           // setValue('email', response.emailAddress)
