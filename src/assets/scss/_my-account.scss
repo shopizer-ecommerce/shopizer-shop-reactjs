@@ -16,6 +16,30 @@
     }
   }
 
+  .delete_account {
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ebebeb;
+    font-size: 15px;
+    font-weight: 500;
+    margin: 0;
+    height: 63px;
+    text-transform: uppercase;
+    color: #242424;
+    display: block;
+    // padding: 13px 21px;
+    position: relative;
+
+    .number {
+      margin-left: 20px;
+
+    }
+
+    .label {
+      margin-left: 20px;
+
+    }
+  }
+
   .card-body {
     border-bottom: 1px solid #ebebeb;
   }

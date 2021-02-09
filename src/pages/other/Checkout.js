@@ -293,7 +293,8 @@ const Checkout = ({isLoading,  merchant, strings, location, cartID, defaultStore
         setCartItems(response)
       }
     } catch (error) {
-      setLoader(true) 
+      setLoader(false) 
+      history.push('/')
     }
     if (userData) {
       getProfile()

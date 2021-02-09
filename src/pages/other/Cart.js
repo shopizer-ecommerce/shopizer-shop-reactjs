@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { multilanguage } from "redux-multilanguage";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 import MetaTags from "react-meta-tags";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
@@ -72,11 +72,20 @@ const Cart = ({
 }) => {
   const { addToast } = useToasts();
   const { pathname } = location;
+  const history = useHistory();
   const cartTotalPrice = cartItems.displaySubTotal;
   const grandTotalPrice = cartItems.displaySubTotal;
   const { register, handleSubmit, control, errors } = useForm({ mode: 'onChange' });
 
   const [shippingOptions, setShippingOptions] = useState();
+
+  useEffect(() => {
+    console.log(cartItems, '***********')
+    if (!isValidObject(cartItems)) {
+      history.push('/')
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   const deleteAllFromCart = () => {
     // console.log(cartItems);
     cartItems.products.forEach((value) => {
@@ -84,6 +93,7 @@ const Cart = ({
     });
 
   }
+
   const getQuote = async (data) => {
     let action = constant.ACTION.CART + cartItems.code + '/' + constant.ACTION.SHIPPING;
     let param = {};

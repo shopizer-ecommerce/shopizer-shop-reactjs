@@ -6,7 +6,7 @@ import MenuCart from "./sub-components/MenuCart";
 import { deleteFromCart, deleteAllFromCart } from "../../redux/actions/cartActions";
 import { setUser } from "../../redux/actions/userAction";
 import { getCart } from "../../redux/actions/cartActions";
-import { setLocalData } from '../../util/helper';
+import { setLocalData, getLocalData } from '../../util/helper';
 import { multilanguage } from "redux-multilanguage";
 import IdleTimer from 'react-idle-timer';
 import constant from '../../util/constant';
@@ -34,22 +34,22 @@ const IconGroup = ({
   const [useDetails, setUseDetails] = useState({});
   useEffect(() => {
     getCart(cartData.code, userData)
-    // console.log(localStorage.getItem('thekey'))
-    // console.log(process.env.REACT_APP_BASE_URL)
-    if (localStorage.getItem('thekey') === process.env.REACT_APP_BASE_URL) {
-      localStorage.setItem('thekey', process.env.REACT_APP_BASE_URL)
+    if (getLocalData('thekey') === process.env.REACT_APP_BASE_URL) {
+      setLocalData('thekey', process.env.REACT_APP_BASE_URL)
     } else {
       logout()
-      localStorage.setItem('thekey', process.env.REACT_APP_BASE_URL)
+      setLocalData('thekey', process.env.REACT_APP_BASE_URL)
     }
-    let startTime = new Date(localStorage.getItem('session'));
+    let startTime = new Date(getLocalData('session'));
     let endTime = new Date();
     var diffMs = (endTime - startTime);
     var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000);
     if (diffMins > 30) {
       logout()
     }
-    getProfile()
+    if (userData) {
+      getProfile()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps 
   }, [])
   const getProfile = async () => {
@@ -79,13 +79,11 @@ const IconGroup = ({
     deleteAllFromCart()
   }
   const onAction = (e) => {
-
-    localStorage.setItem('session', new Date())
+    setLocalData('session', new Date())
   }
 
   const onActive = (e) => {
-
-    localStorage.setItem('session', new Date())
+    setLocalData('session', new Date())
   }
 
   const onIdle = (e) => {

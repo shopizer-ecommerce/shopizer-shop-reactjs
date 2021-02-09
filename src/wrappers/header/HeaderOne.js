@@ -42,14 +42,13 @@ const HeaderOne = ({
       window.removeEventListener("scroll", handleScroll);
     };
 
-    // localStorage.setItem('selectedLang', currentLanguageCode)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const checkServerHealth = async () => {
 
     // let action = 'actuator/health/ping';
     try {
-      let response = await WebService.get('http://aws-demo.shopizer.com:8080/actuator/health/ping');
+      let response = await WebService.get(process.env.REACT_APP_BASE_URL + '/actuator/health/ping');
       if (response) {
         console.log(response)
         if (response.status === 'UP') {

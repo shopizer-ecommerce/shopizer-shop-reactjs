@@ -4,8 +4,9 @@ import Geocode from "react-geocode";
 export const SET_USER = "SET_USER";
 export const SET_COUNTRY = "SET_COUNTRY";
 export const SET_STATE = "SET_STATE";
+export const SET_SHIP_STATE = "SET_SHIP_STATE";
 export const GET_CURRENT_ADDRESS = "GET_CURRENT_ADDRESS";
-Geocode.setApiKey("AIzaSyCOWHYbCCs9_t8g7oOozjTR75wNx5_xpb4");
+Geocode.setApiKey(process.env.REACT_APP_MAP_API_KEY);
 Geocode.setLanguage("en");
 export const setUser = (data) => {
     return async dispatch => {
@@ -35,6 +36,19 @@ export const getState = (code) => {
             let response = await WebService.get(action);
             dispatch({
                 type: SET_STATE,
+                payload: response
+            });
+        } catch (error) {
+        }
+    }
+}
+export const getShippingState = (code) => {
+    return async dispatch => {
+        try {
+            let action = constant.ACTION.ZONES + '?code=' + code;
+            let response = await WebService.get(action);
+            dispatch({
+                type: SET_SHIP_STATE,
                 payload: response
             });
         } catch (error) {

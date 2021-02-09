@@ -1,6 +1,7 @@
 import WebService from '../../util/webService';
 import constant from '../../util/constant';
 import { setLoader } from "../actions/loaderActions";
+import { getLocalData } from '../../util/helper';
 export const GET_SHOPIZER_CART_ID = "GET_SHOPIZER_CART_ID";
 export const GET_CART = "GET_CART";
 export const ADD_TO_CART = "ADD_TO_CART";
@@ -66,19 +67,21 @@ export const addToCart = (item, addToast, cartId, quantityCount, defaultStore, u
 export const getCart = (cartID, userData) => {
   return async dispatch => {
     try {
-      let action;
-      if (userData) {
-        action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.CARTS + '?cart=' + cartID + '&lang=' + JSON.parse(localStorage.getItem('redux_localstorage_simple')).multilanguage.currentLanguageCode;
-      } else {
-        action = constant.ACTION.CART + cartID + '?lang=' + JSON.parse(localStorage.getItem('redux_localstorage_simple')).multilanguage.currentLanguageCode
-      }
+      if (cartID) {
+        let action;
+        if (userData) {
+          action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.CARTS + '?cart=' + cartID + '&lang=' + JSON.parse(getLocalData('redux_localstorage_simple')).multilanguage.currentLanguageCode;
+        } else {
+          action = constant.ACTION.CART + cartID + '?lang=' + JSON.parse(getLocalData('redux_localstorage_simple')).multilanguage.currentLanguageCode
+        }
 
-      let response = await WebService.get(action);
-      dispatch(setShopizerCartID(response.code))
-      dispatch({
-        type: GET_CART,
-        payload: response
-      });
+        let response = await WebService.get(action);
+        dispatch(setShopizerCartID(response.code))
+        dispatch({
+          type: GET_CART,
+          payload: response
+        });
+      }
     } catch (error) {
       console.log('Cart action response ' + error);
     }

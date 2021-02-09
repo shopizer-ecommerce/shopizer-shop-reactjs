@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import MetaTags from "react-meta-tags";
 import { Link, useHistory } from "react-router-dom";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
@@ -11,7 +11,7 @@ import { useForm, Controller } from "react-hook-form";
 import { useToasts } from "react-toast-notifications";
 import WebService from '../../util/webService';
 import constant from '../../util/constant';
-import { setLocalData, isValidObject } from '../../util/helper';
+import { setLocalData, isValidObject, getLocalData } from '../../util/helper';
 import { setLoader } from "../../redux/actions/loaderActions";
 import { setUser, getCountry, getState } from "../../redux/actions/userAction";
 import { addToCart, getCart } from "../../redux/actions/cartActions";
@@ -118,7 +118,8 @@ const LoginRegister = ({ merchant, strings, props, location, setLoader, setUser,
   const { pathname } = location;
   const { addToast } = useToasts();
   const history = useHistory();
-  const { register, handleSubmit, errors } = useForm({
+  const [isRemember, setIsRemember] = useState(false);
+  const { register, handleSubmit, errors, setValue: setLoginValue } = useForm({
     mode: "onChange",
     defaultValues: { username: "", password: "" },
     criteriaMode: "all"
@@ -133,6 +134,11 @@ const LoginRegister = ({ merchant, strings, props, location, setLoader, setUser,
   });
   useEffect(() => {
     // console.log(cartItems);
+    if (getLocalData('isRemember') === 'true') {
+      setIsRemember(true)
+      setLoginValue('username', getLocalData('loginEmail'))
+      // setLoginValue('loginPassword', '')
+    }
     getCountry()
     setDefualtsValue()
     // eslint-disable-next-line react-hooks/exhaustive-deps 
@@ -159,6 +165,11 @@ const LoginRegister = ({ merchant, strings, props, location, setLoader, setUser,
           });
         } else {
           getCart('', response)
+        }
+        if (getLocalData('isRemember') === 'true') {
+          setLocalData('loginEmail', data.username)
+        } else {
+          setLocalData('loginEmail', '')
         }
         addToast("You have successfully logged in to this website", { appearance: "success", autoDismiss: true });
         setUser(response)
@@ -294,7 +305,7 @@ const LoginRegister = ({ merchant, strings, props, location, setLoader, setUser,
                               </div>
                               <div className="button-box">
                                 <div className="login-toggle-btn">
-                                  <input type="checkbox" />
+                                  <input type="checkbox" checked={isRemember} onChange={e => { setIsRemember(!isRemember); e.target.checked ? setLocalData('isRemember', true) : setLocalData('isRemember', false) }} />
                                   <label className="ml-10">{strings["Remember me"]}</label>
                                   <Link to={"/forgot-password"}>
                                     {strings["Forgot Password?"]}

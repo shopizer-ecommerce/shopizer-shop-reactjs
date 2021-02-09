@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import MetaTags from "react-meta-tags";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import Card from "react-bootstrap/Card";
@@ -12,9 +13,13 @@ import constant from '../../util/constant';
 import { setLoader } from "../../redux/actions/loaderActions";
 import { useToasts } from "react-toast-notifications";
 import { connect } from "react-redux";
-import { getState } from "../../redux/actions/userAction";
+import { getState, getShippingState } from "../../redux/actions/userAction";
 import Script from 'react-load-script';
 import { multilanguage } from "redux-multilanguage";
+import SweetAlert from 'react-bootstrap-sweetalert';
+import { deleteAllFromCart } from "../../redux/actions/cartActions";
+import { setUser } from "../../redux/actions/userAction";
+import { setLocalData } from '../../util/helper';
 const changePasswordForm = {
   userName: {
     name: "userName",
@@ -52,6 +57,31 @@ const changePasswordForm = {
       required: {
         value: true,
         message: "Repeat Password is required"
+      }
+    }
+  }
+}
+
+const accountForm = {
+  username: {
+    name: "username",
+    validate: {
+      required: {
+        value: true,
+        message: "User Name is required"
+      }
+    }
+  },
+  email: {
+    name: "email",
+    validate: {
+      required: {
+        value: true,
+        message: "Email is required"
+      },
+      pattern: {
+        value: /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i,
+        message: 'Please entered the valid email id'
       }
     }
   }
@@ -244,9 +274,11 @@ const billingForm = {
     }
   },
 }
-const MyAccount = ({ merchant, strings, location, setLoader, getState, countryData, stateData, userData }) => {
+const MyAccount = ({ setUser, deleteAllFromCart, merchant, strings, location, setLoader, getState, getShippingState, countryData, stateData, shipStateData, userData }) => {
   const { pathname } = location;
   const { addToast } = useToasts();
+  const history = useHistory();
+  const [isDeleted, setIsDeleted] = useState(false)
   const { register, handleSubmit, errors, watch, setError, clearErrors, reset } = useForm({
     mode: "onChange",
     criteriaMode: "all"
@@ -255,7 +287,7 @@ const MyAccount = ({ merchant, strings, location, setLoader, getState, countryDa
     register: billingRef,
     errors: billingErr,
     handleSubmit: billingSubmit,
-    watch: billingWatch, control, setValue
+    control, setValue
   } = useForm({
     mode: "onChange"
   });
@@ -264,8 +296,17 @@ const MyAccount = ({ merchant, strings, location, setLoader, getState, countryDa
     errors: deliveryErr,
     handleSubmit: deliverySubmit,
     control: deliveryControl,
-    setValue: setDeliveryValue,
-    watch: deliveryWatch,
+    setValue: setDeliveryValue
+  } = useForm({
+    mode: "onChange"
+  });
+  const {
+    register: accountRef,
+    errors: accountErr,
+    handleSubmit: accountSubmit,
+    // control: accountControl,
+    setValue: setAccountValue,
+    // watch: deliveryWatch,
   } = useForm({
     mode: "onChange"
   });
@@ -273,6 +314,7 @@ const MyAccount = ({ merchant, strings, location, setLoader, getState, countryDa
   useEffect(() => {
     getProfile()
     getState()
+    getShippingState()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   const getProfile = async () => {
@@ -281,6 +323,8 @@ const MyAccount = ({ merchant, strings, location, setLoader, getState, countryDa
       let response = await WebService.get(action);
       console.log(response);
       if (response) {
+        setAccountValue('username', response.userName)
+        setAccountValue('email', response.emailAddress)
         getState(response.billing.country)
         setValue('firstName', response.billing.firstName)
         setValue('lastName', response.billing.lastName)
@@ -291,11 +335,12 @@ const MyAccount = ({ merchant, strings, location, setLoader, getState, countryDa
         // setValue('stateProvince', response.billing.stateProvince)
         setTimeout(() => {
           setValue('stateProvince', response.billing.zone)
-        }, 1000)
+        }, 2000)
         setValue('postalCode', response.billing.postalCode)
         setValue('phone', response.billing.phone)
         setValue('email', response.emailAddress)
         if (response.delivery) {
+          getShippingState(response.delivery.country)
           setDeliveryValue('shipFirstName', response.delivery.firstName)
           setDeliveryValue('shipLastName', response.delivery.lastName)
           setDeliveryValue('shipCompany', response.delivery.company)
@@ -305,7 +350,7 @@ const MyAccount = ({ merchant, strings, location, setLoader, getState, countryDa
           // setValue('stateProvince', response.billing.stateProvince)
           setTimeout(() => {
             setDeliveryValue('shipStateProvince', response.delivery.zone)
-          }, 1000)
+          }, 2000)
 
           setDeliveryValue('shipPostalCode', response.delivery.postalCode)
           setDeliveryValue('shipPhone', response.delivery.phone)
@@ -444,7 +489,7 @@ const MyAccount = ({ merchant, strings, location, setLoader, getState, countryDa
       let p = autocomplete.getPlace();
       console.log(p);
       setDeliveryValue('shipCountry', p.address_components.find(i => i.types.some(i => i === "country")).short_name)
-      getState(p.address_components.find(i => i.types.some(i => i === "country")).short_name)
+      getShippingState(p.address_components.find(i => i.types.some(i => i === "country")).short_name)
 
       let city = p.address_components.find(i => i.types.some(i => i === "locality"))
       if (city !== undefined) {
@@ -494,26 +539,26 @@ const MyAccount = ({ merchant, strings, location, setLoader, getState, countryDa
           "firstName": data.firstName,
           "lastName": data.lastName,
           "phone": data.phone
-        },
-        "delivery": {
-          "company": deliveryWatch('shipCompany'),
-          "address": deliveryWatch('shipAddress'),
-          "city": deliveryWatch('shipCity'),
-          "postalCode": deliveryWatch('shipPostalCode'),
-          "stateProvince": deliveryWatch('shipStateProvince'),
-          "country": deliveryWatch('shipCountry'),
-          "zone": deliveryWatch('shipStateProvince'),
-          "firstName": deliveryWatch('shipFirstName'),
-          "lastName": deliveryWatch('shipLastName'),
-          "phone": deliveryWatch('shipPhone')
         }
+        // "delivery": {
+        //   "company": deliveryWatch('shipCompany'),
+        //   "address": deliveryWatch('shipAddress'),
+        //   "city": deliveryWatch('shipCity'),
+        //   "postalCode": deliveryWatch('shipPostalCode'),
+        //   "stateProvince": deliveryWatch('shipStateProvince'),
+        //   "country": deliveryWatch('shipCountry'),
+        //   "zone": deliveryWatch('shipStateProvince'),
+        //   "firstName": deliveryWatch('shipFirstName'),
+        //   "lastName": deliveryWatch('shipLastName'),
+        //   "phone": deliveryWatch('shipPhone')
+        // }
       }
       // console.log(param);
-      let response = await WebService.patch(action, param);
-      if (response) {
-        // reset({})
-        addToast("Your billing address has been updated successfully.", { appearance: "success", autoDismiss: true });
-      }
+      await WebService.patch(action, param);
+      // if (response) {
+      // reset({})
+      addToast("Your billing address has been updated successfully.", { appearance: "success", autoDismiss: true });
+      // }
       setLoader(false)
     } catch (error) {
       addToast("Your billing address has been updated fail.", { appearance: "error", autoDismiss: true });
@@ -526,18 +571,18 @@ const MyAccount = ({ merchant, strings, location, setLoader, getState, countryDa
       let action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.ADDRESS;
       let param = {
         "id": userData.id,
-        "billing": {
-          "company": billingWatch('company'),
-          "address": billingWatch('address'),
-          "city": billingWatch('city'),
-          "postalCode": billingWatch('postalCode'),
-          "stateProvince": billingWatch('stateProvince'),
-          "country": billingWatch('country'),
-          "zone": billingWatch('stateProvince'),
-          "firstName": billingWatch('firstName'),
-          "lastName": billingWatch('lastName'),
-          "phone": billingWatch('phone')
-        },
+        // "billing": {
+        //   "company": billingWatch('company'),
+        //   "address": billingWatch('address'),
+        //   "city": billingWatch('city'),
+        //   "postalCode": billingWatch('postalCode'),
+        //   "stateProvince": billingWatch('stateProvince'),
+        //   "country": billingWatch('country'),
+        //   "zone": billingWatch('stateProvince'),
+        //   "firstName": billingWatch('firstName'),
+        //   "lastName": billingWatch('lastName'),
+        //   "phone": billingWatch('phone')
+        // },
         "delivery": {
           "company": data.shipCompany,
           "address": data.shipAddress,
@@ -552,14 +597,60 @@ const MyAccount = ({ merchant, strings, location, setLoader, getState, countryDa
         }
       }
       console.log(param);
-      let response = await WebService.patch(action, param);
-      if (response) {
-        // reset({})
-        addToast("Your delivery address has been updated successfully.", { appearance: "success", autoDismiss: true });
-      }
+      await WebService.patch(action, param);
+      // if (response) {
+      // reset({})
+      addToast("Your delivery address has been updated successfully.", { appearance: "success", autoDismiss: true });
+      // }
       setLoader(false)
     } catch (error) {
       addToast("Your delivery address has been updated fail.", { appearance: "error", autoDismiss: true });
+      setLoader(false)
+    }
+  }
+
+  const onChangeAccount = async (data) => {
+    setLoader(true)
+    try {
+      let action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER;
+      let param = {
+        emailAddress: data.email
+      }
+      // console.log(param);
+      await WebService.patch(action, param);
+      // if (response) {
+      // reset({})
+      addToast("Your account has been updated successfully.", { appearance: "success", autoDismiss: true });
+      // }
+      setLoader(false)
+    } catch (error) {
+      addToast("Your account has been updated fail.", { appearance: "error", autoDismiss: true });
+      setLoader(false)
+    }
+  }
+  const onDeleteConfirm = () => {
+    console.log('confrim')
+    setIsDeleted(!isDeleted)
+  }
+  const onDelete = async () => {
+    console.log('delete')
+    console.log('delete')
+    onDeleteConfirm()
+    setLoader(true)
+    try {
+      let action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER;
+
+
+      await WebService.delete(action);
+
+      addToast("Your account has been deleted successfully.", { appearance: "success", autoDismiss: true });
+      history.push('/login')
+      setUser('')
+      setLocalData('token', '')
+      deleteAllFromCart()
+      setLoader(false)
+    } catch (error) {
+      addToast("Your account has been deleted fail.", { appearance: "error", autoDismiss: true });
       setLoader(false)
     }
   }
@@ -586,12 +677,57 @@ const MyAccount = ({ merchant, strings, location, setLoader, getState, countryDa
             <div className="row">
               <div className="ml-auto mr-auto col-lg-9">
                 <div className="myaccount-wrapper">
-                  <Accordion defaultActiveKey="0">
+                  <Accordion defaultActiveKey="3">
+                    <Card className="single-my-account mb-20">
+                      <Card.Header className="panel-heading">
+                        <Accordion.Toggle variant="link" eventKey="3">
+                          <h3 className="panel-title">
+                            <span>1 .</span> {strings["Your account"]}
+                          </h3>
+                        </Accordion.Toggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey="3">
+                        <Card.Body>
+                          <div className="myaccount-info-wrapper">
+                            <div className="account-info-wrapper">
+                              <h4>{strings["Your account"]}</h4>
+                            </div>
+                            <form onSubmit={accountSubmit(onChangeAccount)}>
+                              <div className="row">
+                                <div className="col-lg-12 col-md-12">
+                                  <div className="billing-info">
+                                    <label>{strings["User Name"]}</label>
+                                    <input type="text" name={accountForm.username.name} disabled ref={accountRef(accountForm.username.validate)} />
+                                    {accountErr[accountForm.username.name] && <p className="error-msg">{errors[accountForm.username.name].message}</p>}
+                                  </div>
+                                </div>
+                                <div className="col-lg-12 col-md-12">
+                                  <div className="billing-info">
+                                    <label>{strings["Email address"]}</label>
+                                    <input type="text" name={accountForm.email.name} ref={accountRef(accountForm.email.validate)} />
+                                    {accountErr[accountForm.email.name] && <p className="error-msg">{accountErr[accountForm.email.name].message}</p>}
+
+                                  </div>
+                                </div>
+
+                              </div>
+
+                              <div className="billing-back-btn">
+                                <div className="billing-btn">
+                                  <button type="submit">{strings["Continue"]}</button>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </Card.Body>
+                      </Accordion.Collapse>
+                    </Card>
+
                     <Card className="single-my-account mb-20">
                       <Card.Header className="panel-heading">
                         <Accordion.Toggle variant="link" eventKey="0">
                           <h3 className="panel-title">
-                            <span>1 .</span> {strings["Billing Address"]}{" "}
+                            <span>2 .</span> {strings["Billing Address"]}{" "}
                           </h3>
                         </Accordion.Toggle>
                       </Card.Header>
@@ -738,7 +874,7 @@ const MyAccount = ({ merchant, strings, location, setLoader, getState, countryDa
                       <Card.Header className="panel-heading">
                         <Accordion.Toggle variant="link" eventKey="1">
                           <h3 className="panel-title">
-                            <span>2 .</span> {strings["Delivery Address"]}{" "}
+                            <span>3 .</span> {strings["Delivery Address"]}{" "}
                           </h3>
                         </Accordion.Toggle>
                       </Card.Header>
@@ -798,7 +934,7 @@ const MyAccount = ({ merchant, strings, location, setLoader, getState, countryDa
                                       rules={billingForm.shipCountry.validate}
                                       render={props => {
                                         return (
-                                          <select onChange={(e) => { props.onChange(e.target.value); getState(e.target.value); }} value={props.value}>
+                                          <select onChange={(e) => { props.onChange(e.target.value); getShippingState(e.target.value); }} value={props.value}>
                                             <option>{strings["Select a country"]}</option>
                                             {
 
@@ -827,7 +963,7 @@ const MyAccount = ({ merchant, strings, location, setLoader, getState, countryDa
                                               <select onChange={(e) => props.onChange(e.target.value)} value={props.value}>
                                                 <option>{strings["Select a state"]}</option>
                                                 {
-                                                  stateData.map((data, i) => {
+                                                  shipStateData.map((data, i) => {
                                                     return <option key={i} value={data.code}>{data.name}</option>
                                                   })
                                                 }
@@ -885,7 +1021,7 @@ const MyAccount = ({ merchant, strings, location, setLoader, getState, countryDa
                       <Card.Header className="panel-heading">
                         <Accordion.Toggle variant="link" eventKey="2">
                           <h3 className="panel-title">
-                            <span>3 .</span> {strings["Change your password"]}
+                            <span>4 .</span> {strings["Change your password"]}
                           </h3>
                         </Accordion.Toggle>
                       </Card.Header>
@@ -938,13 +1074,39 @@ const MyAccount = ({ merchant, strings, location, setLoader, getState, countryDa
                         </Card.Body>
                       </Accordion.Collapse>
                     </Card>
-
+                    <Card className="single-my-account mb-20">
+                      <Card.Header className="panel-heading">
+                        <button type="button" onClick={onDeleteConfirm} className="delete_account">
+                          <span className="number">5 .</span><span className="label">{strings["Delete your account"]}</span>
+                        </button>
+                        {/* <Accordion.Toggle variant="link" eventKey="4">
+                          <h3 className="panel-title" onClick={onDelete}>
+                            <span>5 .</span> {strings["Delete your account"]}
+                          </h3>
+                        </Accordion.Toggle> */}
+                      </Card.Header>
+                    </Card>
                   </Accordion>
                 </div>
               </div>
             </div>
           </div>
+
         </div>
+        {
+          isDeleted &&
+          <SweetAlert
+            showCancel
+            cancelBtnBsStyle="light"
+            confirmBtnText="Yes, delete it!"
+            confirmBtnBsStyle="danger"
+            onConfirm={onDelete}
+            onCancel={onDeleteConfirm}
+            title="Are you sure?"
+          >
+            Are you sure that you want to permanently delete this account
+        </SweetAlert>
+        }
       </LayoutOne>
     </Fragment >
   );
@@ -960,6 +1122,7 @@ const mapStateToProps = (state) => {
     // cartItems: state.cartData.cartItems,
     // currentLocation: state.userData.currentAddress,
     stateData: state.userData.state,
+    shipStateData: state.userData.shipState,
     merchant: state.merchantData.merchant
     // defaultStore: state.merchantData.defaultStore,
   };
@@ -969,8 +1132,17 @@ const mapDispatchToProps = dispatch => {
     setLoader: (value) => {
       dispatch(setLoader(value));
     },
+    setUser: (data) => {
+      dispatch(setUser(data));
+    },
+    deleteAllFromCart: () => {
+      dispatch(deleteAllFromCart())
+    },
     getState: (code) => {
       dispatch(getState(code));
+    },
+    getShippingState: (code) => {
+      dispatch(getShippingState(code));
     },
   };
 };
@@ -978,4 +1150,4 @@ const mapDispatchToProps = dispatch => {
 
 export default connect(mapStateToProps, mapDispatchToProps)(multilanguage(MyAccount));
 
-// export default MyAccount;
+  // export default MyAccount;
