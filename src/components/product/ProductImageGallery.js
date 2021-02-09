@@ -6,6 +6,7 @@ import Swiper from "react-id-swiper";
 const ProductImageGallery = ({ product }) => {
   const [gallerySwiper, getGallerySwiper] = useState(null);
   const [thumbnailSwiper, getThumbnailSwiper] = useState(null);
+  const [currentImage, setCurrentImage] = useState(product.images[0].imageUrl)
 
   // effect for swiper slider synchronize
   useEffect(() => {
@@ -30,7 +31,7 @@ const ProductImageGallery = ({ product }) => {
   };
 
   const thumbnailSwiperParams = {
-    getSwiper: getThumbnailSwiper,
+    getSwiper: product.images.length > 4 && getThumbnailSwiper,
     spaceBetween: 10,
     slidesPerView: 4,
     loopedSlides: 4,
@@ -39,8 +40,8 @@ const ProductImageGallery = ({ product }) => {
     loop: false,
     slideToClickedSlide: true,
     navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev"
+      nextEl: product.images.length > 4 ? ".swiper-button-next" : '',
+      prevEl: product.images.length > 4 ? ".swiper-button-prev" : ''
     },
     renderPrevButton: () => (
       <button className="swiper-button-prev ht-swiper-button-nav">
@@ -75,17 +76,17 @@ const ProductImageGallery = ({ product }) => {
               product.images.map((single, key) => {
                 return (
                   <div key={key}>
-                    <LightgalleryItem
+                    {/* <LightgalleryItem
                       group="any"
                       src={single.imageUrl}
                     >
                       <button>
                         <i className="pe-7s-expand1"></i>
                       </button>
-                    </LightgalleryItem>
+                    </LightgalleryItem> */}
                     <div className="single-image">
                       <img
-                        src={single.imageUrl}
+                        src={currentImage}
                         className="img-fluid"
                         alt=""
                       />
@@ -104,6 +105,7 @@ const ProductImageGallery = ({ product }) => {
                 <div key={key}>
                   <div className="single-image">
                     <img
+                      onClick={() => setCurrentImage(single.imageUrl)}
                       src={single.imageUrl}
                       className="img-fluid"
                       alt=""

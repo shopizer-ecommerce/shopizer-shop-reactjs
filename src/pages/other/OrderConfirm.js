@@ -7,6 +7,7 @@ import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { connect } from "react-redux";
 import { multilanguage } from "redux-multilanguage";
+import { getLocalData } from "../../util/helper";
 const OrderConfirm = ({ location, orderID, strings, merchant }) => {
   const { pathname } = location;
 
@@ -36,7 +37,7 @@ const OrderConfirm = ({ location, orderID, strings, merchant }) => {
                   <h3>{strings["Order Completed"]}</h3>
                   <h2>{strings["Thank you for ordering from importa"]}</h2>
                   <p>
-                    {strings["Your order id is"]} <b>{orderID}</b> <br />{strings["An email with you order details has been sent to"]} test@test.com
+                    {strings["Your order id is"]} <b>{orderID}</b> <br />{strings["An email with you order details has been sent to"]} {getLocalData('order-email')}
                   </p>
                   <p>
                     {strings["Feedback"]}

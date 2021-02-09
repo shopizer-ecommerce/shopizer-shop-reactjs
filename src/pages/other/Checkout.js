@@ -9,7 +9,7 @@ import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 // import Nav from "react-bootstrap/Nav";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
-import { isValidObject } from "../../util/helper";
+import { isValidObject, setLocalData } from "../../util/helper";
 import constant from '../../util/constant';
 import WebService from '../../util/webService';
 import { getCountry, getState } from "../../redux/actions/userAction";
@@ -583,6 +583,7 @@ const Checkout = ({isLoading,  merchant, strings, location, cartID, defaultStore
         reset({})
         ref.clear()
         deleteAllFromCart(response.id)
+        setLocalData('order-email', data.email)
         addToast("Your order has been submitted", { appearance: "success", autoDismiss: true });
         history.push('/order-confirm')
       }

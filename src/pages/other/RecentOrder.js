@@ -72,7 +72,7 @@ const RecentOrder = ({
         <Breadcrumb />
         <div className="cart-main-area pt-90 pb-100">
           <div className="container">
-            {isValidObject(orderData) && orderData.orders.length > 0 ? (
+            {isValidObject(orderData) && orderData.orders && orderData.orders.length > 0 ? (
               <Fragment>
                 <h3 className="cart-page-title">{strings["Your orders items"]}</h3>
                 <div className="row custom-recent-order">
