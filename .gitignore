@@ -105,8 +105,3 @@ dist
 
 # TernJS port file
 .tern-port
-
-#don't commit package lock and yarn.lock
-package-lock.json
-
-yarn.lock
