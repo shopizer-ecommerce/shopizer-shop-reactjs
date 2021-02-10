@@ -80,12 +80,11 @@ const Cart = ({
   const [shippingOptions, setShippingOptions] = useState();
 
   useEffect(() => {
-    console.log(cartItems, '***********')
     if (!isValidObject(cartItems)) {
       history.push('/')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [cartItems])
   const deleteAllFromCart = () => {
     // console.log(cartItems);
     cartItems.products.forEach((value) => {

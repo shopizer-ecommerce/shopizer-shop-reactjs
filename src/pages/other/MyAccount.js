@@ -1076,15 +1076,37 @@ const MyAccount = ({ setUser, deleteAllFromCart, merchant, strings, location, se
                     </Card>
                     <Card className="single-my-account mb-20">
                       <Card.Header className="panel-heading">
-                        <button type="button" onClick={onDeleteConfirm} className="delete_account">
-                          <span className="number">5 .</span><span className="label">{strings["Delete your account"]}</span>
-                        </button>
-                        {/* <Accordion.Toggle variant="link" eventKey="4">
-                          <h3 className="panel-title" onClick={onDelete}>
-                            <span>5 .</span> {strings["Delete your account"]}
+                        {/* */}
+                        <Accordion.Toggle variant="link" eventKey="4">
+                          <h3 className="panel-title">
+                            <span>5 .</span> {strings["Account Management"]}
                           </h3>
-                        </Accordion.Toggle> */}
+                        </Accordion.Toggle>
                       </Card.Header>
+                      <Accordion.Collapse eventKey="4">
+                        <Card.Body>
+                          <div className="myaccount-info-wrapper">
+                            {/* <div className="account-info-wrapper">
+                              <h4>{strings["Your account"]}</h4>
+                            </div> */}
+                            <form>
+                              {/* <div className="row">
+                                <div className="col-lg-12 col-md-12">
+                                  <button type="button" onClick={onDeleteConfirm} className="delete_account">
+                                    <span className="label">{strings["Delete your account"]}</span>
+                                  </button>
+                                </div>
+
+                              </div> */}
+                              <div className="account-management">
+                                <div className="delete-btn">
+                                  <button type="button" onClick={onDeleteConfirm} >{strings["Delete your account"]}</button>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </Card.Body>
+                      </Accordion.Collapse>
                     </Card>
                   </Accordion>
                 </div>

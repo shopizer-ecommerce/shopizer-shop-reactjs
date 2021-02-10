@@ -29,7 +29,7 @@ const SearchProduct = ({ strings, location, defaultStore, currentLanguageCode, s
     }
 
     const getCategoryParams = (sortType, sortValue) => {
-        console.log(sortValue)
+        // console.log(sortValue)
         setCategoryID(sortValue.id)
         history.push("/category/" + sortValue.description.friendlyUrl)
     }
@@ -46,8 +46,8 @@ const SearchProduct = ({ strings, location, defaultStore, currentLanguageCode, s
         try {
             let response = await WebService.post(action, param);
             if (response) {
-                console.log(response)
-                console.log(response.categoryFacets)
+                // console.log(response)
+                // console.log(response.categoryFacets)
                 setProductData(response.products);
                 setTotalProduct(response.productCount);
                 setSubCategory(response.categoryFacets)

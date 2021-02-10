@@ -16,30 +16,37 @@
     }
   }
 
-  .delete_account {
-    background-color: red !important;
-    color: #fff !important;
-    border-bottom: 1px solid #ebebeb;
-    font-size: 15px;
-    font-weight: 500;
-    margin: 0;
-    height: 63px;
-    text-transform: uppercase;
-    color: #242424;
-    display: block;
-    // padding: 13px 21px;
-    position: relative;
+  .account-management {
+    // display: flex;
+    // justify-content: flex-end;
+    // margin-top: 26px;
+    // align-items: center;
 
-    .number {
-      margin-left: 20px;
 
-    }
 
-    .label {
-      margin-left: 20px;
+    .delete-btn {
+      button {
+        background-color: red;
+        border: medium none;
+        color: #fff;
+        width: 100%;
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1;
+        padding: 16px 35px 17px;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.3s ease 0s;
 
+        &:hover {
+          background: #ff0000a6;
+          color: #fff;
+        }
+      }
     }
   }
+
 
   .card-body {
     border-bottom: 1px solid #ebebeb;

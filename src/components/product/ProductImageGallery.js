@@ -76,14 +76,14 @@ const ProductImageGallery = ({ product }) => {
               product.images.map((single, key) => {
                 return (
                   <div key={key}>
-                    {/* <LightgalleryItem
+                    <LightgalleryItem
                       group="any"
                       src={single.imageUrl}
                     >
                       <button>
                         <i className="pe-7s-expand1"></i>
                       </button>
-                    </LightgalleryItem> */}
+                    </LightgalleryItem>
                     <div className="single-image">
                       <img
                         src={currentImage}

@@ -23,7 +23,7 @@ function ProductModal(props) {
   const [selectedProductColor, setSelectedProductColor] = useState([]);
   // const [productStock, setProductStock] = useState();
   const [quantityCount, setQuantityCount] = useState(1);
-
+  const [currentImage, setCurrentImage] = useState(product.images[0].imageUrl)
   // const wishlistItem = props.wishlistitem;
   // const compareItem = props.compareitem;
 
@@ -58,7 +58,7 @@ function ProductModal(props) {
   };
 
   const thumbnailSwiperParams = {
-    getSwiper: getThumbnailSwiper,
+    getSwiper: product.images.length > 4 && getThumbnailSwiper,
     spaceBetween: 10,
     slidesPerView: 4,
     loopedSlides: 4,
@@ -67,8 +67,8 @@ function ProductModal(props) {
     loop: false,
     slideToClickedSlide: true,
     navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev"
+      nextEl: product.images.length > 4 ? ".swiper-button-next" : '',
+      prevEl: product.images.length > 4 ? ".swiper-button-prev" : ''
     },
     renderPrevButton: () => (
       <button className="swiper-button-prev ht-swiper-button-nav">
@@ -168,7 +168,7 @@ function ProductModal(props) {
                         <div key={key}>
                           <div className="single-image">
                             <img
-                              src={single.imageUrl}
+                              src={currentImage}
                               className="img-fluid"
                               alt=""
                             />
@@ -186,6 +186,7 @@ function ProductModal(props) {
                         <div key={key}>
                           <div className="single-image">
                             <img
+                              onClick={() => setCurrentImage(single.imageUrl)}
                               src={single.imageUrl}
                               className="img-fluid"
                               alt=""

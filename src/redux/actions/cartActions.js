@@ -66,8 +66,8 @@ export const addToCart = (item, addToast, cartId, quantityCount, defaultStore, u
 
 export const getCart = (cartID, userData) => {
   return async dispatch => {
-    try {
-      if (cartID) {
+    if (cartID) {
+      try {
         let action;
         if (userData) {
           action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.CARTS + '?cart=' + cartID + '&lang=' + JSON.parse(getLocalData('redux_localstorage_simple')).multilanguage.currentLanguageCode;
@@ -81,9 +81,11 @@ export const getCart = (cartID, userData) => {
           type: GET_CART,
           payload: response
         });
+
+      } catch (error) {
+        console.log('Cart action response ' + error);
+        dispatch(deleteAllFromCart())
       }
-    } catch (error) {
-      console.log('Cart action response ' + error);
     }
   }
 }

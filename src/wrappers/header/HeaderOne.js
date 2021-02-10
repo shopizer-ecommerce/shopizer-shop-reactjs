@@ -50,7 +50,7 @@ const HeaderOne = ({
     try {
       let response = await WebService.get(process.env.REACT_APP_BASE_URL + '/actuator/health/ping');
       if (response) {
-        console.log(response)
+        // console.log(response)
         if (response.status === 'UP') {
           setMerchant()
           getCurrentLocation();

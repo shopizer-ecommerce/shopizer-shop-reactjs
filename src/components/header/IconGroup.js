@@ -56,12 +56,15 @@ const IconGroup = ({
     let action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.PROFILE;
     try {
       let response = await WebService.get(action);
-      console.log(response);
+      // console.log(response);
       if (response) {
         setUseDetails(response)
       }
     }
     catch (error) {
+      setUser('')
+      setLocalData('token', '')
+      history.push('/')
     }
   }
   const handleClick = e => {

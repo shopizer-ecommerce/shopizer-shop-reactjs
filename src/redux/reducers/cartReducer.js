@@ -74,10 +74,10 @@ const cartReducer = (state = initState, action) => {
   if (action.type === DELETE_ALL_FROM_CART) {
     return {
       ...state,
-      orderID: action.payload,
       cartItems: {},
       cartCount: 0,
-      cartID: ''
+      cartID: '',
+      orderID: action.payload,
     }
   }
 
