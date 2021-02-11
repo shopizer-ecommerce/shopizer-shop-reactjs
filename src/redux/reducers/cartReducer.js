@@ -28,7 +28,7 @@ const cartReducer = (state = initState, action) => {
   if (action.type === GET_CART) {
     return {
       ...state,
-      cartItems: action.payload,
+      cartItems: Object.assign({}, action.payload),
       cartCount: action.payload.products.length
     }
   }

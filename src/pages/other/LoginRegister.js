@@ -142,7 +142,7 @@ const LoginRegister = ({ merchant, strings, props, location, setLoader, setUser,
     getCountry()
     setDefualtsValue()
     // eslint-disable-next-line react-hooks/exhaustive-deps 
-  }, []);
+  }, [cartItems]);
   const setDefualtsValue = () => {
     // console.log(currentLocation);
     if (currentLocation.length > 0) {
@@ -160,9 +160,15 @@ const LoginRegister = ({ merchant, strings, props, location, setLoader, setUser,
       let response = await WebService.post(action, param);
       if (response) {
         if (isValidObject(cartItems)) {
-          cartItems.products.forEach((element) => {
-            addToCart(element, '', cartItems.code, element.quantity, defaultStore, response)
-          });
+          // getCart('', response)
+          // setTimeout(() => {
+          // console.log(cartItems);
+          // cartItems.products.forEach((element) => {
+          //   addToCart(element, '', cartItems.code, element.quantity, defaultStore, response)
+          // });
+          getCartandAdd(response)
+          // }, 5000);
+
         } else {
           getCart('', response)
         }
@@ -183,6 +189,25 @@ const LoginRegister = ({ merchant, strings, props, location, setLoader, setUser,
       setLoader(false)
     }
   };
+  const getCartandAdd = async (data) => {
+    try {
+      let action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.CARTS + '?&lang=' + JSON.parse(getLocalData('redux_localstorage_simple')).multilanguage.currentLanguageCode;
+      let response = await WebService.get(action);
+      console.log(response)
+      if (response) {
+
+        setTimeout(() => {
+          console.log(response.code);
+          cartItems.products.forEach((element) => {
+            console.log(response.code);
+            addToCart(element, '', response, element.quantity, defaultStore, data)
+          });
+        }, 2000);
+      }
+    } catch (error) {
+
+    }
+  }
   const onConfirmPassword = (e) => {
     if (watch('password') !== e.target.value) {
       return setError(

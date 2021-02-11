@@ -12,7 +12,7 @@ import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { isValidObject, setLocalData } from "../../util/helper";
 import constant from '../../util/constant';
 import WebService from '../../util/webService';
-import { getCountry, getState } from "../../redux/actions/userAction";
+import { getCountry, getState, getShippingState } from "../../redux/actions/userAction";
 import { useForm, Controller } from "react-hook-form";
 import { loadStripe } from '@stripe/stripe-js';
 import {
@@ -239,7 +239,7 @@ const CARD_ELEMENT_OPTIONS = {
     }
   }
 };
-const Checkout = ({isLoading,  merchant, strings, location, cartID, defaultStore, getCountry, getState, countryData, stateData, currentLocation, userData, setLoader, deleteAllFromCart }) => {
+const Checkout = ({shipStateData, isLoading,  merchant, strings, location, cartID, defaultStore, getCountry, getState,getShippingState, countryData, stateData, currentLocation, userData, setLoader, deleteAllFromCart }) => {
   const { pathname } = location;
   const history = useHistory();
   const { addToast } = useToasts();
@@ -251,6 +251,7 @@ const Checkout = ({isLoading,  merchant, strings, location, cartID, defaultStore
   const [shippingOptions, setShippingOptions] = useState();
   const [shippingQuote, setShippingQuote] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState('');
+  const [deliveryData, setDeliveryData] = useState();
   const { register, control, handleSubmit, errors, setValue, watch, reset, setError, clearErrors } = useForm({
     mode: "onChange",
     criteriaMode: "all"
@@ -261,6 +262,7 @@ const Checkout = ({isLoading,  merchant, strings, location, cartID, defaultStore
     getSummaryOrder()
     // getNuviePayment()
     getState('')
+    getShippingState('')
     getCountry()
     getConfig()
     shippingQuoteChange('')
@@ -335,18 +337,21 @@ const Checkout = ({isLoading,  merchant, strings, location, cartID, defaultStore
         setValue('email', response.emailAddress)
 
         if (response.delivery) {
-          setValue('shipFirstName', response.delivery.firstName)
-          setValue('shipLastName', response.delivery.lastName)
-          setValue('shipCompany', response.delivery.company)
-          setValue('shipAddress', response.delivery.address)
-          setValue('shipCountry', response.delivery.country)
-          setValue('shipCity', response.delivery.city)
-          setTimeout(() => {
-            setValue('shipStateProvince', response.delivery.zone)
-          }, 1000)
-          // setValue('shipStateProvince', response.delivery.stateProvince)
-          setValue('shipPostalCode', response.delivery.postalCode)
+          setDeliveryData(response.delivery)
+        //   getShippingState(response.delivery.country)
+        //   setValue('shipFirstName', response.delivery.firstName)
+        //   setValue('shipLastName', response.delivery.lastName)
+        //   setValue('shipCompany', response.delivery.company)
+        //   setValue('shipAddress', response.delivery.address)
+        //   setValue('shipCountry', response.delivery.country)
+        //   setValue('shipCity', response.delivery.city)
+        //   setTimeout(() => {
+        //     setValue('shipStateProvince', response.delivery.zone)
+        //   }, 1000)
+        //   // setValue('shipStateProvince', response.delivery.stateProvince)
+        //   setValue('shipPostalCode', response.delivery.postalCode)
         }
+        
         onChangeShipping()
         // setConfig(response)
       }
@@ -366,14 +371,39 @@ const Checkout = ({isLoading,  merchant, strings, location, cartID, defaultStore
   const onChangeShipAddress = async () => {
     setIsShipping(!isShipping)
     // console.log(currentLocation.find(i => i.types.some(i => i == "country")).address_components[0].short_name)
-    if (currentLocation.length > 0) {
-      setTimeout(() => {
-        setValue('shipCountry', currentLocation.find(i => i.types.some(i => i === "country")).address_components[0].short_name)
-        setValue('shipCity', currentLocation.find(i => i.types.some(i => i === "locality")).address_components[0].short_name)
-        setValue('shipStateProvince', currentLocation.find(i => i.types.some(i => i === "administrative_area_level_1")).address_components[0].short_name)
-        onChangeShipping()
-      }, 1000);
-    }
+    setTimeout(() => {
+      if (userData) {
+            if(deliveryData){
+            getShippingState(deliveryData.country)
+            setValue('shipFirstName', deliveryData.firstName)
+            setValue('shipLastName', deliveryData.lastName)
+            setValue('shipCompany', deliveryData.company)
+            setValue('shipAddress', deliveryData.address)
+            setValue('shipCountry', deliveryData.country)
+            setValue('shipCity', deliveryData.city)
+            setTimeout(() => {
+              setValue('shipStateProvince', deliveryData.zone)
+            }, 1000)
+            // setValue('shipStateProvince', response.delivery.stateProvince)
+            setValue('shipPostalCode', deliveryData.postalCode)
+          }
+       } else{
+        if(currentLocation.length > 0) {
+          console.log(currentLocation);
+          setTimeout(() => {
+            getShippingState(currentLocation.find(i => i.types.some(i => i === "country")).address_components[0].short_name)
+            setValue('shipCountry', currentLocation.find(i => i.types.some(i => i === "country")).address_components[0].short_name)
+            setValue('shipCity', currentLocation.find(i => i.types.some(i => i === "locality")).address_components[0].short_name)
+            setTimeout(() => {
+              setValue('shipStateProvince', currentLocation.find(i => i.types.some(i => i === "administrative_area_level_1")).address_components[0].short_name)
+            }, 1000)
+            
+            onChangeShipping()
+          }, 1000);
+        }
+      }
+    }, 1000);
+     
   }
   const handleScriptLoad = () => {
     // Declare Options For Autocomplete
@@ -886,7 +916,7 @@ const Checkout = ({isLoading,  merchant, strings, location, cartID, defaultStore
                                   rules={paymentForm.shipCountry.validate}
                                   render={props => {
                                     return (
-                                      <select onChange={(e) => { props.onChange(e.target.value); getState(e.target.value); onChangeShipping() }} value={props.value}>
+                                      <select onChange={(e) => { props.onChange(e.target.value); getShippingState(e.target.value); onChangeShipping() }} value={props.value}>
                                         <option>{strings["Select a country"]}</option>
                                         {
 
@@ -913,7 +943,7 @@ const Checkout = ({isLoading,  merchant, strings, location, cartID, defaultStore
                               <div className="billing-select mb-20">
                                 <label>{strings["State"]}</label>
                                 {
-                                  stateData && stateData.length > 0 ?
+                                  shipStateData && shipStateData.length > 0 ?
                                     <Controller
                                       name={paymentForm.shipStateProvince.name}
                                       control={control}
@@ -923,7 +953,7 @@ const Checkout = ({isLoading,  merchant, strings, location, cartID, defaultStore
                                           <select onChange={(e) => props.onChange(e.target.value)} value={props.value}>
                                             <option>{strings["Select a state"]}</option>
                                             {
-                                              stateData.map((data, i) => {
+                                              shipStateData.map((data, i) => {
                                                 return <option key={i} value={data.code}>{data.name}</option>
                                               })
                                             }
@@ -1177,6 +1207,7 @@ const mapStateToProps = state => {
     cartID: state.cartData.cartID,
     countryData: state.userData.country,
     stateData: state.userData.state,
+    shipStateData: state.userData.shipState,
     currentLocation: state.userData.currentAddress,
     userData: state.userData.userData,
     defaultStore: state.merchantData.defaultStore,
@@ -1195,6 +1226,9 @@ const mapDispatchToProps = dispatch => {
     },
     getState: (code) => {
       dispatch(getState(code));
+    },
+    getShippingState: (code) => {
+      dispatch(getShippingState(code));
     },
     deleteAllFromCart: (orderID) => {
       dispatch(deleteAllFromCart(orderID));

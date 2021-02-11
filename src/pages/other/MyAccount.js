@@ -360,6 +360,7 @@ const MyAccount = ({ setUser, deleteAllFromCart, merchant, strings, location, se
       //   // setConfig(response)
     }
     catch (error) {
+      history.push('/login')
     }
   }
   const onChangePassword = async (data) => {
@@ -953,7 +954,7 @@ const MyAccount = ({ setUser, deleteAllFromCart, merchant, strings, location, se
                                   <div className="billing-info mb-20">
                                     <label>{strings["State"]}</label>
                                     {
-                                      stateData && stateData.length > 0 ?
+                                      shipStateData && shipStateData.length > 0 ?
                                         <Controller
                                           name={billingForm.shipStateProvince.name}
                                           control={deliveryControl}

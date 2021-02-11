@@ -18,7 +18,7 @@ export const addToCart = (item, addToast, cartId, quantityCount, defaultStore, u
       let param;
       let response;
       let message;
-      // console.log(userData, '************ userData *********')
+      console.log(cartId, '************ cartId *********')
       if (selectedProductOptions !== undefined) {
         param = { "attributes": selectedProductOptions, "product": item.id, "quantity": quantityCount }
       } else {
@@ -66,28 +66,34 @@ export const addToCart = (item, addToast, cartId, quantityCount, defaultStore, u
 
 export const getCart = (cartID, userData) => {
   return async dispatch => {
-    if (cartID) {
-      try {
-        let action;
-        if (userData) {
+    // if (cartID) {
+    try {
+      let action;
+      if (userData) {
+        if (cartID) {
           action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.CARTS + '?cart=' + cartID + '&lang=' + JSON.parse(getLocalData('redux_localstorage_simple')).multilanguage.currentLanguageCode;
         } else {
+          action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.CARTS + '?&lang=' + JSON.parse(getLocalData('redux_localstorage_simple')).multilanguage.currentLanguageCode;
+        }
+      } else {
+        if (cartID) {
           action = constant.ACTION.CART + cartID + '?lang=' + JSON.parse(getLocalData('redux_localstorage_simple')).multilanguage.currentLanguageCode
         }
-
-        let response = await WebService.get(action);
-        dispatch(setShopizerCartID(response.code))
-        dispatch({
-          type: GET_CART,
-          payload: response
-        });
-
-      } catch (error) {
-        console.log('Cart action response ' + error);
-        dispatch(deleteAllFromCart())
       }
+
+      let response = await WebService.get(action);
+      dispatch(setShopizerCartID(response.code))
+      dispatch({
+        type: GET_CART,
+        payload: response
+      });
+
+    } catch (error) {
+      console.log('Cart action response ' + error);
+      dispatch(deleteAllFromCart())
     }
   }
+  // }
 }
 export const setShopizerCartID = (id) => {
   return dispatch => {

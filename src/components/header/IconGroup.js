@@ -33,7 +33,7 @@ const IconGroup = ({
   const [searchText, setSearchText] = useState('');
   const [useDetails, setUseDetails] = useState({});
   useEffect(() => {
-    getCart(cartData.code, userData)
+    // getCart(cartData.code, userData)
     if (getLocalData('thekey') === process.env.REACT_APP_BASE_URL) {
       setLocalData('thekey', process.env.REACT_APP_BASE_URL)
     } else {
