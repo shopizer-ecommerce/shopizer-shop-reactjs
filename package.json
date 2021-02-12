@@ -41,6 +41,7 @@
 		"react-spinners": "^0.9.0",
 		"react-star-ratings": "^2.3.0",
 		"react-sticky-el": "^1.1.0",
+		"react-to-print": "^2.12.3",
 		"react-toast-notifications": "^2.2.5",
 		"react-visibility-sensor": "^5.1.1",
 		"redux": "^4.0.4",
