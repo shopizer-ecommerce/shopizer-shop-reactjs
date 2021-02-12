@@ -11,7 +11,7 @@ import CookieConsent from "react-cookie-consent";
 import Loader from "./components/loader/loader"
 // var sha512 = require('js-sha512').sha512;
 // home pages
-const HomeFashionSeven = lazy(() => import("./pages/home/HomeFashionSeven"));
+const Home = lazy(() => import("./pages/home/Home"));
 
 // shop pages
 const ShopGridStandard = lazy(() => import("./pages/shop/ShopGridStandard"));
@@ -76,14 +76,11 @@ const App = (props) => {
                 <Route
                   exact
                   path="/"
-                  component={HomeFashionSeven}
+                  component={Home}
                 />
 
                 {/* Homepages */}
-                <Route
-                  path="/home-fashion-seven"
-                  component={HomeFashionSeven}
-                />
+               
 
                 {/* Shop pages */}
                 <Route
