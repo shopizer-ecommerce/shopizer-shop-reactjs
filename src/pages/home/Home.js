@@ -1,14 +1,14 @@
 import React, { Fragment } from "react";
 import MetaTags from "react-meta-tags";
-import LayoutOne from "../../layouts/LayoutOne";
-import HeroSliderFifteen from "../../wrappers/hero-slider/HeroSliderFifteen";
-import TabProductNine from "../../wrappers/product/TabProductNine";
+import Layout from "../../layouts/Layout";
+import HeroSlider from "../../wrappers/hero-slider/HeroSlider";
+import TabProduct from "../../wrappers/product/TabProduct";
 // import BannerEleven from "../../wrappers/banner/BannerEleven";
 // import CountDownThree from "../../wrappers/countdown/CountDownThree";
-import FeatureIconFour from "../../wrappers/feature-icon/FeatureIconFour";
-import NewsletterThree from "../../wrappers/newsletter/NewsletterThree";
+import FeatureIcon from "../../wrappers/feature-icon/FeatureIcon";
+import Newsletter from "../../wrappers/newsletter/Newsletter";
 import { connect } from "react-redux";
-const HomeFashionSeven = ({ merchant }) => {
+const Home = ({ merchant }) => {
   // console.log(merchant);
   return (
     <Fragment>
@@ -19,15 +19,15 @@ const HomeFashionSeven = ({ merchant }) => {
           content="Fashion home of flone react minimalist eCommerce template."
         /> */}
       </MetaTags>
-      <LayoutOne
+      <Layout
         headerContainerClass="container-fluid"
         headerPaddingClass="header-padding-2"
         headerTop="visible"
       >
         {/* hero slider */}
-        <HeroSliderFifteen />
+        <HeroSlider />
         {/* tab product */}
-        <TabProductNine
+        <TabProduct
           category="fashion"
           spaceBottomClass="pb-100"
           spaceTopClass="pt-100"
@@ -46,7 +46,7 @@ const HomeFashionSeven = ({ merchant }) => {
         />
         */}
         {/* feature icon */}
-        <FeatureIconFour
+        <FeatureIcon
           bgImg="/assets/img/bg/shape.png"
           containerClass="container-fluid"
           gutterClass="padding-10-row-col"
@@ -54,12 +54,12 @@ const HomeFashionSeven = ({ merchant }) => {
           spaceBottomClass="pb-40"
         />
         {/* newsletter */}
-        <NewsletterThree
+        <Newsletter
           spaceTopClass="pt-100"
           spaceBottomClass="pb-100"
           subscribeBtnClass="dark-red-subscribe"
         />
-      </LayoutOne>
+      </Layout>
     </Fragment>
   );
 };
@@ -72,5 +72,5 @@ const mapStateToProps = state => {
 };
 
 
-export default connect(mapStateToProps, null)(HomeFashionSeven);
+export default connect(mapStateToProps, null)(Home);
 // export default HomeFashionSeven;

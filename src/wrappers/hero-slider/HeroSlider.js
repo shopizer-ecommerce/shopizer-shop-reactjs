@@ -1,9 +1,9 @@
 import React from "react";
 import Swiper from "react-id-swiper";
 import sliderData from "../../data/hero-sliders/hero-slider-fifteen.json";
-import HeroSliderFifteenSingle from "../../components/hero-slider/HeroSliderFifteenSingle.js";
+import HeroSliderSingle from "../../components/hero-slider/HeroSliderSingle.js";
 
-const HeroSliderFifteen = () => {
+const HeroSlider = () => {
   const params = {
     effect: "fade",
     loop: true,
@@ -35,7 +35,7 @@ const HeroSliderFifteen = () => {
           {sliderData &&
             sliderData.map((single, key) => {
               return (
-                <HeroSliderFifteenSingle
+                <HeroSliderSingle
                   data={single}
                   key={key}
                   sliderClass="swiper-slide"
@@ -48,4 +48,4 @@ const HeroSliderFifteen = () => {
   );
 };
 
-export default HeroSliderFifteen;
+export default HeroSlider;

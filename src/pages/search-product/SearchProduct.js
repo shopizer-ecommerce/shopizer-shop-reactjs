@@ -4,7 +4,7 @@ import MetaTags from 'react-meta-tags';
 import { useHistory } from "react-router-dom";
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
 import { connect } from 'react-redux';
-import LayoutOne from '../../layouts/LayoutOne';
+import Layout from '../../layouts/Layout';
 import Breadcrumb from '../../wrappers/breadcrumb/Breadcrumb';
 import ShopSidebar from '../../wrappers/product/ShopSidebar';
 import ShopTopbar from '../../wrappers/product/ShopTopbar';
@@ -70,7 +70,7 @@ const SearchProduct = ({ strings, location, defaultStore, currentLanguageCode, s
             <BreadcrumbsItem to={process.env.PUBLIC_URL + '/'}>{strings["Home"]}</BreadcrumbsItem>
             <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>{strings["Search"]}</BreadcrumbsItem>
 
-            <LayoutOne headerContainerClass="container-fluid"
+            <Layout headerContainerClass="container-fluid"
                 headerPaddingClass="header-padding-2"
                 headerTop="visible">
                 {/* breadcrumb */}
@@ -95,7 +95,7 @@ const SearchProduct = ({ strings, location, defaultStore, currentLanguageCode, s
                         </div>
                     </div>
                 </div>
-            </LayoutOne>
+            </Layout>
         </Fragment>
     )
 }

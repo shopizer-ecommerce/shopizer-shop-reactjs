@@ -1,13 +1,13 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-const FeatureIconFourSingle = ({ data, spaceBottomClass }) => {
+const FeatureIconSingle = ({ data, spaceBottomClass }) => {
   return (
     <div className="col-lg-4 col-md-6 col-sm-6">
       <div
         className={`support-wrap-3 text-center ${
           spaceBottomClass ? spaceBottomClass : ""
-        }`}
+          }`}
         style={{ backgroundColor: `${data.backgroundColor}` }}
       >
         <div className="support-icon-2">
@@ -26,9 +26,9 @@ const FeatureIconFourSingle = ({ data, spaceBottomClass }) => {
   );
 };
 
-FeatureIconFourSingle.propTypes = {
+FeatureIconSingle.propTypes = {
   data: PropTypes.object,
   spaceBottomClass: PropTypes.string
 };
 
-export default FeatureIconFourSingle;
+export default FeatureIconSingle;

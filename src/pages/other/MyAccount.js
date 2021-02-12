@@ -5,7 +5,7 @@ import MetaTags from "react-meta-tags";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import Card from "react-bootstrap/Card";
 import Accordion from "react-bootstrap/Accordion";
-import LayoutOne from "../../layouts/LayoutOne";
+import Layout from "../../layouts/Layout";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { useForm, Controller } from "react-hook-form";
 import WebService from '../../util/webService';
@@ -668,7 +668,7 @@ const MyAccount = ({ setUser, deleteAllFromCart, merchant, strings, location, se
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
         {strings["My Account"]}
       </BreadcrumbsItem>
-      <LayoutOne headerContainerClass="container-fluid"
+      <Layout headerContainerClass="container-fluid"
         headerPaddingClass="header-padding-2"
         headerTop="visible">
         {/* breadcrumb */}
@@ -1130,7 +1130,7 @@ const MyAccount = ({ setUser, deleteAllFromCart, merchant, strings, location, se
             Are you sure that you want to permanently delete this account
         </SweetAlert>
         }
-      </LayoutOne>
+      </Layout>
     </Fragment >
   );
 };

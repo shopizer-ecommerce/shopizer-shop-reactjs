@@ -2,12 +2,12 @@ import PropTypes from "prop-types";
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
 // import { getProducts } from "../../helpers/product";
-import ProductGridSingleTwo from "../../components/product/ProductGridSingleTwo";
+import ProductGridSingle from "../../components/product/ProductGridSingle";
 import { addToCart } from "../../redux/actions/cartActions";
 // import { addToWishlist } from "../../redux/actions/wishlistActions";
 // import { addToCompare } from "../../redux/actions/compareActions";
 import { isValidObject } from "../../util/helper";
-const ProductGridTwo = ({
+const ProductGrid = ({
   products,
   currency,
   addToCart,
@@ -26,7 +26,7 @@ const ProductGridTwo = ({
     <Fragment>
       {products.map((product) => {
         return (
-          <ProductGridSingleTwo
+          <ProductGridSingle
             sliderClassName={sliderClassName}
             spaceBottomClass={spaceBottomClass}
             colorClass={colorClass}
@@ -59,7 +59,7 @@ const ProductGridTwo = ({
   );
 };
 
-ProductGridTwo.propTypes = {
+ProductGrid.propTypes = {
   addToCart: PropTypes.func,
   // addToCompare: PropTypes.func,
   // addToWishlist: PropTypes.func,
@@ -125,4 +125,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductGridTwo);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductGrid);

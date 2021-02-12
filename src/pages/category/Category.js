@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
 import { connect } from 'react-redux';
 // import { getSortedProducts } from '../../helpers/product';
-import LayoutOne from '../../layouts/LayoutOne';
+import Layout from '../../layouts/Layout';
 import Breadcrumb from '../../wrappers/breadcrumb/Breadcrumb';
 import ShopSidebar from '../../wrappers/product/ShopSidebar';
 import ShopTopbar from '../../wrappers/product/ShopTopbar';
@@ -19,7 +19,7 @@ import { multilanguage } from "redux-multilanguage";
 import { setCategoryID } from "../../redux/actions/productActions";
 import ReactPaginate from 'react-paginate';
 
-const ShopGridStandard = ({ setCategoryID, isLoading, strings, location, defaultStore, currentLanguageCode, categoryID, setLoader, }) => {
+const Category = ({ setCategoryID, isLoading, strings, location, defaultStore, currentLanguageCode, categoryID, setLoader, }) => {
     const [layout, setLayout] = useState('grid three-column');
     const history = useHistory();
     // const [sortType, setSortType] = useState('');
@@ -173,7 +173,7 @@ const ShopGridStandard = ({ setCategoryID, isLoading, strings, location, default
             {productDetails && productDetails.parent !== null && <BreadcrumbsItem onClick={() => setCategoryID(productDetails.parent.id)} to={"/category/" + productDetails.parent.code}>{productDetails.parent.code}</BreadcrumbsItem>}
             <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>{productDetails && productDetails.description.name}</BreadcrumbsItem>
 
-            <LayoutOne headerContainerClass="container-fluid"
+            <Layout headerContainerClass="container-fluid"
                 headerPaddingClass="header-padding-2"
                 headerTop="visible">
                 {/* breadcrumb */}
@@ -232,12 +232,12 @@ const ShopGridStandard = ({ setCategoryID, isLoading, strings, location, default
                         }
                     </div>
                 </div>
-            </LayoutOne>
+            </Layout>
         </Fragment>
     )
 }
 
-ShopGridStandard.propTypes = {
+Category.propTypes = {
     location: PropTypes.object,
     products: PropTypes.array
 }
@@ -262,4 +262,4 @@ const mapDispatchToProps = dispatch => {
         },
     };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(multilanguage(ShopGridStandard));
+export default connect(mapStateToProps, mapDispatchToProps)(multilanguage(Category));

@@ -5,7 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
-import LayoutOne from "../../layouts/LayoutOne";
+import Layout from "../../layouts/Layout";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { useForm, Controller } from "react-hook-form";
 import { useToasts } from "react-toast-notifications";
@@ -281,7 +281,7 @@ const LoginRegister = ({ merchant, strings, props, location, setLoader, setUser,
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
         {strings["Login"]}
       </BreadcrumbsItem>
-      <LayoutOne headerContainerClass="container-fluid"
+      <Layout headerContainerClass="container-fluid"
         headerPaddingClass="header-padding-2"
         headerTop="visible">
         {/* breadcrumb */}
@@ -439,7 +439,7 @@ const LoginRegister = ({ merchant, strings, props, location, setLoader, setUser,
             </div>
           </div>
         </div>
-      </LayoutOne>
+      </Layout>
     </Fragment >
   );
 };

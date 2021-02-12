@@ -5,7 +5,7 @@ import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import WebService from '../../util/webService';
 import constant from '../../util/constant';
 import { setLoader } from "../../redux/actions/loaderActions";
-import LayoutOne from "../../layouts/LayoutOne";
+import Layout from "../../layouts/Layout";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { connect } from 'react-redux';
 import { multilanguage } from "redux-multilanguage";
@@ -45,7 +45,7 @@ const Content = ({ strings, contentID, setLoader }) => {
             <BreadcrumbsItem to="/">{strings["Home"]}</BreadcrumbsItem>
             <BreadcrumbsItem to="/content">{contentDetails.name} </BreadcrumbsItem>
 
-            <LayoutOne headerContainerClass="container-fluid"
+            <Layout headerContainerClass="container-fluid"
                 headerPaddingClass="header-padding-2"
                 headerTop="visible">
                 {/* breadcrumb */}
@@ -55,7 +55,7 @@ const Content = ({ strings, contentID, setLoader }) => {
                         <p dangerouslySetInnerHTML={{ __html: contentDetails.pageContent }} ></p>
                     </div>
                 </div>
-            </LayoutOne>
+            </Layout>
         </Fragment>
     );
 };

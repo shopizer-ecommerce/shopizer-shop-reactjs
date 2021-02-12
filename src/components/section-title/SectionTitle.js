@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { multilanguage } from "redux-multilanguage";
-const SectionTitleThree = ({
+const SectionTitle = ({
   titleText,
   positionClass,
   spaceClass,
@@ -16,11 +16,11 @@ const SectionTitleThree = ({
   );
 };
 
-SectionTitleThree.propTypes = {
+SectionTitle.propTypes = {
   positionClass: PropTypes.string,
   spaceClass: PropTypes.string,
   titleText: PropTypes.string,
   strings: PropTypes.object
 };
 
-export default multilanguage(SectionTitleThree);
+export default multilanguage(SectionTitle);

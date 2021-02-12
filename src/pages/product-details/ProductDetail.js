@@ -3,7 +3,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import MetaTags from "react-meta-tags";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { connect } from "react-redux";
-import LayoutOne from "../../layouts/LayoutOne";
+import Layout from "../../layouts/Layout";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 // import RelatedProductSlider from "../../wrappers/product/RelatedProductSlider";
 import ProductDescriptionTab from "../../wrappers/product/ProductDescriptionTab";
@@ -12,7 +12,7 @@ import WebService from '../../util/webService';
 import constant from '../../util/constant';
 import { setLoader } from "../../redux/actions/loaderActions";
 import { multilanguage } from "redux-multilanguage";
-const Product = ({ strings, location, productID, currentLanguageCode, setLoader, defaultStore }) => {
+const ProductDetails = ({ strings, location, productID, currentLanguageCode, setLoader, defaultStore }) => {
   const { pathname } = location;
   const [productDetails, setProductDetails] = useState();
   const [productReview, setProductReview] = useState([]);
@@ -61,7 +61,7 @@ const Product = ({ strings, location, productID, currentLanguageCode, setLoader,
         {productDetails && productDetails.description.name}
       </BreadcrumbsItem>
 
-      <LayoutOne headerContainerClass="container-fluid"
+      <Layout headerContainerClass="container-fluid"
         headerPaddingClass="header-padding-2"
         headerTop="visible">
         {/* breadcrumb */}
@@ -93,12 +93,12 @@ const Product = ({ strings, location, productID, currentLanguageCode, setLoader,
           spaceBottomClass="pb-95"
           category={product.category[0]}
         /> */}
-      </LayoutOne>
+      </Layout>
     </Fragment>
   );
 };
 
-Product.propTypes = {
+ProductDetails.propTypes = {
   location: PropTypes.object,
   productID: PropTypes.number,
   currentLanguageCode: PropTypes.string,
@@ -121,4 +121,4 @@ const mapDispatchToProps = dispatch => {
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(multilanguage(Product));
+export default connect(mapStateToProps, mapDispatchToProps)(multilanguage(ProductDetails));

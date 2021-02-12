@@ -13,7 +13,7 @@ import constant from '../../util/constant';
 // import { setLocalData } from '../../util/helper';
 import { setMerchant } from "../../redux/actions/storeAction";
 import { getCurrentLocation } from "../../redux/actions/userAction";
-const HeaderOne = ({
+const Header = ({
   setMerchant,
   merchant,
   layout,
@@ -141,7 +141,7 @@ const HeaderOne = ({
   );
 };
 
-HeaderOne.propTypes = {
+Header.propTypes = {
   // merchant: PropTypes.string,
   borderStyle: PropTypes.string,
   headerPaddingClass: PropTypes.string,
@@ -173,6 +173,6 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(multilanguage(HeaderOne));
+)(multilanguage(Header));
 
 // export default HeaderOne;

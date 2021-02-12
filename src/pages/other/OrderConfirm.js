@@ -3,7 +3,7 @@ import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import MetaTags from "react-meta-tags";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
-import LayoutOne from "../../layouts/LayoutOne";
+import Layout from "../../layouts/Layout";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { connect } from "react-redux";
 import { multilanguage } from "redux-multilanguage";
@@ -24,7 +24,7 @@ const OrderConfirm = ({ location, orderID, strings, merchant }) => {
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
         {strings["Order Confirm"]}
       </BreadcrumbsItem>
-      <LayoutOne headerContainerClass="container-fluid"
+      <Layout headerContainerClass="container-fluid"
         headerPaddingClass="header-padding-2"
         headerTop="visible">
         {/* breadcrumb */}
@@ -50,7 +50,7 @@ const OrderConfirm = ({ location, orderID, strings, merchant }) => {
             </div>
           </div>
         </div>
-      </LayoutOne>
+      </Layout>
     </Fragment>
   );
 };

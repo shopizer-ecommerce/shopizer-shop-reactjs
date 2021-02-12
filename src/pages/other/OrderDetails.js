@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import constant from '../../util/constant';
 import WebService from '../../util/webService';
 // import { addToCart } from "../../redux/actions/cartActions";
-import LayoutOne from "../../layouts/LayoutOne";
+import Layout from "../../layouts/Layout";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { isValidObject } from "../../util/helper";
 import { multilanguage } from "redux-multilanguage";
@@ -72,7 +72,7 @@ const OrderDetails = ({
                 {strings["Order Details"]}
             </BreadcrumbsItem>
 
-            <LayoutOne headerContainerClass="container-fluid"
+            <Layout headerContainerClass="container-fluid"
                 headerPaddingClass="header-padding-2"
                 headerTop="visible">
                 {/* breadcrumb */}
@@ -210,7 +210,7 @@ const OrderDetails = ({
                             )}
                     </div>
                 </div>
-            </LayoutOne>
+            </Layout>
         </Fragment>
     );
 };

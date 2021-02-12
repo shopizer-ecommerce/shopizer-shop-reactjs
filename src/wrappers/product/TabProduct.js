@@ -3,14 +3,14 @@ import React, { useEffect, useState } from "react";
 // import { Link } from "react-router-dom";
 import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
-import SectionTitleThree from "../../components/section-title/SectionTitleThree";
-import ProductGridTwo from "./ProductGridTwo";
+import SectionTitle from "../../components/section-title/SectionTitle";
+import ProductGrid from "./ProductGrid";
 import WebService from '../../util/webService';
 import constant from '../../util/constant';
 import { setLoader } from "../../redux/actions/loaderActions";
 import { multilanguage } from "redux-multilanguage";
 import { connect } from "react-redux";
-const TabProductNine = ({
+const TabProduct = ({
   setLoader,
   spaceTopClass,
   spaceBottomClass,
@@ -63,7 +63,7 @@ const TabProductNine = ({
         } ${extraClass ? extraClass : ""}`}
     >
       <div className={`${containerClass ? containerClass : "container"}`}>
-        <SectionTitleThree titleText="Featured Products" positionClass="text-center" />
+        <SectionTitle titleText="Featured Products" positionClass="text-center" />
         <Tab.Container defaultActiveKey="all">
           <Nav variant="pills" className="product-tab-list pt-30 pb-55 text-center">
             {
@@ -83,7 +83,7 @@ const TabProductNine = ({
                 return (
                   <Tab.Pane key={i} eventKey={value.code}>
                     <div className="row">
-                      <ProductGridTwo
+                      <ProductGrid
                         products={value.data}
                         type="men"
                         limit={8}
@@ -101,7 +101,7 @@ const TabProductNine = ({
   );
 };
 
-TabProductNine.propTypes = {
+TabProduct.propTypes = {
   category: PropTypes.string,
   containerClass: PropTypes.string,
   extraClass: PropTypes.string,
@@ -128,5 +128,5 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(multilanguage(TabProductNine));
+)(multilanguage(TabProduct));
 // export default TabProductNine;

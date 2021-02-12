@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 import React from "react";
 import featureIconData from "../../data/feature-icons/feature-icon-four.json";
-import FeatureIconFourSingle from "../../components/feature-icon/FeatureIconFourSingle.js";
+import FeatureIconSingle from "../../components/feature-icon/FeatureIconSingle.js";
 
-const FeatureIconFour = ({
+const FeatureIcon = ({
   spaceTopClass,
   spaceBottomClass,
   containerClass,
@@ -15,9 +15,9 @@ const FeatureIconFour = ({
     <div
       className={`support-area hm9-section-padding ${
         spaceTopClass ? spaceTopClass : ""
-      } ${spaceBottomClass ? spaceBottomClass : ""} ${
+        } ${spaceBottomClass ? spaceBottomClass : ""} ${
         responsiveClass ? responsiveClass : ""
-      }`}
+        }`}
       style={
         bgImg
           ? { backgroundImage: `url(${process.env.PUBLIC_URL + bgImg})` }
@@ -27,13 +27,13 @@ const FeatureIconFour = ({
       <div
         className={`${containerClass ? containerClass : ""} ${
           gutterClass ? gutterClass : ""
-        }`}
+          }`}
       >
         <div className="row">
           {featureIconData &&
             featureIconData.map((single, key) => {
               return (
-                <FeatureIconFourSingle
+                <FeatureIconSingle
                   data={single}
                   spaceBottomClass="mb-10"
                   key={key}
@@ -46,7 +46,7 @@ const FeatureIconFour = ({
   );
 };
 
-FeatureIconFour.propTypes = {
+FeatureIcon.propTypes = {
   bgImg: PropTypes.string,
   containerClass: PropTypes.string,
   gutterClass: PropTypes.string,
@@ -55,4 +55,4 @@ FeatureIconFour.propTypes = {
   spaceTopClass: PropTypes.string
 };
 
-export default FeatureIconFour;
+export default FeatureIcon;

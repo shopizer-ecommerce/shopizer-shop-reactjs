@@ -6,7 +6,7 @@ import FooterCopyright from "../../components/footer/FooterCopyright";
 import FooterNewsletter from "../../components/footer/FooterNewsletter";
 import { multilanguage } from "redux-multilanguage";
 import { connect } from "react-redux";
-const FooterOne = ({
+const Footer = ({
   backgroundColorClass,
   spaceTopClass,
   spaceBottomClass,
@@ -199,7 +199,7 @@ const FooterOne = ({
   );
 };
 
-FooterOne.propTypes = {
+Footer.propTypes = {
   backgroundColorClass: PropTypes.string,
   containerClass: PropTypes.string,
   extraFooterClass: PropTypes.string,
@@ -226,5 +226,5 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(multilanguage(FooterOne));
+)(multilanguage(Footer));
 // export default FooterOne;
