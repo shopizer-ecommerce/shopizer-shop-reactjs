@@ -48,7 +48,13 @@ const Header = ({
 
     // let action = 'actuator/health/ping';
     try {
+      console.log("*********************************");
+      console.log("BASE URL " + process.env.REACT_APP_BASE_URL);
+      console.log("REACT_APP_API_VERSION " + process.env.REACT_APP_API_VERSION);
+      console.log("REACT_APP_MERCHANT " + process.env.REACT_APP_MERCHANT);
+      console.log("*********************************");
       let response = await WebService.get(process.env.REACT_APP_BASE_URL + '/actuator/health/ping');
+      
       if (response) {
         // console.log(response)
         if (response.status === 'UP') {

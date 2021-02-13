@@ -79,13 +79,9 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 
 docker build . -t shopizerecomm/shopizer-shop:latest
 
-docker run -e "REACT_APP_BASE_URL=http://localhost:8080" \ 
--e "REACT_APP_MERCHANT=DEFAULT" \
--it shopizerecomm/shopizer-shop
-
 docker run \
 -e "REACT_APP_MERCHANT=DEFAULT" \
 -e "REACT_APP_BASE_URL=http://localhost:8080" \
--it --rm -p 8787:80 shopizerecomm/shopizer-shop-reactjs
+-it --rm -p 8080:80 shopizerecomm/shopizer-shop-reactjs
 
 http://localhost:8787
