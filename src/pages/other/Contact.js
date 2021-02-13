@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React, { Fragment } from "react";
 import MetaTags from "react-meta-tags";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
-import LayoutOne from "../../layouts/LayoutOne";
+import Layout from "../../layouts/Layout";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import LocationMap from "../../components/contact/LocationMap";
 import { useForm } from "react-hook-form";
@@ -96,7 +96,7 @@ const Contact = ({ strings, location, merchant, setLoader }) => {
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
         {strings["Contact"]}
       </BreadcrumbsItem>
-      <LayoutOne headerContainerClass="container-fluid"
+      <Layout headerContainerClass="container-fluid"
         headerPaddingClass="header-padding-2"
         headerTop="visible">
         {/* breadcrumb */}
@@ -215,7 +215,7 @@ const Contact = ({ strings, location, merchant, setLoader }) => {
             </div>
           </div>
         </div>
-      </LayoutOne>
+      </Layout>
     </Fragment>
   );
 };

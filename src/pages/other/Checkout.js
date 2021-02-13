@@ -7,7 +7,7 @@ import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 // import { getDiscountPrice } from "../../helpers/product";
 // import Tab from "react-bootstrap/Tab";
 // import Nav from "react-bootstrap/Nav";
-import LayoutOne from "../../layouts/LayoutOne";
+import Layout from "../../layouts/Layout";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { isValidObject, setLocalData } from "../../util/helper";
 import constant from '../../util/constant';
@@ -678,7 +678,7 @@ const Checkout = ({shipStateData, isLoading,  merchant, strings, location, cartI
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
       {strings["Checkout"]}
       </BreadcrumbsItem>
-      <LayoutOne headerContainerClass="container-fluid"
+      <Layout headerContainerClass="container-fluid"
         headerPaddingClass="header-padding-2"
         headerTop="visible">
         {/* breadcrumb */}
@@ -1191,7 +1191,7 @@ const Checkout = ({shipStateData, isLoading,  merchant, strings, location, cartI
               )}
           </div>
         </div>
-      </LayoutOne>
+      </Layout>
     </Fragment>
   );
 };

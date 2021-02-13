@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
-import LayoutOne from "../../layouts/LayoutOne";
+import Layout from "../../layouts/Layout";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { useForm } from "react-hook-form";
 import { useToasts } from "react-toast-notifications";
@@ -68,7 +68,7 @@ const ForgotPassword = ({ merchant, strings, props, location, setLoader, default
             <BreadcrumbsItem to={"/login"}>
                 {strings["Forgot Password"]}
             </BreadcrumbsItem>
-            <LayoutOne headerContainerClass="container-fluid"
+            <Layout headerContainerClass="container-fluid"
                 headerPaddingClass="header-padding-2"
                 headerTop="visible">
                 {/* breadcrumb */}
@@ -127,7 +127,7 @@ const ForgotPassword = ({ merchant, strings, props, location, setLoader, default
                         </div>
                     </div>
                 </div>
-            </LayoutOne>
+            </Layout>
         </Fragment >
     );
 };

@@ -11,13 +11,13 @@ import CookieConsent from "react-cookie-consent";
 import Loader from "./components/loader/loader"
 // var sha512 = require('js-sha512').sha512;
 // home pages
-const HomeFashionSeven = lazy(() => import("./pages/home/HomeFashionSeven"));
+const Home = lazy(() => import("./pages/home/Home"));
 
 // shop pages
-const ShopGridStandard = lazy(() => import("./pages/shop/ShopGridStandard"));
+const Category = lazy(() => import("./pages/category/Category"));
 
 // product pages
-const Product = lazy(() => import("./pages/shop-product/Product"));
+const ProductDetail = lazy(() => import("./pages/product-details/ProductDetail"));
 
 // other pages
 // const About = lazy(() => import("./pages/other/About"));
@@ -35,7 +35,7 @@ const Checkout = lazy(() => import("./pages/other/Checkout"));
 
 const NotFound = lazy(() => import("./pages/other/NotFound"));
 const OrderConfirm = lazy(() => import("./pages/other/OrderConfirm"));
-const Content = lazy(() => import("./pages/content/content"));
+const Content = lazy(() => import("./pages/content/Content"));
 const SearchProduct = lazy(() => import("./pages/search-product/SearchProduct"));
 const App = (props) => {
   useEffect(() => {
@@ -76,25 +76,22 @@ const App = (props) => {
                 <Route
                   exact
                   path="/"
-                  component={HomeFashionSeven}
+                  component={Home}
                 />
 
                 {/* Homepages */}
-                <Route
-                  path="/home-fashion-seven"
-                  component={HomeFashionSeven}
-                />
+
 
                 {/* Shop pages */}
                 <Route
                   path="/category/:id"
-                  component={ShopGridStandard}
+                  component={Category}
                 />
 
                 {/* Shop product pages */}
                 <Route
                   path="/product/:id"
-                  component={Product}
+                  component={ProductDetail}
                 />
                 <Route
                   path="/content/:id"

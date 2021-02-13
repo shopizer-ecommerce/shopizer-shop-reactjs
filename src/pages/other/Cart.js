@@ -18,7 +18,7 @@ import {
   // cartItemStock,
   // deleteAllFromCart
 } from "../../redux/actions/cartActions";
-import LayoutOne from "../../layouts/LayoutOne";
+import Layout from "../../layouts/Layout";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import constant from '../../util/constant';
 import WebService from '../../util/webService';
@@ -121,7 +121,7 @@ const Cart = ({
         {strings["Cart"]}
       </BreadcrumbsItem>
 
-      <LayoutOne headerContainerClass="container-fluid"
+      <Layout headerContainerClass="container-fluid"
         headerPaddingClass="header-padding-2"
         headerTop="visible">
         {/* breadcrumb */}
@@ -405,7 +405,7 @@ const Cart = ({
               )}
           </div>
         </div>
-      </LayoutOne>
+      </Layout>
     </Fragment>
   );
 };

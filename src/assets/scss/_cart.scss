@@ -243,7 +243,7 @@ h3.cart-page-title {
 .order-details-total {
   background-color: #fff2f0;
   border-radius: 25px;
-  padding: 35px 20px 40px 20px;
+  padding: 18px 20px 18px 20px;
 
   .amount_type {
     margin: 38px 20px;
@@ -433,7 +433,7 @@ h3.cart-page-title {
           box-shadow: none;
 
           // -webkit-appearance: none;
-// -moz-appearance: none;
+          // -moz-appearance: none;
         }
 
         input {
@@ -1131,8 +1131,8 @@ h3.cart-page-title {
 
 
             // .img-fluid {
-  //   height: 151px !important;
-  // }
+            //   height: 151px !important;
+            // }
           }
         }
       }
@@ -1465,8 +1465,8 @@ h3.cart-page-title {
             }
 
             // .img-fluid {
-  //   max-width: 40px;
-  // }
+            //   max-width: 40px;
+            // }
           }
         }
       }
@@ -1490,4 +1490,46 @@ h3.cart-page-title {
     }
   }
 
+}
+
+.printRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 60px;
+
+  .cart-page-title {
+    margin: 0px !important;
+  }
+
+  .print-button {
+    background-color: #fb799c;
+    border: medium none;
+    color: #fff;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    padding: 16px 35px 17px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+  }
+}
+
+@media print {
+  @page {
+    size: landscape;
+  }
+
+  .cart-main-area {
+    padding-top: 0px !important;
+  }
+
+  #printPageButton {
+    display: none;
+  }
+
+  .cart-page-title {
+    display: none;
+  }
 }

@@ -9,12 +9,13 @@ import { connect } from "react-redux";
 import constant from '../../util/constant';
 import WebService from '../../util/webService';
 // import { addToCart } from "../../redux/actions/cartActions";
-import LayoutOne from "../../layouts/LayoutOne";
+import Layout from "../../layouts/Layout";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
-import { isValidObject } from "../../util/helper";
+import { isValidObject, isCheckValueAndSetParams } from "../../util/helper";
 import { setLoader } from "../../redux/actions/loaderActions";
 import { setProductID } from "../../redux/actions/productActions";
 import { multilanguage } from "redux-multilanguage";
+import ReactPaginate from 'react-paginate';
 const RecentOrder = ({
   strings,
   location,
@@ -23,9 +24,12 @@ const RecentOrder = ({
   merchant,
   isLoading
 }) => {
+  const pageLimit = 2;
   const history = useHistory();
   const { pathname } = location;
   const [orderData, setOrderData] = useState({});
+  // const [currentPage, setCurrentPage] = useState(0);
+  const [offset, setOffset] = useState(1);
   useEffect(() => {
     getOrder();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -38,6 +42,7 @@ const RecentOrder = ({
       let response = await WebService.get(action);
       if (response) {
         // console.log(response)
+        // setCurrentPage(response.totalPages)
         setOrderData(response)
       }
       setLoader(false)
@@ -65,7 +70,7 @@ const RecentOrder = ({
         {strings["Recent Orders"]}
       </BreadcrumbsItem>
 
-      <LayoutOne headerContainerClass="container-fluid"
+      <Layout headerContainerClass="container-fluid"
         headerPaddingClass="header-padding-2"
         headerTop="visible">
         {/* breadcrumb */}
@@ -79,15 +84,15 @@ const RecentOrder = ({
                   <div className="col-12">
                     <div className="table-content table-responsive cart-table-content">
                       {
-                        orderData.orders.map((order, i) => {
+                        orderData.orders.slice((offset - 1) * pageLimit, offset * pageLimit).map((order, i) => {
 
 
                           return (
-                            <table key={i}>
+                            <table key={i} style={{ marginBottom: 30 }}>
                               <thead>
                                 <tr className="order-header">
                                   <th>{strings["Order Id"]} :  {order.id}</th>
-                                  <th onClick={() => history.push("/order-details/" + order.id)}>{strings["View Details"]}</th>
+                                  <th onClick={() => history.push("/order-details/" + order.id)} style={{ cursor: 'pointer' }}>{strings["View Details"]}</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -144,6 +149,18 @@ const RecentOrder = ({
                     </div>
                   </div>
                 </div>
+                <div className="pro-pagination-style text-center mt-30">
+                  <ReactPaginate
+                    previousLabel={'«'}
+                    nextLabel={'»'}
+                    breakLabel={'...'}
+                    breakClassName={'break-me'}
+                    pageCount={orderData.orders.length / 1}
+                    onPageChange={(e) => setOffset(e.selected + 1)}
+                    containerClassName={'mb-0 mt-0'}
+                    activeClassName={'page-item active'}
+                  />
+                </div>
               </Fragment>
             ) : (
                 !isLoading && <div className="row">
@@ -164,7 +181,7 @@ const RecentOrder = ({
               )}
           </div>
         </div>
-      </LayoutOne>
+      </Layout>
     </Fragment>
   );
 };

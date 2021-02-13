@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 // import { useToasts } from "react-toast-notifications";
 import MetaTags from "react-meta-tags";
@@ -9,12 +9,13 @@ import { connect } from "react-redux";
 import constant from '../../util/constant';
 import WebService from '../../util/webService';
 // import { addToCart } from "../../redux/actions/cartActions";
-import LayoutOne from "../../layouts/LayoutOne";
+import Layout from "../../layouts/Layout";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { isValidObject } from "../../util/helper";
 import { multilanguage } from "redux-multilanguage";
 import { setLoader } from "../../redux/actions/loaderActions";
 import { setProductID } from "../../redux/actions/productActions";
+import { useReactToPrint } from 'react-to-print';
 const OrderDetails = ({
     location,
     orderID,
@@ -26,6 +27,7 @@ const OrderDetails = ({
 }) => {
     // const { addToast } = useToasts();
     const { pathname } = location;
+    const componentRef = useRef();
     const [orderDetails, setorderDetails] = useState({});
     useEffect(() => {
         getOrderDetails();
@@ -52,6 +54,9 @@ const OrderDetails = ({
         // console.log(product);
         setProductID(product.id)
     }
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+    });
     return (
         <Fragment>
             <MetaTags>
@@ -67,17 +72,23 @@ const OrderDetails = ({
                 {strings["Order Details"]}
             </BreadcrumbsItem>
 
-            <LayoutOne headerContainerClass="container-fluid"
+            <Layout headerContainerClass="container-fluid"
                 headerPaddingClass="header-padding-2"
                 headerTop="visible">
                 {/* breadcrumb */}
                 <Breadcrumb />
-                <div className="cart-main-area pt-90 pb-100">
+
+                <div className="cart-main-area pt-90 pb-100" ref={componentRef}>
                     <div className="container">
                         {isValidObject(orderDetails) ? (
                             <Fragment>
-                                <h3 className="cart-page-title" style={{ marginBottom: 60 }}>{strings["Your orders details"]}</h3>
-                                <div className="row">
+                                <div className="printRow">
+                                    <h3 className="cart-page-title" style={{ marginBottom: 60 }}>{strings["Your orders details"]}</h3>
+
+                                    <button id="printPageButton" className="print-button" onClick={handlePrint}>Print</button>
+
+                                </div>
+                                <div className="row" >
                                     <div className="col-12" style={{ marginBottom: 30 }}>
                                         <div style={{ padding: 15 }}>
                                             <span style={{ fontSize: 15 }}><b>{strings["Order No"]}</b> #{orderDetails.id}</span>
@@ -143,7 +154,7 @@ const OrderDetails = ({
                                         </div>
 
                                     </div>
-                                    <div className="custom-payment-shipping-details">
+                                    <div className="col-12 custom-payment-shipping-details">
                                         <div className="col-7">
                                             <h3 className="cart-page-title" style={{ marginBottom: 40 }}>{strings["Payment & Shipping details"]}</h3>
                                             <div style={{ marginBottom: 20 }}>
@@ -165,7 +176,7 @@ const OrderDetails = ({
                                             {
                                                 orderDetails.totals.map((value, i) => {
                                                     return (
-                                                        <h4 className="amount_type">
+                                                        <h4 key={i} className="amount_type">
                                                             <span className="amount_module">{value.module}</span>
                                                             <span className="amount">
                                                                 US${value.value}
@@ -199,7 +210,7 @@ const OrderDetails = ({
                             )}
                     </div>
                 </div>
-            </LayoutOne>
+            </Layout>
         </Fragment>
     );
 };

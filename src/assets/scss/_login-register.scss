@@ -50,6 +50,12 @@
     }
   }
 
+  .auto-fill-password {
+    text-security: disc;
+    -webkit-text-security: disc;
+    -moz-text-security: disc;
+  }
+
   .login-form-container {
     background: transparent none repeat scroll 0 0;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
@@ -82,7 +88,7 @@
           border: 1px solid #e6e6e6;
 
           // -webkit-appearance: none;
-// -moz-appearance: none;
+          // -moz-appearance: none;
         }
 
         .error-msg {
