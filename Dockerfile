@@ -22,10 +22,12 @@ COPY conf /etc/nginx
 RUN ls -al
 
 COPY --from=builder /app/build /usr/share/nginx/html
-RUN ls -al /usr/share/nginx/html
 
+WORKDIR /usr/share/nginx/html
 COPY ./env.sh .
 COPY .env .
+
+RUN ls -al /usr/share/nginx/html
 
 # Add bash
 RUN apk add --no-cache bash
