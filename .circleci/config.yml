@@ -22,8 +22,6 @@ jobs:
        - run: |
            ls -al
        - run: |
-           rm .env.development
-       - run: |
            docker login -u shopizerecomm -p $DOCKERHUB_PASSWORD
        - run: |
            docker build . -t shopizerecomm/shopizer-shop-reactjs:latest
