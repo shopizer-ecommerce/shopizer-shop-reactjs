@@ -6,7 +6,7 @@ COPY package*.json ./
 #remove internal .env file
 RUN npm ci --silent
 #must match package.json react-scripts
-COPY . ./
+COPY . .
 RUN npm run build
 
 
@@ -16,6 +16,8 @@ FROM nginx:stable-alpine
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d
 COPY conf /etc/nginx
+
+RUN ls -al
 
 COPY --from=builder /app/build /usr/share/nginx/html
 RUN ls -al /usr/share/nginx/html
