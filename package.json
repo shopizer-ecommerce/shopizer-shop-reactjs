@@ -52,6 +52,7 @@
 		"uuid": "^3.3.3"
 	},
 	"scripts": {
+		"dev": "chmod +x ./env.sh && ./env.sh && cp env-config.js ./public/ && react-scripts start",
 		"start": "react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",

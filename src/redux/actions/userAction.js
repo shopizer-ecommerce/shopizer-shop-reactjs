@@ -6,7 +6,7 @@ export const SET_COUNTRY = "SET_COUNTRY";
 export const SET_STATE = "SET_STATE";
 export const SET_SHIP_STATE = "SET_SHIP_STATE";
 export const GET_CURRENT_ADDRESS = "GET_CURRENT_ADDRESS";
-Geocode.setApiKey(process.env.REACT_APP_MAP_API_KEY);
+Geocode.setApiKey(window._env_.APP_MAP_API_KEY);
 Geocode.setLanguage("en");
 export const setUser = (data) => {
     return async dispatch => {

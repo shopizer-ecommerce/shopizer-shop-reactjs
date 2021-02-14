@@ -49,11 +49,11 @@ const Header = ({
     // let action = 'actuator/health/ping';
     try {
       console.log("*********************************");
-      console.log("BASE URL " + process.env.REACT_APP_BASE_URL);
-      console.log("REACT_APP_API_VERSION " + process.env.REACT_APP_API_VERSION);
-      console.log("REACT_APP_MERCHANT " + process.env.REACT_APP_MERCHANT);
+      console.log("BASE URL " + window._env_.APP_BASE_URL);
+      console.log("APP_API_VERSION " + window._env_.APP_API_VERSION);
+      console.log("APP_MERCHANT " + window._env_.APP_MERCHANT);
       console.log("*********************************");
-      let response = await WebService.get(process.env.REACT_APP_BASE_URL + '/actuator/health/ping');
+      let response = await WebService.get(window._env_.APP_BASE_URL + '/actuator/health/ping');
       
       if (response) {
         // console.log(response)

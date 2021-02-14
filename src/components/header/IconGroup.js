@@ -34,11 +34,11 @@ const IconGroup = ({
   const [useDetails, setUseDetails] = useState({});
   useEffect(() => {
     // getCart(cartData.code, userData)
-    if (getLocalData('thekey') === process.env.REACT_APP_BASE_URL) {
-      setLocalData('thekey', process.env.REACT_APP_BASE_URL)
+    if (getLocalData('thekey') === window._env_.APP_BASE_URL) {
+      setLocalData('thekey', window._env_.APP_BASE_URL)
     } else {
       logout()
-      setLocalData('thekey', process.env.REACT_APP_BASE_URL)
+      setLocalData('thekey', window._env_.APP_BASE_URL)
     }
     let startTime = new Date(getLocalData('session'));
     let endTime = new Date();

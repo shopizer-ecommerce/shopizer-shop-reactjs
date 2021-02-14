@@ -764,7 +764,7 @@ const MyAccount = ({ setUser, deleteAllFromCart, merchant, strings, location, se
                                 <div className="col-lg-12">
                                   <div className="billing-info mb-20">
                                     <Script
-                                      url={"https://maps.googleapis.com/maps/api/js?key=" + process.env.REACT_APP_MAP_API_KEY + "&libraries=places"}
+                                      url={"https://maps.googleapis.com/maps/api/js?key=" + window._env_.APP_MAP_API_KEY + "&libraries=places"}
                                       onLoad={handleScriptLoad}
                                     />
                                     <label>{strings["Street Address"]}</label>
@@ -911,7 +911,7 @@ const MyAccount = ({ setUser, deleteAllFromCart, merchant, strings, location, se
                                 <div className="col-lg-12">
                                   <div className="billing-info mb-20">
                                     <Script
-                                      url={"https://maps.googleapis.com/maps/api/js?key=" + process.env.REACT_APP_MAP_API_KEY + "&libraries=places"}
+                                      url={"https://maps.googleapis.com/maps/api/js?key=" + window._env_.APP_MAP_API_KEY + "&libraries=places"}
                                       onLoad={handleDeliveryScriptLoad}
                                     />
                                     <label>{strings["Street Address"]}</label>
