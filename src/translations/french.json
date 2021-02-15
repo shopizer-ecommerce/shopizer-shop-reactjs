@@ -140,5 +140,8 @@
   "No items found in cart": "Aucun article trouvé dans le panier",
   "No items found in checkout": "Aucun article trouvé lors du paiement",
   "Page Not Found": "Page non trouvée",
-  "404 Page Note": "Désolé mais la page que vous recherchez n'existe pas, a été supprimée, son nom a été modifié ou est temporairement indisponible."
+  "404 Page Note": "Désolé mais la page que vous recherchez n'existe pas, a été supprimée, son nom a été modifié ou est temporairement indisponible.",
+  "Your account": "Votre compte",
+  "Delete your account": "Supprimer votre compte",
+  "Account Management": "Gestion de compte"
 }

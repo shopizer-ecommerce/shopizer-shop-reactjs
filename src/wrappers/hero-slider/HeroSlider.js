@@ -1,9 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Swiper from "react-id-swiper";
-import sliderData from "../../data/hero-sliders/hero-slider-fifteen.json";
+// import sliderData from "../../data/hero-sliders/hero-slider-fifteen.json";
 import HeroSliderSingle from "../../components/hero-slider/HeroSliderSingle.js";
+import WebService from '../../util/webService';
+import constant from '../../util/constant';
+const HeroSlider = ({ }) => {
 
-const HeroSlider = () => {
+  const [sliderText, setSliderText] = useState('')
+  const [sliderData, setSliderData] = useState([])
+
+  useEffect(() => {
+    getBannerImage();
+    getBannerText();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const getBannerImage = async () => {
+    let action = constant.ACTION.CONTENT + constant.ACTION.IMAGES;
+    try {
+      let response = await WebService.get(action);
+      console.log(response);
+      if (response) {
+        setSliderData(response.content);
+      }
+    } catch (error) {
+    }
+  }
+  const getBannerText = async () => {
+    let action = constant.ACTION.CONTENT + constant.ACTION.BOXES + constant.ACTION.BANNER_TEXT;
+    try {
+      let response = await WebService.get(action);
+      console.log(response);
+      if (response) {
+        setSliderText(response);
+      }
+    } catch (error) {
+    }
+  }
   const params = {
     effect: "fade",
     loop: true,
@@ -38,6 +70,7 @@ const HeroSlider = () => {
                 <HeroSliderSingle
                   data={single}
                   key={key}
+                  sliderText={sliderText}
                   sliderClass="swiper-slide"
                 />
               );

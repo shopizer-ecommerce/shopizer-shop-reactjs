@@ -24,7 +24,7 @@ const RecentOrder = ({
   merchant,
   isLoading
 }) => {
-  const pageLimit = 2;
+  const pageLimit = 5;
   const history = useHistory();
   const { pathname } = location;
   const [orderData, setOrderData] = useState({});
@@ -155,7 +155,7 @@ const RecentOrder = ({
                     nextLabel={'»'}
                     breakLabel={'...'}
                     breakClassName={'break-me'}
-                    pageCount={orderData.orders.length / 1}
+                    pageCount={orderData.orders.length / 5}
                     onPageChange={(e) => setOffset(e.selected + 1)}
                     containerClassName={'mb-0 mt-0'}
                     activeClassName={'page-item active'}

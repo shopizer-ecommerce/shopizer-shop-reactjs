@@ -1,7 +1,9 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { multilanguage } from "redux-multilanguage";
 import { connect } from "react-redux";
+import WebService from '../../util/webService';
+import constant from '../../util/constant';
 // import { setCurrency } from "../../redux/actions/currencyActions";
 import LanguageCurrencyChanger from "./sub-components/LanguageCurrencyChanger";
 
@@ -13,6 +15,22 @@ const HeaderTop = ({
   dispatch,
   borderStyle
 }) => {
+  const [message, setMessage] = useState('')
+  useEffect(() => {
+    getContentMessage();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const getContentMessage = async () => {
+    let action = constant.ACTION.CONTENT + constant.ACTION.BOXES + constant.ACTION.HEADER_MESSAGE;
+    try {
+      let response = await WebService.get(action);
+      console.log(response, '-----------');
+      if (response) {
+        setMessage(response.boxContent);
+      }
+    } catch (error) {
+    }
+  }
   return (
     <div
       className={`header-top-wap ${
@@ -26,11 +44,11 @@ const HeaderTop = ({
         dispatch={dispatch}
       />
       <div className="header-offer">
-        <p>
-          {strings['Free delivery on order over']} {" "}
+        <p dangerouslySetInnerHTML={{ __html: message.replace(/>]]/g, "&gt;") }}>
+          {/* {strings['Free delivery on order over']} {" "}
           <span>
             {'US$79.99'}
-          </span>
+          </span> */}
         </p>
       </div>
     </div>

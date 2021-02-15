@@ -33,7 +33,12 @@ const Constant = {
         RESET: 'reset/',
         REQUEST: 'request/',
         SEARCH: 'search/',
-        AUTOCOMPLETE: 'autocomplete/'
+        AUTOCOMPLETE: 'autocomplete/',
+        BOXES: 'boxes/',
+        BANNER_TEXT: 'bannerText/',
+        IMAGES: 'images/',
+        HEADER_MESSAGE: 'headerMessage/',
+        AGREEMENT: 'agreement/'
     }
 }
 

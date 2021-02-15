@@ -30,6 +30,17 @@
   }
 }
 
+.agreement-info-wrap {
+  font-size: 14px;
+  margin-bottom: 15px;
+  height: 130px;
+  padding: 17px 20px;
+
+  color: #333;
+  border: 1px solid #e6e6e6;
+  background: transparent none repeat scroll 0 0;
+}
+
 .billing-info-wrap {
   h3 {
     font-size: 20px;
@@ -97,7 +108,7 @@
       border: 1px solid #e6e6e6;
 
       // -webkit-appearance: none;
- // -moz-appearance: none;
+      // -moz-appearance: none;
     }
   }
 

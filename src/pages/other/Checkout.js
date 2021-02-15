@@ -252,6 +252,7 @@ const Checkout = ({shipStateData, isLoading,  merchant, strings, location, cartI
   const [shippingQuote, setShippingQuote] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState('');
   const [deliveryData, setDeliveryData] = useState();
+  const [agreementData, setAgreementData] = useState('');
   const { register, control, handleSubmit, errors, setValue, watch, reset, setError, clearErrors } = useForm({
     mode: "onChange",
     criteriaMode: "all"
@@ -664,6 +665,17 @@ const Checkout = ({shipStateData, isLoading,  merchant, strings, location, cartI
       clearErrors(paymentForm.repeatPassword.name);
     }
 
+  }
+
+  const onAgreement = async() => {
+    let action = constant.ACTION.CONTENT + constant.ACTION.BOXES + constant.ACTION.AGREEMENT;
+    try {
+      let response = await WebService.get(action);
+      if (response) {
+        setAgreementData(response.boxContent)
+      }
+    } catch (error) {
+    }
   }
   return (
     <Fragment>
@@ -1129,9 +1141,22 @@ const Checkout = ({shipStateData, isLoading,  merchant, strings, location, cartI
 
                                   <div className="place-order mt-100">
                                     <div className="login-toggle-btn mb-20">
-                                      <input type="checkbox" name={paymentForm.isAgree.name} ref={register(paymentForm.isAgree.validate)} />
+                                      <input type="checkbox" name={paymentForm.isAgree.name} ref={register(paymentForm.isAgree.validate)} onChange={onAgreement}/>
                                       <label className="ml-10 ">{strings["I agree with the terms and conditions"]}</label>
                                       {errors[paymentForm.isAgree.name] && <p className="error-msg">{errors[paymentForm.isAgree.name].message}</p>}
+                                    </div>
+                                    <div>
+                                      {
+                                          watch('isAgree') && 
+                                          <div className="agreement-info-wrap" dangerouslySetInnerHTML={{ __html: agreementData.replace(/>]]/g, "&gt;") }}>
+                                            {/* <textarea
+                                              readOnly={true}
+                                              name="message"
+                                              defaultValue={() => renderAgreementText(agreementData)}
+                                            /> */}
+                                          </div>
+                                      }
+                                    
                                     </div>
                                     <button type="button" onClick={handleSubmit((d) => onSubmitOrder(d, elements, stripe))} className="btn-hover">Place Order</button>
                                   </div>

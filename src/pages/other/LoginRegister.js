@@ -321,7 +321,8 @@ const LoginRegister = ({ merchant, strings, props, location, setLoader, setUser,
                               </div>
                               <div className="login-input">
                                 <input
-                                  type="password"
+                                  type="text"
+                                  className="user-password"
                                   name={loginForm.loginPassword.name}
                                   placeholder={strings["Password"]}
                                   ref={register(loginForm.loginPassword.validate)}

@@ -123,6 +123,8 @@ const Category = ({ setCategoryID, isLoading, strings, location, defaultStore, c
             let response = await WebService.get(action);
             // console.log(response.children);
             if (response) {
+                console.log(response);
+                history.push(response.description.friendlyUrl)
                 setProductDetails(response);
                 // let temp = response.children;
                 // console.log(temp)

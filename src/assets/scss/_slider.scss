@@ -89,13 +89,17 @@
       margin: 0;
     }
 
+    h2 {
+      color: #ffffff;
+    }
+
     h1 {
       font-size: 72px;
       line-height: 97px;
 
       margin: 6px 0 37px;
 
-     color: #010101;
+      color: #010101;
 
       @media #{$lg-layout} {
         font-size: 52px;
@@ -569,7 +573,7 @@
     margin-left: 135px;
 
     /**color: #000000;**/
-    color:#ffffff;
+    color: #ffffff;
 
     @media #{$xs-layout} {
       margin-left: 0;
@@ -618,8 +622,8 @@
   }
 
   h1 {
-    font-size: 76px;
-    line-height: 97px;
+    font-size: 30px;
+    line-height: 40px;
 
     margin: 6px 0 37px;
 
