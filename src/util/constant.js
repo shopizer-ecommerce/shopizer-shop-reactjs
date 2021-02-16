@@ -38,7 +38,8 @@ const Constant = {
         BANNER_TEXT: 'bannerText/',
         IMAGES: 'images/',
         HEADER_MESSAGE: 'headerMessage/',
-        AGREEMENT: 'agreement/'
+        AGREEMENT: 'agreement/',
+        PROMO: 'promo/'
     }
 }
 

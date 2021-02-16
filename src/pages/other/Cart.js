@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import { isValidObject } from "../../util/helper";
 import { useForm, Controller } from "react-hook-form";
 import { getState } from "../../redux/actions/userAction";
-
+import { setLoader } from "../../redux/actions/loaderActions";
 import {
   addToCart,
   // decreaseQuantity,
@@ -23,6 +23,24 @@ import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import constant from '../../util/constant';
 import WebService from '../../util/webService';
 
+const couponCode = {
+  code: {
+    name: 'code',
+    validate: {
+      required: {
+        value: true,
+        message: "Coupon code is required"
+      },
+
+      pattern: {
+        value: /^([a-zA-Z0-9 _-]+)$/,
+        message: 'Please entered alphanumeric value'
+      }
+
+    }
+  }
+
+}
 const quoteForm = {
 
   postalCode: {
@@ -55,7 +73,7 @@ const quoteForm = {
 };
 const Cart = ({
   location,
-  cartItems,
+  cartID,
   defaultStore,
   decreaseQuantity,
   increaseQuantity,
@@ -66,25 +84,52 @@ const Cart = ({
   getState,
   strings,
   merchant,
-  isLoading
+  isLoading,
+  setLoader
   // deleteAllFromCart,
 
 }) => {
   const { addToast } = useToasts();
   const { pathname } = location;
   const history = useHistory();
-  const cartTotalPrice = cartItems.displaySubTotal;
-  const grandTotalPrice = cartItems.displaySubTotal;
+  const [cartItems, setCartItems] = useState({})
+  // const cartTotalPrice = cartItems.displaySubTotal;
+  // const grandTotalPrice = cartItems.displaySubTotal;
   const { register, handleSubmit, control, errors } = useForm({ mode: 'onChange' });
+  const {
+    register: codeRef,
+    handleSubmit: codeSubmit,
+    errors: codeErr
+  } =
+    useForm({ mode: 'onChange' });
 
   const [shippingOptions, setShippingOptions] = useState();
 
   useEffect(() => {
-    if (!isValidObject(cartItems)) {
-      history.push('/')
-    }
+    getCartData()
+    // if (!isValidObject(cartItems)) {
+    //   history.push('/')
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cartItems])
+  }, [])
+  const getCartData = async () => {
+    setLoader(true)
+    let action = constant.ACTION.CART + cartID + '?store=' + defaultStore;
+    try {
+      let response = await WebService.get(action);
+
+      if (response) {
+        setCartItems(response)
+      }
+      setLoader(false)
+    } catch (error) {
+      setLoader(false)
+      setTimeout(() => {
+        history.push('/')
+      }, 200);
+
+    }
+  }
   const deleteAllFromCart = () => {
     // console.log(cartItems);
     cartItems.products.forEach((value) => {
@@ -94,7 +139,7 @@ const Cart = ({
   }
 
   const getQuote = async (data) => {
-    let action = constant.ACTION.CART + cartItems.code + '/' + constant.ACTION.SHIPPING;
+    let action = constant.ACTION.CART + cartID + '/' + constant.ACTION.SHIPPING;
     let param = {};
     param = { 'postalCode': data.postalCode, 'countryCode': data.country }
     try {
@@ -104,6 +149,23 @@ const Cart = ({
         setShippingOptions(response.shippingOptions)
       }
     } catch (error) {
+    }
+  }
+  const applyPromoCode = async (data) => {
+    // console.log(data)
+    setLoader(true)
+    let action = constant.ACTION.CART + cartID + '/' + constant.ACTION.PROMO + data.code;
+    let param = {};
+    param = { 'promoCart': data.code }
+    try {
+      let response = await WebService.post(action, param);
+      // console.log(response);
+      if (response) {
+        setCartItems(response)
+      }
+      setLoader(false)
+    } catch (error) {
+      setLoader(false)
     }
   }
   return (
@@ -304,15 +366,24 @@ const Cart = ({
                             {strings["Use Coupon Code"]}
                           </h4>
                         </div>
-                        <div className="discount-code">
-                          <p>{strings["Enter your coupon code if you have one."]}</p>
-                          <form>
-                            <input type="text" required name="name" />
-                            <button className="cart-btn-2" type="submit">
-                              {strings["Apply Coupon"]}
-                            </button>
-                          </form>
-                        </div>
+                        {
+                          cartItems.promoCode ?
+                            <div className="discount-code">
+                              <p style={{ color: 'green' }}>Your coupon code has been applied!</p>
+                              <h1 style={{ textAlign: 'center', color: '#fb799c' }}>{cartItems.promoCode}</h1>
+                            </div> :
+                            <div className="discount-code">
+                              <p>{strings["Enter your coupon code if you have one."]}</p>
+                              <form onSubmit={codeSubmit(applyPromoCode)}>
+                                <input type="text" name={couponCode.code.name} ref={codeRef(couponCode.code.validate)} />
+                                {codeErr[couponCode.code.name] && <p className="error-msg">{codeErr[couponCode.code.name].message}</p>}
+                                <button className="cart-btn-2" type="submit">
+                                  {strings["Apply Coupon"]}
+                                </button>
+                              </form>
+                            </div>
+                        }
+
                       </div>
 
                       <div className="grand-totall cart-total-box">
@@ -324,13 +395,13 @@ const Cart = ({
                         <h5>
                           {strings["Total products"]}{" "}
                           <span>
-                            {cartTotalPrice}
+                            {cartItems.displaySubTotal}
                           </span>
                         </h5>
                         <h4 className="grand-totall-title">
                           {strings["Grand Total"]}{" "}
                           <span>
-                            {grandTotalPrice}
+                            {cartItems.displaySubTotal}
                           </span>
                         </h4>
                         <Link to={process.env.PUBLIC_URL + "/checkout"}>
@@ -360,30 +431,6 @@ const Cart = ({
                     }
                   </div>
 
-                  {/* <div className="col-lg-4 col-md-12">
-                    <div className="grand-totall">
-                      <div className="title-wrap">
-                        <h4 className="cart-bottom-title section-bg-gary-cart">
-                          {strings["Cart Total"]}
-                        </h4>
-                      </div>
-                      <h5>
-                        {strings["Total products"]}{" "}
-                        <span>
-                          {cartTotalPrice}
-                        </span>
-                      </h5>
-                      <h4 className="grand-totall-title">
-                        {strings["Grand Total"]}{" "}
-                        <span>
-                          {grandTotalPrice}
-                        </span>
-                      </h4>
-                      <Link to={process.env.PUBLIC_URL + "/checkout"}>
-                        {strings["Proceed to Checkout"]}
-                      </Link>
-                    </div>
-                  </div> */}
                 </div>
               </Fragment>
             ) : (
@@ -423,7 +470,7 @@ Cart.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    cartItems: state.cartData.cartItems,
+    cartID: state.cartData.cartID,
     defaultStore: state.merchantData.defaultStore,
     countryData: state.userData.country,
     stateData: state.userData.state,
@@ -437,6 +484,9 @@ const mapDispatchToProps = dispatch => {
     // addToCart: (item, addToast, quantityCount) => {
     //   dispatch(addToCart(item, addToast, quantityCount));
     // },
+    setLoader: (value) => {
+      dispatch(setLoader(value));
+    },
     decreaseQuantity: (item, addToast, cartId, quantityCount, defaultStore) => {
       dispatch(addToCart(item, addToast, cartId, quantityCount, defaultStore));
     },

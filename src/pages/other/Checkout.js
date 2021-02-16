@@ -291,6 +291,7 @@ const Checkout = ({shipStateData, isLoading,  merchant, strings, location, cartI
     let action = constant.ACTION.CART + cartID + '?store=' + defaultStore;
     try {
       let response = await WebService.get(action);
+      console.log(response, '*********')
       if (response) {
         setLoader(false)
         setCartItems(response)
