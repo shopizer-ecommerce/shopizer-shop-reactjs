@@ -30,7 +30,6 @@ const ResetPassword = lazy(() => import("./pages/other/ResetPassword"));
 const Cart = lazy(() => import("./pages/other/Cart"));
 const RecentOrder = lazy(() => import("./pages/other/RecentOrder"));
 const OrderDetails = lazy(() => import("./pages/other/OrderDetails"));
-// const Compare = lazy(() => import("./pages/other/Compare"));
 const Checkout = lazy(() => import("./pages/other/Checkout"));
 
 const NotFound = lazy(() => import("./pages/other/NotFound"));

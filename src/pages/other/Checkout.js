@@ -673,7 +673,7 @@ const Checkout = ({shipStateData, isLoading,  merchant, strings, location, cartI
     try {
       let response = await WebService.get(action);
       if (response) {
-        setAgreementData(response.boxContent)
+        setAgreementData(response.description.description)
       }
     } catch (error) {
     }

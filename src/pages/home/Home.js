@@ -3,9 +3,8 @@ import MetaTags from "react-meta-tags";
 import Layout from "../../layouts/Layout";
 import HeroSlider from "../../wrappers/hero-slider/HeroSlider";
 import TabProduct from "../../wrappers/product/TabProduct";
-// import BannerEleven from "../../wrappers/banner/BannerEleven";
-// import CountDownThree from "../../wrappers/countdown/CountDownThree";
 import FeatureIcon from "../../wrappers/feature-icon/FeatureIcon";
+import Promo from "../../wrappers/promos/Promos";
 import Newsletter from "../../wrappers/newsletter/Newsletter";
 import { connect } from "react-redux";
 const Home = ({ merchant }) => {
@@ -26,25 +25,21 @@ const Home = ({ merchant }) => {
       >
         {/* hero slider */}
         <HeroSlider />
+        {/* promos 
+        <Promo
+          bgImg=""
+          containerClass="container-fluid"
+          gutterClass="padding-10-row-col"
+          spaceTopClass="pt-50"
+          spaceBottomClass="pb-40"
+        />
+        */}
         {/* tab product */}
         <TabProduct
           category="fashion"
           spaceBottomClass="pb-100"
           spaceTopClass="pt-100"
         />
-        {/* banner */}
-        {/*
-        <BannerEleven />
-        */}
-        {/* countdown */}
-        {/*
-        <CountDownThree
-          spaceTopClass="pt-100"
-          spaceBottomClass="pb-100"
-          dateTime="November 13, 2020 12:12:00"
-          countDownImage="/assets/img/banner/deal-2.png"
-        />
-        */}
         {/* feature icon */}
         <FeatureIcon
           bgImg="/assets/img/bg/shape.png"

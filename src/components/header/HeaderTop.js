@@ -20,13 +20,14 @@ const HeaderTop = ({
     getContentMessage();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  /**Home page hero content */
   const getContentMessage = async () => {
     let action = constant.ACTION.CONTENT + constant.ACTION.BOXES + constant.ACTION.HEADER_MESSAGE;
     try {
       let response = await WebService.get(action);
-      console.log(response, '-----------');
       if (response) {
-        setMessage(response.boxContent);
+        //console.log('Response -> ' + JSON.stringify(response));
+        setMessage(response.description.description);
       }
     } catch (error) {
     }

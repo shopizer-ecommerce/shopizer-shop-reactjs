@@ -17,8 +17,6 @@ const rootReducer = combineReducers({
   loading: loaderReducer,
   userData: userReducer,
   content: contentReducer
-  // wishlistData: wishlistReducer,
-  // compareData: compareReducer
 });
 
 export default rootReducer;

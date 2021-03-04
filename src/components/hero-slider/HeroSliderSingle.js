@@ -17,7 +17,7 @@ const HeroSliderFifteenSingle = ({ data, sliderClass, strings, sliderText }) => 
               <h3 className="animated no-style">Enjoy This Offer Today</h3>
               <h1
                 className="animated"
-                dangerouslySetInnerHTML={{ __html: sliderText.boxContent.replace(/>]]/g, "&gt;") }}
+                dangerouslySetInnerHTML={{ __html: sliderText.description.description.replace(/>]]/g, "&gt;") }}
               />
               <div className="slider-btn btn-hover">
                 {/* <Link
