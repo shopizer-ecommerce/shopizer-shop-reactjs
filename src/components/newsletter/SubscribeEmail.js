@@ -25,7 +25,11 @@ const CustomForm = ({
   // message,
   // onValidated,
   spaceTopClass,
-  subscribeBtnClass
+  subscribeBtnClass,
+  buttonLabel,
+  emailPlaceHolder,
+  sendingPlaceHolder,
+  confirmationPlaceHolder
 }) => {
   const [status, setStatus] = useState('');
   const { register, handleSubmit, errors, reset } = useForm({
@@ -39,7 +43,7 @@ const CustomForm = ({
       let action = constant.ACTION.NEWSLETTER;
       let param = { "email": data.email }
       let response = await WebService.post(action, param);
-      console.log(response)
+      //console.log(response)
       // if (response) {
       reset({ email: '' })
       setStatus('success')
@@ -60,13 +64,13 @@ const CustomForm = ({
               name={subScribeForm.email.name}
               ref={register(subScribeForm.email.validate)}
               type="email"
-              placeholder="Your Email Address"
+              placeholder={emailPlaceHolder}
             />
             {errors[subScribeForm.email.name] && <p className="error-msg">{errors[subScribeForm.email.name].message}</p>}
           </div>
 
           {status === "sending" && (
-            <div style={{ color: "#3498db", fontSize: "12px" }}>sending...</div>
+            <div style={{ color: "#3498db", fontSize: "12px" }}>{sendingPlaceHolder}</div>
           )}
           {status === "error" && (
             <div
@@ -77,12 +81,12 @@ const CustomForm = ({
           {status === "success" && (
             <div
               style={{ color: "#2ecc71", fontSize: "12px" }}
-              dangerouslySetInnerHTML={{ __html: 'Thank you for subscribing!. We will send you text message promotions & updates.' }}
+              dangerouslySetInnerHTML={{ __html: {confirmationPlaceHolder} }}
             />
           )}
           <div className={`clear-3 ${subscribeBtnClass ? subscribeBtnClass : ""}`} >
             <button className="button">
-              SUBSCRIBE
+              {buttonLabel}
           </button>
           </div>
         </div>
@@ -94,7 +98,8 @@ const CustomForm = ({
 const SubscribeEmailTwo = ({
   mailchimpUrl,
   spaceTopClass,
-  subscribeBtnClass
+  subscribeBtnClass,
+  strings
 }) => {
   return (
     <div>
@@ -102,11 +107,12 @@ const SubscribeEmailTwo = ({
         url={mailchimpUrl}
         render={({ subscribe, status, message }) => ( */}
       <CustomForm
-        // status={status}
-        // message={message}
-        // onValidated={formData => subscribe(formData)}
         spaceTopClass={spaceTopClass}
         subscribeBtnClass={subscribeBtnClass}
+        buttonLabel={strings["Subscribe"]}
+        emailPlaceHolder={strings["Email address"]}
+        sendingPlaceHolder={strings["Sending"]}
+        confirmationPlaceHolder={strings["Subscribe confirmation"]}
       />
       {/* )}
       /> */}
