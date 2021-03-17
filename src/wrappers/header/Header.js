@@ -88,7 +88,8 @@ const Header = ({
 
   }
   const getContent = async () => {
-    let action = constant.ACTION.CONTENT + constant.ACTION.PAGES + '?&store=' + defaultStore + '&lang=' + currentLanguageCode;
+    //TODO PAGE + COUNT
+    let action = constant.ACTION.CONTENT + constant.ACTION.PAGES + '?page=0&count=20&store=' + defaultStore + '&lang=' + currentLanguageCode;
     try {
       let response = await WebService.get(action);
       if (response) {
