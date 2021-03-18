@@ -93,7 +93,7 @@ const Header = ({
     try {
       let response = await WebService.get(action);
       if (response) {
-        setContentData(response)
+        setContentData(response.items)
       }
     } catch (error) {
     }
