@@ -21,7 +21,7 @@ const MenuCart = ({ cartData, deleteFromCart, defaultStore, strings }) => {
                 <li className="single-shopping-cart" key={key}>
                   <div className="shopping-cart-img">
                     <Link to={"/product/" + single.id}>
-                      <img alt="" src={single.image.imageUrl} className="img-fluid" />
+                      <img alt="" src={defaultImage(single)} className="img-fluid" />
                     </Link>
                   </div>
                   <div className="shopping-cart-title">
@@ -83,6 +83,16 @@ MenuCart.propTypes = {
   deleteFromCart: PropTypes.func,
   strings: PropTypes.object
 };
+
+function defaultImage(product) {
+  if(product.images && product.images.length > 0) {
+    return product.images[0].imageUrl;
+  } else if(product.image != null) {
+    return product.imageUrl;
+  } else {
+    return null;
+  }
+}
 
 const mapStateToProps = state => {
   return {

@@ -50,7 +50,7 @@ const ProductGridListSingle = ({
                 product.image && <img className="default-img" src={product.image.imageUrl} alt="" />
               }
               {
-                product.images.length > 1 ? <img className="hover-img-A" src={product.images[1]} alt="" /> : <img className="hover-img-A" src={product.image.imageUrl} alt="" />
+                product.images.length > 1 ? <img className="hover-img-A" src={product.images[1]} alt="" /> : <img className="hover-img-A" src={defaultImage(product)} alt="" />
               }
             </Link>
 
@@ -138,7 +138,7 @@ const ProductGridListSingle = ({
                       :
                       <img
                         className="hover-img img-fluid"
-                        src={product.image.imageUrl}
+                        src={defaultImage(product)}
                         alt=""
                       />
                     }
@@ -243,6 +243,17 @@ ProductGridListSingle.propTypes = {
   spaceBottomClass: PropTypes.string,
   // wishlistItem: PropTypes.object
 };
+
+function defaultImage(product) {
+  if(product.images && product.images.length > 0) {
+    return product.images[0].imageUrl;
+  } else if(product.image != null) {
+    return product.imageUrl;
+  } else {
+    return null;
+  }
+}
+
 const mapStateToProps = state => {
   return {
     defaultStore: state.merchantData.defaultStore

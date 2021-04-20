@@ -8,8 +8,6 @@ import constant from '../../util/constant';
 import LanguageCurrencyChanger from "./sub-components/LanguageCurrencyChanger";
 
 const HeaderTop = ({
-  // currency,
-  // setCurrency,
   strings,
   currentLanguageCode,
   dispatch,
@@ -22,7 +20,7 @@ const HeaderTop = ({
   }, []);
   /**Home page hero content */
   const getContentMessage = async () => {
-    let action = constant.ACTION.CONTENT + constant.ACTION.BOXES + constant.ACTION.HEADER_MESSAGE;
+    let action = constant.ACTION.CONTENT + constant.ACTION.BOXES + constant.ACTION.HEADER_MESSAGE + '?lang=' + currentLanguageCode;
     try {
       let response = await WebService.get(action);
       if (response) {
@@ -39,17 +37,11 @@ const HeaderTop = ({
         }`}
     >
       <LanguageCurrencyChanger
-        // currency={currency}
-        // setCurrency={setCurrency}
         currentLanguageCode={currentLanguageCode}
         dispatch={dispatch}
       />
       <div className="header-offer">
-        <p dangerouslySetInnerHTML={{ __html: message.replace(/>]]/g, "&gt;") }}>
-          {/* {strings['Free delivery on order over']} {" "}
-          <span>
-            {'US$79.99'}
-          </span> */}
+        <p dangerouslySetInnerHTML={{ __html: message.replace("]]>", "") }}>
         </p>
       </div>
     </div>
@@ -58,8 +50,6 @@ const HeaderTop = ({
 
 HeaderTop.propTypes = {
   borderStyle: PropTypes.string,
-  // setCurrency: PropTypes.func,
-  // currency: PropTypes.object,
   currentLanguageCode: PropTypes.string,
   dispatch: PropTypes.func,
   strings: PropTypes.object
@@ -79,7 +69,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(multilanguage(HeaderTop));
+export default connect()(multilanguage(HeaderTop));

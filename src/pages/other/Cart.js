@@ -77,7 +77,6 @@ const Cart = ({
   defaultStore,
   decreaseQuantity,
   increaseQuantity,
-  // addToCart,
   deleteFromCart,
   countryData,
   stateData,
@@ -217,7 +216,7 @@ const Cart = ({
                               <tr key={key}>
                                 <td className="product-thumbnail">
                                   <Link to={"/product/" + cartItem.description.friendlyUrl} >
-                                    <img className="img-fluid" src={cartItem.image.imageUrl} alt="" />
+                                    <img className="img-fluid" src={defaultImage(cartItem)} alt="" />
                                   </Link>
                                 </td>
 
@@ -478,6 +477,16 @@ const mapStateToProps = state => {
     isLoading: state.loading.isLoading
   };
 };
+
+function defaultImage(product) {
+  if(product.images && product.images.length > 0) {
+    return product.images[0].imageUrl;
+  } else if(product.image != null) {
+    return product.imageUrl;
+  } else {
+    return null;
+  }
+}
 
 const mapDispatchToProps = dispatch => {
   return {

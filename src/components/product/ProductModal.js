@@ -23,7 +23,7 @@ function ProductModal(props) {
   const [selectedProductColor, setSelectedProductColor] = useState([]);
   // const [productStock, setProductStock] = useState();
   const [quantityCount, setQuantityCount] = useState(1);
-  const [currentImage, setCurrentImage] = useState(product.images[0].imageUrl)
+  const [currentImage, setCurrentImage] = useState(defaultImage(product));
   // const wishlistItem = props.wishlistitem;
   // const compareItem = props.compareitem;
 
@@ -166,12 +166,14 @@ function ProductModal(props) {
                     product.images.map((single, key) => {
                       return (
                         <div key={key}>
-                          <div className="single-image">
+                          <div className="single-image" >
+                          {currentImage != null &&
                             <img
                               src={currentImage}
                               className="img-fluid"
                               alt=""
                             />
+                          }
                           </div>
                         </div>
                       );
@@ -443,6 +445,16 @@ ProductModal.propTypes = {
 
   // wishlistitem: PropTypes.object
 };
+
+function defaultImage(product) {
+  if(product.images && product.images.length > 0) {
+    return product.images[0].imageUrl;
+  } else if(product.image != null) {
+    return product.imageUrl;
+  } else {
+    return null;
+  }
+}
 
 const mapStateToProps = state => {
   return {

@@ -29,10 +29,10 @@ const HeroSlider = ({ }) => {
     //}
   }
   const getBannerText = async () => {
+    //let action = constant.ACTION.CONTENT + constant.ACTION.BOXES + constant.ACTION.BANNER_TEXT + '?lang=' + currentLanguageCode;
     let action = constant.ACTION.CONTENT + constant.ACTION.BOXES + constant.ACTION.BANNER_TEXT;
     try {
       let response = await WebService.get(action);
-      console.log(response);
       if (response) {
         setSliderText(response);
       }

@@ -1159,7 +1159,7 @@ const Checkout = ({shipStateData, isLoading,  merchant, strings, location, cartI
                                       }
                                     
                                     </div>
-                                    <button type="button" onClick={handleSubmit((d) => onSubmitOrder(d, elements, stripe))} className="btn-hover">Place Order</button>
+                                    <button type="button" onClick={handleSubmit((d) => onSubmitOrder(d, elements, stripe))} className="btn-hover">{strings["Place your order"]}</button>
                                   </div>
                                 </>
                               )}
