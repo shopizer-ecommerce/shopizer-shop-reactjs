@@ -22,7 +22,17 @@ const subScribeForm = {
   }
 }
 
-const CustomForm = () => {
+const CustomForm = ({
+  // status,
+  // message,
+  // onValidated,
+  spaceTopClass,
+  subscribeBtnClass,
+  buttonLabel,
+  emailPlaceHolder,
+  sendingPlaceHolder,
+  confirmationPlaceHolder
+}) => {
   const [status, setStatus] = useState('');
   const { register, handleSubmit, errors, reset } = useForm({
     mode: "onChange",
@@ -94,25 +104,30 @@ const CustomForm = () => {
   );
 };
 
-const SubscribeEmail = ({ mailchimpUrl }) => {
+const SubscribeEmail = ({ 
+  spaceTopClass,
+  subscribeBtnClass,
+  strings,
+ }) => {
   return (
     <div>
-      {/* <MailchimpSubscribe
-        url={mailchimpUrl}
-        render={({ subscribe, status, message }) => ( */}
       <CustomForm
-      // status={status}
-      // message={message}
-      // onValidated={formData => subscribe(formData)}
+        spaceTopClass={spaceTopClass}
+        subscribeBtnClass={subscribeBtnClass}
+        /**
+        buttonLabel={strings["Subscribe"]}
+        emailPlaceHolder={strings["Email address"]}
+        sendingPlaceHolder={strings["Sending"]}
+        confirmationPlaceHolder={strings["Subscribe confirmation"]}
+        **/
       />
-      {/* )}
-      /> */}
     </div>
   );
 };
 
 SubscribeEmail.propTypes = {
-  mailchimpUrl: PropTypes.string
+  spaceTopClass: PropTypes.string,
+  strings: PropTypes.object
 };
 
 export default SubscribeEmail;

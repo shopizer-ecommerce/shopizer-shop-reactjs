@@ -9,7 +9,7 @@ import WebService from '../../util/webService';
 import constant from '../../util/constant';
 import { setLoader } from "../../redux/actions/loaderActions";
 import StarRatings from 'react-star-ratings';
-function ProductModal(props) {
+function ProductModal(props, strings) {
   const { product, cartData, defaultStore, userData, finalproductprice, finaldiscountedprice, setLoader } = props;
 
 
@@ -378,12 +378,12 @@ function ProductModal(props) {
                               quantityCount,
                               defaultStore,
                               userData,
-                              options
+                              options,strings
                               // selectedProductColor,
                               // selectedProductSize
                             )
                           }
-                          }>Add To Cart</button>
+                          }>{/* {strings["Add to cart"]} */} Add to cart</button>
                       ) : (
                           <button disabled>Out of Stock</button>
                         )}

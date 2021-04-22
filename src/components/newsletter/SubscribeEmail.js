@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
-// import MailchimpSubscribe from "react-mailchimp-subscribe";
 import { useForm } from "react-hook-form";
 import WebService from '../../util/webService';
 import constant from '../../util/constant';
@@ -96,16 +95,12 @@ const CustomForm = ({
 };
 
 const SubscribeEmailTwo = ({
-  mailchimpUrl,
   spaceTopClass,
   subscribeBtnClass,
-  strings
+  strings,
 }) => {
   return (
     <div>
-      {/* <MailchimpSubscribe
-        url={mailchimpUrl}
-        render={({ subscribe, status, message }) => ( */}
       <CustomForm
         spaceTopClass={spaceTopClass}
         subscribeBtnClass={subscribeBtnClass}
@@ -114,14 +109,11 @@ const SubscribeEmailTwo = ({
         sendingPlaceHolder={strings["Sending"]}
         confirmationPlaceHolder={strings["Subscribe confirmation"]}
       />
-      {/* )}
-      /> */}
     </div>
   );
 };
 
 SubscribeEmailTwo.propTypes = {
-  mailchimpUrl: PropTypes.string,
   spaceTopClass: PropTypes.string
 };
 
