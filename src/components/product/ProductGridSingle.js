@@ -172,7 +172,6 @@ const ProductGridSingleTwo = ({
 
         cartData={cartData}
         userData={userData}
-        // addtowishlist={addToWishlist}
         // addtocompare={addToCompare}
         addtoast={addToast}
       />
