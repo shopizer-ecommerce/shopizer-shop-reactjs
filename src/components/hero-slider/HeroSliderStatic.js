@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { multilanguage } from "redux-multilanguage";
-const HeroSliderStatic = ({ sliderText, sliderImage }) => {
+const HeroSliderStatic = ({ string, pitch1, pitch2, pitch3, sliderText, sliderImage }) => {
   return (
 
 
@@ -9,13 +9,13 @@ const HeroSliderStatic = ({ sliderText, sliderImage }) => {
       <div className="col-md-4 ml-auto order-md-2 align-self-start">
         <div className="site-block-cover-content">
             
-            <h2 className="sub-title">#New Summer Collection 2021</h2>
-            <h1>Arrivals Sales</h1>
-            <p><a href="#" className="btn btn-black rounded-0">Shop Now</a></p>
+            <h2 className="sub-title">{pitch1}</h2>
+            <h1>{pitch2}</h1>
+            <p><a href="#" className="btn btn-black rounded-0">{pitch3}</a></p>
         </div>
       </div>
       <div className="col-md-8 order-1 align-self-end">
-          <img src="assets/img/slider/banner-demo.jpg" alt="Image" className="img-fluid"/>
+          <img src="assets/img/slider/modified-png.png" alt="Image" className="img-fluid"/>
       </div>
 </div>
       
@@ -24,6 +24,9 @@ const HeroSliderStatic = ({ sliderText, sliderImage }) => {
 };
 
 HeroSliderStatic.propTypes = {
+  pitch1: PropTypes.string,
+  pitch2: PropTypes.string,
+  pitch3: PropTypes.string,
   text: PropTypes.string,
   image: PropTypes.string
 };

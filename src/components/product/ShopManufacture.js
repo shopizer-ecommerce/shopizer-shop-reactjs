@@ -5,7 +5,7 @@ import React from "react";
 const ShopManufacture = ({ string, manufactures, getSortParams }) => {
   return (
     <div className="sidebar-widget mt-30">
-      <h4 className="pro-sidebar-title">{string["Manufactures"]}</h4>
+      <h4 className="pro-sidebar-title">{string["Styles"]}</h4>
       <div className="sidebar-widget-list mt-20">
         {manufactures.length > 0 ? (
           <ul>

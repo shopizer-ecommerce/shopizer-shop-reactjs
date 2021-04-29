@@ -74,11 +74,6 @@ const NavMenu = ({ props, strings, menuWhiteClass, sidebarMenu, categories, cont
               )
             })
           }
-          <li>
-            <Link to={"/contact"}>
-              {strings["Contact"]}
-            </Link>
-          </li>
         </ul>
       </nav>
     </div>

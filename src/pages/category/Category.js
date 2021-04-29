@@ -138,9 +138,9 @@ const Category = ({ setCategoryID, isLoading, strings, location, defaultStore, c
         let action = constant.ACTION.CATEGORY + categoryid + '/' + constant.ACTION.MANUFACTURERS + '?store=' + defaultStore + '&lang=' + currentLanguageCode
         try {
             let response = await WebService.get(action);
-            console.log(JSON.stringify(response));
+            //console.log(JSON.stringify(response));
             if (response) {
-                setManufacture(response)
+                setManufacture(response.sort())
             }
         } catch (error) {
         }
@@ -156,7 +156,7 @@ const Category = ({ setCategoryID, isLoading, strings, location, defaultStore, c
                     if (variant.code === 'color') {
                         setColor(variant.options);
                     } else if (variant.code === "size") {
-                        setSize(variant.options);
+                        setSize(variant.options.reverse());
                     }
                 });
 
@@ -251,7 +251,7 @@ const mapStateToProps = state => {
         defaultStore: state.merchantData.defaultStore,
         categoryID: state.productData.categoryid,
         isLoading: state.loading.isLoading
-        // products: state.productData.products
+
     }
 }
 const mapDispatchToProps = dispatch => {

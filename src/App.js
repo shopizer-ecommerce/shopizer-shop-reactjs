@@ -46,11 +46,6 @@ const App = (props) => {
         }
       })
     );
-
-    // let date = new Date();
-    // console.log(date)
-    // const has = sha512('1064398:8756321480:10.00:22-01-2021:10:43:01:200:123456789G1');
-    // console.log(has)
   });
 
   return (

@@ -6,8 +6,9 @@ import TabProduct from "../../wrappers/product/TabProduct";
 import FeatureIcon from "../../wrappers/feature-icon/FeatureIcon";
 import Promo from "../../wrappers/promos/Promos";
 import Newsletter from "../../wrappers/newsletter/Newsletter";
+import { multilanguage } from "redux-multilanguage";
 import { connect } from "react-redux";
-const Home = ({ merchant }) => {
+const Home = ({ merchant, strings }) => {
   // console.log(merchant);
   return (
     <Fragment>
@@ -24,7 +25,7 @@ const Home = ({ merchant }) => {
         headerTop="visible"
       >
         {/* hero slider */}
-        <HeroSlider />
+        <HeroSlider string={strings} />
         {/* promos 
         <Promo
           bgImg=""
@@ -67,5 +68,5 @@ const mapStateToProps = state => {
 };
 
 
-export default connect(mapStateToProps, null)(Home);
+export default connect(mapStateToProps, null)(multilanguage(Home));
 // export default HomeFashionSeven;
