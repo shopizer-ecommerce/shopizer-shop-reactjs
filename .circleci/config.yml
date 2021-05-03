@@ -8,6 +8,7 @@ version: 2.1
 
 orbs:
   slack: circleci/slack@3.4.2
+  aws-ecr: circleci/aws-ecr@7.0.0
       
 working_directory: /tmp
 
@@ -30,6 +31,20 @@ jobs:
        - slack/status:
            fail_only: false
            webhook: $SLACK_SHOP_WEBHOOK
+  build_and_deploy_ecr:
+    steps:
+       - aws-ecr/build-and-push-image:
+          account-url: $AWS_ECR_ACCOUNT_URL_ENV_VAR_NAME
+          aws-access-key-id: $ACCESS_KEY_ID_ENV_VAR_NAME
+          aws-secret-access-key: $SECRET_ACCESS_KEY_ENV_VAR_NAME
+          no-output-timeout: 20m
+          region: $AWS_REGION_ENV_VAR_NAME
+          repo: rufina
+          skip-when-tags-exist: false
+          tag: 'latest'
+       - slack/status:
+           fail_only: false
+           webhook: $SLACK_SHOP_WEBHOOK
 
 
 # Orchestrate our job run sequence
@@ -41,3 +56,10 @@ workflows:
             branches:
               only:
                 - main
+  build_and_deploy_ecr:
+    jobs:
+      - push-ecr:
+          filters:
+            branches:
+              only:
+                - rufina

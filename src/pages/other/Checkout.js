@@ -1338,7 +1338,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(getShippingState(code));
     },
     deleteAllFromCart: (orderID) => {
-      dispatch(deleteAllFromCart(orderID));
+      //dispatch(deleteAllFromCart(orderID));
     },
   };
 };
