@@ -58,7 +58,7 @@ workflows:
                 - main
   build_and_deploy_ecr:
     jobs:
-      - push-ecr:
+      - build_and_deploy_ecr:
           filters:
             branches:
               only:
