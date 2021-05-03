@@ -9,7 +9,6 @@ import Newsletter from "../../wrappers/newsletter/Newsletter";
 import { multilanguage } from "redux-multilanguage";
 import { connect } from "react-redux";
 const Home = ({ merchant, strings }) => {
-  // console.log(merchant);
   return (
     <Fragment>
       <MetaTags>
@@ -41,7 +40,7 @@ const Home = ({ merchant, strings }) => {
           spaceBottomClass="pb-100"
           spaceTopClass="pt-100"
         />
-        {/* feature icon */}
+        {/* feature icon 
         <FeatureIcon
           bgImg="/assets/img/bg/shape.png"
           containerClass="container-fluid"
@@ -49,6 +48,7 @@ const Home = ({ merchant, strings }) => {
           spaceTopClass="pt-50"
           spaceBottomClass="pb-40"
         />
+        */}
         {/* newsletter */}
         <Newsletter
           spaceTopClass="pt-100"

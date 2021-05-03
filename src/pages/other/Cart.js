@@ -283,7 +283,12 @@ const Cart = ({
                   </div>
                 </div>
 
+               
                 <div className="row cart-custom-row">
+                  <div className="col-lg-4 col-md-6">
+                    &nbsp;
+                  </div>
+                   {/* 
                   <div className="col-lg-4 col-md-6">
                     <div className="cart-tax">
                       <div className="title-wrap">
@@ -319,7 +324,6 @@ const Cart = ({
                               {errors[quoteForm.country.name] && <p className="error-msg">{errors[quoteForm.country.name].message}</p>}
                             </div>
                             <div className="tax-select">
-                              {/* <label>Region / State</label> */}
                               {
                                 stateData && stateData.length > 0 ?
                                   <Controller
@@ -344,7 +348,7 @@ const Cart = ({
                               {errors[quoteForm.stateProvince.name] && <p className="error-msg">{errors[quoteForm.stateProvince.name].message}</p>}
                             </div>
                             <div className="tax-select">
-                              {/* <label>Postal Code</label> */}
+                              
                               <input type="text" name={quoteForm.postalCode.name} ref={register(quoteForm.postalCode.validate)} placeholder={strings["Postcode"]} />
                               {errors[quoteForm.postalCode.name] && <p className="error-msg">{errors[quoteForm.postalCode.name].message}</p>}
                             </div>
@@ -355,7 +359,9 @@ const Cart = ({
                         </div>
                       </div>
                     </div>
+                    
                   </div>
+                    */}
 
                   <div className="col-lg-8 col-md-6 cart-total">
                     <div className="box-custom">
@@ -442,7 +448,7 @@ const Cart = ({
                       <div className="item-empty-area__text">
                         {strings["No items found in cart"]} <br />{" "}
                         <Link to="/">
-                          Shop Now
+                        {strings["Shop now"]}
                       </Link>
                       </div>
                     </div>

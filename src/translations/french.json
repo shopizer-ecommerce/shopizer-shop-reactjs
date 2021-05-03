@@ -1,10 +1,5 @@
 {
   "Home": "Accueil",
-  "Tables": "les tables",
-  "Living Room": "Salon",
-  "Console": "Console",
-  "Bedroom": "Chambre",
-  "Decorations": "Décorations",
   "Terms and Policy": "Termes et politique",
   "Contact": "Contact",
   "en": "Anglais",
@@ -14,7 +9,7 @@
   "Featured Products": "Produits populaires",
   "View Cart": "Voir le panier",
   "Checkout": "Passer à la caisse",
-  "Total": "Totale",
+  "Total": "Total",
   "No items added to cart": "Aucun article ajouté au panier",
   "Login": "S'identifier",
   "Register": "S'enregistrer",
@@ -144,8 +139,8 @@
   "Your account": "Votre compte",
   "Delete your account": "Supprimer votre compte",
   "Styles": "Styles",
-  "Pitch1": "#New Collection 2021<",
-  "Pitch2": "It's all about comfort",
-  "Shop now": "Magasinez-maintenant",
+  "Pitch1": "#Nouvelle Collection 2021",
+  "Pitch2": "Simplement confortable",
+  "Shop now": "Magasiner",
   "Account Management": "Gestion de compte"
 }

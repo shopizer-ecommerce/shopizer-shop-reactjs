@@ -1,7 +1,7 @@
 import WebService from '../../util/webService';
 import constant from '../../util/constant';
 import { setLoader } from "../actions/loaderActions";
-import { getLocalData } from '../../util/helper';
+import { setLocalData, getLocalData } from '../../util/helper';
 export const GET_SHOPIZER_CART_ID = "GET_SHOPIZER_CART_ID";
 export const GET_CART = "GET_CART";
 export const ADD_TO_CART = "ADD_TO_CART";
@@ -18,7 +18,7 @@ export const addToCart = (item, addToast, cartId, quantityCount, defaultStore, u
       let param;
       let response;
       let message;
-      console.log(cartId, '************ cartId *********')
+      //console.log(cartId, '************ cartId *********')
       if (selectedProductOptions !== undefined) {
         param = { "attributes": selectedProductOptions, "product": item.id, "quantity": quantityCount }
       } else {
@@ -96,6 +96,7 @@ export const getCart = (cartID, userData) => {
   // }
 }
 export const setShopizerCartID = (id) => {
+  setLocalData(GET_SHOPIZER_CART_ID,id);
   return dispatch => {
     dispatch({
       type: GET_SHOPIZER_CART_ID,

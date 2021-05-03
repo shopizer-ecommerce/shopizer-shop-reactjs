@@ -56,7 +56,6 @@ const IconGroup = ({
     let action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.PROFILE;
     try {
       let response = await WebService.get(action);
-      // console.log(response);
       if (response) {
         setUseDetails(response)
       }
@@ -103,7 +102,6 @@ const IconGroup = ({
         let response = await WebService.post(action, param);
         if (response) {
           setSearchData(response.values)
-          // console.log(response)
         }
       } catch (error) {
         console.log(error, '------------')
@@ -133,6 +131,9 @@ const IconGroup = ({
         onAction={onAction}
         debounce={250}
         timeout={timeout} />
+
+      {/*  search as configurable component */}
+      {/*
       <div className="same-style header-search">
 
         < button className="search-active" onClick={e => handleClick(e)}>
@@ -165,13 +166,12 @@ const IconGroup = ({
 
                 </ul>
               </div>
-              {/* <SearchAutoComplete searchData={searchData} /> */}
             </div>
           }
         </div>
-
-
       </div>
+      */}
+
       <div className="same-style account-setting d-none d-lg-block">
         {
           pathname.url !== '/checkout' &&
@@ -281,21 +281,15 @@ const IconGroup = ({
 
 IconGroup.propTypes = {
   cartData: PropTypes.object,
-  // compareData: PropTypes.array,
-  // currency: PropTypes.object,
   iconWhiteClass: PropTypes.string,
   deleteFromCart: PropTypes.func,
-  // wishlistData: PropTypes.array
 };
 
 const mapStateToProps = state => {
   return {
-    // currency: state.currencyData,
     cartData: state.cartData.cartItems,
     cartCount: state.cartData.cartCount,
     userData: state.userData.userData
-    // wishlistData: state.wishlistData,
-    // compareData: state.compareData
   };
 };
 

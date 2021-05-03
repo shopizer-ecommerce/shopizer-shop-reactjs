@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { multilanguage } from "redux-multilanguage";
 const HeroSliderStatic = ({ string, pitch1, pitch2, pitch3, sliderText, sliderImage }) => {
   return (
 
@@ -31,4 +30,4 @@ HeroSliderStatic.propTypes = {
   image: PropTypes.string
 };
 
-export default multilanguage(HeroSliderStatic);
+export default HeroSliderStatic;

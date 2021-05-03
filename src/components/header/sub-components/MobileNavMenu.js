@@ -55,11 +55,6 @@ const MobileNavMenu = ({ strings, categories, contents, setCategoryID, setConten
             )
           })
         }
-        <li>
-          <Link to={"/contact"}>
-            Contact
-          </Link>
-        </li>
 
       </ul>
     </nav>

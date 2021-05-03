@@ -26,6 +26,8 @@ import {
 import Script from 'react-load-script';
 import { multilanguage } from "redux-multilanguage";
 
+
+
 const stripePromise = loadStripe(window._env_.APP_STRIPE_KEY);
 const paymentForm = {
   firstName: {
@@ -239,7 +241,7 @@ const CARD_ELEMENT_OPTIONS = {
     }
   }
 };
-const Checkout = ({shipStateData, isLoading,  merchant, strings, location, cartID, defaultStore, getCountry, getState,getShippingState, countryData, stateData, currentLocation, userData, setLoader, deleteAllFromCart }) => {
+const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, strings, location, cartID, defaultStore, getCountry, getState,getShippingState, countryData, stateData, currentLocation, userData, setLoader, deleteAllFromCart }) => {
   const { pathname } = location;
   const history = useHistory();
   const { addToast } = useToasts();
@@ -257,6 +259,10 @@ const Checkout = ({shipStateData, isLoading,  merchant, strings, location, cartI
     mode: "onChange",
     criteriaMode: "all"
   });
+
+
+
+
 // console.log(window._env_.APP_PAYMENT_TYPE);
   const [ref, setRef] = useState(null)
   useEffect(() => {
@@ -286,18 +292,19 @@ const Checkout = ({shipStateData, isLoading,  merchant, strings, location, cartI
   //   } catch (error) {
   //   }
   // }
+
   const getSummaryOrder = async () => {
     setLoader(true)
+    console.log('GET SUMMARY')
     let action = constant.ACTION.CART + cartID + '?store=' + defaultStore;
     try {
       let response = await WebService.get(action);
-      console.log(response, '*********')
+      console.log(JSON.stringify(response));
       if (response) {
         setLoader(false)
         setCartItems(response)
       }
     } catch (error) {
-      console.log(error, '-----------')
       setLoader(false) 
       deleteAllFromCart()
       setTimeout(() => {
@@ -308,10 +315,10 @@ const Checkout = ({shipStateData, isLoading,  merchant, strings, location, cartI
     if (userData) {
       getProfile()
     } else {
-      setDefualtsValue()
+      setDefaultsValue()
     }
   }
-  const setDefualtsValue = () => {
+  const setDefaultsValue = () => {
     if (currentLocation.length > 0) {
       setValue('country', currentLocation.find(i => i.types.some(i => i === "country")).address_components[0].short_name)
       setValue('city', currentLocation.find(i => i.types.some(i => i === "locality")).address_components[0].short_name)
@@ -370,6 +377,10 @@ const Checkout = ({shipStateData, isLoading,  merchant, strings, location, cartI
     } catch (error) {
     }
   }
+
+  const onChangeAddress = async () => {
+    console.log('Change address');
+  }
   const onChangeShipAddress = async () => {
     setIsShipping(!isShipping)
     // console.log(currentLocation.find(i => i.types.some(i => i == "country")).address_components[0].short_name)
@@ -391,7 +402,7 @@ const Checkout = ({shipStateData, isLoading,  merchant, strings, location, cartI
           }
        } else{
         if(currentLocation.length > 0) {
-          console.log(currentLocation);
+          //console.log(currentLocation);
           setTimeout(() => {
             getShippingState(currentLocation.find(i => i.types.some(i => i === "country")).address_components[0].short_name)
             setValue('shipCountry', currentLocation.find(i => i.types.some(i => i === "country")).address_components[0].short_name)
@@ -464,19 +475,20 @@ const Checkout = ({shipStateData, isLoading,  merchant, strings, location, cartI
     });
   }
   const onChangeShipping = async () => {
-    // console.log(watch('shipPostalCode'))
     let action = constant.ACTION.CART + cartID + '/' + constant.ACTION.SHIPPING;
     let param = {};
+
+    console.log('CHANGE SHIPPING');
+
     if (isShipping) {
       param = { 'postalCode': watch('shipPostalCode'), 'countryCode': watch('shipCountry') }
     } else {
-      param = { 'postalCode': watch('postalCode'), 'countryCode': watch('country') }
+      param = { 'postalCode': watch('postalCode'), 'countryCode': watch('country'), "zpneCode": watch('shipStateProvince') }
     }
     try {
       let response = await WebService.post(action, param);
       if (response) {
         if(response.shippingOptions === "null" || response.shippingOptions === null){
-          console.log('if')
           shippingQuoteChange('')
         }else{
           shippingQuoteChange(response.shippingOptions[response.shippingOptions.length - 1].shippingQuoteOptionId)
@@ -490,15 +502,18 @@ const Checkout = ({shipStateData, isLoading,  merchant, strings, location, cartI
   }
   const shippingQuoteChange = async (quoteID) => {
     let action;
+
+    console.log('SHIPPING QUOTE CHANGED');
+
     if (quoteID) {
       action = constant.ACTION.CART + cartID + '/' + constant.ACTION.TOTAL + '?quote=' + quoteID;
     } else {
       action = constant.ACTION.CART + cartID + '/' + constant.ACTION.TOTAL;
     }
-    // console.log(action)
+    console.log('Shipping action ' +action);
     try {
       let response = await WebService.get(action);
-      // console.log(response, '--------------');
+      console.log('Order total response ' + JSON.stringify(response));
       if (response) {
         setShippingQuote(response.totals)
       }
@@ -508,6 +523,11 @@ const Checkout = ({shipStateData, isLoading,  merchant, strings, location, cartI
   }
   const onSubmitOrder = async (data, elements, stripe) => {
     setLoader(true)
+
+    if( !cartID ) {
+      history.push("/");
+    }
+
     let card = elements.getElement(CardElement);
     // console.log(card);
     // let ownerInfo = {
@@ -518,7 +538,6 @@ const Checkout = ({shipStateData, isLoading,  merchant, strings, location, cartI
     //   },
     // };
     const result = await stripe.createToken(card);
-    // console.log(result)
     // stripe.createSource(card, ownerInfo).then(function (result) {
     if (result.error) {
       setLoader(false)
@@ -529,20 +548,21 @@ const Checkout = ({shipStateData, isLoading,  merchant, strings, location, cartI
     }
     // });
   }
-  const onPayment = async (data, token) => {
+  const onPayment = async (data, result) => {
     let action;
+
     // console.log(data);
     let param = {};
     if (userData) {
       action = constant.ACTION.AUTH + constant.ACTION.CART + cartID + '/' + constant.ACTION.CHECKOUT
       param = {
         "shippingQuote": selectedOptions,
-        "currency": "USD",
+        "currency": merchant.currency,
         "payment": {
           "paymentType": "CREDITCARD",
           "transactionType": "CAPTURE",
           "paymentModule": "stripe",
-          "paymentToken": token,
+          "paymentToken": result.token,
           "amount": shippingQuote[shippingQuote.length - 1].value
         }
       }
@@ -600,12 +620,12 @@ const Checkout = ({shipStateData, isLoading,  merchant, strings, location, cartI
       }
       param = {
         "shippingQuote": selectedOptions,
-        "currency": "USD",
+        "currency": merchant.currency,
         "payment": {
           "paymentType": "CREDITCARD",
           "transactionType": "CAPTURE",
           "paymentModule": "stripe",
-          "paymentToken": token,
+          "paymentToken": result.token,
           "amount": shippingQuote[shippingQuote.length - 1].value
         },
         "customer": customer
@@ -678,6 +698,64 @@ const Checkout = ({shipStateData, isLoading,  merchant, strings, location, cartI
     } catch (error) {
     }
   }
+
+  function changeAddress() {
+    var param = { 'postalCode': watch('postalCode'), 'countryCode': watch('country'), 'zoneCode': watch('stateProvince') }
+    if (isShipping) {
+     param = { 'postalCode': watch('shipPostalCode'), 'countryCode': watch('shipCountry'), 'zoneCode': watch('shipStateProvince')  }
+    } 
+
+    var p = '';
+    if(p !== param) {
+
+      p = param;
+      //execute
+
+       
+       console.log('Required fields '+ JSON.stringify(param));
+       unity(p);
+  
+    } else {
+      return;
+    }
+
+  }
+
+  var unity = (function() {
+    var executed;
+    if(executed) {
+      return;
+    }
+    return function() {
+            if (!executed) {
+                executed = true;
+                //if( param.postalCode == null && param.country == null && param.zoneCode == null) {
+                //  return;
+                //}
+                var millisecondsToWait = 5000;
+                setTimeout(function() {
+                    // Whatever you want to do after the wait
+                    console.log('Into execution');
+
+
+                    executed = false;
+                }, millisecondsToWait);
+            } 
+            return;
+            /**
+            console.log('The execution '+ executed);
+            var millisecondsToWait = 5000;
+            setTimeout(function() {
+                // Whatever you want to do after the wait
+                console.log('Into execution');
+                executed = false;
+            }, millisecondsToWait);
+            // do something
+            ?**/
+
+    };
+  })();
+  
   return (
     <Fragment>
       <MetaTags>
@@ -767,7 +845,6 @@ const Checkout = ({shipStateData, isLoading,  merchant, strings, location, cartI
                               rules={paymentForm.country.validate}
                               render={props => {
                                 return (
-                                  // console.log(props) ||
                                   <select onChange={(e) => { props.onChange(e.target.value); getState(e.target.value); onChangeShipping() }} value={props.value}>
                                     <option>{strings["Select a country"]}</option>
                                     {
@@ -802,8 +879,8 @@ const Checkout = ({shipStateData, isLoading,  merchant, strings, location, cartI
                                   rules={paymentForm.stateProvince.validate}
                                   render={props => {
                                     return (
-                                      <select onChange={(e) => props.onChange(e.target.value)} value={props.value}>
-                                        <option>{strings["Select a state"]}</option>
+                                      <select onBlur={changeAddress()} onChange={(e) => props.onChange(e.target.value)} value={props.value}>
+                                        <option>{strings["State / province"]}</option>
                                         {
                                           stateData.map((data, i) => {
                                             return <option key={i} value={data.code}>{data.name}</option>
@@ -963,8 +1040,8 @@ const Checkout = ({shipStateData, isLoading,  merchant, strings, location, cartI
                                       rules={paymentForm.shipStateProvince.validate}
                                       render={props => {
                                         return (
-                                          <select onChange={(e) => props.onChange(e.target.value)} value={props.value}>
-                                            <option>{strings["Select a state"]}</option>
+                                          <select onChange={(a) => console.log('-----'+a)} value={props.value}>
+                                            <option>{strings["State / Province"]}</option>
                                             {
                                               shipStateData.map((data, i) => {
                                                 return <option key={i} value={data.code}>{data.name}</option>
@@ -1127,7 +1204,9 @@ const Checkout = ({shipStateData, isLoading,  merchant, strings, location, cartI
                       {
                         window._env_.APP_PAYMENT_TYPE === 'STRIPE' &&
                         <div className="payment-method mt-25">
-                          <Elements stripe={stripePromise}>
+                          <Elements stripe={stripePromise} 
+                            options={{locale: currentLanguageCode}}
+                          >
                             <ElementsConsumer>
                               {({ stripe, elements }) => (
                                 <>
@@ -1170,10 +1249,10 @@ const Checkout = ({shipStateData, isLoading,  merchant, strings, location, cartI
                       {
                         window._env_.APP_PAYMENT_TYPE === 'NUVEI' &&
                         <iframe title="Payment Page" height={"1150"} width="570" srcDoc='<form action="https://testpayments.nuvei.com/merchant/paymentpage" method="post">
-                        <input type="hidden" name="TERMINALID" value="1064398" />
-                        <input type="hidden" name="ORDERID" value="8756321480" />
-                        <input type="hidden" name="CURRENCY" value="USD" />
-                        <input type="hidden" name="AMOUNT" value="10.00" />
+                        <input type="hidden" name="TERMINALID" value="" />
+                        <input type="hidden" name="ORDERID" value="" />
+                        <input type="hidden" name="CURRENCY" value="" />
+                        <input type="hidden" name="AMOUNT" value="" />
                         <input type="hidden" name="DATETIME" value="22-01-2021:10:43:01:200" />
                         <input type="hidden" name="HASH" value="8636622c1dd4039783cd0fbcffd53a6ce2ceab7d0e183e8ce1b8043e3cdedebe3b6665c5e87d3b268e85217f6c11f15f09f86764d82b0bd923c8c19e9209296d" />
                         
@@ -1208,7 +1287,7 @@ const Checkout = ({shipStateData, isLoading,  merchant, strings, location, cartI
                       <div className="item-empty-area__text">
                       {strings["No items found in checkout"]} <br />{" "}
                         <Link to={"/"}>
-                          Shop Now
+                        {strings["Shop now"]}
                       </Link>
                       </div>
                     </div>
@@ -1225,7 +1304,8 @@ const Checkout = ({shipStateData, isLoading,  merchant, strings, location, cartI
 Checkout.propTypes = {
   cartItems: PropTypes.object,
   // currency: PropTypes.object,
-  location: PropTypes.object
+  location: PropTypes.object,
+  currentLanguageCode: PropTypes.string
 };
 
 const mapStateToProps = state => {
@@ -1238,7 +1318,8 @@ const mapStateToProps = state => {
     userData: state.userData.userData,
     defaultStore: state.merchantData.defaultStore,
     merchant: state.merchantData.merchant,
-    isLoading: state.loading.isLoading
+    isLoading: state.loading.isLoading,
+    currentLanguageCode: state.multilanguage.currentLanguageCode,
     // currency: state.currencyData
   };
 };

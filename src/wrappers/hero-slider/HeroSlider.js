@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import HeroSliderStatic from "../../components/hero-slider/HeroSliderStatic.js";
 import { multilanguage } from "redux-multilanguage";
+import { connect } from 'react-redux';
 
 const HeroSlider = ({ string }) => {
 
@@ -9,16 +10,24 @@ const HeroSlider = ({ string }) => {
     <div className="site-blocks-cover">
       <div className="container">
         <HeroSliderStatic
-          pitch1={string["Styles"]}
-          pitch2={string["Styles"]}
-          pitch3={string["Styles"]}
+          pitch1={string["Pitch1"]}
+          pitch2={string["Pitch2"]}
+          pitch3={string["Shop now"]}
         />
       </div>
     </div>
   );
 
 
-
 };
 
-export default (multilanguage(HeroSlider));
+const mapStateToProps = state => {
+
+  return {
+      currentLanguageCode: state.multilanguage.currentLanguageCode,
+      defaultStore: state.merchantData.defaultStore,
+      isLoading: state.loading.isLoading
+  }
+}
+
+export default connect(mapStateToProps)(multilanguage(HeroSlider));

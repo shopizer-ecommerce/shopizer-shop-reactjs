@@ -230,7 +230,6 @@ const Category = ({ setCategoryID, isLoading, strings, location, defaultStore, c
                                             </div>
                                         </div>
                                     </div>)
-
                         }
                     </div>
                 </div>
