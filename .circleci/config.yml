@@ -56,10 +56,10 @@ workflows:
           repo: rufina
           skip-when-tags-exist: false
           tag: 'latest'
-        filters:
-          branches:
-            only:
-              - rufina
+          filters:
+            branches:
+              only:
+                - rufina
       - slack/status:
            fail_only: false
            webhook: $SLACK_SHOP_WEBHOOK
