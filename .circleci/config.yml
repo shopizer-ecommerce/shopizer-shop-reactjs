@@ -60,7 +60,4 @@ workflows:
             branches:
               only:
                 - rufina
-      - slack/status:
-           fail_only: false
-           webhook: $SLACK_SHOP_WEBHOOK
 
