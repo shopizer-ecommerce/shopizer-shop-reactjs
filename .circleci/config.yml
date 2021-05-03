@@ -42,9 +42,6 @@ workflows:
             branches:
               only:
                 - main
-      - slack/status:
-           fail_only: false
-           webhook: $SLACK_ADMIN_WEBHOOK
   build_and_push_image:
     jobs:
       - aws-ecr/build-and-push-image:
