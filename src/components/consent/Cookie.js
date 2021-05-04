@@ -6,8 +6,8 @@ import { multilanguage, loadLanguages } from "redux-multilanguage";
 
 const Cookie = ({ strings }) => {
     return (
-        <CookieConsent location="bottom" buttonText="ACCEPT" style={{ background: "#fb799c" }}
-        buttonText={strings["Accept"]} buttonStyle={{ background: "#404040", color: "#fff", fontSize: "14px", padding: '10px 30px' }}>{strings["Cookie Consent"]}</CookieConsent>
+        <CookieConsent location="bottom" buttonText="ACCEPT" style={{ background: "#2B373B" }}
+        buttonText={strings["Accept"]} buttonStyle={{ background: "#4e503b", color: "#fff", fontSize: "14px", padding: '10px 30px' }}>{strings["Cookie Consent"]}</CookieConsent>
     );
 };
 
