@@ -11,9 +11,10 @@ import WebService from '../../util/webService';
 import constant from '../../util/constant';
 import { useToasts } from "react-toast-notifications";
 import * as moment from 'moment';
+import { multilanguage } from "redux-multilanguage";
 // import { Scrollbars } from 'react-custom-scrollbars';
 import ReactPaginate from 'react-paginate';
-const ProductDescriptionTab = ({ spaceBottomClass, product, review, userData }) => {
+const ProductDescriptionTab = ({ strings, spaceBottomClass, product, review, userData }) => {
   const [ratingValue, setRatingValue] = useState(0)
   const [ratingMessage, setRatingMessage] = useState('')
   const [offset, setOffset] = useState(1);
@@ -76,11 +77,13 @@ const ProductDescriptionTab = ({ spaceBottomClass, product, review, userData }) 
               <Tab.Pane eventKey="additionalInfo">
                 <div className="product-anotherinfo-wrapper">
                   <ul>
+                    {/**
                     <li>
                       <span>Weight</span> {product.productSpecifications.weight} Pounds
                     </li>
+                    */}
                     <li>
-                      <span>Dimensions</span>{product.productSpecifications.length}{" "} x {product.productSpecifications.width}{" "}
+                      <span>{strings["Package size"]}</span>{product.productSpecifications.length}{" "} x {product.productSpecifications.width}{" "}
                       x {product.productSpecifications.height} Inches{" "}
                     </li>
                     {/* <li>
@@ -231,7 +234,8 @@ ProductDescriptionTab.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    userData: state.userData.userData
+    userData: state.userData.userData,
+    currentLanguageCode: state.multilanguage.currentLanguageCode,
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -243,5 +247,5 @@ const mapDispatchToProps = dispatch => {
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductDescriptionTab);
+export default connect(mapStateToProps, mapDispatchToProps)(multilanguage(ProductDescriptionTab));
 // export default ProductDescriptionTab;
