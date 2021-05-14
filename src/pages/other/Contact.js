@@ -103,9 +103,11 @@ const Contact = ({ strings, location, merchant, setLoader }) => {
         <Breadcrumb />
         <div className="contact-area pt-100 pb-100">
           <div className="container">
+            {/**
             <div className="contact-map mb-10">
               <LocationMap merchant={merchant} />
             </div>
+            */}
             <div className="custom-row-2">
               <div className="col-lg-4 col-md-5">
                 <div className="contact-info-wrap">
@@ -123,10 +125,7 @@ const Contact = ({ strings, location, merchant, setLoader }) => {
                     </div>
                     <div className="contact-info-dec">
                       <p>
-                        <a href="mailto:urname@email.com">{merchant.email}</a>
-                      </p>
-                      <p>
-                        <a href="https://www.shopizer.com/">www.shopizer.com</a>
+                        <a href={'mailto:' + merchant.email}>{merchant.email}</a>
                       </p>
                     </div>
                   </div>
@@ -140,6 +139,7 @@ const Contact = ({ strings, location, merchant, setLoader }) => {
                       <p>{merchant.address.postalCode}</p>
                     </div>
                   </div>
+                  {/**
                   <div className="contact-social text-center">
                     <h3>Follow Us</h3>
                     <ul>
@@ -170,6 +170,7 @@ const Contact = ({ strings, location, merchant, setLoader }) => {
                       </li>
                     </ul>
                   </div>
+                  */}
                 </div>
               </div>
               <div className="col-lg-8 col-md-7">
@@ -219,6 +220,10 @@ const Contact = ({ strings, location, merchant, setLoader }) => {
     </Fragment>
   );
 };
+
+//hostName = () => {
+//  return window.location.protocol + "//" + window.location.host;
+//}
 
 Contact.propTypes = {
   location: PropTypes.object
