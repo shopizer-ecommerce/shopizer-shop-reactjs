@@ -129,7 +129,8 @@ const ProductGridListSingle = ({
                     {
                       product.image && <img className="default-img img-fluid" src={product.image.imageUrl} alt="" />
                     }
-                    {product.images.length > 1 ?
+                    
+                    {/*product.images.length > 1 ?
                       <img
                         className="hover-img img-fluid"
                         src={product.images[1]}
@@ -141,7 +142,8 @@ const ProductGridListSingle = ({
                         src={defaultImage(product)}
                         alt=""
                       />
-                    }
+                    */}
+                    
 
                   </Link>
                 </div>

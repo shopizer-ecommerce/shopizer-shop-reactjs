@@ -276,22 +276,6 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
     onChangeShipping()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  // const getNuviePayment = async () => {
-  //   let action = 'https://testpayments.nuvei.com/merchant/paymentpage';
-  //   let param = {
-  //     "TERMINALID": '1064398',
-  //     "ORDERID": '8756321480',
-  //     "CURRENCY": 'USD',
-  //     "AMOUNT": '10.00',
-  //     "DATETIME": '22-01-2021:10:43:01:200',
-  //     "HASH": '8636622c1dd4039783cd0fbcffd53a6ce2ceab7d0e183e8ce1b8043e3cdedebe3b6665c5e87d3b268e85217f6c11f15f09f86764d82b0bd923c8c19e9209296d',
-  //   }
-  //   try {
-  //     let response = await axios.post(action, param)
-  //     console.log(response)
-  //   } catch (error) {
-  //   }
-  // }
 
   const getSummaryOrder = async () => {
     setLoader(true)
@@ -478,7 +462,7 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
     let action = constant.ACTION.CART + cartID + '/' + constant.ACTION.SHIPPING;
     let param = {};
 
-    console.log('CHANGE SHIPPING');
+    //console.log('CHANGE SHIPPING');
 
     if (isShipping) {
       param = { 'postalCode': watch('shipPostalCode'), 'countryCode': watch('shipCountry') }
@@ -503,7 +487,7 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
   const shippingQuoteChange = async (quoteID) => {
     let action;
 
-    console.log('SHIPPING QUOTE CHANGED');
+    //console.log('SHIPPING QUOTE CHANGED');
 
     if (quoteID) {
       action = constant.ACTION.CART + cartID + '/' + constant.ACTION.TOTAL + '?quote=' + quoteID;
