@@ -12,7 +12,7 @@ import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { isValidObject, setLocalData } from "../../util/helper";
 import constant from '../../util/constant';
 import WebService from '../../util/webService';
-import { getCountry, getState, getShippingState } from "../../redux/actions/userAction";
+import { getState, getShippingState, getShippingCountry } from "../../redux/actions/userAction";
 import { useForm, Controller } from "react-hook-form";
 import { loadStripe } from '@stripe/stripe-js';
 import {
@@ -241,7 +241,7 @@ const CARD_ELEMENT_OPTIONS = {
     }
   }
 };
-const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, strings, location, cartID, defaultStore, getCountry, getState,getShippingState, countryData, stateData, currentLocation, userData, setLoader, deleteAllFromCart }) => {
+const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, strings, location, cartID, defaultStore, getShippingCountry, getState,getShippingState, countryData, stateData, currentLocation, userData, setLoader, deleteAllFromCart }) => {
   const { pathname } = location;
   const history = useHistory();
   const { addToast } = useToasts();
@@ -270,7 +270,7 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
     // getNuviePayment()
     getState('')
     getShippingState('')
-    getCountry()
+    getShippingCountry('')
     getConfig()
     shippingQuoteChange('')
     onChangeShipping()
@@ -363,7 +363,7 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
   }
 
   const onChangeAddress = async () => {
-    console.log('Change address');
+    //console.log('Change address');
   }
   const onChangeShipAddress = async () => {
     setIsShipping(!isShipping)
@@ -1289,7 +1289,7 @@ Checkout.propTypes = {
   cartItems: PropTypes.object,
   // currency: PropTypes.object,
   location: PropTypes.object,
-  currentLanguageCode: PropTypes.string
+  //currentLanguageCode: PropTypes.string
 };
 
 const mapStateToProps = state => {
@@ -1312,10 +1312,10 @@ const mapDispatchToProps = dispatch => {
     setLoader: (value) => {
       dispatch(setLoader(value));
     },
-    getCountry: () => {
-      dispatch(getCountry());
+    getShippingCountry: () => {
+      dispatch(getShippingCountry('en'));
     },
-    getState: (code) => {
+    getState: (code) => {//state
       dispatch(getState(code));
     },
     getShippingState: (code) => {
