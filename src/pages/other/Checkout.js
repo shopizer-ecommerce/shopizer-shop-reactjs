@@ -241,7 +241,7 @@ const CARD_ELEMENT_OPTIONS = {
     }
   }
 };
-const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, strings, location, cartID, defaultStore, getShippingCountry, getState,getShippingState, countryData, stateData, currentLocation, userData, setLoader, deleteAllFromCart }) => {
+const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, strings, location, cartID, defaultStore, getShippingCountry, getState,getShippingState, countryData, shipCountryData, stateData, currentLocation, userData, setLoader, deleteAllFromCart }) => {
   const { pathname } = location;
   const history = useHistory();
   const { addToast } = useToasts();
@@ -270,7 +270,6 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
     // getNuviePayment()
     getState('')
     getShippingState('')
-    getShippingCountry('')
     getConfig()
     shippingQuoteChange('')
     onChangeShipping()
@@ -833,7 +832,10 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
                                     <option>{strings["Select a country"]}</option>
                                     {
 
-                                      countryData.map((data, i) => {
+                                      //countryData.map((data, i) => {
+                                       //getShippingCountry(currentLanguageCode).map((data, i) => {
+                                        shipCountryData.map((data, i) => {
+                                      
                                         return <option key={i} value={data.code}>{data.name}</option>
                                       })
                                     }
@@ -1296,6 +1298,7 @@ const mapStateToProps = state => {
   return {
     cartID: state.cartData.cartID,
     countryData: state.userData.country,
+    shipCountryData: state.userData.shipCountry,
     stateData: state.userData.state,
     shipStateData: state.userData.shipState,
     currentLocation: state.userData.currentAddress,
@@ -1311,9 +1314,6 @@ const mapDispatchToProps = dispatch => {
   return {
     setLoader: (value) => {
       dispatch(setLoader(value));
-    },
-    getShippingCountry: () => {
-      dispatch(getShippingCountry('en'));
     },
     getState: (code) => {//state
       dispatch(getState(code));
