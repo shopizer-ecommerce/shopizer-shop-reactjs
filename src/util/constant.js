@@ -22,6 +22,7 @@ const Constant = {
         AUTH: 'auth/',
         PROFILE: 'profile',
         SHIPPING: 'shipping',
+        SHIPPING_COUNTRY: 'shipping/country',
         TOTAL: 'total/',
         NEWSLETTER: 'newsletter/',
         REGISTER: 'register',

@@ -1,11 +1,14 @@
 import WebService from '../../util/webService';
 import constant from '../../util/constant';
+
 import { setLoader } from "../actions/loaderActions";
 import { setLocalData, getLocalData } from '../../util/helper';
+import Cookies from 'universal-cookie';
 export const GET_SHOPIZER_CART_ID = "GET_SHOPIZER_CART_ID";
 export const GET_CART = "GET_CART";
 export const ADD_TO_CART = "ADD_TO_CART";
 export const DECREASE_QUANTITY = "DECREASE_QUANTITY";
+export const INCREASE_QUANTITY = "INCREASE_QUANTITY";
 export const DELETE_FROM_CART = "DELETE_FROM_CART";
 export const DELETE_ALL_FROM_CART = "DELETE_ALL_FROM_CART";
 
@@ -18,26 +21,25 @@ export const addToCart = (item, addToast, cartId, quantityCount, defaultStore, u
       let param;
       let response;
       let message;
-      //console.log(cartId, '************ cartId *********')
+      console.log('Item ' + cartId + " quantity " + quantityCount);
       if (selectedProductOptions !== undefined) {
         param = { "attributes": selectedProductOptions, "product": item.id, "quantity": quantityCount }
       } else {
         param = { "product": item.id, "quantity": quantityCount }
       }
+      console.log('Cart parameters ' + JSON.stringify(param));
       if (cartId) {
-        message = "Updated To Cart"
-        action = constant.ACTION.CART + cartId + '?store=' + defaultStore;
+        message = "Updated Cart"
+        action = constant.ACTION.CART + cartId + '?store=' + window._env_.APP_MERCHANT ;
         response = await WebService.put(action, param);
       } else {
-        message = "Added To Cart"
-        // if (userData) {
-        //   action = constant.ACTION.CUSTOMERS + userData.id + '/' + constant.ACTION.CART;
-        // } else {
-        action = constant.ACTION.CART + '?store=' + defaultStore
-        // }
+        message = "Added Cart"
+        action = constant.ACTION.CART + '?store=' + window._env_.APP_MERCHANT 
         response = await WebService.post(action, param);
       }
 
+      //refresh cart
+      console.log('Cart response' + JSON.stringify(response));
       if (response) {
         dispatch(setShopizerCartID(response.code))
         dispatch(setLoader(false))
@@ -49,11 +51,9 @@ export const addToCart = (item, addToast, cartId, quantityCount, defaultStore, u
         } else {
           dispatch(getCart(response.code, userData));
         }
-
         if (addToast) {
           addToast(message, { appearance: "success", autoDismiss: true });
         }
-
       }
     } catch (error) {
       dispatch(setLoader(false))
@@ -96,6 +96,11 @@ export const getCart = (cartID, userData) => {
   // }
 }
 export const setShopizerCartID = (id) => {
+  //set local data
+  // set cart id in cookie
+  var cart_cookie = window._env_.APP_MERCHANT + '_shopizer_cart';
+  const cookies = new Cookies();
+  cookies.set(cart_cookie, id, { path: '/', maxAge: 20000000 });//6 months
   setLocalData(GET_SHOPIZER_CART_ID,id);
   return dispatch => {
     dispatch({
@@ -104,8 +109,25 @@ export const setShopizerCartID = (id) => {
     });
   }
 }
+
+export const getShopizerCartID = () => {
+  //set local data
+  // set cart id in cookie
+  var cart_cookie = window._env_.APP_MERCHANT + '_shopizer_cart';
+  const cookies = new Cookies();
+  let cookie = cookies.get(cart_cookie);
+  if(cookie) {
+    getCart(cookie, null);
+  }
+
+}
+
+
+
+
 //decrease from cart
 export const decreaseQuantity = (item, addToast) => {
+  console.log('decrease ' + JSON.stringify(item));
   return dispatch => {
     // if (addToast) {
     //   addToast("Item Decremented From Cart", {
@@ -114,14 +136,31 @@ export const decreaseQuantity = (item, addToast) => {
     //   });
     // }
     // dispatch({ type: DECREASE_QUANTITY, payload: item });
+    
   };
 };
+
+export const increaseQuantity = (item, addToast) => {
+  console.log('increase ' + JSON.stringify(item));
+  return dispatch => {
+    // if (addToast) {
+    //   addToast("Item Decremented From Cart", {
+    //     appearance: "warning",
+    //     autoDismiss: true
+    //   });
+    // }
+    // dispatch({ type: DECREASE_QUANTITY, payload: item });
+    
+  };
+};
+
+
 //delete from cart
 export const deleteFromCart = (cartID, item, defaultStore, addToast) => {
   return async dispatch => {
     dispatch(setLoader(true))
     try {
-      let action = constant.ACTION.CART + cartID + '/' + constant.ACTION.PRODUCT + item.id + '?store=' + defaultStore;
+      let action = constant.ACTION.CART + cartID + '/' + constant.ACTION.PRODUCT + item.id + '?store=' + window._env_.APP_MERCHANT;
       await WebService.delete(action);
 
       dispatch({
@@ -135,7 +174,7 @@ export const deleteFromCart = (cartID, item, defaultStore, addToast) => {
 
       // dispatch(getCart(cartID));
     } catch (error) {
-      console.log('Error removing from cart ');
+      console.log('Error removing from cart ' + cartID);
       dispatch(setLoader(false))
     }
   };

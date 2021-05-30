@@ -12,7 +12,7 @@ import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { isValidObject, setLocalData } from "../../util/helper";
 import constant from '../../util/constant';
 import WebService from '../../util/webService';
-import { getCountry, getState, getShippingState } from "../../redux/actions/userAction";
+import { getState, getShippingState, getShippingCountry } from "../../redux/actions/userAction";
 import { useForm, Controller } from "react-hook-form";
 import { loadStripe } from '@stripe/stripe-js';
 import {
@@ -241,7 +241,7 @@ const CARD_ELEMENT_OPTIONS = {
     }
   }
 };
-const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, strings, location, cartID, defaultStore, getCountry, getState,getShippingState, countryData, stateData, currentLocation, userData, setLoader, deleteAllFromCart }) => {
+const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, strings, location, cartID, defaultStore, getShippingCountry, getState,getShippingState, countryData, shipCountryData, stateData, currentLocation, userData, setLoader, deleteAllFromCart }) => {
   const { pathname } = location;
   const history = useHistory();
   const { addToast } = useToasts();
@@ -270,28 +270,11 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
     // getNuviePayment()
     getState('')
     getShippingState('')
-    getCountry()
     getConfig()
     shippingQuoteChange('')
     onChangeShipping()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  // const getNuviePayment = async () => {
-  //   let action = 'https://testpayments.nuvei.com/merchant/paymentpage';
-  //   let param = {
-  //     "TERMINALID": '1064398',
-  //     "ORDERID": '8756321480',
-  //     "CURRENCY": 'USD',
-  //     "AMOUNT": '10.00',
-  //     "DATETIME": '22-01-2021:10:43:01:200',
-  //     "HASH": '8636622c1dd4039783cd0fbcffd53a6ce2ceab7d0e183e8ce1b8043e3cdedebe3b6665c5e87d3b268e85217f6c11f15f09f86764d82b0bd923c8c19e9209296d',
-  //   }
-  //   try {
-  //     let response = await axios.post(action, param)
-  //     console.log(response)
-  //   } catch (error) {
-  //   }
-  // }
 
   const getSummaryOrder = async () => {
     setLoader(true)
@@ -379,7 +362,7 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
   }
 
   const onChangeAddress = async () => {
-    console.log('Change address');
+    //console.log('Change address');
   }
   const onChangeShipAddress = async () => {
     setIsShipping(!isShipping)
@@ -478,7 +461,7 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
     let action = constant.ACTION.CART + cartID + '/' + constant.ACTION.SHIPPING;
     let param = {};
 
-    console.log('CHANGE SHIPPING');
+    //console.log('CHANGE SHIPPING');
 
     if (isShipping) {
       param = { 'postalCode': watch('shipPostalCode'), 'countryCode': watch('shipCountry') }
@@ -503,7 +486,7 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
   const shippingQuoteChange = async (quoteID) => {
     let action;
 
-    console.log('SHIPPING QUOTE CHANGED');
+    //console.log('SHIPPING QUOTE CHANGED');
 
     if (quoteID) {
       action = constant.ACTION.CART + cartID + '/' + constant.ACTION.TOTAL + '?quote=' + quoteID;
@@ -849,7 +832,10 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
                                     <option>{strings["Select a country"]}</option>
                                     {
 
-                                      countryData.map((data, i) => {
+                                      //countryData.map((data, i) => {
+                                       //getShippingCountry(currentLanguageCode).map((data, i) => {
+                                        shipCountryData.map((data, i) => {
+                                      
                                         return <option key={i} value={data.code}>{data.name}</option>
                                       })
                                     }
@@ -1305,13 +1291,14 @@ Checkout.propTypes = {
   cartItems: PropTypes.object,
   // currency: PropTypes.object,
   location: PropTypes.object,
-  currentLanguageCode: PropTypes.string
+  //currentLanguageCode: PropTypes.string
 };
 
 const mapStateToProps = state => {
   return {
     cartID: state.cartData.cartID,
     countryData: state.userData.country,
+    shipCountryData: state.userData.shipCountry,
     stateData: state.userData.state,
     shipStateData: state.userData.shipState,
     currentLocation: state.userData.currentAddress,
@@ -1328,10 +1315,7 @@ const mapDispatchToProps = dispatch => {
     setLoader: (value) => {
       dispatch(setLoader(value));
     },
-    getCountry: () => {
-      dispatch(getCountry());
-    },
-    getState: (code) => {
+    getState: (code) => {//state
       dispatch(getState(code));
     },
     getShippingState: (code) => {

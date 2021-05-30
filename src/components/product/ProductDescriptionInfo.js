@@ -383,7 +383,7 @@ const ProductDescriptionInfo = ({
       ) : (
           ""
         )} */}
-
+      {/**
       <div className="pro-details-social">
         <ul>
           <li>
@@ -413,6 +413,7 @@ const ProductDescriptionInfo = ({
           </li>
         </ul>
       </div>
+      */}
     </div>
   );
 };

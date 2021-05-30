@@ -5,6 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 import MetaTags from "react-meta-tags";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
+import { Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
 // import { getDiscountPrice } from "../../helpers/product";
 import { isValidObject } from "../../util/helper";
@@ -36,10 +37,8 @@ const couponCode = {
         value: /^([a-zA-Z0-9 _-]+)$/,
         message: 'Please entered alphanumeric value'
       }
-
     }
   }
-
 }
 const quoteForm = {
 
@@ -77,6 +76,7 @@ const Cart = ({
   defaultStore,
   decreaseQuantity,
   increaseQuantity,
+  getValue,
   deleteFromCart,
   countryData,
   stateData,
@@ -116,7 +116,6 @@ const Cart = ({
     let action = constant.ACTION.CART + cartID + '?store=' + defaultStore;
     try {
       let response = await WebService.get(action);
-
       if (response) {
         setCartItems(response)
       }
@@ -130,10 +129,25 @@ const Cart = ({
     }
   }
   const deleteAllFromCart = () => {
-    // console.log(cartItems);
     cartItems.products.forEach((value) => {
       deleteFromCart(cartItems.code, value, defaultStore, addToast)
     });
+    //go to home page
+    history.push('/');
+
+  }
+
+  const decrease = (cartItems, item, qty) => {
+
+  }
+
+  const increase = (cartItems, item, key, addToast, qty) => {
+    console.log('increaseQuantity... ' + JSON.stringify(cartItems.products));          
+    item.quantity = qty;
+    console.log('quantity... ' + JSON.stringify(item)); 
+    cartItems.products.splice(key,1,item);
+    console.log('New items... ' + JSON.stringify(cartItems.products)); 
+    //modify qty
 
   }
 
@@ -143,7 +157,7 @@ const Cart = ({
     param = { 'postalCode': data.postalCode, 'countryCode': data.country }
     try {
       let response = await WebService.post(action, param);
-      console.log(response.shippingOptions);
+      //console.log(response.shippingOptions);
       if (response) {
         setShippingOptions(response.shippingOptions)
       }
@@ -173,7 +187,7 @@ const Cart = ({
         <title>{merchant.name} | {strings["Place your order"]}</title>
         {/* <meta
           name="description"
-          content="Cart page of flone react minimalist eCommerce template."
+          content="Cart page of flone react shopizer eCommerce template."
         /> */}
       </MetaTags>
 
@@ -245,9 +259,11 @@ const Cart = ({
 
                                 <td className="product-quantity">
                                   <div className="cart-plus-minus">
-                                    <button className="dec qtybutton" onClick={() => decreaseQuantity(cartItem, addToast, cartItems.code, cartItem.quantity - 1, defaultStore)} > - </button>
-                                    <input className="cart-plus-minus-box" type="text" value={cartItem.quantity} readOnly />
-                                    <button className="inc qtybutton" onClick={() => increaseQuantity(cartItem, addToast, cartItems.code, cartItem.quantity + 1, defaultStore)}>+</button>
+                                    <button className="dec qtybutton" onClick={() => decreaseQuantity(cartItems, key, cartItem, addToast, cartItems.code, cartItem.quantity - 1, defaultStore)} > - </button>
+                                    <input className="cart-plus-minus-box" onChange={() => getValue()} type="text" value={cartItem.quantity} />
+                                    <button className="inc qtybutton" onClick={() => increaseQuantity(cartItem, cartID, cartItem.quantity + 1, addToast)}>+</button>
+                                                                                     
+                                                                         
                                   </div>
                                 </td>
                                 <td className="product-subtotal">
@@ -502,11 +518,15 @@ const mapDispatchToProps = dispatch => {
     setLoader: (value) => {
       dispatch(setLoader(value));
     },
-    decreaseQuantity: (item, addToast, cartId, quantityCount, defaultStore) => {
-      dispatch(addToCart(item, addToast, cartId, quantityCount, defaultStore));
+    decreaseQuantity: (cartItems, key, item, addToast, cartId, quantityCount, defaultStore) => {
+      console.log('decreaseQuantity...');
+      //dispatch(addToCart(item, addToast, cartId, quantityCount, defaultStore));
     },
-    increaseQuantity: (item, addToast, cartId, quantityCount, defaultStore) => {
-      dispatch(addToCart(item, addToast, cartId, quantityCount, defaultStore));
+    increaseQuantity: (item, cartId, quantityCount, addToast) => {
+      dispatch(addToCart(item, addToast, cartId, quantityCount, ''));
+    },
+    getValue: () => {
+      return 5;
     },
     deleteFromCart: (cartId, item, defaultStore, addToast) => {
       dispatch(deleteFromCart(cartId, item, defaultStore, addToast));
