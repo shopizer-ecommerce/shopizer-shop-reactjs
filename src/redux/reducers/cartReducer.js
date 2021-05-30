@@ -1,7 +1,11 @@
 // import uuid from "uuid/v4";
+import Cookies from 'universal-cookie';
+import { removeLocalData } from '../../util/helper';
+
 import {
   // ADD_TO_CART,
   DECREASE_QUANTITY,
+  INCREASE_QUANTITY,
   DELETE_FROM_CART,
   DELETE_ALL_FROM_CART,
   GET_CART,
@@ -29,12 +33,13 @@ const cartReducer = (state = initState, action) => {
     return {
       ...state,
       cartItems: Object.assign({}, action.payload),
-      cartCount: action.payload.products.length
+      cartCount: action.payload.quantity
     }
   }
 
 
   if (action.type === DECREASE_QUANTITY) {
+    console.log('Decrease cart qty')
     // if (product.quantity === 1) {
     //   const remainingItems = (cartItems, product) =>
     //     cartItems.filter(
@@ -54,6 +59,12 @@ const cartReducer = (state = initState, action) => {
     let index = cartItems.cartItems.products.findIndex(order => order.id === product.id);
     cartItems.cartItems.products.splice(index, 1);
     if (cartItems.cartItems.products.length === 0) {
+      //remove from local storage
+      //remove from cookie
+      var cart_cookie = window._env_.APP_MERCHANT + '_shopizer_cart';
+      const cookies = new Cookies();
+      cookies.remove(cart_cookie);
+      removeLocalData(GET_SHOPIZER_CART_ID);
       return {
         ...state,
         cartItems: {},
@@ -72,6 +83,10 @@ const cartReducer = (state = initState, action) => {
   }
 
   if (action.type === DELETE_ALL_FROM_CART) {
+    var cart_cookie = window._env_.APP_MERCHANT + '_shopizer_cart';
+    const cookies = new Cookies();
+    cookies.remove(cart_cookie);
+    removeLocalData(cart_cookie);
     return {
       ...state,
       cartItems: {},

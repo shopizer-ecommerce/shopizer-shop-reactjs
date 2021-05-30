@@ -7,9 +7,15 @@ import { multilanguage, loadLanguages } from "redux-multilanguage";
 import { connect } from "react-redux";
 import { BreadcrumbsProvider } from "react-breadcrumbs-dynamic";
 
-//import CookieConsent from "react-cookie-consent";
 import Loader from "./components/loader/loader"
 import Cookie from "./components/consent/Cookie"
+import Cookies from 'universal-cookie';
+
+
+import {
+  setShopizerCartID
+} from "./redux/actions/cartActions";
+
 // var sha512 = require('js-sha512').sha512;
 // home pages
 const Home = lazy(() => import("./pages/home/Home"));
@@ -37,8 +43,24 @@ const NotFound = lazy(() => import("./pages/other/NotFound"));
 const OrderConfirm = lazy(() => import("./pages/other/OrderConfirm"));
 const Content = lazy(() => import("./pages/content/Content"));
 const SearchProduct = lazy(() => import("./pages/search-product/SearchProduct"));
+
+
+//export default function App = (props) => {
 const App = (props) => {
+
+
   useEffect(() => {
+    var cart_cookie = window._env_.APP_MERCHANT + '_shopizer_cart';
+    const cookies = new Cookies();
+    let cookie = cookies.get(cart_cookie);
+    if(cookie) {
+        console.log('cookie !!! ' + cookie);
+        props.dispatch(setShopizerCartID(cookie));
+    }
+    //if(cookies[cart_cookie]) {
+    //  console.log('cookie !!! ' + cookies[cart_cookie]);
+    //  props.dispatch(setShopizerCartID(cookies[cart_cookie]));
+    //}
     props.dispatch(
       loadLanguages({
         languages: { //from merchant supported languages

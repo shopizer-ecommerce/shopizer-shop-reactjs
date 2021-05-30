@@ -1,6 +1,14 @@
 export function setLocalData(key, value) {
   try {
-    localStorage.setItem(key, value)
+    localStorage.setItem(key, value);
+  } catch (error) {
+    // console.log("error", error)
+  }
+}
+
+export function removeLocalData(key) {
+  try {
+    localStorage.removeItem(key);
   } catch (error) {
     // console.log("error", error)
   }

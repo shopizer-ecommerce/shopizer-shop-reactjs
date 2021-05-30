@@ -35,7 +35,6 @@ export const getCountry = () => {
 export const getShippingCountry = (lang) => {
     return async dispatch => {
         try {
-            console.log(lang);
             let action = constant.ACTION.SHIPPING_COUNTRY  + '?store=' + window._env_.APP_MERCHANT + '&lang=' + lang;
             let response = await WebService.get(action);
             //console.log('Country ship data ' + JSON.stringify(response));

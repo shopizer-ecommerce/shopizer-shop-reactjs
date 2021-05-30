@@ -25,9 +25,9 @@ const store = createStore(
 // store.dispatch(fetchProducts(products));
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+    <Provider store={store}>
+      <App />
+    </Provider>,
   document.getElementById("root")
 );
 
