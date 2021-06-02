@@ -282,11 +282,11 @@ function ProductModal(props, strings) {
                             <div className="pro-details-size-content">
                               {
                                 <select onChange={(e) => { onChangeOptions(JSON.parse(e.target.value), option) }}>
-                                  {/* <option>Select a country</option> */}
                                   {
 
                                     option.optionValues.map((singleSize, i) => {
-                                      return <option key={i} value={JSON.stringify(singleSize)} selected={checkedOrNot(singleSize)}>{singleSize.description.name} {singleSize.price && '(' + singleSize.price + ')'}</option>
+                                      return <option key={i} value={JSON.stringify(singleSize)} 
+                                      selected={checkedOrNot(singleSize)}>{singleSize.description.name} {singleSize.price && '(' + singleSize.price + ')'}</option>
                                     })
                                   }
                                 </select>
