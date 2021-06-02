@@ -1,8 +1,9 @@
-import { SET_USER, SET_COUNTRY, SET_STATE, GET_CURRENT_ADDRESS, SET_SHIP_STATE } from "../actions/userAction";
+import { SET_USER, SET_COUNTRY, SET_SHIPPING_COUNTRY, SET_STATE, GET_CURRENT_ADDRESS, SET_SHIP_STATE } from "../actions/userAction";
 
 const initState = {
     userData: '',
     country: [],
+    shipCountry: [],
     state: [],
     shipState: [],
     currentAddress: []
@@ -19,6 +20,12 @@ const userReducer = (state = initState, action) => {
         return {
             ...state,
             country: action.payload
+        };
+    }
+    if (action.type === SET_SHIPPING_COUNTRY) {
+        return {
+            ...state,
+            shipCountry: action.payload
         };
     }
     if (action.type === SET_STATE) {

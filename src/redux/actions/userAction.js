@@ -4,6 +4,7 @@ import Geocode from "react-geocode";
 import { changeLanguage } from 'redux-multilanguage';
 export const SET_USER = "SET_USER";
 export const SET_COUNTRY = "SET_COUNTRY";
+export const SET_SHIPPING_COUNTRY = "SET_SHIPPING_COUNTRY";
 export const SET_STATE = "SET_STATE";
 export const SET_SHIP_STATE = "SET_SHIP_STATE";
 export const GET_CURRENT_ADDRESS = "GET_CURRENT_ADDRESS";
@@ -34,17 +35,19 @@ export const getCountry = () => {
 export const getShippingCountry = (lang) => {
     return async dispatch => {
         try {
-            console.log(lang);
-            let action = constant.ACTION.SHIPPING_COUNTRY  + '?store=' + window._env_.APP_MERCHANT + '&lang=' + changeLanguage;
+            let action = constant.ACTION.SHIPPING_COUNTRY  + '?store=' + window._env_.APP_MERCHANT + '&lang=' + lang;
             let response = await WebService.get(action);
+            //console.log('Country ship data ' + JSON.stringify(response));
             dispatch({
-                type: SET_COUNTRY,
+                type: SET_SHIPPING_COUNTRY,
                 payload: response
             });
         } catch (error) {
         }
     }
 }
+
+
 export const getState = (code) => {
     return async dispatch => {
         try {
