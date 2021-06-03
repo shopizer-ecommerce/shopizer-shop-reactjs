@@ -3,7 +3,7 @@ import { SET_USER, SET_COUNTRY, SET_SHIPPING_COUNTRY, SET_STATE, GET_CURRENT_ADD
 const initState = {
     userData: '',
     country: [],
-    shipCountry: [],
+    shippingCountry: [],
     state: [],
     shipState: [],
     currentAddress: []
@@ -25,7 +25,7 @@ const userReducer = (state = initState, action) => {
     if (action.type === SET_SHIPPING_COUNTRY) {
         return {
             ...state,
-            shipCountry: action.payload
+            shippingCountry: action.payload
         };
     }
     if (action.type === SET_STATE) {

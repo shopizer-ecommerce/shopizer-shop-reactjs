@@ -12,7 +12,7 @@ import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { isValidObject, setLocalData } from "../../util/helper";
 import constant from '../../util/constant';
 import WebService from '../../util/webService';
-import { getState, getShippingState, getShippingCountry } from "../../redux/actions/userAction";
+import { getState, getShippingState, getShippingCountry} from "../../redux/actions/userAction";
 import { useForm, Controller } from "react-hook-form";
 import { loadStripe } from '@stripe/stripe-js';
 import {
@@ -241,7 +241,7 @@ const CARD_ELEMENT_OPTIONS = {
     }
   }
 };
-const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, strings, location, cartID, defaultStore, getShippingCountry, getState,getShippingState, countryData, shipCountryData, stateData, currentLocation, userData, setLoader, deleteAllFromCart }) => {
+const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, strings, location, cartID, defaultStore, getState, getShippingState, getShippingCountry, countryData, shippingCountryData, stateData, currentLocation, userData, setLoader, deleteAllFromCart }) => {
   const { pathname } = location;
   const history = useHistory();
   const { addToast } = useToasts();
@@ -261,9 +261,6 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
   });
 
 
-
-
-// console.log(window._env_.APP_PAYMENT_TYPE);
   const [ref, setRef] = useState(null)
   useEffect(() => {
     getSummaryOrder()
@@ -275,6 +272,7 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
     onChangeShipping()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
 
   const getSummaryOrder = async () => {
     setLoader(true)
@@ -832,10 +830,8 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
                                     <option>{strings["Select a country"]}</option>
                                     {
 
-                                      //countryData.map((data, i) => {
-                                       //getShippingCountry(currentLanguageCode).map((data, i) => {
-                                        shipCountryData.map((data, i) => {
-                                      
+                                        //countryData.map((data, i) => {
+                                          getShippingCountry().map((data, i) => {
                                         return <option key={i} value={data.code}>{data.name}</option>
                                       })
                                     }
@@ -1298,7 +1294,7 @@ const mapStateToProps = state => {
   return {
     cartID: state.cartData.cartID,
     countryData: state.userData.country,
-    shipCountryData: state.userData.shipCountry,
+    shippingCountryData: state.userData.shippingCountry,
     stateData: state.userData.state,
     shipStateData: state.userData.shipState,
     currentLocation: state.userData.currentAddress,
@@ -1324,6 +1320,9 @@ const mapDispatchToProps = dispatch => {
     deleteAllFromCart: (orderID) => {
       //dispatch(deleteAllFromCart(orderID));
     },
+    getShippingCountry: () => {
+      dispatch(getShippingCountry());
+    }
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(multilanguage(Checkout));
