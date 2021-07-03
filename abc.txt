@@ -1,0 +1,9 @@
+     
+     <img src="assets/img/slider/F45-Website-1.jpg" alt="Image" className="img-fluid"/>
+     
+      <div className="col-md-4 col-sm-4">
+      <h2>Perfecto poele et foyer</h2>
+      <h4>Ventes et installations de poeles et foyers</h4>
+      </div>
+
+      <img src="assets/img/slider/F45-Website-1.jpg" alt="Image" className="bg-img"/>
