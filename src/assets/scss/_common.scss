@@ -1966,8 +1966,15 @@ a.default-btn {
 }
 
    .container  {
+    max-width: 80% !important;
+  }
+
+  .container-home  {
     max-width: 100% !important;
   }
+
+
+
 
   .slider-content-2 {
     margin-top: 20% !important;

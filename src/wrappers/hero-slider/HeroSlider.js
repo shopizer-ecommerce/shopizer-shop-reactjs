@@ -10,7 +10,7 @@ const HeroSlider = ({ string }) => {
 
   return (
     <div className="site-blocks-cover">
-      <div className="container">
+      <div className="container-home">
         <HeroSliderSingle/>
       </div>
     </div>
