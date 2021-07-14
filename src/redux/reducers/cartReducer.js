@@ -5,7 +5,7 @@ import { removeLocalData } from '../../util/helper';
 import {
   // ADD_TO_CART,
   DECREASE_QUANTITY,
-  INCREASE_QUANTITY,
+  // INCREASE_QUANTITY,
   DELETE_FROM_CART,
   DELETE_ALL_FROM_CART,
   GET_CART,
@@ -83,10 +83,10 @@ const cartReducer = (state = initState, action) => {
   }
 
   if (action.type === DELETE_ALL_FROM_CART) {
-    var cart_cookie = window._env_.APP_MERCHANT + '_shopizer_cart';
+    var cart_cookie1 = window._env_.APP_MERCHANT + '_shopizer_cart';
     const cookies = new Cookies();
-    cookies.remove(cart_cookie);
-    removeLocalData(cart_cookie);
+    cookies.remove(cart_cookie1);
+    removeLocalData(cart_cookie1);
     return {
       ...state,
       cartItems: {},

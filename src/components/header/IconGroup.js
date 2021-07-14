@@ -29,8 +29,8 @@ const IconGroup = ({
   const history = useHistory();
   const timeout = 1000 * 60 * 30;
   // const [idleTimer, setIdleTimer] = useState(null);
-  const [searchData, setSearchData] = useState([]);
-  const [searchText, setSearchText] = useState('');
+  // const [searchData, setSearchData] = useState([]);
+  // const [searchText, setSearchText] = useState('');
   const [useDetails, setUseDetails] = useState({});
   useEffect(() => {
     // getCart(cartData.code, userData)
@@ -40,13 +40,13 @@ const IconGroup = ({
       logout()
       setLocalData('thekey', window._env_.APP_BASE_URL)
     }
-    let startTime = new Date(getLocalData('session'));
-    let endTime = new Date();
-    var diffMs = (endTime - startTime);
-    var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000);
-    if (diffMins > 30) {
-      logout()
-    }
+    // let startTime = new Date(getLocalData('session'));
+    // let endTime = new Date();
+    // var diffMs = (endTime - startTime);
+    // var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000);
+    // if (diffMins > 30) {
+    //   logout()
+    // }
     if (userData) {
       getProfile()
     }
@@ -89,37 +89,37 @@ const IconGroup = ({
   }
 
   const onIdle = (e) => {
-    logout()
+    // logout()
   }
 
-  const onSearch = async (e) => {
-    setSearchText(e.target.value)
-    if (e.target.value.length >= 3) {
+  // const onSearch = async (e) => {
+  //   setSearchText(e.target.value)
+  //   if (e.target.value.length >= 3) {
 
-      let action = constant.ACTION.SEARCH + constant.ACTION.AUTOCOMPLETE;
-      let param = { "query": e.target.value }
-      try {
-        let response = await WebService.post(action, param);
-        if (response) {
-          setSearchData(response.values)
-        }
-      } catch (error) {
-        console.log(error, '------------')
-      }
-    }
-  }
-  const onSelectedSearch = (data) => {
-    setSearchText(data)
-    setSearchData([])
-  }
-  const keyDownFunction = (e) => {
-    if (e.keyCode === 13) {
-      onSearchClick()
-    }
-  }
-  const onSearchClick = () => {
-    history.push('/search/' + searchText)
-  }
+  //     let action = constant.ACTION.SEARCH + constant.ACTION.AUTOCOMPLETE;
+  //     let param = { "query": e.target.value }
+  //     try {
+  //       let response = await WebService.post(action, param);
+  //       if (response) {
+  //         setSearchData(response.values)
+  //       }
+  //     } catch (error) {
+  //       console.log(error, '------------')
+  //     }
+  //   }
+  // }
+  // const onSelectedSearch = (data) => {
+  //   setSearchText(data)
+  //   setSearchData([])
+  // }
+  // const keyDownFunction = (e) => {
+  //   if (e.keyCode === 13) {
+  //     onSearchClick()
+  //   }
+  // }
+  // const onSearchClick = () => {
+  //   history.push('/search/' + searchText)
+  // }
   return (
     <div
       className={`header-right-wrap ${iconWhiteClass ? iconWhiteClass : ""}`}

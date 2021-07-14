@@ -30,16 +30,16 @@ export const addToCart = (item, addToast, cartId, quantityCount, defaultStore, u
       console.log('Cart parameters ' + JSON.stringify(param));
       if (cartId) {
         message = "Updated Cart"
-        action = constant.ACTION.CART + cartId + '?store=' + window._env_.APP_MERCHANT ;
+        action = constant.ACTION.CART + cartId + '?store=' + window._env_.APP_MERCHANT;
         response = await WebService.put(action, param);
       } else {
         message = "Added Cart"
-        action = constant.ACTION.CART + '?store=' + window._env_.APP_MERCHANT 
+        action = constant.ACTION.CART + '?store=' + window._env_.APP_MERCHANT
         response = await WebService.post(action, param);
       }
 
       //refresh cart
-      console.log('Cart response' + JSON.stringify(response));
+      // console.log('Cart response' + JSON.stringify(response));
       if (response) {
         dispatch(setShopizerCartID(response.code))
         dispatch(setLoader(false))
@@ -101,7 +101,7 @@ export const setShopizerCartID = (id) => {
   var cart_cookie = window._env_.APP_MERCHANT + '_shopizer_cart';
   const cookies = new Cookies();
   cookies.set(cart_cookie, id, { path: '/', maxAge: 20000000 });//6 months
-  setLocalData(GET_SHOPIZER_CART_ID,id);
+  setLocalData(GET_SHOPIZER_CART_ID, id);
   return dispatch => {
     dispatch({
       type: GET_SHOPIZER_CART_ID,
@@ -116,7 +116,7 @@ export const getShopizerCartID = () => {
   var cart_cookie = window._env_.APP_MERCHANT + '_shopizer_cart';
   const cookies = new Cookies();
   let cookie = cookies.get(cart_cookie);
-  if(cookie) {
+  if (cookie) {
     getCart(cookie, null);
   }
 
@@ -136,7 +136,7 @@ export const decreaseQuantity = (item, addToast) => {
     //   });
     // }
     // dispatch({ type: DECREASE_QUANTITY, payload: item });
-    
+
   };
 };
 
@@ -150,7 +150,7 @@ export const increaseQuantity = (item, addToast) => {
     //   });
     // }
     // dispatch({ type: DECREASE_QUANTITY, payload: item });
-    
+
   };
 };
 

@@ -12,7 +12,7 @@ import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { isValidObject, setLocalData } from "../../util/helper";
 import constant from '../../util/constant';
 import WebService from '../../util/webService';
-import { getState, getShippingState, getShippingCountry } from "../../redux/actions/userAction";
+import { getState, getShippingState } from "../../redux/actions/userAction";
 import { useForm, Controller } from "react-hook-form";
 import { loadStripe } from '@stripe/stripe-js';
 import {
@@ -20,9 +20,9 @@ import {
 } from '@stripe/react-stripe-js';
 import { useToasts } from "react-toast-notifications";
 import { setLoader } from "../../redux/actions/loaderActions";
-import {
-  deleteAllFromCart
-} from "../../redux/actions/cartActions";
+// import {
+//   deleteAllFromCart
+// } from "../../redux/actions/cartActions";
 import Script from 'react-load-script';
 import { multilanguage } from "redux-multilanguage";
 
@@ -263,7 +263,7 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
 
 
 
-// console.log(window._env_.APP_PAYMENT_TYPE);
+  // console.log(window._env_.APP_PAYMENT_TYPE);
   const [ref, setRef] = useState(null)
   useEffect(() => {
     getSummaryOrder()
@@ -282,7 +282,7 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
     let action = constant.ACTION.CART + cartID + '?store=' + defaultStore;
     try {
       let response = await WebService.get(action);
-      console.log(JSON.stringify(response));
+      // console.log(JSON.stringify(response));
       if (response) {
         setLoader(false)
         setCartItems(response)
@@ -361,9 +361,9 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
     }
   }
 
-  const onChangeAddress = async () => {
-    //console.log('Change address');
-  }
+  // const onChangeAddress = async () => {
+  //   //console.log('Change address');
+  // }
   const onChangeShipAddress = async () => {
     setIsShipping(!isShipping)
     // console.log(currentLocation.find(i => i.types.some(i => i == "country")).address_components[0].short_name)
@@ -493,10 +493,10 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
     } else {
       action = constant.ACTION.CART + cartID + '/' + constant.ACTION.TOTAL;
     }
-    console.log('Shipping action ' +action);
+    // console.log('Shipping action ' +action);
     try {
       let response = await WebService.get(action);
-      console.log('Order total response ' + JSON.stringify(response));
+      // console.log('Order total response ' + JSON.stringify(response));
       if (response) {
         setShippingQuote(response.totals)
       }

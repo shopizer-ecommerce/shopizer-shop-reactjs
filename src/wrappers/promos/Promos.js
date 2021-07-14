@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
-import featureIconData from "../../data/feature-icons/feature-icon-four.json";
-import FeatureIconSingle from "../../components/feature-icon/FeatureIconSingle.js";
+// import featureIconData from "../../data/feature-icons/feature-icon-four.json";
+// import FeatureIconSingle from "../../components/feature-icon/FeatureIconSingle.js";
 
 const FeatureIcon = ({
   spaceTopClass,
@@ -27,8 +27,8 @@ const FeatureIcon = ({
       <div>
         <div className="row">
           <div className="col-lg-3 col-md-3 col-sm-6"></div>
-          <div className="col-lg-3 col-md-3 col-sm-6"><img src="/assets/img/promo/promo20.jpg"/></div>
-          <div className="col-lg-3 col-md-3 col-sm-6"><img src="/assets/img/promo/promo10.jpg"/></div>
+          <div className="col-lg-3 col-md-3 col-sm-6"><img src="/assets/img/promo/promo20.jpg" alt="promo20" /></div>
+          <div className="col-lg-3 col-md-3 col-sm-6"><img src="/assets/img/promo/promo10.jpg" alt="promo10" /></div>
           <div className="col-lg-3 col-md-3 col-sm-6"></div>
 
         </div>

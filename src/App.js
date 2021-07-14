@@ -53,9 +53,9 @@ const App = (props) => {
     var cart_cookie = window._env_.APP_MERCHANT + '_shopizer_cart';
     const cookies = new Cookies();
     let cookie = cookies.get(cart_cookie);
-    if(cookie) {
-        console.log('cookie !!! ' + cookie);
-        props.dispatch(setShopizerCartID(cookie));
+    if (cookie) {
+      console.log('cookie !!! ' + cookie);
+      props.dispatch(setShopizerCartID(cookie));
     }
     //if(cookies[cart_cookie]) {
     //  console.log('cookie !!! ' + cookies[cart_cookie]);

@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import HeroSliderStatic from "../../components/hero-slider/HeroSliderStatic.js";
 import { multilanguage } from "redux-multilanguage";
 import { connect } from 'react-redux';
@@ -24,9 +24,9 @@ const HeroSlider = ({ string }) => {
 const mapStateToProps = state => {
 
   return {
-      currentLanguageCode: state.multilanguage.currentLanguageCode,
-      defaultStore: state.merchantData.defaultStore,
-      isLoading: state.loading.isLoading
+    currentLanguageCode: state.multilanguage.currentLanguageCode,
+    defaultStore: state.merchantData.defaultStore,
+    isLoading: state.loading.isLoading
   }
 }
 

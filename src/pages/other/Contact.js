@@ -4,7 +4,7 @@ import MetaTags from "react-meta-tags";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import Layout from "../../layouts/Layout";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
-import LocationMap from "../../components/contact/LocationMap";
+// import LocationMap from "../../components/contact/LocationMap";
 import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
 import WebService from '../../util/webService';
