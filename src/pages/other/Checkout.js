@@ -12,7 +12,7 @@ import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { isValidObject, setLocalData } from "../../util/helper";
 import constant from '../../util/constant';
 import WebService from '../../util/webService';
-import { getState, getShippingState } from "../../redux/actions/userAction";
+import { getShippingCountry, getState, getShippingState } from "../../redux/actions/userAction";
 import { useForm, Controller } from "react-hook-form";
 import { loadStripe } from '@stripe/stripe-js';
 import {
@@ -241,7 +241,7 @@ const CARD_ELEMENT_OPTIONS = {
     }
   }
 };
-const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, strings, location, cartID, defaultStore, getShippingCountry, getState,getShippingState, countryData, shipCountryData, stateData, currentLocation, userData, setLoader, deleteAllFromCart }) => {
+const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, strings, location, cartID, defaultStore,getShippingCountry, getState,getShippingState,  shipCountryData, stateData, currentLocation, userData, setLoader, deleteAllFromCart }) => {
   const { pathname } = location;
   const history = useHistory();
   const { addToast } = useToasts();
@@ -270,6 +270,7 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
     // getNuviePayment()
     getState('')
     getShippingState('')
+    getShippingCountry(currentLanguageCode);
     getConfig()
     shippingQuoteChange('')
     onChangeShipping()
@@ -832,9 +833,9 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
                                     <option>{strings["Select a country"]}</option>
                                     {
 
-                                      //countryData.map((data, i) => {
+                                      shipCountryData.map((data, i) => {
                                        //getShippingCountry(currentLanguageCode).map((data, i) => {
-                                        shipCountryData.map((data, i) => {
+                                        // shipCountryData.map((data, i) => {
                                       
                                         return <option key={i} value={data.code}>{data.name}</option>
                                       })
@@ -996,7 +997,7 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
                                         <option>{strings["Select a country"]}</option>
                                         {
 
-                                          countryData.map((data, i) => {
+                                          shipCountryData.map((data, i) => {
                                             return <option key={i} value={data.code}>{data.name}</option>
                                           })
                                         }
@@ -1297,7 +1298,7 @@ Checkout.propTypes = {
 const mapStateToProps = state => {
   return {
     cartID: state.cartData.cartID,
-    countryData: state.userData.country,
+    // countryData: state.userData.country,
     shipCountryData: state.userData.shipCountry,
     stateData: state.userData.state,
     shipStateData: state.userData.shipState,
@@ -1314,6 +1315,9 @@ const mapDispatchToProps = dispatch => {
   return {
     setLoader: (value) => {
       dispatch(setLoader(value));
+    },
+    getShippingCountry: (value) => {
+      dispatch(getShippingCountry(value));
     },
     getState: (code) => {//state
       dispatch(getState(code));

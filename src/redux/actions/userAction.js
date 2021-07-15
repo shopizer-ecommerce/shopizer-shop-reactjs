@@ -21,7 +21,7 @@ export const setUser = (data) => {
 export const getCountry = () => {
     return async dispatch => {
         try {
-            let action = constant.ACTION.COUNTRY();
+            let action = constant.ACTION.COUNTRY;
             let response = await WebService.get(action);
             dispatch({
                 type: SET_COUNTRY,
@@ -37,7 +37,7 @@ export const getShippingCountry = (lang) => {
         try {
             let action = constant.ACTION.SHIPPING_COUNTRY + '?store=' + window._env_.APP_MERCHANT + '&lang=' + lang;
             let response = await WebService.get(action);
-            //console.log('Country ship data ' + JSON.stringify(response));
+            // console.log('Country ship data ' + response.length);
             dispatch({
                 type: SET_SHIPPING_COUNTRY,
                 payload: response
