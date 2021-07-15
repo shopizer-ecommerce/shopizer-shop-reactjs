@@ -831,7 +831,7 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
                                     {
 
                                         //countryData.map((data, i) => {
-                                          getShippingCountry().map((data, i) => {
+                                        getShippingCountry().map((data, i) => {
                                         return <option key={i} value={data.code}>{data.name}</option>
                                       })
                                     }
