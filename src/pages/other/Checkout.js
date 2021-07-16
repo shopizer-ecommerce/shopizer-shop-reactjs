@@ -921,7 +921,7 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
                       {
                         isAccount &&
                         <div>
-                          <p style={{ color: '#fb799c' }}> Create an account by entering the information below.If you are a returning customer please login using the link at the top of the page.</p>
+                          <p className="main-color"> Create an account by entering the information below.If you are a returning customer please login using the link at the top of the page.</p>
                           <div className="col-lg-12">
                             <div className="billing-info mb-20">
                               <label>Account Password</label>

@@ -1916,7 +1916,7 @@
 
       &:hover {
         color: #fff;
-        border: 1px solid #fb799c;
+        border: 1px solid $theme-color;
       }
 
       @media #{$md-layout} {
@@ -2247,7 +2247,7 @@
 
       &:hover {
         color: #fff;
-        border: 1px solid #fb799c;
+        border: 1px solid $theme-color;
       }
     }
   }

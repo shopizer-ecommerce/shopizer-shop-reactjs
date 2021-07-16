@@ -350,7 +350,7 @@ const LoginRegister = ({ merchant, strings, props, location, setLoader, setUser,
                           <div className="login-register-form">
                             <form onSubmit={handleSubmit2(onRegister)}>
 
-                              <p style={{ fontSize: 16, fontWeight: 500, color: '#fb799c' }}>{strings["Login Information"]}</p>
+                              <p className="login-info">{strings["Login Information"]}</p>
                               <div className="login-input">
                                 <input type="email" autoComplete="Email" name={registerForm.email.name} ref={register2(registerForm.email.validate)} placeholder={strings["Username"]} />
                                 {errors2[registerForm.email.name] && <p className="error-msg">{errors2[registerForm.email.name].message}</p>}
@@ -366,7 +366,7 @@ const LoginRegister = ({ merchant, strings, props, location, setLoader, setUser,
                                 {errors2[registerForm.repeatPassword.name] && <p className="error-msg">{errors2[registerForm.repeatPassword.name].message}</p>}
 
                               </div>
-                              <p style={{ fontSize: 16, fontWeight: 500, color: '#fb799c' }}>{strings["Personal Information"]}</p>
+                              <p className="login-info">{strings["Personal Information"]}</p>
                               <div className="login-input">
                                 <input type="text" name={registerForm.firstName.name} ref={register2(registerForm.firstName.validate)} placeholder={strings["First Name"]} />
                                 {errors2[registerForm.firstName.name] && <p className="error-msg">{errors2[registerForm.firstName.name].message}</p>}

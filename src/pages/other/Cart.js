@@ -407,8 +407,8 @@ const Cart = ({
                         {
                           cartItems.promoCode ?
                             <div className="discount-code">
-                              <p style={{ color: 'green' }}>Your coupon code has been applied!</p>
-                              <h1 style={{ textAlign: 'center', color: '#fb799c' }}>{cartItems.promoCode}</h1>
+                              <p className="coupon-applied">Your coupon code has been applied!</p>
+                              <h1 className="promoCode">{cartItems.promoCode}</h1>
                             </div> :
                             <div className="discount-code">
                               <p>{strings["Enter your coupon code if you have one."]}</p>
