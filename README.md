@@ -20,3 +20,10 @@ docker run \
 -it --rm -p 80:80 shopizerecomm/shopizer-shop-reactjs
 
 http://localhost
+
+## Change theme color
+
+_variables.scss
+$theme-color: #fb799c;
+
+loader/loader.js
