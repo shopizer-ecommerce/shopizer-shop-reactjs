@@ -8,7 +8,8 @@ const Loader = ({ isLoading }) => {
         <div>
             <BounceLoader
                 size={100}
-                color={"#fb799c"}
+                // color={"#fb799c"}
+                color={window._env_.APP_THEME_COLOR}
                 loading={isLoading}
             />
         </div>

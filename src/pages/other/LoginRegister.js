@@ -13,7 +13,7 @@ import WebService from '../../util/webService';
 import constant from '../../util/constant';
 import { setLocalData, isValidObject, getLocalData } from '../../util/helper';
 import { setLoader } from "../../redux/actions/loaderActions";
-import { setUser, getCountry, getState } from "../../redux/actions/userAction";
+import { setUser, getShippingCountry, getState } from "../../redux/actions/userAction";
 import { addToCart, getCart } from "../../redux/actions/cartActions";
 import { connect } from "react-redux";
 import { multilanguage } from "redux-multilanguage";
@@ -114,7 +114,7 @@ const registerForm = {
     }
   },
 };
-const LoginRegister = ({ merchant, strings, props, location, setLoader, setUser, getCart, getCountry, getState, countryData, currentLocation, stateData, cartItems, addToCart, defaultStore }) => {
+const LoginRegister = ({ merchant, strings, props, location, setLoader, setUser, getCart, getShippingCountry, getState, shipCountryData, currentLocation, stateData, cartItems, addToCart, defaultStore }) => {
   const { pathname } = location;
   const { addToast } = useToasts();
   const history = useHistory();
@@ -139,7 +139,7 @@ const LoginRegister = ({ merchant, strings, props, location, setLoader, setUser,
       setLoginValue('username', getLocalData('loginEmail'))
       // setLoginValue('loginPassword', '')
     }
-    getCountry()
+    getShippingCountry(multilanguage.currentLanguageCode)
     setDefualtsValue()
     // eslint-disable-next-line react-hooks/exhaustive-deps 
   }, [cartItems]);
@@ -386,8 +386,7 @@ const LoginRegister = ({ merchant, strings, props, location, setLoader, setUser,
                                       <select onChange={(e) => { props.onChange(e.target.value); getState(e.target.value) }} value={props.value}>
                                         <option>{strings["Select a country"]}</option>
                                         {
-
-                                          countryData.map((data, i) => {
+                                          shipCountryData.map((data, i) => {
                                             return <option key={i} value={data.code}>{data.name}</option>
                                           })
                                         }
@@ -451,7 +450,7 @@ LoginRegister.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    countryData: state.userData.country,
+    shipCountryData: state.userData.shipCountry,
     cartItems: state.cartData.cartItems,
     currentLocation: state.userData.currentAddress,
     stateData: state.userData.state,
@@ -490,8 +489,11 @@ const mapDispatchToProps = dispatch => {
     setUser: (data) => {
       dispatch(setUser(data));
     },
-    getCountry: () => {
-      dispatch(getCountry());
+    // getCountry: () => {
+    //   dispatch(getCountry());
+    // },
+    getShippingCountry: (value) => {
+      dispatch(getShippingCountry(value));
     },
     getState: (code) => {
       dispatch(getState(code));

@@ -28,6 +28,7 @@ const ProductDescriptionTab = ({ strings, spaceBottomClass, product, review, use
   //   }
   //   return rating;
   // }
+  console.log(product);
   useEffect(() => {
 
   }, [offset])
@@ -67,6 +68,11 @@ const ProductDescriptionTab = ({ strings, spaceBottomClass, product, review, use
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
+                <Nav.Link eventKey="property">
+                  Properties
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
                 <Nav.Link eventKey="productDescription">Description</Nav.Link>
               </Nav.Item>
               <Nav.Item>
@@ -77,22 +83,29 @@ const ProductDescriptionTab = ({ strings, spaceBottomClass, product, review, use
               <Tab.Pane eventKey="additionalInfo">
                 <div className="product-anotherinfo-wrapper">
                   <ul>
-                    {/**
+
                     <li>
                       <span>Weight</span> {product.productSpecifications.weight} Pounds
                     </li>
-                    */}
+
                     <li>
                       <span>{strings["Package size"]}</span>{product.productSpecifications.length}{" "} x {product.productSpecifications.width}{" "}
                       x {product.productSpecifications.height} Inches{" "}
                     </li>
-                    {/* <li>
-                      <span>Materials</span> 60% cotton, 40% polyester
-                    </li>
-                    <li>
-                      <span>Other Info</span> American heirloom jean shorts pug
-                      seitan letterpress
-                    </li> */}
+                  </ul>
+                </div>
+              </Tab.Pane>
+              <Tab.Pane eventKey="property">
+                <div className="product-anotherinfo-wrapper">
+                  <ul>
+
+                    {
+                      product.properties.map((value, i) => {
+                        return <li key={i}>
+                          <span><b>{value.property.name}</b></span> {value.propertyValue.name}
+                        </li>
+                      })
+                    }
                   </ul>
                 </div>
               </Tab.Pane>

@@ -114,11 +114,19 @@ const Cart = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   useEffect(() => {
+    console.log(cartCount)
     async function fetchData() {
       let action = constant.ACTION.CART + cartID + '?store=' + defaultStore;
-      let response = await WebService.get(action);
-      if (response) {
-        setCartItems(response)
+      try {
+        let response = await WebService.get(action);
+        if (response) {
+          setCartItems(response)
+        }
+      } catch (error) {
+        console.log(error, 'jaimin')
+        setTimeout(() => {
+          history.push('/')
+        }, 200);
       }
     }
     fetchData();
