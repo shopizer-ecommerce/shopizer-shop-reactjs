@@ -69,8 +69,8 @@ const NavMenu = ({ props, strings, menuWhiteClass, sidebarMenu, categories, cont
           {
             contents.map((content, index) => {
               return (
-                content.displayedInMenu &&
-                <li key={index}> <Link to={"/content/" + content.slug} onClick={() => onClickContent(content.code)}> {content.name}</Link></li>
+                content.visible && content.description &&
+                <li key={index}> <Link to={"/content/" + content.description.friendlyUrl} onClick={() => onClickContent(content.code)}> {content.description.name}</Link></li>
               )
             })
           }

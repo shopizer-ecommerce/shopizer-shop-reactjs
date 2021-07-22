@@ -28,7 +28,6 @@ const ProductDescriptionTab = ({ strings, spaceBottomClass, product, review, use
   //   }
   //   return rating;
   // }
-  console.log(product);
   useEffect(() => {
 
   }, [offset])
@@ -68,11 +67,6 @@ const ProductDescriptionTab = ({ strings, spaceBottomClass, product, review, use
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="property">
-                  Properties
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
                 <Nav.Link eventKey="productDescription">Description</Nav.Link>
               </Nav.Item>
               <Nav.Item>
@@ -95,10 +89,10 @@ const ProductDescriptionTab = ({ strings, spaceBottomClass, product, review, use
                   </ul>
                 </div>
               </Tab.Pane>
-              <Tab.Pane eventKey="property">
+              <Tab.Pane eventKey="productDescription">
+                <p dangerouslySetInnerHTML={{ __html: product.description.description }}></p>
                 <div className="product-anotherinfo-wrapper">
                   <ul>
-
                     {
                       product.properties.map((value, i) => {
                         return <li key={i}>
@@ -108,9 +102,6 @@ const ProductDescriptionTab = ({ strings, spaceBottomClass, product, review, use
                     }
                   </ul>
                 </div>
-              </Tab.Pane>
-              <Tab.Pane eventKey="productDescription">
-                <p dangerouslySetInnerHTML={{ __html: product.description.description }}></p>
               </Tab.Pane>
               <Tab.Pane eventKey="productReviews">
                 <div className="row">

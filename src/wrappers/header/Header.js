@@ -48,13 +48,13 @@ const Header = ({
 
     // let action = 'actuator/health/ping';
     try {
-      console.log("*********************************");
-      console.log("BASE URL " + window._env_.APP_BASE_URL);
-      console.log("APP_API_VERSION " + window._env_.APP_API_VERSION);
-      console.log("APP_MERCHANT " + window._env_.APP_MERCHANT);
-      console.log("*********************************");
+      // console.log("*********************************");
+      // console.log("BASE URL " + window._env_.APP_BASE_URL);
+      // console.log("APP_API_VERSION " + window._env_.APP_API_VERSION);
+      // console.log("APP_MERCHANT " + window._env_.APP_MERCHANT);
+      // console.log("*********************************");
       let response = await WebService.get(window._env_.APP_BASE_URL + '/actuator/health/ping');
-      
+
       if (response) {
         // console.log(response)
         if (response.status === 'UP') {
