@@ -9,8 +9,9 @@ import Layout from "../../layouts/Layout";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { connect } from 'react-redux';
 import { multilanguage } from "redux-multilanguage";
+import { isCheckValueAndSetParams } from '../../util/helper';
 
-const Content = ({ strings, contentID, setLoader }) => {
+const Content = ({ strings, contentID, setLoader, currentLanguageCode }) => {
 
     const [contentDetails, setContentDetail] = useState('');
     useEffect(() => {
@@ -21,7 +22,7 @@ const Content = ({ strings, contentID, setLoader }) => {
 
     const getContent = async () => {
         setLoader(true)
-        let action = constant.ACTION.CONTENT + constant.ACTION.PAGES + contentID;
+        let action = `${constant.ACTION.CONTENT}${constant.ACTION.PAGES}${contentID}${isCheckValueAndSetParams('?lang=', currentLanguageCode)}`;
         try {
             let response = await WebService.get(action);
             if (response) {
@@ -66,6 +67,7 @@ const Content = ({ strings, contentID, setLoader }) => {
 
 const mapStateToProps = (state) => {
     return {
+        currentLanguageCode: state.multilanguage.currentLanguageCode,
         contentID: state.content.contentId
     };
 };
