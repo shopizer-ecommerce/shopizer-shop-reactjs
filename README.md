@@ -23,7 +23,6 @@ http://localhost
 
 ## Change theme color
 
-_variables.scss
-$theme-color: #fb799c;
+change env file
 
-loader/loader.js
+APP_THEME_COLOR=#7c515d
