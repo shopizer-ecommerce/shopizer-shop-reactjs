@@ -148,5 +148,11 @@
   "Account Management": "Gestion de compte",
   "SKU": "UGS",
   "Description": "La description",
-  "Reviews": "Commentaires"
+  "Reviews": "Commentaires",
+  "Weight": "Poids",
+  "Add a Review": "Ajouter un commentaire",
+  "Your rating": "Votre note",
+  "Message": "Un message",
+  "Submit": "Soumettre",
+  "No items found in reviews": "Aucun article trouvé dans les avis"
 }
