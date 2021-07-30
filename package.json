@@ -26,7 +26,7 @@
 		"react-fullpage": "^0.1.19",
 		"react-geocode": "^0.2.2",
 		"react-hook-form": "^6.13.1",
-		"react-id-swiper": "2.4.0",
+		"react-id-swiper": "^4.0.0",
 		"react-idle-timer": "^4.5.2",
 		"react-lightgallery": "0.6.3",
 		"react-load-script": "0.0.6",
@@ -48,7 +48,7 @@
 		"redux-localstorage-simple": "^2.1.6",
 		"redux-multilanguage": "^0.1.2",
 		"redux-thunk": "^2.3.0",
-		"swiper": "^6.8.0",
+		"swiper": "^5.4.1",
 		"universal-cookie": "^4.0.4",
 		"uuid": "^3.3.3"
 	},

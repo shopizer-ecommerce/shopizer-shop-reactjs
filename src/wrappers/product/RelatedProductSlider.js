@@ -1,6 +1,12 @@
 import PropTypes from "prop-types";
 import React from "react";
+
 import Swiper from "react-id-swiper";
+import 'swiper/swiper.scss'
+
+//import { Swiper } from 'swiper/react';
+//import 'swiper/swiper.scss';
+
 import SectionTitle from "../../components/section-title/SectionTitle";
 import ProductGrid from "./ProductGrid";
 
