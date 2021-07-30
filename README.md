@@ -23,11 +23,5 @@ http://localhost
 
 ## Change theme color
 
-<<<<<<< HEAD
 change env file
-
 APP_THEME_COLOR=#7c515d
-=======
-env should have
-APP_THEME_COLOR=#D1D1D1
->>>>>>> main
