@@ -1,7 +1,12 @@
 import PropTypes from "prop-types";
 import React, { Fragment, useEffect, useState } from "react";
 import { LightgalleryProvider, LightgalleryItem } from "react-lightgallery";
+
 import Swiper from "react-id-swiper";
+import 'swiper/swiper.scss'
+
+//import { Swiper } from 'swiper/react';
+//import 'swiper/swiper.scss';
 
 const ProductImageGallery = ({ product }) => {
   const [gallerySwiper, getGallerySwiper] = useState(null);
