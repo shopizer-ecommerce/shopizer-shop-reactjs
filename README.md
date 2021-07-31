@@ -10,6 +10,10 @@ In the project directory, you can run:
 
 ### `npm run dev`
 
+### Create distribution
+
+`npm run build`
+
 ### docker files ###
 
 docker build . -t shopizerecomm/shopizer-shop:latest
