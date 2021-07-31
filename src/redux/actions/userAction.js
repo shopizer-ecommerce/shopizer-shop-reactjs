@@ -1,7 +1,7 @@
 import WebService from '../../util/webService';
 import constant from '../../util/constant';
 import Geocode from "react-geocode";
-import { changeLanguage } from 'redux-multilanguage';
+// import { changeLanguage } from 'redux-multilanguage';
 export const SET_USER = "SET_USER";
 export const SET_COUNTRY = "SET_COUNTRY";
 export const SET_SHIPPING_COUNTRY = "SET_SHIPPING_COUNTRY";
@@ -21,7 +21,7 @@ export const setUser = (data) => {
 export const getCountry = () => {
     return async dispatch => {
         try {
-            let action = constant.ACTION.COUNTRY();
+            let action = constant.ACTION.COUNTRY;
             let response = await WebService.get(action);
             dispatch({
                 type: SET_COUNTRY,
@@ -35,9 +35,9 @@ export const getCountry = () => {
 export const getShippingCountry = (lang) => {
     return async dispatch => {
         try {
-            let action = constant.ACTION.SHIPPING_COUNTRY  + '?store=' + window._env_.APP_MERCHANT + '&lang=' + lang;
+            let action = constant.ACTION.SHIPPING_COUNTRY + '?store=' + window._env_.APP_MERCHANT + '&lang=' + lang;
             let response = await WebService.get(action);
-            //console.log('Country ship data ' + JSON.stringify(response));
+            // console.log('Country ship data ' + response.length);
             dispatch({
                 type: SET_SHIPPING_COUNTRY,
                 payload: response

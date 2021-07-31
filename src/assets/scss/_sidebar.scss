@@ -83,8 +83,8 @@
             opacity: 0;
 
             &:checked~.checkmark {
-              border: 2px solid #fb799c;
-              background-color: #fb799c;
+              border: 2px solid $theme-color;
+              background-color: $theme-color;
             }
 
             &:checked~.checkmark::after {

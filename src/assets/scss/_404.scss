@@ -5,7 +5,7 @@
     letter-spacing: 1rem;
     line-height: 1.1;
     margin-bottom: 30px;
-    color: #fb799c;
+    color: $theme-color;
 
     @media #{$lg-layout} {
       font-size: 15rem;
@@ -38,7 +38,7 @@
     // letter-spacing: 1rem;
     line-height: 1.1;
     margin-bottom: 30px;
-    color: #fb799c;
+    color: $theme-color;
   }
 }
 
@@ -54,7 +54,7 @@
   padding: 0 10px;
   border: none;
   border-radius: 0;
-  background-color: #fb799c;
+  background-color: $theme-color;
   display: inline-block;
 
   // &:after {
@@ -64,7 +64,7 @@
   //   bottom: -6px;
   //   height: 3px;
   //   width: 100%;
-  //   background-color: #fb799c;
+  //   background-color: $theme-color;
   //   transition: all 0.3s;
   // }
 
@@ -92,7 +92,7 @@
 
   & button {
     border: none;
-    background-color: #fb799c;
+    background-color: $theme-color;
     width: 70px;
     color: #fff;
     cursor: pointer;

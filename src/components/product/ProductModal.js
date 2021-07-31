@@ -1,6 +1,12 @@
 import PropTypes from "prop-types";
 import React, { Fragment, useState, useEffect } from "react";
+
 import Swiper from "react-id-swiper";
+import 'swiper/swiper.scss'
+
+//import { Swiper } from 'swiper/react';
+//import 'swiper/swiper.scss';
+
 // import { getProductCartQuantity } from "../../helpers/product";
 import { Modal } from "react-bootstrap";
 // import Rating from "./sub-components/ProductRating";
@@ -167,13 +173,13 @@ function ProductModal(props, strings) {
                       return (
                         <div key={key}>
                           <div className="single-image" >
-                          {currentImage != null &&
-                            <img
-                              src={currentImage}
-                              className="img-fluid"
-                              alt=""
-                            />
-                          }
+                            {currentImage != null &&
+                              <img
+                                src={currentImage}
+                                className="img-fluid"
+                                alt=""
+                              />
+                            }
                           </div>
                         </div>
                       );
@@ -231,6 +237,24 @@ function ProductModal(props, strings) {
                 </div>
                 <div className="pro-details-list">
                   <p dangerouslySetInnerHTML={{ __html: product.description.description }}></p>
+                  <ul>
+                    <li>
+                      <span>Weight</span> {product.productSpecifications.weight} Pounds
+                    </li>
+                    {
+                      <li>
+                        <span>{strings["Package size"]}</span>{product.productSpecifications.length}{" "} x {product.productSpecifications.width}{" "}
+                        x {product.productSpecifications.height} Inches{" "}
+                      </li>
+                    }
+                    {
+                      product.properties.map((value, i) => {
+                        return <li key={i}>
+                          <span><b>{value.property.name}</b></span> {value.propertyValue.name}
+                        </li>
+                      })
+                    }
+                  </ul>
                 </div>
 
                 {product.options ? (
@@ -378,7 +402,7 @@ function ProductModal(props, strings) {
                               quantityCount,
                               defaultStore,
                               userData,
-                              options,strings
+                              options, strings
                               // selectedProductColor,
                               // selectedProductSize
                             )
@@ -447,9 +471,9 @@ ProductModal.propTypes = {
 };
 
 function defaultImage(product) {
-  if(product.images && product.images.length > 0) {
+  if (product.images && product.images.length > 0) {
     return product.images[0].imageUrl;
-  } else if(product.image != null) {
+  } else if (product.image != null) {
     return product.imageUrl;
   } else {
     return null;

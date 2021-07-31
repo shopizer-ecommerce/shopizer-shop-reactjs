@@ -5,11 +5,11 @@ import { Link, useHistory } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 import MetaTags from "react-meta-tags";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
 // import { getDiscountPrice } from "../../helpers/product";
 import { isValidObject } from "../../util/helper";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { getState } from "../../redux/actions/userAction";
 import { setLoader } from "../../redux/actions/loaderActions";
 import {
@@ -40,36 +40,36 @@ const couponCode = {
     }
   }
 }
-const quoteForm = {
+// const quoteForm = {
 
-  postalCode: {
-    name: "postalCode",
-    validate: {
-      required: {
-        value: true,
-        message: "postalCode is required"
-      }
-    }
-  },
-  country: {
-    name: "country",
-    validate: {
-      required: {
-        value: true,
-        message: "Country is required"
-      }
-    }
-  },
-  stateProvince: {
-    name: "stateProvince",
-    validate: {
-      required: {
-        value: true,
-        message: "State is required"
-      }
-    }
-  },
-};
+//   postalCode: {
+//     name: "postalCode",
+//     validate: {
+//       required: {
+//         value: true,
+//         message: "postalCode is required"
+//       }
+//     }
+//   },
+//   country: {
+//     name: "country",
+//     validate: {
+//       required: {
+//         value: true,
+//         message: "Country is required"
+//       }
+//     }
+//   },
+//   stateProvince: {
+//     name: "stateProvince",
+//     validate: {
+//       required: {
+//         value: true,
+//         message: "State is required"
+//       }
+//     }
+//   },
+// };
 const Cart = ({
   location,
   cartID,
@@ -84,7 +84,8 @@ const Cart = ({
   strings,
   merchant,
   isLoading,
-  setLoader
+  setLoader,
+  cartCount
   // deleteAllFromCart,
 
 }) => {
@@ -94,7 +95,7 @@ const Cart = ({
   const [cartItems, setCartItems] = useState({})
   // const cartTotalPrice = cartItems.displaySubTotal;
   // const grandTotalPrice = cartItems.displaySubTotal;
-  const { register, handleSubmit, control, errors } = useForm({ mode: 'onChange' });
+  // const { register, handleSubmit, control, errors } = useForm({ mode: 'onChange' });
   const {
     register: codeRef,
     handleSubmit: codeSubmit,
@@ -102,7 +103,8 @@ const Cart = ({
   } =
     useForm({ mode: 'onChange' });
 
-  const [shippingOptions, setShippingOptions] = useState();
+  // const [shippingOptions, setShippingOptions] = useState();
+  const [shippingOptions] = useState();
 
   useEffect(() => {
     getCartData()
@@ -111,6 +113,27 @@ const Cart = ({
     // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+  useEffect(() => {
+    console.log(cartCount)
+    async function fetchData() {
+      let action = constant.ACTION.CART + cartID + '?store=' + defaultStore;
+      try {
+        let response = await WebService.get(action);
+        if (response) {
+          setCartItems(response)
+        }
+      } catch (error) {
+        console.log(error, 'jaimin')
+        setTimeout(() => {
+          history.push('/')
+        }, 200);
+      }
+    }
+    fetchData();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cartCount])
+
   const getCartData = async () => {
     setLoader(true)
     let action = constant.ACTION.CART + cartID + '?store=' + defaultStore;
@@ -137,33 +160,33 @@ const Cart = ({
 
   }
 
-  const decrease = (cartItems, item, qty) => {
+  // const decrease = (cartItems, item, qty) => {
 
-  }
+  // }
 
-  const increase = (cartItems, item, key, addToast, qty) => {
-    console.log('increaseQuantity... ' + JSON.stringify(cartItems.products));          
-    item.quantity = qty;
-    console.log('quantity... ' + JSON.stringify(item)); 
-    cartItems.products.splice(key,1,item);
-    console.log('New items... ' + JSON.stringify(cartItems.products)); 
-    //modify qty
+  // const increase = (cartItems, item, key, addToast, qty) => {
+  //   console.log('increaseQuantity... ' + JSON.stringify(cartItems.products));          
+  //   item.quantity = qty;
+  //   console.log('quantity... ' + JSON.stringify(item)); 
+  //   cartItems.products.splice(key,1,item);
+  //   console.log('New items... ' + JSON.stringify(cartItems.products)); 
+  //   //modify qty
 
-  }
+  // }
 
-  const getQuote = async (data) => {
-    let action = constant.ACTION.CART + cartID + '/' + constant.ACTION.SHIPPING;
-    let param = {};
-    param = { 'postalCode': data.postalCode, 'countryCode': data.country }
-    try {
-      let response = await WebService.post(action, param);
-      //console.log(response.shippingOptions);
-      if (response) {
-        setShippingOptions(response.shippingOptions)
-      }
-    } catch (error) {
-    }
-  }
+  // const getQuote = async (data) => {
+  //   let action = constant.ACTION.CART + cartID + '/' + constant.ACTION.SHIPPING;
+  //   let param = {};
+  //   param = { 'postalCode': data.postalCode, 'countryCode': data.country }
+  //   try {
+  //     let response = await WebService.post(action, param);
+  //     //console.log(response.shippingOptions);
+  //     if (response) {
+  //       setShippingOptions(response.shippingOptions)
+  //     }
+  //   } catch (error) {
+  //   }
+  // }
   const applyPromoCode = async (data) => {
     // console.log(data)
     setLoader(true)
@@ -259,11 +282,13 @@ const Cart = ({
 
                                 <td className="product-quantity">
                                   <div className="cart-plus-minus">
-                                    <button className="dec qtybutton" onClick={() => decreaseQuantity(cartItems, key, cartItem, addToast, cartItems.code, cartItem.quantity - 1, defaultStore)} > - </button>
+                                    {/* <button className="dec qtybutton" onClick={() => decreaseQuantity(cartItems, key, cartItem, addToast, cartItems.code, cartItem.quantity - 1, defaultStore)} > - </button>
                                     <input className="cart-plus-minus-box" onChange={() => getValue()} type="text" value={cartItem.quantity} />
-                                    <button className="inc qtybutton" onClick={() => increaseQuantity(cartItem, cartID, cartItem.quantity + 1, addToast)}>+</button>
-                                                                                     
-                                                                         
+                                    <button className="inc qtybutton" onClick={() => increaseQuantity(cartItem, cartID, cartItem.quantity + 1, addToast)}>+</button> */}
+                                    <button className="dec qtybutton" onClick={() => decreaseQuantity(cartItem, addToast, cartItems.code, cartItem.quantity - 1, defaultStore)} > - </button>
+                                    <input className="cart-plus-minus-box" type="text" value={cartItem.quantity} readOnly />
+                                    <button className="inc qtybutton" onClick={() => increaseQuantity(cartItem, addToast, cartItems.code, cartItem.quantity + 1, defaultStore)}>+</button>
+
                                   </div>
                                 </td>
                                 <td className="product-subtotal">
@@ -299,12 +324,12 @@ const Cart = ({
                   </div>
                 </div>
 
-               
+
                 <div className="row cart-custom-row">
                   <div className="col-lg-4 col-md-6">
                     &nbsp;
                   </div>
-                   {/* 
+                  {/* 
                   <div className="col-lg-4 col-md-6">
                     <div className="cart-tax">
                       <div className="title-wrap">
@@ -390,8 +415,8 @@ const Cart = ({
                         {
                           cartItems.promoCode ?
                             <div className="discount-code">
-                              <p style={{ color: 'green' }}>Your coupon code has been applied!</p>
-                              <h1 style={{ textAlign: 'center', color: '#fb799c' }}>{cartItems.promoCode}</h1>
+                              <p className="coupon-applied">Your coupon code has been applied!</p>
+                              <h1 className="promoCode">{cartItems.promoCode}</h1>
                             </div> :
                             <div className="discount-code">
                               <p>{strings["Enter your coupon code if you have one."]}</p>
@@ -464,8 +489,8 @@ const Cart = ({
                       <div className="item-empty-area__text">
                         {strings["No items found in cart"]} <br />{" "}
                         <Link to="/">
-                        {strings["Shop now"]}
-                      </Link>
+                          {strings["Shop now"]}
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -491,6 +516,8 @@ Cart.propTypes = {
 
 const mapStateToProps = state => {
   return {
+
+    cartCount: state.cartData.cartCount,
     cartID: state.cartData.cartID,
     defaultStore: state.merchantData.defaultStore,
     countryData: state.userData.country,
@@ -501,9 +528,9 @@ const mapStateToProps = state => {
 };
 
 function defaultImage(product) {
-  if(product.images && product.images.length > 0) {
+  if (product.images && product.images.length > 0) {
     return product.images[0].imageUrl;
-  } else if(product.image != null) {
+  } else if (product.image != null) {
     return product.imageUrl;
   } else {
     return null;
@@ -518,16 +545,22 @@ const mapDispatchToProps = dispatch => {
     setLoader: (value) => {
       dispatch(setLoader(value));
     },
-    decreaseQuantity: (cartItems, key, item, addToast, cartId, quantityCount, defaultStore) => {
-      console.log('decreaseQuantity...');
-      //dispatch(addToCart(item, addToast, cartId, quantityCount, defaultStore));
+    decreaseQuantity: (item, addToast, cartId, quantityCount, defaultStore) => {
+      dispatch(addToCart(item, addToast, cartId, quantityCount, defaultStore));
     },
-    increaseQuantity: (item, cartId, quantityCount, addToast) => {
-      dispatch(addToCart(item, addToast, cartId, quantityCount, ''));
+    increaseQuantity: (item, addToast, cartId, quantityCount, defaultStore) => {
+      dispatch(addToCart(item, addToast, cartId, quantityCount, defaultStore));
     },
-    getValue: () => {
-      return 5;
-    },
+    // decreaseQuantity: (cartItems, key, item, addToast, cartId, quantityCount, defaultStore) => {
+    //   console.log('decreaseQuantity...');
+    //   //dispatch(addToCart(item, addToast, cartId, quantityCount, defaultStore));
+    // },
+    // increaseQuantity: (item, cartId, quantityCount, addToast) => {
+    //   dispatch(addToCart(item, addToast, cartId, quantityCount, ''));
+    // },
+    // getValue: () => {
+    //   return 5;
+    // },
     deleteFromCart: (cartId, item, defaultStore, addToast) => {
       dispatch(deleteFromCart(cartId, item, defaultStore, addToast));
     },

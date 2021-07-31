@@ -15,9 +15,9 @@ sans-serif;
 
 $white: #ffffff;
 $black: #000000;
-$grey: #f6f7f8;
-$red: #f6f7f8;
-$green: #f6f7f8;
+$grey: grey;
+$red: red;
+$green: green;
 
 // bg Colors ---------------
 
@@ -30,7 +30,9 @@ $bg-purple: #f0e0ff;
 $heading-color: #000000;
 
 // Theme Color
-$theme-color: #fb799c;
+// $theme-color: #fb799c;
+$theme-color: var(--theme-color);
+// $theme-color: #7c515d;
 
 // Responsive Variables
 $xx-layout: "only screen and (min-width: 1366px) and (max-width: 1600px)";

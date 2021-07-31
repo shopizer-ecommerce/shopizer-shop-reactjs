@@ -312,7 +312,7 @@
         border-radius: 3px;
 
         &.pink {
-          background-color: #fb799c;
+          background-color: $theme-color;
         }
 
         &.purple {
@@ -1599,7 +1599,7 @@
       transition: all 0.0s ease 0s;
 
       border: none;
-      background: #fb799c none repeat scroll 0 0;
+      background: $theme-color none repeat scroll 0 0;
     }
 
     .ui-slider-handle {
@@ -1608,7 +1608,7 @@
       margin-left: 0;
 
       border: medium none;
-      border: 4px solid #fb799c;
+      border: 4px solid $theme-color;
       border-radius: 50%;
       background: #fff none repeat scroll 0 0;
     }
@@ -1662,7 +1662,7 @@
       right: 20px;
 
       &.pink {
-        color: #fb799c;
+        color: $theme-color;
       }
 
       &.red {
@@ -1727,7 +1727,7 @@
 
         &:hover,
         &.active {
-          background-color: #fb799c;
+          background-color: $theme-color;
         }
       }
 
@@ -1762,7 +1762,7 @@
         border-radius: 3px;
 
         &.pink {
-          color: #fb799c;
+          color: $theme-color;
         }
 
         &.purple {
@@ -1812,7 +1812,7 @@
           &.old {
             text-decoration: line-through;
 
-            color: #fb799c;
+            color: $theme-color;
 
             &.red {
               color: #ff3d2a;
@@ -1856,7 +1856,7 @@
             &.old {
               text-decoration: line-through;
 
-              color: #fb799c;
+              color: $theme-color;
             }
           }
         }
@@ -2173,7 +2173,7 @@
         }
 
         &.pink {
-          background-color: #fb799c;
+          background-color: $theme-color;
         }
 
         &:last-child {
@@ -2283,11 +2283,11 @@
           border: none;
           border-radius: 50px;
           background: none;
-          background-color: #fb799c;
+          background-color: $theme-color;
 
           &:hover,
           &.active {
-            background-color: #fb799c;
+            background-color: $theme-color;
           }
 
           &:disabled {
@@ -2523,7 +2523,7 @@
         &.old {
           text-decoration: line-through;
 
-          color: #fb799c;
+          color: $theme-color;
         }
       }
 
@@ -2684,7 +2684,7 @@
       }
 
       &.pink {
-        background-color: #fb799c;
+        background-color: $theme-color;
       }
 
       &:last-child {
@@ -2710,7 +2710,7 @@
     text-align: center;
 
     opacity: 1;
-    background: none repeat scroll 0 0 #fb799c;
+    background: none repeat scroll 0 0 $theme-color;
 
     .pro-same-action {
       margin: 0 2px;
@@ -2737,7 +2737,7 @@
         &:hover,
         &.active {
           color: #fff;
-          background-color: #fb799c;
+          background-color: $theme-color;
         }
       }
     }
@@ -2791,7 +2791,7 @@
         &.old {
           text-decoration: line-through;
 
-          color: #fb799c;
+          color: $theme-color;
         }
       }
     }

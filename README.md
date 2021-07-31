@@ -20,3 +20,8 @@ docker run \
 -it --rm -p 80:80 shopizerecomm/shopizer-shop-reactjs
 
 http://localhost
+
+## Change theme color
+
+change env file
+APP_THEME_COLOR=#7c515d

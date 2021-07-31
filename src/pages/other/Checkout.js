@@ -12,7 +12,7 @@ import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { isValidObject, setLocalData } from "../../util/helper";
 import constant from '../../util/constant';
 import WebService from '../../util/webService';
-import { getState, getShippingState, getShippingCountry } from "../../redux/actions/userAction";
+import { getShippingCountry, getState, getShippingState } from "../../redux/actions/userAction";
 import { useForm, Controller } from "react-hook-form";
 import { loadStripe } from '@stripe/stripe-js';
 import {
@@ -20,9 +20,9 @@ import {
 } from '@stripe/react-stripe-js';
 import { useToasts } from "react-toast-notifications";
 import { setLoader } from "../../redux/actions/loaderActions";
-import {
-  deleteAllFromCart
-} from "../../redux/actions/cartActions";
+// import {
+//   deleteAllFromCart
+// } from "../../redux/actions/cartActions";
 import Script from 'react-load-script';
 import { multilanguage } from "redux-multilanguage";
 
@@ -241,7 +241,7 @@ const CARD_ELEMENT_OPTIONS = {
     }
   }
 };
-const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, strings, location, cartID, defaultStore, getShippingCountry, getState,getShippingState, countryData, shipCountryData, stateData, currentLocation, userData, setLoader, deleteAllFromCart }) => {
+const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, strings, location, cartID, defaultStore,getShippingCountry, getState,getShippingState,  shipCountryData, stateData, currentLocation, userData, setLoader, deleteAllFromCart }) => {
   const { pathname } = location;
   const history = useHistory();
   const { addToast } = useToasts();
@@ -263,13 +263,14 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
 
 
 
-// console.log(window._env_.APP_PAYMENT_TYPE);
+  // console.log(window._env_.APP_PAYMENT_TYPE);
   const [ref, setRef] = useState(null)
   useEffect(() => {
     getSummaryOrder()
     // getNuviePayment()
     getState('')
     getShippingState('')
+    getShippingCountry(currentLanguageCode);
     getConfig()
     shippingQuoteChange('')
     onChangeShipping()
@@ -282,7 +283,7 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
     let action = constant.ACTION.CART + cartID + '?store=' + defaultStore;
     try {
       let response = await WebService.get(action);
-      console.log(JSON.stringify(response));
+      // console.log(JSON.stringify(response));
       if (response) {
         setLoader(false)
         setCartItems(response)
@@ -361,9 +362,9 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
     }
   }
 
-  const onChangeAddress = async () => {
-    //console.log('Change address');
-  }
+  // const onChangeAddress = async () => {
+  //   //console.log('Change address');
+  // }
   const onChangeShipAddress = async () => {
     setIsShipping(!isShipping)
     // console.log(currentLocation.find(i => i.types.some(i => i == "country")).address_components[0].short_name)
@@ -493,10 +494,10 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
     } else {
       action = constant.ACTION.CART + cartID + '/' + constant.ACTION.TOTAL;
     }
-    console.log('Shipping action ' +action);
+    // console.log('Shipping action ' +action);
     try {
       let response = await WebService.get(action);
-      console.log('Order total response ' + JSON.stringify(response));
+      // console.log('Order total response ' + JSON.stringify(response));
       if (response) {
         setShippingQuote(response.totals)
       }
@@ -832,9 +833,9 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
                                     <option>{strings["Select a country"]}</option>
                                     {
 
-                                      //countryData.map((data, i) => {
+                                      shipCountryData.map((data, i) => {
                                        //getShippingCountry(currentLanguageCode).map((data, i) => {
-                                        shipCountryData.map((data, i) => {
+                                        // shipCountryData.map((data, i) => {
                                       
                                         return <option key={i} value={data.code}>{data.name}</option>
                                       })
@@ -920,7 +921,7 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
                       {
                         isAccount &&
                         <div>
-                          <p style={{ color: '#fb799c' }}> Create an account by entering the information below.If you are a returning customer please login using the link at the top of the page.</p>
+                          <p className="main-color"> Create an account by entering the information below.If you are a returning customer please login using the link at the top of the page.</p>
                           <div className="col-lg-12">
                             <div className="billing-info mb-20">
                               <label>Account Password</label>
@@ -996,7 +997,7 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
                                         <option>{strings["Select a country"]}</option>
                                         {
 
-                                          countryData.map((data, i) => {
+                                          shipCountryData.map((data, i) => {
                                             return <option key={i} value={data.code}>{data.name}</option>
                                           })
                                         }
@@ -1297,7 +1298,7 @@ Checkout.propTypes = {
 const mapStateToProps = state => {
   return {
     cartID: state.cartData.cartID,
-    countryData: state.userData.country,
+    // countryData: state.userData.country,
     shipCountryData: state.userData.shipCountry,
     stateData: state.userData.state,
     shipStateData: state.userData.shipState,
@@ -1314,6 +1315,9 @@ const mapDispatchToProps = dispatch => {
   return {
     setLoader: (value) => {
       dispatch(setLoader(value));
+    },
+    getShippingCountry: (value) => {
+      dispatch(getShippingCountry(value));
     },
     getState: (code) => {//state
       dispatch(getState(code));

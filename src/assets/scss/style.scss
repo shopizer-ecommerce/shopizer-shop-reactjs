@@ -38,6 +38,10 @@
 @import "video-popup";
 
 
+:root {
+    --theme-color: red;
+}
+
 .css-m2td1u {
     position: fixed !important;
     width: 100% !important;
@@ -47,6 +51,11 @@
     justify-content: center;
     background: #0000004a;
     z-index: 99;
+
+    div {
+        left: auto !important;
+        top: auto !important;
+    }
 }
 
 .css-16vsn7r {
@@ -58,7 +67,7 @@
     display: flex;
     align-items: center;
     background-color: #f6f6f6;
-    border-top: 5px solid #fb799c;
+    border-top: 5px solid $theme-color;
     color: #5b5858;
     height: 55px;
     // width: 469px;

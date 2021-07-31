@@ -41,7 +41,7 @@ const CustomForm = ({
     try {
       let action = constant.ACTION.NEWSLETTER;
       let param = { "email": data.email }
-      let response = await WebService.post(action, param);
+      await WebService.post(action, param);
       //console.log(response)
       // if (response) {
       reset({ email: '' })
@@ -80,13 +80,13 @@ const CustomForm = ({
           {status === "success" && (
             <div
               style={{ color: "#2ecc71", fontSize: "12px" }}
-              dangerouslySetInnerHTML={{ __html: {confirmationPlaceHolder} }}
+              dangerouslySetInnerHTML={{ __html: { confirmationPlaceHolder } }}
             />
           )}
           <div className={`clear-3 ${subscribeBtnClass ? subscribeBtnClass : ""}`} >
             <button className="button">
               {buttonLabel}
-          </button>
+            </button>
           </div>
         </div>
       </form>

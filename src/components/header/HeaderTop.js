@@ -55,18 +55,18 @@ HeaderTop.propTypes = {
   strings: PropTypes.object
 };
 
-const mapStateToProps = state => {
-  return {
-    // currency: state.currencyData
-  };
-};
+// const mapStateToProps = state => {
+//   return {
+//     // currency: state.currencyData
+//   };
+// };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    // setCurrency: currencyName => {
-    //   dispatch(setCurrency(currencyName));
-    // }
-  };
-};
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     // setCurrency: currencyName => {
+//     //   dispatch(setCurrency(currencyName));
+//     // }
+//   };
+// };
 
 export default connect()(multilanguage(HeaderTop));

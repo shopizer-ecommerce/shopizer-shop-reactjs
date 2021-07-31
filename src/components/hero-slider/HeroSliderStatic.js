@@ -2,14 +2,20 @@ import PropTypes from "prop-types";
 import React from "react";
 const HeroSliderStatic = ({ string, pitch1, pitch2, pitch3, sliderText, sliderImage }) => {
   return (
-<div className="row">
-      <div className="col-md-12 col-sm-12">
-          <img src="assets/img/slider/F45-Website-1.jpg" alt="Image" className="img-fluid"/>
+
+    <div className="row">
+      <div className="col-md-4 ml-auto order-md-2 align-self-start">
+        <div className="site-block-cover-content">
+
+          <h2 className="sub-title">{pitch1}</h2>
+          <h1>{pitch2}</h1>
+          <p><a href="!#" className="btn btn-black rounded-0">{pitch3}</a></p>
+        </div>
       </div>
-</div>
-
-
-    
+      <div className="col-md-8 order-1 align-self-end">
+        <img src="assets/img/slider/fireplace-pic.jpeg" alt="banner" className="img-fluid" />
+      </div>
+    </div>
 
   );
 };

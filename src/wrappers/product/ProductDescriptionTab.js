@@ -61,43 +61,60 @@ const ProductDescriptionTab = ({ strings, spaceBottomClass, product, review, use
         <div className="description-review-wrapper">
           <Tab.Container defaultActiveKey="productDescription">
             <Nav variant="pills" className="description-review-topbar">
-              <Nav.Item>
+              {/* <Nav.Item>
                 <Nav.Link eventKey="additionalInfo">
                   Additional Information
                 </Nav.Link>
+              </Nav.Item> */}
+              <Nav.Item>
+                <Nav.Link eventKey="productDescription">{strings["Description"]}</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="productDescription">Description</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="productReviews">Reviews({review.length})</Nav.Link>
+                <Nav.Link eventKey="productReviews">{strings["Reviews"]}({review.length})</Nav.Link>
               </Nav.Item>
             </Nav>
             <Tab.Content className="description-review-bottom">
-              <Tab.Pane eventKey="additionalInfo">
+              {/* <Tab.Pane eventKey="additionalInfo">
                 <div className="product-anotherinfo-wrapper">
                   <ul>
-                    {/**
+
                     <li>
                       <span>Weight</span> {product.productSpecifications.weight} Pounds
                     </li>
-                    */}
+
                     <li>
                       <span>{strings["Package size"]}</span>{product.productSpecifications.length}{" "} x {product.productSpecifications.width}{" "}
                       x {product.productSpecifications.height} Inches{" "}
                     </li>
-                    {/* <li>
-                      <span>Materials</span> 60% cotton, 40% polyester
-                    </li>
-                    <li>
-                      <span>Other Info</span> American heirloom jean shorts pug
-                      seitan letterpress
-                    </li> */}
                   </ul>
                 </div>
-              </Tab.Pane>
+              </Tab.Pane> */}
               <Tab.Pane eventKey="productDescription">
                 <p dangerouslySetInnerHTML={{ __html: product.description.description }}></p>
+                <div className="product-anotherinfo-wrapper">
+                  <ul>
+                    {
+                      product.productSpecifications.weight &&
+                      <li>
+                        <span>{strings["Weight"]}</span> {product.productSpecifications.weight}
+                      </li>
+                    }
+                    {
+                      product.productSpecifications.length && product.productSpecifications.width && product.productSpecifications.height &&
+                      <li>
+                        <span>{strings["Package size"]}</span>{product.productSpecifications.length || 0}{" "} x {product.productSpecifications.width || 0}{" "}
+                        x {product.productSpecifications.height || 0}
+                      </li>
+                    }
+                    {
+                      product.properties.map((value, i) => {
+                        return <li key={i}>
+                          <span><b>{value.property.name}</b></span> {value.propertyValue.name}
+                        </li>
+                      })
+                    }
+                  </ul>
+                </div>
               </Tab.Pane>
               <Tab.Pane eventKey="productReviews">
                 <div className="row">
@@ -165,7 +182,7 @@ const ProductDescriptionTab = ({ strings, spaceBottomClass, product, review, use
                             <i className="pe-7s-star"></i>
                           </div>
                           <div className="item-empty-area__text">
-                            No items found in reviews<br />{" "}
+                            {strings["No items found in reviews"]}<br />{" "}
                           </div>
                         </div>
                       </div>
@@ -173,11 +190,11 @@ const ProductDescriptionTab = ({ strings, spaceBottomClass, product, review, use
                     userData ?
                       <div className="col-lg-5">
                         <div className="ratting-form-wrapper pl-50">
-                          <h3>Add a Review</h3>
+                          <h3>{strings["Add a Review"]}</h3>
                           <div className="ratting-form">
                             <form>
                               <div className="star-box">
-                                <span>Your rating:</span>
+                                <span>{strings["Your rating"]}:</span>
                                 <StarRatings
                                   rating={ratingValue}
                                   starRatedColor="#ffa900"
@@ -195,11 +212,11 @@ const ProductDescriptionTab = ({ strings, spaceBottomClass, product, review, use
                                   <div className="rating-form-style form-submit">
                                     <textarea
                                       name="Your Review"
-                                      placeholder="Message"
+                                      placeholder={strings["Message"]}
                                       defaultValue={""}
                                       onChange={(e) => setRatingMessage(e.target.value)}
                                     />
-                                    <input type="button" defaultValue="Submit" onClick={onClickSubmit} disabled={ratingMessage === '' || ratingValue === 0} />
+                                    <input type="button" defaultValue={strings["Submit"]} onClick={onClickSubmit} disabled={ratingMessage === '' || ratingValue === 0} />
                                   </div>
                                 </div>
                               </div>
@@ -210,7 +227,7 @@ const ProductDescriptionTab = ({ strings, spaceBottomClass, product, review, use
                       :
                       <div className="col-lg-5">
                         <div className="checkout-heading">
-                          <Link to={"/login-register"}>Returning customer ? Click here to login</Link>
+                          <Link to={"/login"}>{strings["Returning customer ? Click here to login"]}</Link>
                         </div>
                       </div>
 

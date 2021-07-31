@@ -53,10 +53,12 @@ const App = (props) => {
     var cart_cookie = window._env_.APP_MERCHANT + '_shopizer_cart';
     const cookies = new Cookies();
     let cookie = cookies.get(cart_cookie);
-    if(cookie) {
-        console.log('cookie !!! ' + cookie);
-        props.dispatch(setShopizerCartID(cookie));
+    if (cookie) {
+      console.log('cookie !!! ' + cookie);
+      props.dispatch(setShopizerCartID(cookie));
     }
+    // console.log(window._env_);
+    document.documentElement.style.setProperty('--theme-color', window._env_.APP_THEME_COLOR)
     //if(cookies[cart_cookie]) {
     //  console.log('cookie !!! ' + cookies[cart_cookie]);
     //  props.dispatch(setShopizerCartID(cookies[cart_cookie]));

@@ -9,22 +9,24 @@ import Layout from "../../layouts/Layout";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { connect } from 'react-redux';
 import { multilanguage } from "redux-multilanguage";
+import { isCheckValueAndSetParams } from '../../util/helper';
 
-const Content = ({ strings, contentID, setLoader }) => {
+const Content = ({ strings, contentID, setLoader, currentLanguageCode }) => {
 
     const [contentDetails, setContentDetail] = useState('');
     useEffect(() => {
+        console.log(contentID)
         getContent();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [contentID]);
 
     const getContent = async () => {
         setLoader(true)
-        let action = constant.ACTION.CONTENT + constant.ACTION.PAGES + contentID;
+        let action = `${constant.ACTION.CONTENT}${constant.ACTION.PAGES}${contentID}${isCheckValueAndSetParams('?lang=', currentLanguageCode)}`;
         try {
             let response = await WebService.get(action);
             if (response) {
-                // console.log(response)
+                console.log(response)
                 setContentDetail(response)
             }
             setLoader(false)
@@ -35,15 +37,15 @@ const Content = ({ strings, contentID, setLoader }) => {
     return (
         <Fragment>
             <MetaTags>
-                <title>{contentDetails.title}</title>
+                <title>{contentDetails && contentDetails.description.title}</title>
                 <meta
                     name="description"
-                    content={contentDetails.metaDetails}
+                    content={contentDetails && contentDetails.description.metaDescription}
                 />
             </MetaTags>
 
             <BreadcrumbsItem to="/">{strings["Home"]}</BreadcrumbsItem>
-            <BreadcrumbsItem to="/content">{contentDetails.name} </BreadcrumbsItem>
+            <BreadcrumbsItem to="/content">{contentDetails && contentDetails.description.name} </BreadcrumbsItem>
 
             <Layout headerContainerClass="container-fluid"
                 headerPaddingClass="header-padding-2"
@@ -52,7 +54,10 @@ const Content = ({ strings, contentID, setLoader }) => {
                 <Breadcrumb />
                 <div className="cart-main-area pt-90 pb-100">
                     <div className="container">
-                        <p dangerouslySetInnerHTML={{ __html: contentDetails.pageContent }} ></p>
+                        {
+                            contentDetails &&
+                            <p dangerouslySetInnerHTML={{ __html: contentDetails.description.description }} ></p>
+                        }
                     </div>
                 </div>
             </Layout>
@@ -62,6 +67,7 @@ const Content = ({ strings, contentID, setLoader }) => {
 
 const mapStateToProps = (state) => {
     return {
+        currentLanguageCode: state.multilanguage.currentLanguageCode,
         contentID: state.content.contentId
     };
 };

@@ -26,7 +26,8 @@ const ProductDescriptionInfo = ({
   setLoader,
   productID,
   defaultStore,
-  userData
+  userData,
+  strings
   // addToWishlist,
   // addToCompare
 }) => {
@@ -36,6 +37,7 @@ const ProductDescriptionInfo = ({
   const [selectedProductColor, setSelectedProductColor] = useState([])
   const [quantityCount, setQuantityCount] = useState(1);
   useEffect(() => {
+    // console.log(strings);
     getDefualtsOption()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -300,10 +302,10 @@ const ProductDescriptionInfo = ({
                   )
                 }}>
                 {" "}
-                Add To Cart{" "}
+                {strings["Add to cart"]}{" "}
               </button>
             ) : (
-                <button disabled>Out of Stock</button>
+                <button disabled>{strings["Out of Stock"]}</button>
               )}
           </div>
           {/* <div className="pro-details-wishlist">
@@ -338,7 +340,7 @@ const ProductDescriptionInfo = ({
         // )
       }
       <div className="pro-details-meta">
-        <span>SKU :</span>
+        <span>{strings["SKU"]} :</span>
         <ul>
           <li >
             <Link to="">
@@ -349,7 +351,7 @@ const ProductDescriptionInfo = ({
       </div>
       {product.categories && product.categories.length > 0 ? (
         <div className="pro-details-meta">
-          <span>Categories :</span>
+          <span>{strings["Categories"]} :</span>
           <ul>
             {product.categories.map((single, key) => {
               return (

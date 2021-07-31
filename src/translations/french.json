@@ -142,8 +142,17 @@
   "Your account": "Votre compte",
   "Delete your account": "Supprimer votre compte",
   "Styles": "Styles",
-  "Pitch1": "#Nouvelle Collection 2021",
-  "Pitch2": "Simplement confortable",
+  "Pitch1": "#Nouvelle Collection 2022",
+  "Pitch2": "PerfectoGaz",
   "Shop now": "Magasiner",
-  "Account Management": "Gestion de compte"
+  "Account Management": "Gestion de compte",
+  "SKU": "UGS",
+  "Description": "La description",
+  "Reviews": "Commentaires",
+  "Weight": "Poids",
+  "Add a Review": "Ajouter un commentaire",
+  "Your rating": "Votre note",
+  "Message": "Un message",
+  "Submit": "Soumettre",
+  "No items found in reviews": "Aucun article trouvé dans les avis"
 }

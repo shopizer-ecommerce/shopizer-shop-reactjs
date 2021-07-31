@@ -50,8 +50,8 @@ const MobileNavMenu = ({ strings, categories, contents, setCategoryID, setConten
         {
           contents.map((content, index) => {
             return (
-              content.displayedInMenu &&
-              <li key={index}> <Link to={"/content/" + content.slug} onClick={() => onClickContent(content.code)}> {strings[content.name] ? strings[content.name] : content.name}</Link></li>
+              content.visible && content.description &&
+              <li key={index}> <Link to={"/content/" + content.description.friendlyUrl} onClick={() => onClickContent(content.code)}>{content.description.name}</Link></li>
             )
           })
         }

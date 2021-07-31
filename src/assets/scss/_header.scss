@@ -414,7 +414,7 @@
         >a {
           font-size: 15px;
           font-weight: 500;
-          line-height: 94px;
+          line-height: 55px;
 
           display: inline-block;
 
@@ -626,7 +626,7 @@
 
       .user-name {
         font-size: 14px;
-        color: #fb799c;
+        color: $theme-color;
       }
 
       .user-email {

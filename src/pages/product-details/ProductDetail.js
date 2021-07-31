@@ -29,6 +29,7 @@ const ProductDetails = ({ strings, location, productID, currentLanguageCode, set
     try {
       let response = await WebService.get(action);
       if (response) {
+        console.log(response)
         setProductDetails(response)
         setLoader(false)
       }
@@ -73,6 +74,7 @@ const ProductDetails = ({ strings, location, productID, currentLanguageCode, set
           <ProductImageDescription
             spaceTopClass="pt-100"
             spaceBottomClass="pb-100"
+            strings={strings}
             product={productDetails}
           />
         }
@@ -83,6 +85,7 @@ const ProductDetails = ({ strings, location, productID, currentLanguageCode, set
           productDetails &&
           <ProductDescriptionTab
             spaceBottomClass="pb-90"
+            strings={strings}
             product={productDetails}
             review={productReview}
           />

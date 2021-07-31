@@ -41,7 +41,7 @@
 
       color: #fff;
       border-radius: 3px;
-      background-color: #fb799c;
+      background-color: $theme-color;
     }
 
     .img-popup-wrap {
@@ -563,7 +563,7 @@
 
       color: #fff;
       border-radius: 3px;
-      background-color: #fb799c;
+      background-color: $theme-color;
     }
 
     .product-video {
@@ -581,7 +581,7 @@
 
         color: #fff;
         border-radius: 3px;
-        background-color: #fb799c;
+        background-color: $theme-color;
 
         @media #{$xs-layout} {
           padding: 3px 10px 3px;
@@ -618,7 +618,7 @@
 
     color: #fff;
     border-radius: 3px;
-    background-color: #fb799c;
+    background-color: $theme-color;
   }
 }
 
@@ -734,11 +734,11 @@
       border-radius: 3px;
 
       &.pink {
-        background-color: #fb799c;
+        background-color: $theme-color;
       }
 
       &.purple {
-        background-color: #fb799c;
+        background-color: $theme-color;
       }
     }
   }

@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
-import featureIconData from "../../data/feature-icons/feature-icon-four.json";
-import FeatureIconSingle from "../../components/feature-icon/FeatureIconSingle.js";
+// import featureIconData from "../../data/feature-icons/feature-icon-four.json";
+// import FeatureIconSingle from "../../components/feature-icon/FeatureIconSingle.js";
 
 const FeatureIcon = ({
   spaceTopClass,
@@ -24,14 +24,13 @@ const FeatureIcon = ({
           : {}
       }
     >
-      <div className="category-home">
+      <div>
         <div className="row">
-          <div className="col-lg-4 col-md-4 col-sm-4 col-xs-6"><img src="http://perfectogaz.com/wp-content/uploads/2017/03/neo25-1-1024x683.jpg" width="1000" height="517" /></div>
-          <div className="col-lg-4 col-md-4 col-sm-4 col-xs-6"><img src="http://perfectogaz.com/wp-content/uploads/2017/01/super.jpg" width="1000" height="517" /></div>
-          <div className="col-lg-4 col-md-4 col-sm-4 col-xs-6"><img src="http://perfectogaz.com/wp-content/uploads/2017/01/super.jpg" width="1000" height="517" /></div>
-          <div className="col-lg-4 col-md-4 col-sm-4 col-xs-6"><img src="http://perfectogaz.com/wp-content/uploads/2017/01/super.jpg" width="1000" height="517" /></div>        
-          <div className="col-lg-4 col-md-4 col-sm-4 col-xs-6"><img src="http://perfectogaz.com/wp-content/uploads/2017/01/super.jpg" width="1000" height="517" /></div>
-          <div className="col-lg-4 col-md-4 col-sm-4 col-xs-6"><img src="http://perfectogaz.com/wp-content/uploads/2017/01/super.jpg" width="1000" height="517" /></div>        
+          <div className="col-lg-3 col-md-3 col-sm-6"></div>
+          <div className="col-lg-3 col-md-3 col-sm-6"><img src="/assets/img/promo/promo20.jpg" alt="promo20" /></div>
+          <div className="col-lg-3 col-md-3 col-sm-6"><img src="/assets/img/promo/promo10.jpg" alt="promo10" /></div>
+          <div className="col-lg-3 col-md-3 col-sm-6"></div>
+
         </div>
       </div>
     </div>

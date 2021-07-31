@@ -31,8 +31,10 @@ const CustomForm = ({
   buttonLabel,
   emailPlaceHolder,
   sendingPlaceHolder,
-  confirmationPlaceHolder
+  confirmationPlaceHolder,
+  strings
 }) => {
+  console.log(strings, '-******************')
   const [status, setStatus] = useState('');
   const { register, handleSubmit, errors, reset } = useForm({
     mode: "onChange",
@@ -67,14 +69,14 @@ const CustomForm = ({
               name={subScribeForm.email.name}
               ref={register(subScribeForm.email.validate)}
               type="email"
-              placeholder="Your Email Address"
+              placeholder={strings["Your Email Address"]}
             />
             {errors[subScribeForm.email.name] && <p className="error-msg">{errors[subScribeForm.email.name].message}</p>}
           </div>
           <div className="clear">
             <button className="button" >
-              SUBSCRIBE
-          </button>
+              {strings["Subscribe"]}
+            </button>
           </div>
         </div>
       </form>
@@ -104,22 +106,23 @@ const CustomForm = ({
   );
 };
 
-const SubscribeEmail = ({ 
+const SubscribeEmail = ({
   spaceTopClass,
   subscribeBtnClass,
   strings,
- }) => {
+}) => {
   return (
     <div>
       <CustomForm
         spaceTopClass={spaceTopClass}
         subscribeBtnClass={subscribeBtnClass}
-        /**
-        buttonLabel={strings["Subscribe"]}
-        emailPlaceHolder={strings["Email address"]}
-        sendingPlaceHolder={strings["Sending"]}
-        confirmationPlaceHolder={strings["Subscribe confirmation"]}
-        **/
+        strings={strings}
+      /**
+      buttonLabel={strings["Subscribe"]}
+      emailPlaceHolder={strings["Email address"]}
+      sendingPlaceHolder={strings["Sending"]}
+      confirmationPlaceHolder={strings["Subscribe confirmation"]}
+      **/
       />
     </div>
   );
