@@ -18,6 +18,10 @@ const HeroSlider = ({ string }) => {
         />
       </div>
     </div>
+
+
+
+
   );
 
 

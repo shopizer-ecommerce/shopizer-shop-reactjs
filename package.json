@@ -9,6 +9,7 @@
 		"axios": "^0.21.1",
 		"bootstrap": "4.5.0",
 		"google-maps-react": "^2.0.2",
+		"install": "^0.13.0",
 		"js-sha512": "^0.8.0",
 		"moment": "^2.29.1",
 		"node-fetch": "2.6.1",

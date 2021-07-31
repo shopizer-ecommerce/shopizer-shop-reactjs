@@ -1970,13 +1970,10 @@ a.default-btn {
    .container  {
     max-width: 80% !important;
   }
-
+  /* custom */
   .container-home  {
     max-width: 100% !important;
   }
-
-
-
 
   .slider-content-2 {
     margin-top: 20% !important;
@@ -1985,7 +1982,45 @@ a.default-btn {
     background-color: #FFFFFF;
 }
 
+.category-home .row {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
 
+.category-home .desc {
+  background: rgba(0,0,0,.8);
+      background-color: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  text-align: center;
+  opacity: 0;
+  -webkit-transform: scale(1.15);
+  -moz-transform: scale(1.15);
+  -ms-transform: scale(1.15);
+  -o-transform: scale(1.15);
+  transform: scale(1.15);
+}
+
+.category-home img {
+  object-fit: cover !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+
+.category-home .col-lg-4.col-md-4.col-sm-4.col-xs-6 {
+  padding-right: 0px;
+  padding-left:  0px;
+}
+
+.category-home img:hover {
+  opacity: 1;
+}
 
 .item-empty-area {
   &__icon {
