@@ -14,6 +14,10 @@ const HeroSlider = ({ string }) => {
         <HeroSliderSingle/>
       </div>
     </div>
+
+
+
+
   );
 
 
