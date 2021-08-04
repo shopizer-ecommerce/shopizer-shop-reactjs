@@ -34,7 +34,6 @@ const CustomForm = ({
   confirmationPlaceHolder,
   strings
 }) => {
-  console.log(strings, '-******************')
   const [status, setStatus] = useState('');
   const { register, handleSubmit, errors, reset } = useForm({
     mode: "onChange",
