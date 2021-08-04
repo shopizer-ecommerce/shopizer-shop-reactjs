@@ -102,4 +102,4 @@ dist
 .tern-port
 
 #temporary configurations
-env-config.js
+#env-config.js
