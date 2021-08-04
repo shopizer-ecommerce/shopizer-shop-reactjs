@@ -32,7 +32,7 @@ jobs:
        - run:
             name: Build
             command: npm run build
-      - run:
+       - run:
             name: Environment config
             command: cp env-config.js ./build
        # Cache local dependencies if they don't exist
