@@ -1,0 +1,60 @@
+# Java Maven CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-java/ for more details
+#
+
+
+version: 2.1
+
+orbs:
+  slack: circleci/slack@3.4.2
+  aws-ecr: circleci/aws-ecr@7.0.0
+      
+working_directory: /tmp
+
+# Define the jobs we want to run for this project
+jobs:
+  deploy:
+    machine: true
+    steps:
+       - checkout
+       # start proprietary DB using private Docker image
+       # with credentials stored in the UI
+       - run: |
+           ls -al
+       - run: |
+           docker login -u shopizerecomm -p $DOCKERHUB_PASSWORD
+       - run: |
+           docker build . -t shopizerecomm/shopizer-shop-reactjs:latest
+       - run: |
+           docker push shopizerecomm/shopizer-shop-reactjs:latest
+       - slack/status:
+           fail_only: false
+           webhook: $SLACK_SHOP_WEBHOOK
+
+
+# Orchestrate our job run sequence
+workflows:
+  build_and_deploy:
+    jobs:
+      - deploy:
+          filters:
+            branches:
+              only:
+                - main
+  build_and_push_image:
+    jobs:
+      - aws-ecr/build-and-push-image:
+          account-url: AWS_ECR_ACCOUNT_URL_ENV_VAR_NAME
+          aws-access-key-id: ACCESS_KEY_ID_ENV_VAR_NAME
+          aws-secret-access-key: SECRET_ACCESS_KEY_ENV_VAR_NAME
+          no-output-timeout: 20m
+          region: AWS_REGION_ENV_VAR_NAME
+          repo: rufina
+          skip-when-tags-exist: false
+          tag: 'latest'
+          filters:
+            branches:
+              only:
+                - rufina
+
