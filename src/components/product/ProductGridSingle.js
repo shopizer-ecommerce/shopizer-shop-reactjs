@@ -32,7 +32,9 @@ const ProductGridSingleTwo = ({
   const onClickProductDetails = (id) => {
     setProductID(id)
   }
+  
   return (
+    product.available &&
     <Fragment>
       <div
         className={`col-xl-3 col-md-6 col-lg-4 col-sm-6 ${sliderClassName ? sliderClassName : ""}`}>
@@ -40,10 +42,10 @@ const ProductGridSingleTwo = ({
           className={`product-wrap-2 ${spaceBottomClass ? spaceBottomClass : ""} ${colorClass ? colorClass : ""} `}>
           <div className="product-img">
             <Link to={process.env.PUBLIC_URL + "/product/" + product.description.friendlyUrl} onClick={() => onClickProductDetails(product.id)}>
-              {product.images && product.images.length > 0}
+                {
+                product.images.lenth > 0  &&
                 <img src={product.images[0].imageUrl} alt="" />
-              
-
+                }
             </Link>
             {/* {
               product.discount || product.new ? (

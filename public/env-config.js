@@ -9,5 +9,6 @@ window._env_ = {
   APP_NUVEI_SECRET: "",
   APP_PAYMENT_TYPE: "STRIPE",
   APP_STRIPE_KEY: "pk_test_TYooMQauvdEDq54NiTphI7jx,",
-  APP_THEME_COLOR: "#7c515d",
+  sAPP_THEME_COLOR: "#7c515d",
+  sAPP_THEME_COLOR: "#7c515d",
 }
