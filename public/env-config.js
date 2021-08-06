@@ -1,6 +1,6 @@
 window._env_ = {
   APP_PRODUCTION: "false",
-  APP_BASE_URL: "https://api.boutiquerufina.com",
+  APP_BASE_URL: "https://api.perfectopoelesetfoyers.com",
   APP_API_VERSION: "/api/v1/",
   APP_MERCHANT: "DEFAULT",
   APP_PRODUCT_GRID_LIMIT: "15",
