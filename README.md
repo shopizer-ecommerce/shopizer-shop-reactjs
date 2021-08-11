@@ -29,3 +29,6 @@ http://localhost
 
 change env file
 APP_THEME_COLOR=#7c515d
+
+
+default language is in rootReducer
