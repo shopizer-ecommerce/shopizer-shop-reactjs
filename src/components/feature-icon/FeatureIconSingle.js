@@ -16,6 +16,9 @@ const FeatureIconSingle = ({ data, spaceBottomClass }) => {
             className="animated"
             src={process.env.PUBLIC_URL + data.iconImage}
             alt=""
+            width="75px"
+            height="75px"
+            style={{opacity: 0.2}}
           />
         </div>
         <div className="support-content-3">

@@ -124,7 +124,7 @@ const Header = ({
       >
         <div className={layout === "container-fluid" ? layout : "container"}>
           <div className="row">
-            <div className="col-xl-2 col-lg-2 col-md-6 col-4">
+            <div className="col-xl-2 col-lg-2 col-md-4 col-4">
               {/* header logo */}
               {
                 merchant.logo != null && <Logo imageUrl={merchant.logo.path} logoClass="logo" />
@@ -135,7 +135,7 @@ const Header = ({
               {/* Nav menu */}
               <NavMenu categories={categoryData} contents={contentData} />
             </div>
-            <div className="col-xl-2 col-lg-2 col-md-6 col-8">
+            <div className="col-xl-2 col-lg-2 col-md-8 col-8">
               {/* Icon group */}
               <IconGroup />
             </div>
@@ -143,7 +143,7 @@ const Header = ({
         </div>
         {/* mobile menu */}
         <MobileMenu categories={categoryData} contents={contentData} />
-      </div>
+        </div>
     </header>
   );
 };
