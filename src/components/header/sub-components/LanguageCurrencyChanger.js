@@ -23,6 +23,7 @@ const LanguageCurrencyChanger = ({
   // };
 
   return (
+    
     <div className="language-currency-wrap">
       <div className="same-language-currency language-style">
         <span>
@@ -82,4 +83,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(multilanguage(LanguageCurrencyChanger));
-// export default LanguageCurrencyChanger;
+

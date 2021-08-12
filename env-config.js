@@ -8,7 +8,8 @@ window._env_ = {
   APP_NUVEI_TERMINAL_ID: "",
   APP_NUVEI_SECRET: "",
   APP_PAYMENT_TYPE: "STRIPE",
-  APP_STRIPE_KEY: "pk_test_TYooMQauvdEDq54NiTphI7jx,",
+  APP_STRIPE_KEY: "pk_test_TYooMQauvdEDq54NiTphI7jx",
   APP_THEME_COLOR: "#7c515d",
-  APP_DEFAULT_LANGUAGE: "fr"
+  APP_DEFAULT_LANGUAGE: "fr",
+  APP_DEFAULT_LANGUAGE: "fr",
 }

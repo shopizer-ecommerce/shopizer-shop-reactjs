@@ -3,7 +3,7 @@ import React, { useEffect, Suspense, lazy } from "react";
 import ScrollToTop from "./helpers/scroll-top";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ToastProvider } from "react-toast-notifications";
-import { multilanguage, loadLanguages } from "redux-multilanguage";
+import { multilanguage, loadLanguages, changeLanguage } from "redux-multilanguage";
 import { connect } from "react-redux";
 import { BreadcrumbsProvider } from "react-breadcrumbs-dynamic";
 
@@ -50,19 +50,6 @@ const App = (props) => {
 
 
   useEffect(() => {
-    var cart_cookie = window._env_.APP_MERCHANT + '_shopizer_cart';
-    const cookies = new Cookies();
-    let cookie = cookies.get(cart_cookie);
-    if (cookie) {
-      console.log('cookie !!! ' + cookie);
-      props.dispatch(setShopizerCartID(cookie));
-    }
-    // console.log(window._env_);
-    document.documentElement.style.setProperty('--theme-color', window._env_.APP_THEME_COLOR)
-    //if(cookies[cart_cookie]) {
-    //  console.log('cookie !!! ' + cookies[cart_cookie]);
-    //  props.dispatch(setShopizerCartID(cookies[cart_cookie]));
-    //}
     props.dispatch(
       loadLanguages({
         languages: { //from merchant supported languages
@@ -71,6 +58,23 @@ const App = (props) => {
         }
       })
     );
+
+    /** this is a one language only site  */
+    props.dispatch(changeLanguage(window._env_.APP_DEFAULT_LANGUAGE));
+
+    var cart_cookie = window._env_.APP_MERCHANT + '_shopizer_cart';
+    const cookies = new Cookies();
+    let cookie = cookies.get(cart_cookie);
+    if (cookie) {
+      props.dispatch(setShopizerCartID(cookie));
+    }
+    // console.log(window._env_);
+    document.documentElement.style.setProperty('--theme-color', window._env_.APP_THEME_COLOR)
+    //if(cookies[cart_cookie]) {
+    //  console.log('cookie !!! ' + cookies[cart_cookie]);
+    //  props.dispatch(setShopizerCartID(cookies[cart_cookie]));
+    //}
+
   });
 
   return (
