@@ -3,7 +3,7 @@ import React from "react";
 
 const FeatureIconSingle = ({ data, spaceBottomClass }) => {
   return (
-    <div className="col-lg-3 col-md-6 col-sm-6">
+    <div className="col-lg-3 col-md-3 col-sm-6 col-xs-6">
       <div
         className={`support-wrap-3 text-center ${
           spaceBottomClass ? spaceBottomClass : ""
@@ -19,7 +19,8 @@ const FeatureIconSingle = ({ data, spaceBottomClass }) => {
           />
         </div>
         <div className="support-content-3">
-          <p>{data.title}</p>
+          <h3 style={{color:"#555252"}}>{data.title}</h3>
+          <small style={{color:"#651f1b"}}>{data.subtext}</small>
         </div>
       </div>
     </div>
