@@ -1,23 +1,26 @@
 [
   {
     "id": 1,
-    "titleImage": "/assets/img/icon-img/support-8.png",
-    "title": "Free shipping on all order",
+    "title": "Performant",
     "iconImage": "/assets/img/icon-img/support-5.png",
-    "backgroundColor": "#ccfbe9"
+    "backgroundColor": "#651f1b"
   },
   {
     "id": 2,
-    "titleImage": "/assets/img/icon-img/support-9.png",
-    "title": "Back guarantee under 5 days",
+    "title": "Tous les styles",
     "iconImage": "/assets/img/icon-img/support-6.png",
-    "backgroundColor": "#f2fbcc"
+    "backgroundColor": "#651f1b"
   },
   {
     "id": 3,
-    "titleImage": "/assets/img/icon-img/support-10.png",
-    "title": "On every order over $150",
+    "title": "Guaranties",
     "iconImage": "/assets/img/icon-img/support-7.png",
-    "backgroundColor": "#ddfbcc"
+    "backgroundColor": "#651f1b"
+  },
+  {
+    "id": 4,
+    "title": "Fiable",
+    "iconImage": "/assets/img/icon-img/support-7.png",
+    "backgroundColor": "#651f1b"
   }
 ]
