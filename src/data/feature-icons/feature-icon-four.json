@@ -1,23 +1,30 @@
 [
   {
     "id": 1,
-    "titleImage": "/assets/img/icon-img/support-8.png",
-    "title": "Free shipping on all order",
-    "iconImage": "/assets/img/icon-img/support-5.png",
-    "backgroundColor": "#ccfbe9"
+    "title": "Performant",
+    "subtext" : "Performance allant de 80 000 a 150 000 BTU",
+    "iconImage": "/assets/img/icon-img/custom/performance-icon-png-12.jpg",
+    "backgroundColor": "#FFFFFF"
   },
   {
     "id": 2,
-    "titleImage": "/assets/img/icon-img/support-9.png",
-    "title": "Back guarantee under 5 days",
-    "iconImage": "/assets/img/icon-img/support-6.png",
-    "backgroundColor": "#f2fbcc"
+    "title": "Ambiance",
+    "subtext" : "Styles pour les interieurs moderne, etc...    ",
+    "iconImage": "/assets/img/icon-img/custom/sofa-xxl_icon.png",
+    "backgroundColor": "#FFFFFF"
   },
   {
     "id": 3,
-    "titleImage": "/assets/img/icon-img/support-10.png",
-    "title": "On every order over $150",
-    "iconImage": "/assets/img/icon-img/support-7.png",
-    "backgroundColor": "#ddfbcc"
+    "title": "Garanties",
+    "subtext" : "Garanties du fabriquant et sur mesure",
+    "iconImage": "/assets/img/icon-img/custom/warranty.png",
+    "backgroundColor": "#FFFFFF"
+  },
+  {
+    "id": 4,
+    "title": "Fiable",
+    "subtext" : "Tester pour usage domestique et industriel",
+    "iconImage": "/assets/img/icon-img/custom/icon-for-reliable-13.jpg",
+    "backgroundColor": "#FFFFFF"
   }
 ]

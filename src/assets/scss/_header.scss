@@ -109,7 +109,8 @@
 .logo {
 
   img {
-    max-width: 100%;
+      max-width: 100%;
+      margin: 5%;
   }
 
   @media #{$md-layout} {
@@ -171,13 +172,16 @@
   }
 }
 
+
+
 .main-menu {
+
   nav {
+
     ul {
+      
       display: block;
-
-      margin-top: -5px;
-
+      margin-top : 2.5%;
       text-align: center;
 
       li {
@@ -490,7 +494,7 @@
 }
 
 .stick .header-right-wrap {
-  margin-top: 22px;
+  margin-top: 44px;
 
   @media #{$md-layout} {
     margin-top: 0;
@@ -2152,8 +2156,8 @@
       max-width: 100%
     }
 
-    margin-top: 22px;
-    margin-bottom: 18px;
+ /*   margin-top: 22px;
+    margin-bottom: 18px; */
 
     @media #{$md-layout} {
       margin-top: 2px;
@@ -2923,7 +2927,7 @@
 
 @media only screen and (min-width:1025px) and (max-width:1225px) {
   .logo {
-    margin-top: 20px;
+  /*  margin-top: 20px; */
   }
 
   .main-menu nav ul li {
@@ -2937,7 +2941,7 @@
 
 @media only screen and (min-width:992px) and (max-width:1024px) {
   .logo {
-    margin-top: 24px;
+   /* margin-top: 24px; */
   }
 
   .main-menu nav ul li {
