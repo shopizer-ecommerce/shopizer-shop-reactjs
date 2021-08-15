@@ -21,11 +21,11 @@ const FooterCopyright = ({ footerLogo, spaceBottomClass, colorClass, merchant })
 
       </div>
       <p>
-        Copyright © {new Date(merchant.inBusinessSince).getFullYear()}{" "}
+        © {new Date(merchant.inBusinessSince).getFullYear()}{" "}
         <Link to="" rel="noopener noreferrer">
           {merchant.name}
         </Link>
-        .<br /> All Rights Reserved
+        .<br /> Tous droits réservés
       </p>
     </div>
   );

@@ -22,9 +22,9 @@ const LanguageCurrencyChanger = ({
   //   setCurrency(currencyName);
   // };
 
-  return (
-    
-    <div className="language-currency-wrap">
+  
+    /* to be uncommented when 
+    /* <div className="language-currency-wrap">
       <div className="same-language-currency language-style">
         <span>
           {currentLanguageCode === "en"
@@ -51,10 +51,11 @@ const LanguageCurrencyChanger = ({
 
           </ul>
         </div>
-      </div>
-
-      <div className="same-language-currency">
-        <p>{strings['Call Us']} : {merchant.phone}</p>
+          </div>*/
+return (
+    <div className="language-currency-wrap">
+      <div className="same-language-currency" style = {{ padding : 15 }}>
+        <p>{strings['Call Us']} : <a href="tel:{merchant.phone}">{merchant.phone}</a></p>
       </div>
     </div>
   );
