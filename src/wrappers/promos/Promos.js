@@ -24,14 +24,68 @@ const FeatureIcon = ({
           : {}
       }
     >
-      <div>
-        <div className="row">
-          <div className="col-lg-3 col-md-3 col-sm-6"></div>
-          <div className="col-lg-3 col-md-3 col-sm-6"><img src="/assets/img/promo/promo20.jpg" alt="promo20" /></div>
-          <div className="col-lg-3 col-md-3 col-sm-6"><img src="/assets/img/promo/promo10.jpg" alt="promo10" /></div>
-          <div className="col-lg-3 col-md-3 col-sm-6"></div>
-
-        </div>
+    
+  <div className="row" style={{margin: "0px"}}>
+          <div className="col-lg-6 col-md-6 col-sm-12" style={{ padding :'0px' }}>
+             <div className="single-image">
+             <a>
+                <img src="http://perfectogaz.com/wp-content/uploads/2017/01/super.jpg" className="image"/>
+                <div className="overlay">
+                  <p>My Name is John</p>
+                </div>
+              </a>
+            </div> 
+          </div>
+          <div className="col-lg-6 col-md-6 col-sm-12" style={{ padding :'0px' }}>
+             <div className="single-image">
+             <a>
+                <img src="http://perfectogaz.com/wp-content/uploads/2017/01/super.jpg" className="image"/>
+                <div className="overlay">
+                  <p>My Name is John</p>
+                </div>
+              </a>
+            </div> 
+          </div>
+          <div className="col-lg-6 col-md-6 col-sm-12" style={{ padding :'0px' }}>
+             <div className="single-image">
+             <a>
+                <img src="http://perfectogaz.com/wp-content/uploads/2017/01/super.jpg" className="image"/>
+                <div className="overlay">
+                  <p>My Name is John</p>
+                </div>
+              </a>
+            </div> 
+          </div>
+          <div className="col-lg-6 col-md-6 col-sm-12" style={{ padding :'0px' }}>
+             <div className="single-image">
+             <a>
+                <img src="http://perfectogaz.com/wp-content/uploads/2017/01/super.jpg" className="image"/>
+                <div className="overlay">
+                  <p>My Name is John</p>
+                </div>
+              </a>
+            </div> 
+          </div>
+          <div className="col-lg-6 col-md-6 col-sm-12" style={{ padding :'0px' }}>
+             <div className="single-image">
+             <a>
+                <img src="http://perfectogaz.com/wp-content/uploads/2017/01/super.jpg" className="image"/>
+                <div className="overlay">
+                  <p>My Name is John</p>
+                </div>
+              </a>
+            </div> 
+          </div>
+          <div className="col-lg-6 col-md-6 col-sm-12" style={{ padding :'0px' }}>
+             <div className="single-image">
+             <a>
+                <img src="http://perfectogaz.com/wp-content/uploads/2017/01/super.jpg" className="image"/>
+                <div className="overlay">
+                  <p>My Name is John</p>
+                </div>
+              </a>
+            </div> 
+          </div>
       </div>
     </div>
   );

@@ -22,8 +22,8 @@ const FeatureIconSingle = ({ data, spaceBottomClass }) => {
           />
         </div>
         <div className="support-content-3">
-          <h3 style={{color:"#555252"}}>{data.title}</h3>
-          <small style={{color:"#651f1b"}}>{data.subtext}</small>
+          <h3 style={{color:"#FFF"}}>{data.title}</h3>
+          <small style={{color:"#FFF"}}>{data.subtext}</small>
         </div>
       </div>
     </div>

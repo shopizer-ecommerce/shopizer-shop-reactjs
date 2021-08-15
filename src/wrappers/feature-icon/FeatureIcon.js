@@ -20,7 +20,7 @@ const FeatureIcon = ({
         }`}
       style={
         bgImg
-          ? { backgroundColor: '#FFFFFF' }
+          ? { backgroundColor: '#651f1b' }
           : {}
       }
     >

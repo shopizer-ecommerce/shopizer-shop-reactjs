@@ -31,7 +31,7 @@ const Home = ({ merchant, strings }) => {
         containerClass="container-fluid"
         gutterClass="padding-10-row-col"
         spaceTopClass="pt-20"
-        spaceBottomClass="pb-10"
+        spaceBottomClass="pb-20"
       />
         { /*promos */}
         <Promo

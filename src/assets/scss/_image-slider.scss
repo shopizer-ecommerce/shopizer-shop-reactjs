@@ -13,3 +13,33 @@
     transform: scale(1.1);
   }
 }
+
+
+
+/* The overlay effect - lays on top of the container and over the image */
+.overlay {
+  position: absolute;
+  top:0;
+  height:100%;
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.5); /* Black see-through */
+  color: #f1f1f1;
+  width: 100%;
+  transition: .5s ease;
+  opacity:0;
+  color: white;
+  font-size: 20px;
+  padding: 20px;
+  text-align: center;
+}
+
+.overlay p {
+  position:relative;
+  top: 50%;
+  color: #FFFFFF;
+}
+
+/* When you mouse over the container, fade in the overlay title */
+.single-image:hover .overlay {
+  opacity: 1;
+}
