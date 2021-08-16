@@ -22,3 +22,16 @@
         <img src="assets/img/slider/fireplace-pic.jpeg" alt="banner" className="img-fluid" />
       </div>
     </div>
+
+
+    /*,
+  {
+    "id": 4,
+    "title": "Fiable",
+    "subtext" : "Tester pour usage domestique et industriel",
+    "iconImage": "/assets/img/icon-img/custom/icon-for-reliable-13.jpg",
+    "backgroundColor": "#651f1b"
+  }
+  */
+
+  linear-gradient(to right, rgba(0,0,0,0.1) 0%,rgba(0,0,0,0.6) 100%),

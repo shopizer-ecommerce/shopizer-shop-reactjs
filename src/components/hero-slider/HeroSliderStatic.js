@@ -4,7 +4,7 @@ const HeroSliderStatic = ({ string, pitch1, pitch2, pitch3, sliderText, sliderIm
   return (
 <div  className="row" 
       style={{
-        backgroundImage: "linear-gradient(to right, rgba(0,0,0,0.1) 0%,rgba(0,0,0,0.6) 100%),url(assets/img/slider/fireplace-pic.jpeg)",
+        backgroundImage: "url(assets/img/slider/fireplace-pic.jpeg)",
         backgroundPosition: 'center',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',

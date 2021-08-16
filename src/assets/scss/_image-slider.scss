@@ -33,7 +33,13 @@
   text-align: center;
 }
 
-.overlay p {
+.overlay h2 {
+  position:relative;
+  top: 50%;
+  color: #FFFFFF;
+}
+
+.overlay small {
   position:relative;
   top: 50%;
   color: #FFFFFF;
