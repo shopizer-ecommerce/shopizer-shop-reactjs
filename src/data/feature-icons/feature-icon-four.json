@@ -3,14 +3,14 @@
     "id": 1,
     "title": "Performant",
     "subtext" : "Performance allant de 80 000 a 150 000 BTU",
-    "iconImage": "/assets/img/icon-img/custom/performance-icon-png-12.jpg",
+    "iconImage": "/assets/img/icon-img/custom/_about.png",
     "backgroundColor": "#651f1b"
   },
   {
     "id": 2,
     "title": "Ambiance",
     "subtext" : "Styles pour les interieurs moderne, etc...    ",
-    "iconImage": "/assets/img/icon-img/custom/sofa-xxl_icon.png",
+    "iconImage": "/assets/img/icon-img/custom/sofa-2.png",
     "backgroundColor": "#651f1b"
   },
   {
@@ -18,13 +18,6 @@
     "title": "Garantie",
     "subtext" : "Garanties du fabriquant et sur mesure",
     "iconImage": "/assets/img/icon-img/custom/warranty.png",
-    "backgroundColor": "#651f1b"
-  },
-  {
-    "id": 4,
-    "title": "Fiable",
-    "subtext" : "Tester pour usage domestique et industriel",
-    "iconImage": "/assets/img/icon-img/custom/icon-for-reliable-13.jpg",
     "backgroundColor": "#651f1b"
   }
 ]

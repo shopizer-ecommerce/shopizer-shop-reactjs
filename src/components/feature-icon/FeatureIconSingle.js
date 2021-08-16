@@ -3,7 +3,7 @@ import React from "react";
 
 const FeatureIconSingle = ({ data, spaceBottomClass }) => {
   return (
-    <div className="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+    <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
       <div
         className={`support-wrap-3 text-center ${
           spaceBottomClass ? spaceBottomClass : ""
