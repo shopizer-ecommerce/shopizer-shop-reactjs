@@ -28,61 +28,66 @@ const FeatureIcon = ({
   <div className="row" style={{margin: "0px"}}>
           <div className="col-lg-6 col-md-6 col-sm-12" style={{ padding :'0px' }}>
              <div className="single-image">
-             <a href="#">
-                <img src="http://perfectogaz.com/wp-content/uploads/2017/01/super.jpg" className="image"/>
+             <a href="/category/bois">
+                <img src="/assets/img/bg/super.jpg" className="image"/>
                 <div className="overlay">
                   <h2>Bois</h2>
-                  <small>Visitez nos foyer de bois <u>Pacific Energy</u>, <a>Jotul</a>, <a>Continental</a> et <a>Archguard</a></small>
+                  <small>Visitez nos foyer de bois Pacific Energy, Jotul, Continental et Archguard</small>
                 </div>
               </a>
             </div> 
           </div>
           <div className="col-lg-6 col-md-6 col-sm-12" style={{ padding :'0px' }}>
              <div className="single-image">
-             <a href="#">
-                <img src="http://perfectogaz.com/wp-content/uploads/2015/07/GF-370-Background.white-copie-1.jpg" className="image"/>
+             <a href="/category/gaz">
+                <img src="/assets/img/bg/GF-370-Background.white-copie-1.jpg" className="image"/>
                 <div className="overlay">
-                  <h3>Gaz</h3>
+                  <h2>Gaz</h2>
+                  <small>Visitez nos foyer au gaz Savannah, Pacific Energy, Continental et autres</small>
                 </div>
               </a>
             </div> 
           </div>
           <div className="col-lg-6 col-md-6 col-sm-12" style={{ padding :'0px' }}>
              <div className="single-image">
-             <a href="#">
-                <img src="http://perfectogaz.com/wp-content/uploads/2017/01/Piazzetta.jpg" className="image"/>
+             <a href="/category/granule">
+                <img src="/assets/img/bg/Piazzetta.jpg" className="image"/>
                 <div className="overlay">
-                  <h3>Granules</h3>
+                  <h2>Granules</h2>
+                  <small>Visitez nos foyer au granules Piazzetta et Enviro</small>
                 </div>
               </a>
             </div> 
           </div>
           <div className="col-lg-6 col-md-6 col-sm-12" style={{ padding :'0px' }}>
              <div className="single-image">
-             <a>
-                <img src="http://perfectogaz.com/wp-content/uploads/2015/07/BI-72-DEEP-FI-Room.jpg" className="image"/>
+             <a href="/category/electrique">
+                <img src="/assets/img/bg/BI-72-DEEP-FI-Room.jpg" className="image"/>
                 <div className="overlay">
-                  <h3>Électrique</h3>
+                  <h2>Électrique</h2>
+                  <small>Visitez nos foyer électrique Amantii et Sampli Fire</small>
                 </div>
               </a>
             </div> 
           </div>
           <div className="col-lg-6 col-md-6 col-sm-12" style={{ padding :'0px' }}>
              <div className="single-image">
-             <a>
-                <img src="http://perfectogaz.com/wp-content/uploads/2015/07/SaffireRouge.jpg" className="image"/>
+             <a href="/category/bbq">
+                <img src="/assets/img/bg/SaffireRouge.jpg" className="image"/>
                 <div className="overlay">
-                  <h3>BBQ</h3>
+                  <h2>BBQ</h2>
+                  <small>Visitez nos BBQ Saffire et Jackson Grills</small>
                 </div>
               </a>
             </div> 
           </div>
           <div className="col-lg-6 col-md-6 col-sm-12" style={{ padding :'0px' }}>
              <div className="single-image">
-             <a>
-                <img src="http://perfectogaz.com/wp-content/uploads/2015/07/SaffireRouge.jpg" className="image"/>
+             <a href="/category/fournaises">
+                <img src="/assets/img/bg/Jotul-03-1024x717.jpg" className="image"/>
                 <div className="overlay">
-                  <h3>Fournaises</h3>
+                  <h2>fournaises</h2>
+                  <small>Visitez nos différentes fournaises</small>
                 </div>
               </a>
             </div> 
