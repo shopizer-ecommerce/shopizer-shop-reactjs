@@ -141,7 +141,7 @@ export const decreaseQuantity = (item, addToast) => {
 };
 
 export const increaseQuantity = (item, addToast) => {
-  console.log('increase ' + JSON.stringify(item));
+  //console.log('increase ' + JSON.stringify(item));
   return dispatch => {
     // if (addToast) {
     //   addToast("Item Decremented From Cart", {

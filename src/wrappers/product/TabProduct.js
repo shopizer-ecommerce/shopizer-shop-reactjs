@@ -33,7 +33,7 @@ const TabProduct = ({
       let response = await WebService.get(action);
       // console.log(response);
       if (response) {
-        let category = [{ 'id': '', 'name': 'All', 'code': 'all', data: response.products }];
+        let category = [{ 'id': '', 'name': '[ ]', 'code': 'all', data: response.products }];
         response.products.forEach((item) => {
           if (item.categories !== null) {
             item.categories.forEach((a) => {

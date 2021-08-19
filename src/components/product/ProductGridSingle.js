@@ -43,7 +43,7 @@ const ProductGridSingleTwo = ({
           <div className="product-img">
             <Link to={process.env.PUBLIC_URL + "/product/" + product.description.friendlyUrl} onClick={() => onClickProductDetails(product.id)}>
                 {
-                product.images.lenth > 0  &&
+                //product.images.lenth > 0  &&
                 <img src={product.images[0].imageUrl} alt="" />
                 }
             </Link>
