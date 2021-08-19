@@ -29,7 +29,7 @@ const FeatureIcon = ({
           <div className="col-lg-6 col-md-6 col-sm-12" style={{ padding :'0px' }}>
              <div className="single-image">
              <a href="/category/bois">
-                <img src="/assets/img/bg/super.jpg" className="image"/>
+                <img src="/assets/img/bg/super.jpg" className="image" alt=""/>
                 <div className="overlay">
                   <h2>Bois</h2>
                   <small>Visitez nos foyer de bois Pacific Energy, Jotul, Continental et Archguard</small>
@@ -40,7 +40,7 @@ const FeatureIcon = ({
           <div className="col-lg-6 col-md-6 col-sm-12" style={{ padding :'0px' }}>
              <div className="single-image">
              <a href="/category/gaz">
-                <img src="/assets/img/bg/GF-370-Background.white-copie-1.jpg" className="image"/>
+                <img src="/assets/img/bg/GF-370-Background.white-copie-1.jpg" className="image" alt=""/>
                 <div className="overlay">
                   <h2>Gaz</h2>
                   <small>Visitez nos foyer au gaz Savannah, Pacific Energy, Continental et autres</small>
@@ -51,7 +51,7 @@ const FeatureIcon = ({
           <div className="col-lg-6 col-md-6 col-sm-12" style={{ padding :'0px' }}>
              <div className="single-image">
              <a href="/category/granule">
-                <img src="/assets/img/bg/Piazzetta.jpg" className="image"/>
+                <img src="/assets/img/bg/Piazzetta.jpg" className="image" alt=""/>
                 <div className="overlay">
                   <h2>Granules</h2>
                   <small>Visitez nos foyer au granules Piazzetta et Enviro</small>
@@ -62,7 +62,7 @@ const FeatureIcon = ({
           <div className="col-lg-6 col-md-6 col-sm-12" style={{ padding :'0px' }}>
              <div className="single-image">
              <a href="/category/electrique">
-                <img src="/assets/img/bg/BI-72-DEEP-FI-Room.jpg" className="image"/>
+                <img src="/assets/img/bg/BI-72-DEEP-FI-Room.jpg" className="image" alt=""/>
                 <div className="overlay">
                   <h2>Électrique</h2>
                   <small>Visitez nos foyer électrique Amantii et Sampli Fire</small>
@@ -73,7 +73,7 @@ const FeatureIcon = ({
           <div className="col-lg-6 col-md-6 col-sm-12" style={{ padding :'0px' }}>
              <div className="single-image">
              <a href="/category/bbq">
-                <img src="/assets/img/bg/SaffireRouge.jpg" className="image"/>
+                <img src="/assets/img/bg/SaffireRouge.jpg" className="image" alt=""/>
                 <div className="overlay">
                   <h2>BBQ</h2>
                   <small>Visitez nos BBQ Saffire et Jackson Grills</small>
@@ -84,7 +84,7 @@ const FeatureIcon = ({
           <div className="col-lg-6 col-md-6 col-sm-12" style={{ padding :'0px' }}>
              <div className="single-image">
              <a href="/category/fournaises">
-                <img src="/assets/img/bg/Jotul-03-1024x717.jpg" className="image"/>
+                <img src="/assets/img/bg/Jotul-03-1024x717.jpg" className="image" alt=""/>
                 <div className="overlay">
                   <h2>fournaises</h2>
                   <small>Visitez nos différentes fournaises</small>
