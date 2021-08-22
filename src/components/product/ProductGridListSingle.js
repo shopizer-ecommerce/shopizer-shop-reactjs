@@ -50,7 +50,7 @@ const ProductGridListSingle = ({
                 product.image && <img className="default-img" src={defaultImage(product)} alt="" />
               }
               {
-                product.images.length > 1 ? <img className="hover-img-A" src={defaultImage(product)} alt="" /> : <img className="hover-img-A" src={defaultImage(product)} alt="" />
+                product.images.length > 1 ? <img className="hover-img" src={defaultImage(product)} alt="" /> : <img className="hover-img" src={defaultImage(product)} alt="" />
               }
             </Link>
 
