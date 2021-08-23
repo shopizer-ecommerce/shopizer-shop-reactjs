@@ -24,7 +24,7 @@ function ProductModal(props, strings) {
   const [setProductPrice] = useState(finalproductprice)
   const [setIsDiscount] = useState(product.discounted)
 
-  const [gallerySwiper, getGallerySwiper] = useState(null);i
+  const [gallerySwiper, getGallerySwiper] = useState(null);
   const [thumbnailSwiper, getThumbnailSwiper] = useState(null);
   const [selectedProductColor, setSelectedProductColor] = useState([]);
   // const [productStock, setProductStock] = useState();
