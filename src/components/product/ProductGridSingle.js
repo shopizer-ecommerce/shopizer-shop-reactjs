@@ -81,6 +81,7 @@ const ProductGridSingleTwo = ({
                 to={`product/${product.description.friendlyUrl}`} onClick={() => onClickProductDetails(product.id)} title="Select options">
                 <i className="fa fa-cog"></i>
               </Link>
+              {/*
               {
                 product.available && product.canBePurchased && product.visible && product.quantity > 0 &&
                 <button
@@ -91,12 +92,13 @@ const ProductGridSingleTwo = ({
                   <i className="fa fa-shopping-cart"></i>{" "}
                 </button>
               }
+             */}
 
               {/* ) : (
                       <button disabled className="active" title="Out of stock">
                         <i className="fa fa-shopping-cart"></i>
                       </button>
-                    )} */}
+                    )} 
 
               <button onClick={() => setModalShow(true)} title="Quick View">
                 <i className="fa fa-eye"></i>
@@ -116,6 +118,7 @@ const ProductGridSingleTwo = ({
               </button> */}
             </div>
           </div>
+
           <div className="product-content-2">
             <div className={`title-price-wrap-2 ${titlePriceClass ? titlePriceClass : ""}`}>
               <h3>
@@ -123,6 +126,7 @@ const ProductGridSingleTwo = ({
                   {product.description.name}
                 </Link>
               </h3>
+              {/*
               <div className="price-2">
                 {product.discounted ? (
                   <Fragment>
@@ -137,6 +141,7 @@ const ProductGridSingleTwo = ({
                     <span>{finalProductPrice} </span>
                   )}
               </div>
+              */}
             </div>
             {/* <div className="pro-wishlist-2">
               <button

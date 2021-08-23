@@ -3,7 +3,7 @@ window._env_ = {
   APP_BASE_URL: "https://api.perfectopoelesetfoyers.com",
   APP_API_VERSION: "/api/v1/",
   APP_MERCHANT: "DEFAULT",
-  APP_PRODUCT_GRID_LIMIT: "15",
+  APP_PRODUCT_GRID_LIMIT: "40",
   APP_MAP_API_KEY: "",
   APP_NUVEI_TERMINAL_ID: "",
   APP_NUVEI_SECRET: "",

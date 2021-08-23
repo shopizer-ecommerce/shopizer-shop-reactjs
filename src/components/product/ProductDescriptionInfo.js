@@ -117,6 +117,7 @@ const ProductDescriptionInfo = ({
   return (
     <div className="product-details-content ml-70">
       <h2>{product.description.name}</h2>
+      {/*
       <div className="product-details-price">
         {isDiscount ? (
           <Fragment>
@@ -129,6 +130,7 @@ const ProductDescriptionInfo = ({
             <span>{productPrice} </span>
           )}
       </div>
+        */}
       {/* {product.rating && product.rating > 0 ? ( */}
       <div className="pro-details-rating-wrap">
         <div className="pro-details-rating">
@@ -257,7 +259,7 @@ const ProductDescriptionInfo = ({
       ) : (
           ""
         )}
-      {
+      {/*
         //   product.affiliateLink ? (
         //   <div className="pro-details-quality">
         //     <div className="pro-details-cart btn-hover ml-0">
@@ -271,6 +273,8 @@ const ProductDescriptionInfo = ({
         //     </div>
         //   </div>
         // ) : (
+
+
         <div className="pro-details-quality">
           <div className="cart-plus-minus">
             <button onClick={() => setQuantityCount(quantityCount > 1 ? quantityCount - 1 : 1)} className="dec qtybutton">-</button>
@@ -308,6 +312,7 @@ const ProductDescriptionInfo = ({
                 <button disabled>{strings["Out of Stock"]}</button>
               )}
           </div>
+
           {/* <div className="pro-details-wishlist">
             <button
               className={wishlistItem !== undefined ? "active" : ""}
@@ -335,10 +340,10 @@ const ProductDescriptionInfo = ({
             >
               <i className="pe-7s-shuffle" />
             </button>
-          </div> */}
+          </div> 
         </div>
-        // )
-      }
+       */}
+
       <div className="pro-details-meta">
         <span>{strings["SKU"]} :</span>
         <ul>

@@ -211,6 +211,7 @@ function ProductModal(props, strings) {
             <div className="col-md-7 col-sm-12 col-xs-12">
               <div className="product-details-content quickview-content">
                 <h2>{product.description.name}</h2>
+                {/*
                 <div className="product-details-price">
                   {isDiscount ? (
                     <Fragment>
@@ -223,6 +224,7 @@ function ProductModal(props, strings) {
                     </Fragment>
                   ) : (<span>{productPrice} </span>)}
                 </div>
+                  */}
 
                 <div className="pro-details-rating-wrap">
                   <div className="pro-details-rating">

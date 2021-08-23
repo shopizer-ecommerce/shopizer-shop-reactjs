@@ -94,15 +94,9 @@ const ProductDescriptionTab = ({ strings, spaceBottomClass, product, review, use
                 <div className="product-anotherinfo-wrapper">
                   <ul>
                     {
-                      product.productSpecifications.weight &&
-                      <li>
-                        <span>{strings["Weight"]}</span> {product.productSpecifications.weight}
-                      </li>
-                    }
-                    {
                       product.productSpecifications.length && product.productSpecifications.width && product.productSpecifications.height &&
                       <li>
-                        <span>{strings["Package size"]}</span>{product.productSpecifications.length || 0}{" "} x {product.productSpecifications.width || 0}{" "}
+                        <span><b>{strings["Package size"]}</b></span>{product.productSpecifications.length || 0}{" "} x {product.productSpecifications.width || 0}{" "}
                         x {product.productSpecifications.height || 0}
                       </li>
                     }

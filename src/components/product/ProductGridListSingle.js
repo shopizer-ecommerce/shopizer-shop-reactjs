@@ -56,37 +56,16 @@ const ProductGridListSingle = ({
 
 
             <div className="product-action">
-              <div className="pro-same-action pro-wishlist">
-                <Link to={"/product/" + product.description.friendlyUrl} onClick={() => onClickProductDetails(product.id)} title="Select options">
-                  <i className="fa fa-cog"></i>
-                </Link>
-              </div>
+
               <div className="pro-same-action pro-cart">
-
-                {
-                  product.available && product.canBePurchased && product.visible && product.quantity > 0 ?
-                    (
-                      <button
-                        onClick={() => addToCart(product, addToast, cartItem, 1, defaultStore, userData)}
-                        // className="active"
-                        // disabled={cartItem !== undefined && cartItem.quantity > 0}
-                        title={strings["Add to cart"]}
-                      > {" "}  <i className="pe-7s-cart"></i>{" "}{strings["Add to cart"]}</button>
-                    )
-                    :
-                    (
-                      <button disabled className="active">
-                        {strings["Out of Stock"]}
-                      </button>
-                    )
-                }
-
-              </div>
-              <div className="pro-same-action pro-quickview">
-                <button onClick={() => setModalShow(true)} title="Quick View">
-                  <i className="pe-7s-look" />
+                <Link to={"/product/" + product.description.friendlyUrl} onClick={() => onClickProductDetails(product.id)} title="Select options">
+                <button>
+                    <span>Détails du produit</span>
                 </button>
+               </Link>
+
               </div>
+
             </div>
           </div>
           <div className="product-content text-center">
@@ -106,6 +85,7 @@ const ProductGridListSingle = ({
               />
               {/* <Rating ratingValue={product.rating} /> */}
             </div>
+            {/*
             <div className="product-price">
               {product.discounted ? (
                 <Fragment>
@@ -118,6 +98,7 @@ const ProductGridListSingle = ({
                   <span>{finalProductPrice} </span>
                 )}
             </div>
+              */}
           </div>
         </div>
         <div className="shop-list-wrap mb-30">
