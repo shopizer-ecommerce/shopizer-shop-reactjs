@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { Fragment, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 // import { getProductCartQuantity } from "../../helpers/product";
@@ -31,11 +31,11 @@ const ProductDescriptionInfo = ({
   // addToWishlist,
   // addToCompare
 }) => {
-  const [discountedPrice, setDiscountedPrice] = useState(finalDiscountedPrice)
-  const [productPrice, setProductPrice] = useState(finalProductPrice)
-  const [isDiscount, setIsDiscount] = useState(product.discounted)
+  const [setDiscountedPrice] = useState(finalDiscountedPrice)
+  const [setProductPrice] = useState(finalProductPrice)
+  const [setIsDiscount] = useState(product.discounted)
   const [selectedProductColor, setSelectedProductColor] = useState([])
-  const [quantityCount, setQuantityCount] = useState(1);
+  const [setQuantityCount] = useState(1);
   useEffect(() => {
     // console.log(strings);
     getDefualtsOption()
