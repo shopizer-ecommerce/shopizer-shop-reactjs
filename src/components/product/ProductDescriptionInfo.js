@@ -35,7 +35,6 @@ const ProductDescriptionInfo = ({
   const [setProductPrice] = useState(finalProductPrice)
   const [setIsDiscount] = useState(product.discounted)
   const [selectedProductColor, setSelectedProductColor] = useState([])
-  const [setQuantityCount] = useState(1);
   useEffect(() => {
     // console.log(strings);
     getDefualtsOption()
