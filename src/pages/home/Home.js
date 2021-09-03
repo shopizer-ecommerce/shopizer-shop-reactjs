@@ -13,10 +13,10 @@ const Home = ({ merchant, strings }) => {
     <Fragment>
       <MetaTags>
         <title>{merchant.name}</title>
-        {/* <meta
+        { <meta
           name="description"
-          content="Fashion home of flone react minimalist eCommerce template."
-        /> */}
+          content="Vente et installation de poêles et foyers au gaz et granules"
+        /> }
       </MetaTags>
       <Layout
         headerContainerClass="container-fluid"

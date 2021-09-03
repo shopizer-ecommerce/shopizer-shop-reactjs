@@ -73,10 +73,11 @@ const Header = ({
 
   }
   const getCategoryHierarchy = async () => {
-    let action = constant.ACTION.CATEGORY + '?count=50&page=0&store=' + defaultStore + '&lang=' + currentLanguageCode;
+    let action = constant.ACTION.CATEGORY + '?count=60&page=0&store=' + defaultStore + '&lang=' + currentLanguageCode;
     try {
       let response = await WebService.get(action);
       if (response) {
+        //map of key - id -> state
         setCategoryData(response.categories);
       }
     } catch (error) {

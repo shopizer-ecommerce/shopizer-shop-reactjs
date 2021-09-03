@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React, { useEffect, Suspense, lazy } from "react";
 import ScrollToTop from "./helpers/scroll-top";
+import { useHistory } from "react-router-dom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ToastProvider } from "react-toast-notifications";
 import { multilanguage, loadLanguages, changeLanguage } from "redux-multilanguage";
@@ -9,12 +10,15 @@ import { BreadcrumbsProvider } from "react-breadcrumbs-dynamic";
 
 import Loader from "./components/loader/loader"
 import Cookie from "./components/consent/Cookie"
+import constant from './util/constant';
+import WebService from './util/webService';
 import Cookies from 'universal-cookie';
+import { Redirect } from 'react-router'
 
 
-import {
-  setShopizerCartID
-} from "./redux/actions/cartActions";
+import { setShopizerCartID } from "./redux/actions/cartActions";
+
+import { setCategoryID } from "./redux/actions/productActions";
 
 // var sha512 = require('js-sha512').sha512;
 // home pages
@@ -44,10 +48,28 @@ const OrderConfirm = lazy(() => import("./pages/other/OrderConfirm"));
 const Content = lazy(() => import("./pages/content/Content"));
 const SearchProduct = lazy(() => import("./pages/search-product/SearchProduct"));
 
-
 //export default function App = (props) => {
 const App = (props) => {
 
+  const history = useHistory();
+
+  const getUrlResolution = async (friendly) => {
+    let action = window._env_.APP_BASE_URL + window._env_.APP_API_VERSION + constant.ACTION.FRIENDLYCATEGORY + friendly + '?store=' + window._env_.APP_MERCHANT + '&lang=' + window._env_.APP_DEFAULT_LANGUAGE;
+    console.log('Log url ' + action);
+    
+    try {
+      let response = await WebService.get(action);
+      if (response) {
+          console.log(JSON.stringify(response));
+          console.log('setCategory ' + response.id)
+          setCategoryID(response.id);
+      } else {
+        history.push('/not-found');
+      }
+    } catch (error) {
+      history.push('/not-found')
+    }
+}
 
   useEffect(() => {
     props.dispatch(
@@ -68,13 +90,7 @@ const App = (props) => {
     if (cookie) {
       props.dispatch(setShopizerCartID(cookie));
     }
-    // console.log(window._env_);
     document.documentElement.style.setProperty('--theme-color', window._env_.APP_THEME_COLOR)
-    //if(cookies[cart_cookie]) {
-    //  console.log('cookie !!! ' + cookies[cart_cookie]);
-    //  props.dispatch(setShopizerCartID(cookies[cart_cookie]));
-    //}
-
   });
 
   return (
@@ -110,6 +126,17 @@ const App = (props) => {
                   path="/category/:id"
                   component={Category}
                 />
+
+                 <Route
+                  path="/friendly-category/:url"
+                  render={props => {
+                    let urlPath = window.location.href;
+                    const lastItem = urlPath.substring(urlPath.lastIndexOf('/') + 1)
+                    getUrlResolution(lastItem);
+                    //return <Redirect to={'/category/' + lastItem}/>;
+                  }}
+                 />
+
 
                 {/* Shop product pages */}
                 <Route

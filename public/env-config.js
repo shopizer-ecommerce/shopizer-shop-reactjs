@@ -11,5 +11,4 @@ window._env_ = {
   APP_STRIPE_KEY: "pk_test_TYooMQauvdEDq54NiTphI7jx,",
   APP_THEME_COLOR: "#7c515d",
   APP_DEFAULT_LANGUAGE: "fr",
-  APP_DEFAULT_LANGUAGE: "fr",
 }

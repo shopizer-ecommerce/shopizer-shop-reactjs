@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
+import { Link } from 'react-router-dom';
 // import featureIconData from "../../data/feature-icons/feature-icon-four.json";
 // import FeatureIconSingle from "../../components/feature-icon/FeatureIconSingle.js";
 
@@ -28,68 +29,68 @@ const FeatureIcon = ({
   <div className="row" style={{margin: "0px"}}>
           <div className="col-lg-6 col-md-6 col-sm-12" style={{ padding :'0px' }}>
              <div className="single-image">
-             <a href="/category/bois">
-                <img src="/assets/img/bg/super.jpg" className="image" alt=""/>
-                <div className="overlay">
-                  <h2>Bois</h2>
-                  <small>Visitez nos foyer de bois Pacific Energy, Jotul, Continental et Archguard</small>
-                </div>
-              </a>
+                <Link to="/category/bois">
+                  <img src="/assets/img/bg/super.jpg" className="image" alt=""/>
+                  <div className="overlay">
+                    <h2>Bois</h2>
+                    <small>Visitez nos foyer de bois Pacific Energy, Jotul, Continental et Archguard</small>
+                  </div>
+                </Link>
             </div> 
           </div>
           <div className="col-lg-6 col-md-6 col-sm-12" style={{ padding :'0px' }}>
              <div className="single-image">
-             <a href="/category/gaz">
+             <Link to="/category/gaz">
                 <img src="/assets/img/bg/GF-370-Background.white-copie-1.jpg" className="image" alt=""/>
                 <div className="overlay">
                   <h2>Gaz</h2>
                   <small>Visitez nos foyer au gaz Savannah, Pacific Energy, Continental et autres</small>
                 </div>
-              </a>
+              </Link>
             </div> 
           </div>
           <div className="col-lg-6 col-md-6 col-sm-12" style={{ padding :'0px' }}>
              <div className="single-image">
-             <a href="/category/granule">
+             <Link to="/category/granule">
                 <img src="/assets/img/bg/Piazzetta.jpg" className="image" alt=""/>
                 <div className="overlay">
                   <h2>Granules</h2>
                   <small>Visitez nos foyer au granules Piazzetta et Enviro</small>
                 </div>
-              </a>
+              </Link>
             </div> 
           </div>
           <div className="col-lg-6 col-md-6 col-sm-12" style={{ padding :'0px' }}>
              <div className="single-image">
-             <a href="/category/electrique">
+             <Link to="/category/electrique">
                 <img src="/assets/img/bg/BI-72-DEEP-FI-Room.jpg" className="image" alt=""/>
                 <div className="overlay">
                   <h2>Électrique</h2>
                   <small>Visitez nos foyer électrique Amantii et Sampli Fire</small>
                 </div>
-              </a>
+             </Link>
             </div> 
           </div>
           <div className="col-lg-6 col-md-6 col-sm-12" style={{ padding :'0px' }}>
              <div className="single-image">
-             <a href="/category/bbq">
+             <Link to="/friendly-category/bbq">
                 <img src="/assets/img/bg/SaffireRouge.jpg" className="image" alt=""/>
                 <div className="overlay">
                   <h2>BBQ</h2>
                   <small>Visitez nos BBQ Saffire et Jackson Grills</small>
                 </div>
-              </a>
+              </Link>
             </div> 
           </div>
           <div className="col-lg-6 col-md-6 col-sm-12" style={{ padding :'0px' }}>
              <div className="single-image">
-             <a href="/category/fournaises">
+             <Link to="/category/fournaises">
                 <img src="/assets/img/bg/Jotul-03-1024x717.jpg" className="image" alt=""/>
                 <div className="overlay">
                   <h2>fournaises</h2>
                   <small>Visitez nos différentes fournaises</small>
                 </div>
-              </a>
+              </Link>
             </div> 
           </div>
       </div>

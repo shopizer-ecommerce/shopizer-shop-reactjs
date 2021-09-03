@@ -22,7 +22,7 @@ export const setProductID = (productID) => {
   }
 }
 export const setCategoryID = (categoryID) => {
-
+  console.log('Dispatch categ ' + categoryID);
   return dispatch => {
     dispatch({
       type: SET_CATEGORY_ID,

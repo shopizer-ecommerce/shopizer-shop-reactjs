@@ -3,6 +3,7 @@ const Constant = {
         STORE: 'store/',
         DEFAULT: 'DEFAULT/',
         CATEGORY: 'category/',
+        FRIENDLYCATEGORY: 'category/name/',
         CONTENT: 'content/',
         PAGES: 'pages/',
         PRODUCT_GROUP: 'products/group/',
