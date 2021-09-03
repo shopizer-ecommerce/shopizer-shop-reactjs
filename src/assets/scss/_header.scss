@@ -2526,7 +2526,6 @@
   transition: 0.6s;
   transform: translateX(100%);
 
-
   &.active {
     transform: translateX(0);
   }
@@ -2556,13 +2555,13 @@
   background: #343538;
 
 
-  // @media #{$sm-layout}{
-  //     width: 50px;
-  //     height: 50px;
-  //     line-height: 55px;
-  //     left: 10px;
-  //     font-size: 25px;
-  // }
+   @media #{$sm-layout}{
+       width: 50px;
+       height: 50px;
+       line-height: 55px;
+       left: 10px;
+       font-size: 25px;
+   }
 
   &:hover,
   &:focus {
