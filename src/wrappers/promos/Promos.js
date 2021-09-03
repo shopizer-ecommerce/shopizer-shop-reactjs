@@ -86,7 +86,7 @@ const FeatureIcon = ({
              <a href="/category/fournaises">
                 <img src="/assets/img/bg/Jotul-03-1024x717.jpg" className="image" alt=""/>
                 <div className="overlay">
-                  <h2>fournaises</h2>
+                  <h2>Fournaises</h2>
                   <small>Visitez nos différentes fournaises</small>
                 </div>
               </a>
