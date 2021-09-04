@@ -12,12 +12,12 @@ const MobileNavMenu = ({ strings, categories, contents, setCategoryID, setConten
   const onClickContent = (item) => {
     setContent(item)
   }
-  // console.log(contents);
+
   return (
     <nav className="offcanvas-navigation" id="offcanvas-navigation">
       <ul>
         <li className="menu-item">
-          <Link to={"/"}>Home</Link>
+          <Link to={"/"}>{strings["Home"]}</Link>
         </li>
 
         {

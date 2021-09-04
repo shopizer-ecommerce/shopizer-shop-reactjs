@@ -21,7 +21,6 @@ const productReducer = (state = initState, action) => {
     };
   }
   if (action.type === SET_CATEGORY_ID) {
-    console.log('state categ ' + action.payload);
     return {
       ...state,
       categoryid: action.payload

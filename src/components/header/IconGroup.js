@@ -1,8 +1,7 @@
 import PropTypes from "prop-types";
 import React, { useState, useEffect } from "react";
-import { Link, useRouteMatch, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import MenuCart from "./sub-components/MenuCart";
 import { deleteFromCart, deleteAllFromCart } from "../../redux/actions/cartActions";
 import { setUser } from "../../redux/actions/userAction";
 import { getCart } from "../../redux/actions/cartActions";
@@ -25,13 +24,12 @@ const IconGroup = ({
   strings,
   getCart
 }) => {
-  const pathname = useRouteMatch();
   const history = useHistory();
   const timeout = 1000 * 60 * 30;
   // const [idleTimer, setIdleTimer] = useState(null);
   // const [searchData, setSearchData] = useState([]);
   // const [searchText, setSearchText] = useState('');
-  const [useDetails, setUseDetails] = useState({});
+  const [setUseDetails] = useState({});
   useEffect(() => {
     // getCart(cartData.code, userData)
     if (getLocalData('thekey') === window._env_.APP_BASE_URL) {
@@ -66,9 +64,11 @@ const IconGroup = ({
       history.push('/')
     }
   }
-  const handleClick = e => {
-    e.currentTarget.nextSibling.classList.toggle("active");
-  };
+
+  //const handleClick = e => {
+  //  e.currentTarget.nextSibling.classList.toggle("active");
+  //};
+
   const triggerMobileMenu = () => {
     const offcanvasMobileMenu = document.querySelector(
       "#offcanvas-mobile-menu"

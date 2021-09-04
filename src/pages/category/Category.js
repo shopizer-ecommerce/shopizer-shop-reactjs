@@ -78,8 +78,8 @@ const Category = ({ setCategoryID, isLoading, strings, location, defaultStore, c
     }
 
     const getCategoryParams = (sortType, sortValue) => {
-        // console.log(sortType)
-        // console.log(sortValue)
+        //console.log('Sort type ' + sortType);
+        //console.log('Sort calue ' +sortValue);
         // setCategoryValue(sortValue)
         setCategoryID(sortValue.id)
         history.push("/category/" + sortValue.description.friendlyUrl)
@@ -138,7 +138,6 @@ const Category = ({ setCategoryID, isLoading, strings, location, defaultStore, c
         let action = constant.ACTION.CATEGORY + categoryid + '/' + constant.ACTION.MANUFACTURERS + '?store=' + defaultStore + '&lang=' + currentLanguageCode
         try {
             let response = await WebService.get(action);
-            //console.log(JSON.stringify(response));
             if (response) {
                 setManufacture(response.sort())
             }
@@ -150,7 +149,7 @@ const Category = ({ setCategoryID, isLoading, strings, location, defaultStore, c
         let action = constant.ACTION.CATEGORY + categoryid + '/' + constant.ACTION.VARIANTS + '?store=' + defaultStore + '&lang=' + currentLanguageCode;
         try {
             let response = await WebService.get(action);
-            // console.log(response);
+
             if (response) {
                 response.forEach(variant => {
                     if (variant.code === 'color') {

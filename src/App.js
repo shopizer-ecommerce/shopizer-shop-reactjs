@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useEffect, Suspense, lazy } from "react";
 import ScrollToTop from "./helpers/scroll-top";
-import { useHistory } from "react-router-dom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ToastProvider } from "react-toast-notifications";
 import { multilanguage, loadLanguages, changeLanguage } from "redux-multilanguage";
@@ -17,7 +16,6 @@ import { Redirect } from 'react-router'
 
 
 import { setShopizerCartID } from "./redux/actions/cartActions";
-
 import { setCategoryID } from "./redux/actions/productActions";
 
 // var sha512 = require('js-sha512').sha512;
@@ -48,28 +46,41 @@ const OrderConfirm = lazy(() => import("./pages/other/OrderConfirm"));
 const Content = lazy(() => import("./pages/content/Content"));
 const SearchProduct = lazy(() => import("./pages/search-product/SearchProduct"));
 
+
 //export default function App = (props) => {
-const App = (props) => {
+const App = (props, setCategoryID) => {
 
-  const history = useHistory();
 
-  const getUrlResolution = async (friendly) => {
+  const resolveUrl = async (friendly) => {
     let action = window._env_.APP_BASE_URL + window._env_.APP_API_VERSION + constant.ACTION.FRIENDLYCATEGORY + friendly + '?store=' + window._env_.APP_MERCHANT + '&lang=' + window._env_.APP_DEFAULT_LANGUAGE;
     console.log('Log url ' + action);
     
     try {
       let response = await WebService.get(action);
       if (response) {
-          console.log(JSON.stringify(response));
-          console.log('setCategory ' + response.id)
-          setCategoryID(response.id);
+          console.log(response.id);
+          try {
+            let actualstorage = JSON.parse(localStorage.getItem("redux_localstorage_simple"));
+            console.log('Storage ' + actualstorage.productData.categoryid);
+            actualstorage.productData.categoryid = response.id;
+            console.log('Storage after1 ' + actualstorage.productData.categoryid);
+            console.log('Storage after 2' + JSON.stringify(actualstorage));
+            localStorage.setItem("redux_localstorage_simple", JSON.stringify(actualstorage));
+          } catch (error) {
+            console.log("error", error)
+          }
+
+          
       } else {
-        history.push('/not-found');
+        //returnfunct = false;
       }
     } catch (error) {
-      history.push('/not-found')
+      console.log("error", error)
     }
-}
+
+ }
+
+
 
   useEffect(() => {
     props.dispatch(
@@ -128,12 +139,12 @@ const App = (props) => {
                 />
 
                  <Route
-                  path="/friendly-category/:url"
+                  path="/categorie/:url"
                   render={props => {
                     let urlPath = window.location.href;
                     const lastItem = urlPath.substring(urlPath.lastIndexOf('/') + 1)
-                    getUrlResolution(lastItem);
-                    //return <Redirect to={'/category/' + lastItem}/>;
+                    resolveUrl(lastItem);
+                    return <Redirect to={'/category/' + lastItem}/>;
                   }}
                  />
 
@@ -220,4 +231,12 @@ App.propTypes = {
   dispatch: PropTypes.func
 };
 
-export default connect()(multilanguage(App));
+const mapDispatchToProps = dispatch => {
+  return {
+    setCategoryID: (value) => {
+      dispatch(setCategoryID(value));
+    }
+  };
+};
+
+export default connect(null, mapDispatchToProps)(multilanguage(App));
