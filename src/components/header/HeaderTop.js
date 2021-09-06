@@ -28,6 +28,7 @@ const HeaderTop = ({
         setMessage(response.description.description);
       }
     } catch (error) {
+      console.log("Content error " + error );
     }
   }
   return (
@@ -40,9 +41,14 @@ const HeaderTop = ({
         currentLanguageCode={currentLanguageCode}
         dispatch={dispatch}
       />
+      {/** 
+      <HeaderMessage
+        currentLanguageCode={currentLanguageCode}
+        dispatch={dispatch}
+      />
+      */}
       <div className="header-offer">
-        <p dangerouslySetInnerHTML={{ __html: message.replace("]]>", "") }}>
-        </p>
+        <p dangerouslySetInnerHTML={{ __html: message.replace("]]>", "") }}></p>
       </div>
     </div>
   );

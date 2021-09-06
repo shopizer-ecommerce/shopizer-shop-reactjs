@@ -40,6 +40,7 @@ const Constant = {
         BANNER_TEXT: 'bannerText/',
         IMAGES: 'images/',
         HEADER_MESSAGE: 'headerMessage/',
+        AVAILABILITY: 'availability/',
         AGREEMENT: 'agreement/',
         PROMO: 'promo/'
     }

@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import MetaTags from "react-meta-tags";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import Layout from "../../layouts/Layout";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
-// import LocationMap from "../../components/contact/LocationMap";
+import LocationMap from "../../components/contact/LocationMap";
 import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
 import WebService from '../../util/webService';
@@ -12,6 +12,7 @@ import constant from '../../util/constant';
 import { setLoader } from "../../redux/actions/loaderActions";
 import { useToasts } from "react-toast-notifications";
 import { multilanguage } from "redux-multilanguage";
+
 const contactForm = {
   email: {
     name: "email",
@@ -54,12 +55,30 @@ const contactForm = {
     }
   }
 };
-const Contact = ({ strings, location, merchant, setLoader }) => {
+const Contact = ({ strings, currentLanguageCode, location, merchant, setLoader }) => {
+  const [message, setMessage] = useState('')
   const { pathname } = location;
   const { addToast } = useToasts();
   const { register, handleSubmit, errors, reset } = useForm({
     mode: "onChange"
   });
+  useEffect(() => {
+    getContentMessage();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const getContentMessage = async () => {
+    let action = constant.ACTION.CONTENT + constant.ACTION.BOXES + constant.ACTION.AVAILABILITY + '?lang=' + currentLanguageCode;
+    try {
+      let response = await WebService.get(action);
+      if (response) {
+        //console.log('Response -> ' + JSON.stringify(response));
+        setMessage(response.description.description);
+      }
+    } catch (error) {
+      console.log("Content error " + error );
+    }
+  }
 
   const onSubmitContactForm = async (data) => {
     // console.log(data)
@@ -87,10 +106,6 @@ const Contact = ({ strings, location, merchant, setLoader }) => {
     <Fragment>
       <MetaTags>
         <title>{merchant.name} | {strings["Contact"]}</title>
-        {/* <meta
-          name="description"
-          content="Contact of flone react minimalist eCommerce template."
-        /> */}
       </MetaTags>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>{strings["Home"]}</BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
@@ -103,11 +118,11 @@ const Contact = ({ strings, location, merchant, setLoader }) => {
         <Breadcrumb />
         <div className="contact-area pt-100 pb-100">
           <div className="container">
-            {/**
+            {
             <div className="contact-map mb-10">
               <LocationMap merchant={merchant} />
             </div>
-            */}
+            }
             <div className="custom-row-2">
               <div className="col-lg-4 col-md-5">
                 <div className="contact-info-wrap">
@@ -139,38 +154,19 @@ const Contact = ({ strings, location, merchant, setLoader }) => {
                       <p>{merchant.address.postalCode}</p>
                     </div>
                   </div>
-                  {/**
                   <div className="contact-social text-center">
-                    <h3>Follow Us</h3>
+                    <h3>Suivez-nous</h3>
                     <ul>
                       <li>
-                        <a href="//facebook.com">
+                        <a href="https://www.facebook.com/perfectogazpropane/">
                           <i className="fa fa-facebook" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="//pinterest.com">
-                          <i className="fa fa-pinterest-p" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="//thumblr.com">
-                          <i className="fa fa-tumblr" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="//vimeo.com">
-                          <i className="fa fa-vimeo" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="//twitter.com">
-                          <i className="fa fa-twitter" />
                         </a>
                       </li>
                     </ul>
                   </div>
-                  */}
+                  <div className="contact-info-dec">
+                  <p dangerouslySetInnerHTML={{ __html: message.replace("]]>", "") }}></p>
+                  </div>
                 </div>
               </div>
               <div className="col-lg-8 col-md-7">
@@ -226,7 +222,8 @@ const Contact = ({ strings, location, merchant, setLoader }) => {
 //}
 
 Contact.propTypes = {
-  location: PropTypes.object
+  location: PropTypes.object,
+  currentLanguageCode: PropTypes.string,
 };
 
 const mapStateToProps = state => {

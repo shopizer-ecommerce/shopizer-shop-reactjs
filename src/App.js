@@ -9,10 +9,7 @@ import { BreadcrumbsProvider } from "react-breadcrumbs-dynamic";
 
 import Loader from "./components/loader/loader"
 import Cookie from "./components/consent/Cookie"
-import constant from './util/constant';
-import WebService from './util/webService';
 import Cookies from 'universal-cookie';
-import { Redirect } from 'react-router'
 
 
 import { setShopizerCartID } from "./redux/actions/cartActions";
@@ -48,37 +45,7 @@ const SearchProduct = lazy(() => import("./pages/search-product/SearchProduct"))
 
 
 //export default function App = (props) => {
-const App = (props, setCategoryID) => {
-
-
-  const resolveUrl = async (friendly) => {
-    let action = window._env_.APP_BASE_URL + window._env_.APP_API_VERSION + constant.ACTION.FRIENDLYCATEGORY + friendly + '?store=' + window._env_.APP_MERCHANT + '&lang=' + window._env_.APP_DEFAULT_LANGUAGE;
-    console.log('Log url ' + action);
-    
-    try {
-      let response = await WebService.get(action);
-      if (response) {
-          console.log(response.id);
-          try {
-            let actualstorage = JSON.parse(localStorage.getItem("redux_localstorage_simple"));
-            console.log('Storage ' + actualstorage.productData.categoryid);
-            actualstorage.productData.categoryid = response.id;
-            console.log('Storage after1 ' + actualstorage.productData.categoryid);
-            console.log('Storage after 2' + JSON.stringify(actualstorage));
-            localStorage.setItem("redux_localstorage_simple", JSON.stringify(actualstorage));
-          } catch (error) {
-            console.log("error", error)
-          }
-
-          
-      } else {
-        //returnfunct = false;
-      }
-    } catch (error) {
-      console.log("error", error)
-    }
-
- }
+const App = (props) => {
 
 
 
@@ -137,17 +104,6 @@ const App = (props, setCategoryID) => {
                   path="/category/:id"
                   component={Category}
                 />
-
-                 <Route
-                  path="/categorie/:url"
-                  render={props => {
-                    let urlPath = window.location.href;
-                    const lastItem = urlPath.substring(urlPath.lastIndexOf('/') + 1)
-                    resolveUrl(lastItem);
-                    return <Redirect to={'/category/' + lastItem}/>;
-                  }}
-                 />
-
 
                 {/* Shop product pages */}
                 <Route

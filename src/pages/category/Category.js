@@ -86,9 +86,29 @@ const Category = ({ setCategoryID, isLoading, strings, location, defaultStore, c
         // getProductList(categoryValue, selectedOption, selectedManufature)
     }
 
-    useEffect(() => {
+    const resolveCategory = async (path) => {
+        let categoryFriendlyName = path.substring(path.lastIndexOf('/') + 1);
+        let action = window._env_.APP_BASE_URL + window._env_.APP_API_VERSION + constant.ACTION.FRIENDLYCATEGORY + categoryFriendlyName + '?store=' + window._env_.APP_MERCHANT + '&lang=' + window._env_.APP_DEFAULT_LANGUAGE;
+        
+        try {
+          let response = await WebService.get(action);
+          if (response) {
+              setCategoryValue(response.id);
+              setCategoryID(response.id)
+              categoryID = response.id;
+   
+          } else {
+           history.push("/");
+          }
+        } catch (error) {
+          console.log("error", error);
+          history.push("/");
+        }
+    }
 
-        setCategoryValue(categoryID)
+    useEffect(() => {
+        resolveCategory(history.location.pathname);
+        //setCategoryValue(categoryID)
         setSubCategory([])
         setColor([])
         setManufacture([])

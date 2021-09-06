@@ -21,7 +21,7 @@ const HeroSliderStatic = ({ string, pitch1, pitch2, pitch3, sliderText, sliderIm
     <div className="site-block-cover-content">
         <h2 className="sub-title">{pitch1}</h2>
         <h1>{pitch2}</h1>
-        <p><a href="!#" className="btn btn-black rounded-0">{pitch3}</a></p>
+        <p><a href="/" className="btn btn-black rounded-0">{pitch3}</a></p>
       </div>
     </div>
 

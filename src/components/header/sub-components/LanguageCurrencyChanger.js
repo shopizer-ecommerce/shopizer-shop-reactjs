@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 //import { changeLanguage } from "redux-multilanguage";
 import { multilanguage } from "redux-multilanguage";
+import {Link} from "react-router-dom";
 import { connect } from "react-redux";
 const LanguageCurrencyChanger = ({
   // currency,
@@ -54,10 +55,10 @@ const LanguageCurrencyChanger = ({
           </ul>
         </div>
           </div>*/
-return (
+   return (
     <div className="language-currency-wrap">
       <div className="same-language-currency" style = {{ padding : 15 }}>
-        <p>{strings['Call Us']} : <a href="tel:{merchant.phone}">{merchant.phone}</a></p>
+        <p><Link to="/contact">{strings['Call Us']}</Link> : <a href="tel:{merchant.phone}">{merchant.phone}</a></p>
       </div>
     </div>
   );

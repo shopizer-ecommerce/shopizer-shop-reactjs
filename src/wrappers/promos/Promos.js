@@ -29,7 +29,7 @@ const FeatureIcon = ({
   <div className="row" style={{margin: "0px"}}>
           <div className="col-lg-6 col-md-6 col-sm-12" style={{ padding :'0px' }}>
              <div className="single-image">
-                <Link to="/categorie/bois">
+                <Link to="/category/bois">
                   <img src="/assets/img/bg/super.jpg" className="image" alt=""/>
                   <div className="overlay">
                     <h2>Bois</h2>
@@ -40,7 +40,7 @@ const FeatureIcon = ({
           </div>
           <div className="col-lg-6 col-md-6 col-sm-12" style={{ padding :'0px' }}>
              <div className="single-image">
-             <Link to="/categorie/gaz">
+             <Link to="/category/gaz">
                 <img src="/assets/img/bg/GF-370-Background.white-copie-1.jpg" className="image" alt=""/>
                 <div className="overlay">
                   <h2>Gaz</h2>
@@ -51,7 +51,7 @@ const FeatureIcon = ({
           </div>
           <div className="col-lg-6 col-md-6 col-sm-12" style={{ padding :'0px' }}>
              <div className="single-image">
-             <Link to="/categorie/granule">
+             <Link to="/category/granule">
                 <img src="/assets/img/bg/Piazzetta.jpg" className="image" alt=""/>
                 <div className="overlay">
                   <h2>Granules</h2>
@@ -62,7 +62,7 @@ const FeatureIcon = ({
           </div>
           <div className="col-lg-6 col-md-6 col-sm-12" style={{ padding :'0px' }}>
              <div className="single-image">
-             <Link to="/categorie/electrique">
+             <Link to="/category/electrique">
                 <img src="/assets/img/bg/BI-72-DEEP-FI-Room.jpg" className="image" alt=""/>
                 <div className="overlay">
                   <h2>Électrique</h2>
@@ -73,7 +73,7 @@ const FeatureIcon = ({
           </div>
           <div className="col-lg-6 col-md-6 col-sm-12" style={{ padding :'0px' }}>
              <div className="single-image">
-             <Link to="/categorie/bbq">
+             <Link to="/category/bbq">
                 <img src="/assets/img/bg/SaffireRouge.jpg" className="image" alt=""/>
                 <div className="overlay">
                   <h2>BBQ</h2>
@@ -84,7 +84,7 @@ const FeatureIcon = ({
           </div>
           <div className="col-lg-6 col-md-6 col-sm-12" style={{ padding :'0px' }}>
              <div className="single-image">
-             <Link to="/categorie/fournaises">
+             <Link to="/category/fournaises">
                 <img src="/assets/img/bg/Jotul-03-1024x717.jpg" className="image" alt=""/>
                 <div className="overlay">
                   <h2>Fournaises</h2>
