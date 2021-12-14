@@ -15,7 +15,7 @@
 		"prop-types": "^15.7.2",
 		"react": "^17.0.1",
 		"react-app-polyfill": "^1.0.4",
-		"react-bootstrap": "1.0.1",
+		"react-bootstrap": "1.6.4",
 		"react-bootstrap-sweetalert": "^5.2.0",
 		"react-breadcrumbs-dynamic": "^1.2.1",
 		"react-cookie-consent": "^6.2.1",
