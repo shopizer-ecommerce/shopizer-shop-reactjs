@@ -4,7 +4,7 @@
 	"private": true,
 	"dependencies": {
 		"@stripe/react-stripe-js": "^1.1.2",
-		"@stripe/stripe-js": "^1.11.0",
+		"@stripe/stripe-js": "^1.21.1",
 		"animate.css": "^3.7.2",
 		"axios": "^0.21.1",
 		"bootstrap": "4.5.0",
