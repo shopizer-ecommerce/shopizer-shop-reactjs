@@ -2,13 +2,19 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
-In the project directory, you can run:
+In the project directory, you can run the commands below
+
+CConfigure shopizer backend in public/env-config.js
+
+## Tested with node  v16.13.0
 
 ### USING NPM
 
 ### `npm i`
 
 ### `npm run dev`
+
+http://localhost:3000
 
 ### docker files ###
 

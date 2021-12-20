@@ -21,7 +21,7 @@ const FooterCopyright = ({ footerLogo, spaceBottomClass, colorClass, merchant })
 
       </div>
       <p>
-        Copyright © {new Date(merchant.inBusinessSince).getFullYear()}{" "}
+        Copyright © {new Date(merchant.inBusinessSince).getFullYear()}{"-"}{new Date().getFullYear()}{" "}
         <Link to="" rel="noopener noreferrer">
           {merchant.name}
         </Link>

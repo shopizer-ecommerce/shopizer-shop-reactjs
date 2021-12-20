@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
-// import MailchimpSubscribe from "react-mailchimp-subscribe";
 
 import { useForm } from "react-hook-form";
 import WebService from '../../../util/webService';
