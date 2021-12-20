@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run the commands below
 
-CConfigure shopizer backend in public/env-config.js
+Configure shopizer backend in public/env-config.js
 
 ## Tested with node  v16.13.0
 
