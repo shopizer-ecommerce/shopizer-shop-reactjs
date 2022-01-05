@@ -18,10 +18,10 @@ export const setUser = (data) => {
         });
     }
 }
-export const getCountry = () => {
+export const getCountry = (lang) => {
     return async dispatch => {
         try {
-            let action = constant.ACTION.COUNTRY;
+            let action = constant.ACTION.COUNTRY + '?store=' + window._env_.APP_MERCHANT + '&lang=' + lang;
             let response = await WebService.get(action);
             dispatch({
                 type: SET_COUNTRY,
@@ -37,7 +37,6 @@ export const getShippingCountry = (lang) => {
         try {
             let action = constant.ACTION.SHIPPING_COUNTRY + '?store=' + window._env_.APP_MERCHANT + '&lang=' + lang;
             let response = await WebService.get(action);
-            // console.log('Country ship data ' + response.length);
             dispatch({
                 type: SET_SHIPPING_COUNTRY,
                 payload: response
@@ -51,6 +50,7 @@ export const getShippingCountry = (lang) => {
 export const getState = (code) => {
     return async dispatch => {
         try {
+            console.log('Calling get state');
             let action = constant.ACTION.ZONES + '?code=' + code;
             let response = await WebService.get(action);
             dispatch({
@@ -92,8 +92,6 @@ export const getCurrentAddress = (lat, long) => {
     return async dispatch => {
         Geocode.fromLatLng(lat, long).then(
             response => {
-                // const address = response.results[0].formatted_address;
-                // console.log(response);
                 dispatch({
                     type: GET_CURRENT_ADDRESS,
                     payload: response.results

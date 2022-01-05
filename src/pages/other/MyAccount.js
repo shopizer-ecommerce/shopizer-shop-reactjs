@@ -13,7 +13,7 @@ import constant from '../../util/constant';
 import { setLoader } from "../../redux/actions/loaderActions";
 import { useToasts } from "react-toast-notifications";
 import { connect } from "react-redux";
-import { getState, getShippingState } from "../../redux/actions/userAction";
+import { getState, getCountry, getShippingState } from "../../redux/actions/userAction";
 import Script from 'react-load-script';
 import { multilanguage } from "redux-multilanguage";
 import SweetAlert from 'react-bootstrap-sweetalert';
@@ -274,7 +274,7 @@ const billingForm = {
     }
   },
 }
-const MyAccount = ({ setUser, deleteAllFromCart, merchant, strings, location, setLoader, getState, getShippingState, countryData, stateData, shipStateData, userData }) => {
+const MyAccount = ({ language, setUser, deleteAllFromCart, merchant, strings, location, setLoader, getState, getCountry, getShippingState, countryData, stateData, shipStateData, userData }) => {
   const { pathname } = location;
   const { addToast } = useToasts();
   const history = useHistory();
@@ -314,6 +314,7 @@ const MyAccount = ({ setUser, deleteAllFromCart, merchant, strings, location, se
   useEffect(() => {
     getProfile()
     getState()
+    getCountry()
     getShippingState()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -321,11 +322,11 @@ const MyAccount = ({ setUser, deleteAllFromCart, merchant, strings, location, se
     let action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.PROFILE;
     try {
       let response = await WebService.get(action);
-      console.log(response);
       if (response) {
         setAccountValue('username', response.userName)
         setAccountValue('email', response.emailAddress)
         getState(response.billing.country)
+        getCountry(language)
         setValue('firstName', response.billing.firstName)
         setValue('lastName', response.billing.lastName)
         setValue('company', response.billing.company)
@@ -488,7 +489,7 @@ const MyAccount = ({ setUser, deleteAllFromCart, merchant, strings, location, se
     // Fire Event when a suggested name is selected
     autocomplete.addListener('place_changed', () => {
       let p = autocomplete.getPlace();
-      console.log(p);
+      //console.log(p);
       setDeliveryValue('shipCountry', p.address_components.find(i => i.types.some(i => i === "country")).short_name)
       getShippingState(p.address_components.find(i => i.types.some(i => i === "country")).short_name)
 
@@ -597,7 +598,7 @@ const MyAccount = ({ setUser, deleteAllFromCart, merchant, strings, location, se
           "phone": data.shipPhone
         }
       }
-      console.log(param);
+      //console.log(param);
       await WebService.patch(action, param);
       // if (response) {
       // reset({})
@@ -634,8 +635,6 @@ const MyAccount = ({ setUser, deleteAllFromCart, merchant, strings, location, se
     setIsDeleted(!isDeleted)
   }
   const onDelete = async () => {
-    console.log('delete')
-    console.log('delete')
     onDeleteConfirm()
     setLoader(true)
     try {
@@ -710,7 +709,6 @@ const MyAccount = ({ setUser, deleteAllFromCart, merchant, strings, location, se
 
                                   </div>
                                 </div>
-
                               </div>
 
                               <div className="billing-back-btn">
@@ -1141,6 +1139,7 @@ MyAccount.propTypes = {
 const mapStateToProps = (state) => {
   return {
     countryData: state.userData.country,
+    language: state.multilanguage.currentLanguageCode,
     userData: state.userData.userData,
     // cartItems: state.cartData.cartItems,
     // currentLocation: state.userData.currentAddress,
@@ -1163,6 +1162,9 @@ const mapDispatchToProps = dispatch => {
     },
     getState: (code) => {
       dispatch(getState(code));
+    },
+    getCountry: (language) => {
+      dispatch(getCountry(language));
     },
     getShippingState: (code) => {
       dispatch(getShippingState(code));

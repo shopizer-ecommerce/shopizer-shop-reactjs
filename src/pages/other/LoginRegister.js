@@ -13,7 +13,7 @@ import WebService from '../../util/webService';
 import constant from '../../util/constant';
 import { setLocalData, isValidObject, getLocalData } from '../../util/helper';
 import { setLoader } from "../../redux/actions/loaderActions";
-import { setUser, getShippingCountry, getState } from "../../redux/actions/userAction";
+import { setUser, getCountry, getShippingCountry, getState } from "../../redux/actions/userAction";
 import { addToCart, getCart } from "../../redux/actions/cartActions";
 import { connect } from "react-redux";
 import { multilanguage } from "redux-multilanguage";
@@ -114,7 +114,7 @@ const registerForm = {
     }
   },
 };
-const LoginRegister = ({ merchant, strings, props, location, setLoader, setUser, getCart, getShippingCountry, getState, shipCountryData, currentLocation, stateData, cartItems, addToCart, defaultStore }) => {
+const LoginRegister = ({ merchant, strings, props, location, setLoader, setUser, getCart, getCountry, getShippingCountry, getState, shipCountryData, currentLocation, stateData, cartItems, addToCart, defaultStore }) => {
   const { pathname } = location;
   const { addToast } = useToasts();
   const history = useHistory();
@@ -139,6 +139,7 @@ const LoginRegister = ({ merchant, strings, props, location, setLoader, setUser,
       setLoginValue('username', getLocalData('loginEmail'))
       // setLoginValue('loginPassword', '')
     }
+    getCountry(multilanguage.currentLanguageCode)
     getShippingCountry(multilanguage.currentLanguageCode)
     setDefualtsValue()
     // eslint-disable-next-line react-hooks/exhaustive-deps 
@@ -489,9 +490,9 @@ const mapDispatchToProps = dispatch => {
     setUser: (data) => {
       dispatch(setUser(data));
     },
-    // getCountry: () => {
-    //   dispatch(getCountry());
-    // },
+    getCountry: () => {
+       dispatch(getCountry());
+    },
     getShippingCountry: (value) => {
       dispatch(getShippingCountry(value));
     },
