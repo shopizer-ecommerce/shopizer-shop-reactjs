@@ -4,7 +4,7 @@ import Layout from "../../layouts/Layout";
 import HeroSlider from "../../wrappers/hero-slider/HeroSlider";
 import TabProduct from "../../wrappers/product/TabProduct";
 // import FeatureIcon from "../../wrappers/feature-icon/FeatureIcon";
-// import Promo from "../../wrappers/promos/Promos";
+import Promo from "../../wrappers/promos/Promos";
 import Newsletter from "../../wrappers/newsletter/Newsletter";
 import { multilanguage } from "redux-multilanguage";
 import { connect } from "react-redux";
@@ -25,7 +25,7 @@ const Home = ({ merchant, strings }) => {
       >
         {/* hero slider */}
         <HeroSlider string={strings} />
-        {/* promos 
+        {/* promos */}
         <Promo
           bgImg=""
           containerClass="container-fluid"
@@ -33,7 +33,7 @@ const Home = ({ merchant, strings }) => {
           spaceTopClass="pt-50"
           spaceBottomClass="pb-40"
         />
-        */}
+        
         {/* tab product */}
         <TabProduct
           category="fashion"

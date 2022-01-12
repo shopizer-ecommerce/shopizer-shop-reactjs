@@ -14,7 +14,7 @@ const HeroSliderStatic = ({ string, pitch1, pitch2, pitch3, sliderText, sliderIm
         </div>
       </div>
       <div className="col-md-8 order-1 align-self-end">
-        <img src="assets/img/slider/banner-demo.jpg" alt="banner" className="img-fluid" />
+        <img src="assets/img/banner/table.png" alt="banner" className="img-fluid" />
       </div>
     </div>
 

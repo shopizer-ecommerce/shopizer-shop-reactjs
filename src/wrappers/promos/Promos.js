@@ -26,10 +26,15 @@ const FeatureIcon = ({
     >
       <div>
         <div className="row">
+         {/* 
           <div className="col-lg-3 col-md-3 col-sm-6"></div>
           <div className="col-lg-3 col-md-3 col-sm-6"><img src="/assets/img/promo/promo20.jpg" alt="promo20" /></div>
           <div className="col-lg-3 col-md-3 col-sm-6"><img src="/assets/img/promo/promo10.jpg" alt="promo10" /></div>
           <div className="col-lg-3 col-md-3 col-sm-6"></div>
+          */}
+          <div className="col-lg-2"></div>
+          <div className="col-lg-8"><img src="/assets/img/promo/promo.png" alt="promo20" width="1200"/></div>
+          <div className="col-lg-2"></div>
 
         </div>
       </div>
