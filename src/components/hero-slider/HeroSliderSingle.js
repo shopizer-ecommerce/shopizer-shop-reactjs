@@ -15,7 +15,7 @@ const HeroSliderFifteenSingle = ({ data, sliderClass, strings, sliderText }) => 
           <div className="col-xl-6 col-lg-7 col-md-8 col-sm-8 col-12 ml-auto">
             <div className="slider-content-2 slider-animated-1">
               <h3 className="animated no-style">Enjoy This Offer Today</h3>
-              <h2 className="animated">blabla</h2>
+              <h2 className="animated">Shop now</h2>
               <div className="slider-btn btn-hover">
                 {/* <Link
                   className="animated rounden-btn"
