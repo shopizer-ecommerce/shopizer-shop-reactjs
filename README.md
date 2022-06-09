@@ -12,6 +12,10 @@ Configure shopizer backend in public/env-config.js
 
 ### `npm i`
 
+If it fails run the following
+
+### `npm install --legacy-peer-deps`
+
 ### `npm run dev`
 
 http://localhost:3000
