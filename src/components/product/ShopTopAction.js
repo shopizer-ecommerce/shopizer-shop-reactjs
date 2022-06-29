@@ -24,7 +24,7 @@ const ShopTopAction = ({
           </select>
         </div> */}
         <p>
-          {strings["Showing"]} {sortedProductCount < pageLimit ? productCount : sortedProductCount * offset} of {productCount} {strings["result"]}
+          {strings["Showing"]} {sortedProductCount < pageLimit ? productCount : sortedProductCount * offset} de {productCount} {strings["result"]}
         </p>
       </div>
 

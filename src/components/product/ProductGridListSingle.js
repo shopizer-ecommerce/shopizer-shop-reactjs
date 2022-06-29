@@ -44,6 +44,16 @@ const ProductGridListSingle = ({
         <div
           className={`product-wrap ${spaceBottomClass ? spaceBottomClass : ""}`}
         >
+
+         <div className="product-content text-center">
+            <h3>
+              <Link to={"/product/" + product.description.friendlyUrl} onClick={() => onClickProductDetails(product.id)}>
+                {product.description.name}
+              </Link>
+            </h3>
+          </div>
+
+
           <div className="product-img">
             <Link to={process.env.PUBLIC_URL + "/product/" + product.description.friendlyUrl} onClick={() => onClickProductDetails(product.id)}>
               {
@@ -56,24 +66,23 @@ const ProductGridListSingle = ({
 
 
             <div className="product-action">
-
               <div className="pro-same-action pro-cart">
                 <Link to={"/product/" + product.description.friendlyUrl} onClick={() => onClickProductDetails(product.id)} title="Select options">
                 <button>
                     <span>Détails du produit</span>
                 </button>
                </Link>
-
               </div>
-
             </div>
           </div>
+          {/*
           <div className="product-content text-center">
             <h3>
               <Link to={"/product/" + product.description.friendlyUrl} onClick={() => onClickProductDetails(product.id)}>
                 {product.description.name}
               </Link>
             </h3>
+             
             <div className="product-rating">
               <StarRatings
                 rating={product.rating}
@@ -83,8 +92,8 @@ const ProductGridListSingle = ({
                 numberOfStars={5}
                 name='view-rating'
               />
-              {/* <Rating ratingValue={product.rating} /> */}
-            </div>
+              {/* <Rating ratingValue={product.rating} /> 
+            </div>*/}
             {/*
             <div className="product-price">
               {product.discounted ? (
@@ -98,8 +107,8 @@ const ProductGridListSingle = ({
                   <span>{finalProductPrice} </span>
                 )}
             </div>
-              */}
-          </div>
+              
+          </div>*/}
         </div>
         <div className="shop-list-wrap mb-30">
           <div className="row">

@@ -40,6 +40,22 @@ const ProductGridSingleTwo = ({
         className={`col-xl-3 col-md-6 col-lg-4 col-sm-6 ${sliderClassName ? sliderClassName : ""}`}>
         <div
           className={`product-wrap-2 ${spaceBottomClass ? spaceBottomClass : ""} ${colorClass ? colorClass : ""} `}>
+
+
+
+          <div className="product-content-2">
+            <div className={`title-price-wrap-2 ${titlePriceClass ? titlePriceClass : ""}`}>
+              <h3>
+                <Link to={process.env.PUBLIC_URL + "/product/" + product.description.friendlyUrl} onClick={() => onClickProductDetails(product.id)}>
+                  {product.description.name}
+                </Link>
+              </h3>
+            </div>
+          </div>
+
+
+
+            
           <div className="product-img">
             <Link to={process.env.PUBLIC_URL + "/product/" + product.description.friendlyUrl} onClick={() => onClickProductDetails(product.id)}>
                 {
@@ -118,7 +134,7 @@ const ProductGridSingleTwo = ({
               </button> */}
             </div>
           </div>
-
+ {/*
           <div className="product-content-2">
             <div className={`title-price-wrap-2 ${titlePriceClass ? titlePriceClass : ""}`}>
               <h3>
@@ -126,7 +142,7 @@ const ProductGridSingleTwo = ({
                   {product.description.name}
                 </Link>
               </h3>
-              {/*
+             
               <div className="price-2">
                 {product.discounted ? (
                   <Fragment>
@@ -141,8 +157,8 @@ const ProductGridSingleTwo = ({
                     <span>{finalProductPrice} </span>
                   )}
               </div>
-              */}
-            </div>
+              
+            </div>*/}
             {/* <div className="pro-wishlist-2">
               <button
                 className={wishlistItem !== undefined ? "active" : ""}
@@ -156,8 +172,8 @@ const ProductGridSingleTwo = ({
               >
                 <i className="fa fa-heart-o" />
               </button>
-            </div> */}
-          </div>
+            </div> 
+          </div>*/}
         </div>
       </div>
       {/* product modal */}

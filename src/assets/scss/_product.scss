@@ -282,9 +282,11 @@
 .product-wrap,
 .product-list-image-wrap {
   position: relative;
+  
 
   .product-img {
     position: relative;
+    margin-top: 10px;
 
     overflow: hidden;
     height: 300px;
@@ -433,6 +435,7 @@
 
     h3 {
       font-size: 16px;
+      text-transform: uppercase;
 
       margin: 0;
     }
