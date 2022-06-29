@@ -21,11 +21,11 @@ export const addToCart = (item, addToast, cartId, quantityCount, defaultStore, u
       let param;
       let response;
       let message;
-      console.log('Item ' + cartId + " quantity " + quantityCount);
+      console.log('Item ' + item.sku + " quantity " + quantityCount);
       if (selectedProductOptions !== undefined) {
-        param = { "attributes": selectedProductOptions, "product": item.id, "quantity": quantityCount }
+        param = { "attributes": selectedProductOptions, "product": item.sku, "quantity": quantityCount }
       } else {
-        param = { "product": item.id, "quantity": quantityCount }
+        param = { "product": item.sku, "quantity": quantityCount }
       }
       console.log('Cart parameters ' + JSON.stringify(param));
       if (cartId) {
