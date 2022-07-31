@@ -11,7 +11,7 @@
 		"google-maps-react": "^2.0.6",
 		"js-sha512": "^0.8.0",
 		"moment": "^2.29.1",
-		"node-fetch": "2.6.1",
+		"node-fetch": "3.2.10",
 		"prop-types": "^15.7.2",
 		"react": "^16.6.0",
 		"react-dom": "^16.6.0",
