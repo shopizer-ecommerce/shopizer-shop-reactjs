@@ -65,7 +65,7 @@ const Contact = ({ strings, location, merchant, setLoader }) => {
     // console.log(data)
     setLoader(true)
     try {
-      let action = constant.ACTION.CONTACT;
+      let action = constant.ACTION.VERSION_V1 + constant.ACTION.CONTACT;
       let param = {
         "comment": data.comment,
         "email": data.email,

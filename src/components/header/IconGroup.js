@@ -53,7 +53,7 @@ const IconGroup = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps 
   }, [])
   const getProfile = async () => {
-    let action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.PROFILE;
+    let action = constant.ACTION.VERSION_V1 + constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.PROFILE;
     try {
       let response = await WebService.get(action);
       if (response) {
@@ -96,7 +96,7 @@ const IconGroup = ({
   //   setSearchText(e.target.value)
   //   if (e.target.value.length >= 3) {
 
-  //     let action = constant.ACTION.SEARCH + constant.ACTION.AUTOCOMPLETE;
+  //     let action = constant.ACTION.VERSION_V1 + constant.ACTION.SEARCH + constant.ACTION.AUTOCOMPLETE;
   //     let param = { "query": e.target.value }
   //     try {
   //       let response = await WebService.post(action, param);

@@ -1,7 +1,8 @@
 window._env_ = {
   APP_PRODUCTION: "false",
   APP_BASE_URL: "http://localhost:8080",
-  APP_API_VERSION: "/api/v1/",
+  API_PATH="/api",
+
   APP_MERCHANT: "DEFAULT",
   APP_PRODUCT_GRID_LIMIT: "15",
   APP_MAP_API_KEY: "",

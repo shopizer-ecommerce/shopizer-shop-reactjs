@@ -25,7 +25,7 @@ const ProductDetails = ({ strings, location, productID, currentLanguageCode, set
 
   const getProductDetails = async () => {
     setLoader(true)
-    let action = constant.ACTION.PRODUCTS + productID + '?lang=' + currentLanguageCode + '&store=' + defaultStore;
+    let action = constant.ACTION.VERSION_V1 + constant.ACTION.PRODUCTS + productID + '?lang=' + currentLanguageCode + '&store=' + defaultStore;
     try {
       let response = await WebService.get(action);
       if (response) {
@@ -38,7 +38,7 @@ const ProductDetails = ({ strings, location, productID, currentLanguageCode, set
     }
   }
   const getReview = async () => {
-    let action = constant.ACTION.PRODUCTS + productID + '/reviews?store=' + defaultStore;
+    let action = constant.ACTION.VERSION_V1 + constant.ACTION.PRODUCTS + productID + '/reviews?store=' + defaultStore;
     try {
       let response = await WebService.get(action);
       if (response) {

@@ -130,17 +130,29 @@ function ProductModal(props, strings) {
     getPrice(tempSelectedOptions)
   }
   const getPrice = async (tempSelectedOptions) => {
-    setLoader(true)
-    let action = constant.ACTION.PRODUCT + product.id + '/' + constant.ACTION.PRICE;
-    let param = { "options": tempSelectedOptions }
+    setLoader(true);
+
+    /**
+     * Since Shopizer 3.2.5 attributes and options are not used directly but only
+     * and has been replaced with variants. 
+     */
+    setLoader(true);
+    /**
+     * Since Shopizer 3.2.5 attributes and options are not used directly but only
+     * and has been replaced with variants. 
+     */
+    //let action = constant.ACTION.VERSION_V1 + constant.ACTION.PRODUCT + productID + '/' + constant.ACTION.PRICE;
+    //let param = { "options": tempSelectedOptions }
     try {
-      let response = await WebService.post(action, param);
-      if (response) {
-        setDiscountedPrice(response.finalPrice);
-        setProductPrice(response.originalPrice);
-        setIsDiscount(response.discounted);
+      //let response = await WebService.post(action, param);
+      //if (response) {
+        // setProductDetails(response)
+        setDiscountedPrice(product.productPrice.finalPrice);
+        setProductPrice(product.productPrice.originalPrice);
+        setIsDiscount(product.productPrice.discounted);
+        // finalDiscountedPrice = response.originalPrice
         setLoader(false)
-      }
+      //}
     } catch (error) {
       setLoader(false)
     }

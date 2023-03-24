@@ -50,10 +50,11 @@ const Header = ({
     try {
       // console.log("*********************************");
       // console.log("BASE URL " + window._env_.APP_BASE_URL);
-      // console.log("APP_API_VERSION " + window._env_.APP_API_VERSION);
+
       // console.log("APP_MERCHANT " + window._env_.APP_MERCHANT);
       // console.log("*********************************");
-      let response = await WebService.get(window._env_.APP_BASE_URL + '/actuator/health/ping');
+      //let response = await WebService.get(window._env_.APP_BASE_URL + '/actuator/health/ping');
+      let response = await WebService.get('/actuator/health/ping');
 
       if (response) {
         // console.log(response)
@@ -73,7 +74,7 @@ const Header = ({
 
   }
   const getCategoryHierarchy = async () => {
-    let action = constant.ACTION.CATEGORY + '?count=20&page=0&store=' + defaultStore + '&lang=' + currentLanguageCode;
+    let action = constant.ACTION.VERSION_V1 + constant.ACTION.CATEGORY + '?count=20&page=0&store=' + defaultStore + '&lang=' + currentLanguageCode;
     try {
       let response = await WebService.get(action);
       if (response) {
@@ -89,7 +90,7 @@ const Header = ({
   }
   const getContent = async () => {
     //TODO PAGE + COUNT
-    let action = constant.ACTION.CONTENT + constant.ACTION.PAGES + '?page=0&count=20&store=' + defaultStore + '&lang=' + currentLanguageCode;
+    let action = constant.ACTION.VERSION_V1 + constant.ACTION.CONTENT + constant.ACTION.PAGES + '?page=0&count=20&store=' + defaultStore + '&lang=' + currentLanguageCode;
     try {
       let response = await WebService.get(action);
       if (response) {
@@ -126,9 +127,11 @@ const Header = ({
           <div className="row">
             <div className="col-xl-2 col-lg-2 col-md-6 col-4">
               {/* header logo */}
-              {
-                merchant.logo != null && <Logo imageUrl={merchant.logo.path} logoClass="logo" />
-              }
+              {merchant.logo != null ? (
+                <Logo imageUrl={merchant.logo.path} logoClass="logo" />
+              ) : (
+                <h3>{merchant.name}</h3>
+              )}
 
             </div>
             <div className="col-xl-8 col-lg-8 d-none d-lg-block">

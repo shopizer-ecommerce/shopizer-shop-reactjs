@@ -36,7 +36,7 @@ const OrderDetails = ({
 
     const getOrderDetails = async () => {
         setLoader(true)
-        let action = constant.ACTION.AUTH + constant.ACTION.ORDERS + orderID;
+        let action = constant.ACTION.VERSION_V1 + constant.ACTION.AUTH + constant.ACTION.ORDERS + orderID;
         try {
             let response = await WebService.get(action);
             if (response) {

@@ -156,7 +156,7 @@ const LoginRegister = ({ merchant, strings, props, location, setLoader, setUser,
   const onSubmit = async (data) => {
     setLoader(true)
     try {
-      let action = constant.ACTION.CUSTOMER + constant.ACTION.LOGIN;
+      let action = constant.ACTION.VERSION_V1 + constant.ACTION.CUSTOMER + constant.ACTION.LOGIN;
       let param = { "username": data.username, "password": data.loginPassword }
       let response = await WebService.post(action, param);
       if (response) {
@@ -192,7 +192,7 @@ const LoginRegister = ({ merchant, strings, props, location, setLoader, setUser,
   };
   const getCartandAdd = async (data) => {
     try {
-      let action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.CARTS + '?&lang=' + JSON.parse(getLocalData('redux_localstorage_simple')).multilanguage.currentLanguageCode;
+      let action = constant.ACTION.VERSION_V1 + constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.CARTS + '?&lang=' + JSON.parse(getLocalData('redux_localstorage_simple')).multilanguage.currentLanguageCode;
       let response = await WebService.get(action);
       console.log(response)
       if (response) {
@@ -240,7 +240,7 @@ const LoginRegister = ({ merchant, strings, props, location, setLoader, setUser,
     // console.log(data)
     setLoader(true)
     try {
-      let action = constant.ACTION.CUSTOMER + constant.ACTION.REGISTER;
+      let action = constant.ACTION.VERSION_V1 + constant.ACTION.CUSTOMER + constant.ACTION.REGISTER;
       let param = {
         "userName": data.email,
         "password": data.password,

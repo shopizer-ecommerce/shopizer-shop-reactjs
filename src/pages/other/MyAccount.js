@@ -319,7 +319,7 @@ const MyAccount = ({ language, setUser, deleteAllFromCart, merchant, strings, lo
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   const getProfile = async () => {
-    let action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.PROFILE;
+    let action = constant.ACTION.VERSION_V1 + constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.PROFILE;
     try {
       let response = await WebService.get(action);
       if (response) {
@@ -367,7 +367,7 @@ const MyAccount = ({ language, setUser, deleteAllFromCart, merchant, strings, lo
   const onChangePassword = async (data) => {
     setLoader(true)
     try {
-      let action = constant.ACTION.CUSTOMER + constant.ACTION.PASSWORD;
+      let action = constant.ACTION.VERSION_V1 + constant.ACTION.CUSTOMER + constant.ACTION.PASSWORD;
       let param = {
         "password": data.password,
         "repeatPassword": data.repeatPassword,
@@ -527,7 +527,7 @@ const MyAccount = ({ language, setUser, deleteAllFromCart, merchant, strings, lo
     // console.log(data)
     setLoader(true)
     try {
-      let action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.ADDRESS;
+      let action = constant.ACTION.VERSION_V1 + constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.ADDRESS;
       let param = {
         "id": userData.id,
         "billing": {
@@ -570,7 +570,7 @@ const MyAccount = ({ language, setUser, deleteAllFromCart, merchant, strings, lo
   const onUpdateDelivery = async (data) => {
     setLoader(true)
     try {
-      let action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.ADDRESS;
+      let action = constant.ACTION.VERSION_V1 + constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.ADDRESS;
       let param = {
         "id": userData.id,
         // "billing": {
@@ -614,7 +614,7 @@ const MyAccount = ({ language, setUser, deleteAllFromCart, merchant, strings, lo
   const onChangeAccount = async (data) => {
     setLoader(true)
     try {
-      let action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER;
+      let action = constant.ACTION.VERSION_V1 + constant.ACTION.AUTH + constant.ACTION.CUSTOMER;
       let param = {
         emailAddress: data.email
       }
@@ -638,7 +638,7 @@ const MyAccount = ({ language, setUser, deleteAllFromCart, merchant, strings, lo
     onDeleteConfirm()
     setLoader(true)
     try {
-      let action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER;
+      let action = constant.ACTION.VERSION_V1 + constant.ACTION.AUTH + constant.ACTION.CUSTOMER;
 
 
       await WebService.delete(action);

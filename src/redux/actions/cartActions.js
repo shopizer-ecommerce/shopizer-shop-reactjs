@@ -30,11 +30,11 @@ export const addToCart = (item, addToast, cartId, quantityCount, defaultStore, u
       console.log('Cart parameters ' + JSON.stringify(param));
       if (cartId) {
         message = "Updated Cart"
-        action = constant.ACTION.CART + cartId + '?store=' + window._env_.APP_MERCHANT;
+        action = constant.ACTION.VERSION_V1 + constant.ACTION.CART + cartId + '?store=' + window._env_.APP_MERCHANT;
         response = await WebService.put(action, param);
       } else {
         message = "Added Cart"
-        action = constant.ACTION.CART + '?store=' + window._env_.APP_MERCHANT
+        action = constant.ACTION.VERSION_V1 + constant.ACTION.CART + '?store=' + window._env_.APP_MERCHANT
         response = await WebService.post(action, param);
       }
 
@@ -71,13 +71,13 @@ export const getCart = (cartID, userData) => {
       let action;
       if (userData) {
         if (cartID) {
-          action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.CARTS + '?cart=' + cartID + '&lang=' + JSON.parse(getLocalData('redux_localstorage_simple')).multilanguage.currentLanguageCode;
+          action = constant.ACTION.VERSION_V1 + constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.CARTS + '?cart=' + cartID + '&lang=' + JSON.parse(getLocalData('redux_localstorage_simple')).multilanguage.currentLanguageCode;
         } else {
-          action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.CARTS + '?&lang=' + JSON.parse(getLocalData('redux_localstorage_simple')).multilanguage.currentLanguageCode;
+          action = constant.ACTION.VERSION_V1 + constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.CARTS + '?&lang=' + JSON.parse(getLocalData('redux_localstorage_simple')).multilanguage.currentLanguageCode;
         }
       } else {
         if (cartID) {
-          action = constant.ACTION.CART + cartID + '?lang=' + JSON.parse(getLocalData('redux_localstorage_simple')).multilanguage.currentLanguageCode
+          action = constant.ACTION.VERSION_V1 + constant.ACTION.CART + cartID + '?lang=' + JSON.parse(getLocalData('redux_localstorage_simple')).multilanguage.currentLanguageCode
         }
       }
 
@@ -160,7 +160,7 @@ export const deleteFromCart = (cartID, item, defaultStore, addToast) => {
   return async dispatch => {
     dispatch(setLoader(true))
     try {
-      let action = constant.ACTION.CART + cartID + '/' + constant.ACTION.PRODUCT + item.id + '?store=' + window._env_.APP_MERCHANT;
+      let action = constant.ACTION.VERSION_V1 + constant.ACTION.CART + cartID + '/' + constant.ACTION.PRODUCT + item.id + '?store=' + window._env_.APP_MERCHANT;
       await WebService.delete(action);
 
       dispatch({

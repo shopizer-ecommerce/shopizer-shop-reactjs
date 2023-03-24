@@ -47,6 +47,9 @@ const Category = ({ setCategoryID, isLoading, strings, location, defaultStore, c
         setLayout(layout)
     }
 
+
+    const productsUrl = constant.ACTION.VERSION_V1 + constant.ACTION.PRODUCTS;
+
     const getSortParams = (sortType, sortValue) => {
         // console.log(sortType)
         let tempSelectedOption = selectedOption;
@@ -59,7 +62,6 @@ const Category = ({ setCategoryID, isLoading, strings, location, defaultStore, c
             } else {
                 tempSelectedOption.splice(index, 1);
             }
-            // console.log(tempSelectedSize)
             setSelectedOption(tempSelectedOption)
         }
         else if (sortType === 'manufacturer') {
@@ -102,11 +104,11 @@ const Category = ({ setCategoryID, isLoading, strings, location, defaultStore, c
         setLoader(true)
         // setProductData([]);
         // let action = `${constant.ACTION.PRODUCTS} + '?store=' + defaultStore + '&lang=' + currentLanguageCode + '&start=' + offset + '&count=' + pageLimit + '&category=' + categoryID`;
-        let action = `${constant.ACTION.PRODUCTS}?${isCheckValueAndSetParams('&store=', defaultStore)}${isCheckValueAndSetParams('&lang=', currentLanguageCode)}${isCheckValueAndSetParams('&page=', offset)}${isCheckValueAndSetParams('&count=', pageLimit)}${isCheckValueAndSetParams('&category=', categoryid)}${isCheckValueAndSetParams('&optionValues=', size.join())}${isCheckValueAndSetParams('&manufacturer=', manufacture.join())}`;
+        let action = `${productsUrl}?${isCheckValueAndSetParams('&store=', defaultStore)}${isCheckValueAndSetParams('&lang=', currentLanguageCode)}${isCheckValueAndSetParams('&page=', offset)}${isCheckValueAndSetParams('&count=', pageLimit)}${isCheckValueAndSetParams('&category=', categoryid)}${isCheckValueAndSetParams('&optionValues=', size.join())}${isCheckValueAndSetParams('&manufacturer=', manufacture.join())}`;
         try {
             let response = await WebService.get(action);
             if (response) {
-                setCurrentPage(response.totalPages)
+                setCurrentPage(response.totalPages);
                 setProductData(response.products);
                 setTotalProduct(response.recordsTotal)
             }
@@ -118,7 +120,7 @@ const Category = ({ setCategoryID, isLoading, strings, location, defaultStore, c
         getCategoryDetails(categoryid)
     }
     const getCategoryDetails = async (categoryid) => {
-        let action = constant.ACTION.CATEGORY + categoryid + '?store=' + defaultStore + '&lang=' + currentLanguageCode;
+        let action = constant.ACTION.VERSION_V1 + constant.ACTION.CATEGORY + categoryid + '?store=' + defaultStore + '&lang=' + currentLanguageCode;
         try {
             let response = await WebService.get(action);
             // console.log(response.children);
@@ -135,7 +137,7 @@ const Category = ({ setCategoryID, isLoading, strings, location, defaultStore, c
         getManufacturers(categoryid)
     }
     const getManufacturers = async (categoryid) => {
-        let action = constant.ACTION.CATEGORY + categoryid + '/' + constant.ACTION.MANUFACTURERS + '?store=' + defaultStore + '&lang=' + currentLanguageCode
+        let action = constant.ACTION.VERSION_V1 + constant.ACTION.CATEGORY + categoryid + '/' + constant.ACTION.MANUFACTURERS + '?store=' + defaultStore + '&lang=' + currentLanguageCode
         try {
             let response = await WebService.get(action);
             //console.log(JSON.stringify(response));
@@ -147,7 +149,7 @@ const Category = ({ setCategoryID, isLoading, strings, location, defaultStore, c
         getVariants(categoryid)
     }
     const getVariants = async (categoryid) => {
-        let action = constant.ACTION.CATEGORY + categoryid + '/' + constant.ACTION.VARIANTS + '?store=' + defaultStore + '&lang=' + currentLanguageCode;
+        let action = constant.ACTION.VERSION_V1 + constant.ACTION.CATEGORY + categoryid + '/' + constant.ACTION.VARIANTS + '?store=' + defaultStore + '&lang=' + currentLanguageCode;
         try {
             let response = await WebService.get(action);
             // console.log(response);

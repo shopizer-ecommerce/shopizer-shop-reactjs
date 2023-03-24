@@ -42,7 +42,7 @@ const CustomForm = ({
   const onSubmit = async (data) => {
     setStatus('sending')
     try {
-      let action = constant.ACTION.NEWSLETTER;
+      let action = constant.ACTION.VERSION_V1 + constant.ACTION.NEWSLETTER;
       let param = { "email": data.email }
       await WebService.post(action, param);
       // console.log(response)

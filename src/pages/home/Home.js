@@ -69,4 +69,3 @@ const mapStateToProps = state => {
 
 
 export default connect(mapStateToProps, null)(multilanguage(Home));
-// export default HomeFashionSeven;

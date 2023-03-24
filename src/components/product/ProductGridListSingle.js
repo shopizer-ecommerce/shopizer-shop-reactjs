@@ -8,6 +8,7 @@ import ProductModal from "./ProductModal";
 import { setProductID } from "../../redux/actions/productActions";
 import { connect } from "react-redux";
 import StarRatings from 'react-star-ratings';
+
 const ProductGridListSingle = ({
   product,
   // currency,
@@ -247,6 +248,9 @@ ProductGridListSingle.propTypes = {
 };
 
 function defaultImage(product) {
+
+console.log('Product Image -> ' + product.images.size);
+
   if(product.images && product.images.length > 0) {
     return product.images[0].imageUrl;
   } else if(product.image != null) {

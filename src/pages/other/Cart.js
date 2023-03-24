@@ -116,7 +116,7 @@ const Cart = ({
   useEffect(() => {
     console.log(cartCount)
     async function fetchData() {
-      let action = constant.ACTION.CART + cartID + '?store=' + defaultStore;
+      let action = constant.ACTION.VERSION_V1 + constant.ACTION.CART + cartID + '?store=' + defaultStore;
       try {
         let response = await WebService.get(action);
         if (response) {
@@ -136,7 +136,7 @@ const Cart = ({
 
   const getCartData = async () => {
     setLoader(true)
-    let action = constant.ACTION.CART + cartID + '?store=' + defaultStore;
+    let action = constant.ACTION.VERSION_V1 + constant.ACTION.CART + cartID + '?store=' + defaultStore;
     try {
       let response = await WebService.get(action);
       if (response) {
@@ -175,7 +175,7 @@ const Cart = ({
   // }
 
   // const getQuote = async (data) => {
-  //   let action = constant.ACTION.CART + cartID + '/' + constant.ACTION.SHIPPING;
+  //   let action = constant.ACTION.VERSION_V1 + constant.ACTION.CART + cartID + '/' + constant.ACTION.SHIPPING;
   //   let param = {};
   //   param = { 'postalCode': data.postalCode, 'countryCode': data.country }
   //   try {
@@ -190,7 +190,7 @@ const Cart = ({
   const applyPromoCode = async (data) => {
     // console.log(data)
     setLoader(true)
-    let action = constant.ACTION.CART + cartID + '/' + constant.ACTION.PROMO + data.code;
+    let action = constant.ACTION.VERSION_V1 + constant.ACTION.CART + cartID + '/' + constant.ACTION.PROMO + data.code;
     let param = {};
     param = { 'promoCart': data.code }
     try {

@@ -280,7 +280,7 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
   const getSummaryOrder = async () => {
     setLoader(true)
     console.log('GET SUMMARY')
-    let action = constant.ACTION.CART + cartID + '?store=' + defaultStore;
+    let action = constant.ACTION.VERSION_V1 + constant.ACTION.CART + cartID + '?store=' + defaultStore;
     try {
       let response = await WebService.get(action);
       // console.log(JSON.stringify(response));
@@ -310,7 +310,7 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
     }
   }
   const getProfile = async () => {
-    let action = constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.PROFILE;
+    let action = constant.ACTION.VERSION_V1 + constant.ACTION.AUTH + constant.ACTION.CUSTOMER + constant.ACTION.PROFILE;
     try {
       let response = await WebService.get(action);
       if (response) {
@@ -352,7 +352,7 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
     }
   }
   const getConfig = async () => {
-    let action = constant.ACTION.CONFIG;
+    let action = constant.ACTION.VERSION_V1 + constant.ACTION.CONFIG;
     try {
       let response = await WebService.get(action);
       if (response) {
@@ -459,7 +459,7 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
     });
   }
   const onChangeShipping = async () => {
-    let action = constant.ACTION.CART + cartID + '/' + constant.ACTION.SHIPPING;
+    let action = constant.ACTION.VERSION_V1 + constant.ACTION.CART + cartID + '/' + constant.ACTION.SHIPPING;
     let param = {};
 
     //console.log('CHANGE SHIPPING');
@@ -490,9 +490,9 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
     //console.log('SHIPPING QUOTE CHANGED');
 
     if (quoteID) {
-      action = constant.ACTION.CART + cartID + '/' + constant.ACTION.TOTAL + '?quote=' + quoteID;
+      action = constant.ACTION.VERSION_V1 + constant.ACTION.CART + cartID + '/' + constant.ACTION.TOTAL + '?quote=' + quoteID;
     } else {
-      action = constant.ACTION.CART + cartID + '/' + constant.ACTION.TOTAL;
+      action = constant.ACTION.VERSION_V1 + constant.ACTION.CART + cartID + '/' + constant.ACTION.TOTAL;
     }
     // console.log('Shipping action ' +action);
     try {
@@ -538,7 +538,7 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
     // console.log(data);
     let param = {};
     if (userData) {
-      action = constant.ACTION.AUTH + constant.ACTION.CART + cartID + '/' + constant.ACTION.CHECKOUT
+      action = constant.ACTION.VERSION_V1 + constant.ACTION.AUTH + constant.ACTION.CART + cartID + '/' + constant.ACTION.CHECKOUT
       param = {
         "shippingQuote": selectedOptions,
         "currency": merchant.currency,
@@ -551,7 +551,7 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
         }
       }
     } else {
-      action = constant.ACTION.CART + cartID + '/' + constant.ACTION.CHECKOUT
+      action = constant.ACTION.VERSION_V1 + constant.ACTION.CART + cartID + '/' + constant.ACTION.CHECKOUT
       let customer = {};
       if (isShipping) {
         customer = {
@@ -673,7 +673,7 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
   }
 
   const onAgreement = async() => {
-    let action = constant.ACTION.CONTENT + constant.ACTION.BOXES + constant.ACTION.AGREEMENT;
+    let action = constant.ACTION.VERSION_V1 + constant.ACTION.CONTENT + constant.ACTION.BOXES + constant.ACTION.AGREEMENT;
     try {
       let response = await WebService.get(action);
       if (response) {

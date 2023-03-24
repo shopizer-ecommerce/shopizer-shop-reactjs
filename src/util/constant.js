@@ -1,5 +1,7 @@
 const Constant = {
     ACTION: {
+        VERSION_V1: '/api/v1/',
+        VERSION_V2: '/api/v2/',
         STORE: 'store/',
         DEFAULT: 'DEFAULT/',
         CATEGORY: 'category/',

@@ -34,7 +34,7 @@ const ProductDescriptionTab = ({ strings, spaceBottomClass, product, review, use
   const onClickSubmit = async () => {
     setLoader(true)
     try {
-      let action = constant.ACTION.AUTH + constant.ACTION.PRODUCTS + product.id + '/reviews'
+      let action = constant.ACTION.VERSION_V1 + constant.ACTION.AUTH + constant.ACTION.PRODUCTS + product.id + '/reviews'
       let param = {
         "customerId": userData.id,
         "date": moment().format('YYYY-MM-DD'),

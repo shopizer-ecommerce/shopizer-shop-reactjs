@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { getLocalData } from './helper'
 
+//const BASE_URL = window._env_.APP_BASE_URL;
 const BASE_URL = window._env_.APP_BASE_URL + window._env_.APP_API_VERSION;
 axios.defaults.baseURL = BASE_URL
 
@@ -16,7 +17,10 @@ export default class WebService {
         return response.data
     }
     static async get(action) {
-        let response = await axios.get(action)
+        action = window._env_.APP_BASE_URL + action;
+        console.log('Action get ' + action);
+        let response = await axios.get(action);
+        console.log('Action response ' + JSON.stringify(response.data));
         return response.data
     }
     static async delete(action) {

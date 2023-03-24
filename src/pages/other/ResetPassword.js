@@ -58,7 +58,7 @@ const ResetPassword = ({ merchant, strings, props, location, setLoader, defaultS
     const checkValidURL = async () => {
         setLoader(true)
         try {
-            let action = constant.ACTION.CUSTOMER + storeCode + '/' + constant.ACTION.RESET + resetID;
+            let action = constant.ACTION.VERSION_V1 + constant.ACTION.CUSTOMER + storeCode + '/' + constant.ACTION.RESET + resetID;
             await WebService.get(action);
             // if (response) {
             //     // addToast("You have successfully logged in to this website", { appearance: "success", autoDismiss: true });
@@ -101,7 +101,7 @@ const ResetPassword = ({ merchant, strings, props, location, setLoader, defaultS
     const onSubmit = async (data) => {
         setLoader(true)
         try {
-            let action = constant.ACTION.CUSTOMER + storeCode + '/' + constant.ACTION.PASSWORD + resetID;
+            let action = constant.ACTION.VERSION_V1 + constant.ACTION.CUSTOMER + storeCode + '/' + constant.ACTION.PASSWORD + resetID;
             let param = { "password": data.password, "repeatPassword": data.repeatPassword }
             await WebService.post(action, param);
             // if (response) {

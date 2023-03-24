@@ -21,7 +21,7 @@ export const setUser = (data) => {
 export const getCountry = (lang) => {
     return async dispatch => {
         try {
-            let action = constant.ACTION.COUNTRY + '?store=' + window._env_.APP_MERCHANT + '&lang=' + lang;
+            let action = constant.ACTION.VERSION_V1 + constant.ACTION.COUNTRY + '?store=' + window._env_.APP_MERCHANT + '&lang=' + lang;
             let response = await WebService.get(action);
             dispatch({
                 type: SET_COUNTRY,
@@ -35,7 +35,7 @@ export const getCountry = (lang) => {
 export const getShippingCountry = (lang) => {
     return async dispatch => {
         try {
-            let action = constant.ACTION.SHIPPING_COUNTRY + '?store=' + window._env_.APP_MERCHANT + '&lang=' + lang;
+            let action = constant.ACTION.VERSION_V1 + constant.ACTION.SHIPPING_COUNTRY + '?store=' + window._env_.APP_MERCHANT + '&lang=' + lang;
             let response = await WebService.get(action);
             dispatch({
                 type: SET_SHIPPING_COUNTRY,
@@ -51,7 +51,7 @@ export const getState = (code) => {
     return async dispatch => {
         try {
             console.log('Calling get state');
-            let action = constant.ACTION.ZONES + '?code=' + code;
+            let action = constant.ACTION.VERSION_V1 + constant.ACTION.ZONES + '?code=' + code;
             let response = await WebService.get(action);
             dispatch({
                 type: SET_STATE,
@@ -64,7 +64,7 @@ export const getState = (code) => {
 export const getShippingState = (code) => {
     return async dispatch => {
         try {
-            let action = constant.ACTION.ZONES + '?code=' + code;
+            let action = constant.ACTION.VERSION_V1 + constant.ACTION.ZONES + '?code=' + code;
             let response = await WebService.get(action);
             dispatch({
                 type: SET_SHIP_STATE,

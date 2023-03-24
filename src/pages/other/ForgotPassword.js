@@ -42,7 +42,7 @@ const ForgotPassword = ({ merchant, strings, props, location, setLoader, default
     const onSubmit = async (data) => {
         setLoader(true)
         try {
-            let action = constant.ACTION.CUSTOMER + constant.ACTION.PASSWORD + constant.ACTION.RESET + constant.ACTION.REQUEST;
+            let action = constant.ACTION.VERSION_V1 + constant.ACTION.CUSTOMER + constant.ACTION.PASSWORD + constant.ACTION.RESET + constant.ACTION.REQUEST;
             let param = { "username": data.username }
             await WebService.post(action, param);
             // if (response) {
