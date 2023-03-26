@@ -35,3 +35,5 @@ http://localhost
 
 env should have
 APP_THEME_COLOR=#D1D1D1
+
+# Branch main for Shopizer pre 3.2.5, Branch 3.2.5 specific to 3.2.5
