@@ -14,7 +14,7 @@ RUN npm run build
 
 
 # production env
-FROM nginx:stable-alpine
+FROM nginx:mainline-alpine
 
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d
