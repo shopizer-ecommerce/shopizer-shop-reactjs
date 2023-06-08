@@ -37,7 +37,7 @@
 		"react-router-dom": "^5.1.2",
 		"react-scripts": "^4.0.1",
 		"react-scroll": "^1.7.14",
-		"react-spinners": "^0.9.0",
+		"react-spinners": "^0.11.0",
 		"react-star-ratings": "^2.3.0",
 		"react-sticky-el": "^1.1.0",
 		"react-to-print": "^2.12.3",
