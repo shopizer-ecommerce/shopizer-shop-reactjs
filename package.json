@@ -6,7 +6,7 @@
 		"@stripe/react-stripe-js": "^1.1.2",
 		"@stripe/stripe-js": "^1.11.0",
 		"animate.css": "^3.7.2",
-		"axios": "^0.21.1",
+		"axios": "^1.6.0",
 		"bootstrap": "4.5.0",
 		"google-maps-react": "^2.0.6",
 		"js-sha512": "^0.8.0",
