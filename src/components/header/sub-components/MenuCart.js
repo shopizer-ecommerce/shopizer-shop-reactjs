@@ -21,7 +21,7 @@ const MenuCart = ({ cartData, deleteFromCart, defaultStore, strings }) => {
                 <li className="single-shopping-cart" key={key}>
                   <div className="shopping-cart-img">
                     <Link to={"/product/" + single.id}>
-                      <img alt="" src={defaultImage(single)} className="img-fluid" />
+                      <img alt="" src={defaultImageDemo(single)} className="img-fluid" />
                     </Link>
                   </div>
                   <div className="shopping-cart-title">
@@ -92,6 +92,10 @@ function defaultImage(product) {
   } else {
     return null;
   }
+}
+
+function defaultImageDemo(product) {
+  return "/assets/img/prod/" + product.sku + ".jpg";
 }
 
 const mapStateToProps = state => {

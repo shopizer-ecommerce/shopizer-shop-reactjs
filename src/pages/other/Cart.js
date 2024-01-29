@@ -253,7 +253,7 @@ const Cart = ({
                               <tr key={key}>
                                 <td className="product-thumbnail">
                                   <Link to={"/product/" + cartItem.description.friendlyUrl} >
-                                    <img className="img-fluid" src={defaultImage(cartItem)} alt="" />
+                                    <img className="img-fluid" src={defaultImageDemo(cartItem)} alt="" />
                                   </Link>
                                 </td>
 
@@ -537,6 +537,11 @@ function defaultImage(product) {
   }
 }
 
+function defaultImageDemo(product) {
+  console.log(JSON.stringify(product));
+  return "/assets/img/prod/" + product.sku + ".jpg";
+}
+
 const mapDispatchToProps = dispatch => {
   return {
     // addToCart: (item, addToast, quantityCount) => {
@@ -546,7 +551,12 @@ const mapDispatchToProps = dispatch => {
       dispatch(setLoader(value));
     },
     decreaseQuantity: (item, addToast, cartId, quantityCount, defaultStore) => {
-      dispatch(addToCart(item, addToast, cartId, quantityCount, defaultStore));
+      if(quantityCount === 0){
+        dispatch(deleteFromCart(cartId, item, defaultStore, addToast));
+      }
+      else{
+        dispatch(addToCart(item, addToast, cartId, quantityCount, defaultStore));
+      }
     },
     increaseQuantity: (item, addToast, cartId, quantityCount, defaultStore) => {
       dispatch(addToCart(item, addToast, cartId, quantityCount, defaultStore));

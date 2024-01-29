@@ -33,7 +33,7 @@ const FeatureIcon = ({
           <div className="col-lg-3 col-md-3 col-sm-6"></div>
           */}
           <div className="col-lg-2"></div>
-          <div className="col-lg-8"><img src="/assets/img/promo/promo.png" alt="promo20" width="1200"/></div>
+          {/*<div className="col-lg-8"><img src="/assets/img/promo/promo.png" alt="promo20" width="1200"/></div>*/}
           <div className="col-lg-2"></div>
 
         </div>

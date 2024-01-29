@@ -29,7 +29,7 @@ function ProductModal(props, strings) {
   const [selectedProductColor, setSelectedProductColor] = useState([]);
   // const [productStock, setProductStock] = useState();
   const [quantityCount, setQuantityCount] = useState(1);
-  const [currentImage, setCurrentImage] = useState(defaultImage(product));
+  const [currentImage, setCurrentImage] = useState(defaultImageDemo(product));
   // const wishlistItem = props.wishlistitem;
   // const compareItem = props.compareitem;
 
@@ -167,34 +167,45 @@ function ProductModal(props, strings) {
           <div className="row">
             <div className="col-md-5 col-sm-12 col-xs-12">
               <div className="product-large-image-wrapper">
-                <Swiper {...gallerySwiperParams}>
-                  {product.images && product.images.length > 0 &&
-                    product.images.map((single, key) => {
-                      return (
-                        <div key={key}>
-                          <div className="single-image" >
-                            {currentImage != null &&
-                              <img
-                                src={currentImage}
-                                className="img-fluid"
-                                alt=""
-                              />
-                            }
-                          </div>
-                        </div>
-                      );
-                    })}
-                </Swiper>
+                <div>
+                  <div className="single-image">
+
+                        <img
+                            src={defaultImageDemo(product)}
+                            className="img-fluid"
+                            alt=""
+                        />
+
+                  </div>
+                </div>
+                {/*<Swiper {...gallerySwiperParams}>*/}
+                {/*  {product.images && product.images.length > 0 &&*/}
+                {/*    product.images.map((single, key) => {*/}
+                {/*      return (*/}
+                {/*        <div key={key}>*/}
+                {/*          <div className="single-image" >*/}
+                {/*            {currentImage != null &&*/}
+                {/*              <img*/}
+                {/*                src={currentImage}*/}
+                {/*                className="img-fluid"*/}
+                {/*                alt=""*/}
+                {/*              />*/}
+                {/*            }*/}
+                {/*          </div>*/}
+                {/*        </div>*/}
+                {/*      );*/}
+                {/*    })}*/}
+                {/*</Swiper>*/}
               </div>
               <div className="product-small-image-wrapper mt-15">
                 <Swiper {...thumbnailSwiperParams}>
                   {product.images && product.images.length > 1 &&
-                    product.images.map((single, key) => {
-                      return (
-                        <div key={key}>
-                          <div className="single-image">
-                            <img
-                              onClick={() => setCurrentImage(single.imageUrl)}
+                      product.images.map((single, key) => {
+                        return (
+                            <div key={key}>
+                              <div className="single-image">
+                                <img
+                                    onClick={() => setCurrentImage(single.imageUrl)}
                               src={single.imageUrl}
                               className="img-fluid"
                               alt=""
@@ -478,6 +489,12 @@ function defaultImage(product) {
   } else {
     return null;
   }
+}
+
+function defaultImageDemo(product) {
+  console.log('defaultImageDemo ' + product.description.friendlyUrl);
+  console.log('defaultImageDemo2 ' + product.sku);
+  return "/assets/img/prod/" + product.description.friendlyUrl + ".jpg";
 }
 
 const mapStateToProps = state => {

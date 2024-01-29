@@ -45,55 +45,58 @@ const ProductGridListSingle = ({
           className={`product-wrap ${spaceBottomClass ? spaceBottomClass : ""}`}
         >
           <div className="product-img">
-            <Link to={process.env.PUBLIC_URL + "/product/" + product.description.friendlyUrl} onClick={() => onClickProductDetails(product.id)}>
-              {
-                product.image && <img className="default-img" src={defaultImage(product)} alt="" />
-              }
-              {
-                product.images.length > 1 ? <img className="hover-img-A" src={defaultImage(product)} alt="" /> : ''
-              }
-            </Link>
-
+            {/*<Link to={process.env.PUBLIC_URL + "/product/" + product.description.friendlyUrl} onClick={() => onClickProductDetails(product.id)}>*/}
+            {/*  {*/}
+            {/*    <img className="default-img" src={defaultImageDemo(product)} alt="" />*/}
+            {/*  }*/}
+            {/*  /!*{*!/*/}
+            {/*  /!*  product.images.length > 1 ? <img className="hover-img-A" src={defaultImageDemo(product)} alt="" /> : ''*!/*/}
+            {/*  /!*}*!/*/}
+            {/*</Link>*/}
+            <img style={{cursor:"pointer"}} className="default-img" src={defaultImageDemo(product)} alt="" onClick={() => setModalShow(true)}/>
 
             <div className="product-action">
-              <div className="pro-same-action pro-wishlist">
-                <Link to={"/product/" + product.description.friendlyUrl} onClick={() => onClickProductDetails(product.id)} title="Select options">
-                  <i className="fa fa-cog"></i>
-                </Link>
-              </div>
+              {/*<div className="pro-same-action pro-wishlist">*/}
+              {/*  /!*<img src={"/assets/img/prod/" + product.description.friendlyUrl + ".jpg"}/>*!/*/}
+              {/*  <Link to={"/product/" + product.description.friendlyUrl}*/}
+              {/*        onClick={() => onClickProductDetails(product.id)} title="Select options">*/}
+              {/*    <i className="fa fa-cog">*/}
+              {/*    </i>*/}
+              {/*  </Link>*/}
+              {/*</div>*/}
               <div className="pro-same-action pro-cart">
 
                 {
                   product.available && product.canBePurchased && product.visible && product.quantity > 0 ?
-                    (
-                      <button
-                        onClick={() => addToCart(product, addToast, cartItem, 1, defaultStore, userData)}
-                        // className="active"
-                        // disabled={cartItem !== undefined && cartItem.quantity > 0}
-                        title={strings["Add to cart"]}
-                      > {" "}  <i className="pe-7s-cart"></i>{" "}{strings["Add to cart"]}</button>
-                    )
-                    :
-                    (
-                      <button disabled className="active">
-                        {strings["Out of Stock"]}
-                      </button>
-                    )
+                      (
+                          <button
+                              onClick={() => addToCart(product, addToast, cartItem, 1, defaultStore, userData)}
+                              // className="active"
+                              // disabled={cartItem !== undefined && cartItem.quantity > 0}
+                              title={strings["Add to cart"]}
+                          > {" "} <i className="pe-7s-cart"></i>{" "}{strings["Add to cart"]}</button>
+                      )
+                      :
+                      (
+                          <button disabled className="active">
+                            {strings["Out of Stock"]}
+                          </button>
+                      )
                 }
 
               </div>
               <div className="pro-same-action pro-quickview">
                 <button onClick={() => setModalShow(true)} title="Quick View">
-                  <i className="pe-7s-look" />
+                  <i className="pe-7s-look"/>
                 </button>
               </div>
             </div>
           </div>
           <div className="product-content text-center">
             <h3>
-              <Link to={"/product/" + product.description.friendlyUrl} onClick={() => onClickProductDetails(product.id)}>
+              <span style={{cursor:"pointer"}} onClick={() => setModalShow(true)}>
                 {product.description.name}
-              </Link>
+              </span>
             </h3>
             <div className="product-rating">
               <StarRatings
@@ -254,6 +257,9 @@ function defaultImage(product) {
   } else {
     return null;
   }
+}
+function defaultImageDemo(product) {
+  return "/assets/img/prod/" + product.description.friendlyUrl + ".jpg";
 }
 
 const mapStateToProps = state => {

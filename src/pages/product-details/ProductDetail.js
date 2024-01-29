@@ -109,6 +109,7 @@ ProductDetails.propTypes = {
 
 const mapStateToProps = (state, ownProps) => {
   // const itemId = ownProps.match.params.id;
+  console.log('state.productData  ' + JSON.stringify(state));
   return {
     productID: state.productData.productid,
     currentLanguageCode: state.multilanguage.currentLanguageCode,

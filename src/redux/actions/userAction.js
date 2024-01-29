@@ -78,14 +78,14 @@ export const getCurrentLocation = () => {
     return async dispatch => {
         const location = window.navigator && window.navigator.geolocation
         // console.log(location, 'getCurrentLocation')
-        if (location) {
-            location.getCurrentPosition((position) => {
-                // console.log(position)
-                dispatch(getCurrentAddress(position.coords.latitude, position.coords.longitude))
-            }, (error) => {
-                console.log(error)
-            })
-        }
+        // if (location) {
+        //     location.getCurrentPosition((position) => {
+        //         // console.log(position)
+        //         dispatch(getCurrentAddress(position.coords.latitude, position.coords.longitude))
+        //     }, (error) => {
+        //         console.log(error)
+        //     })
+        // }
     }
 }
 export const getCurrentAddress = (lat, long) => {

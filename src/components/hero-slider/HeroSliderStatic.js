@@ -10,11 +10,11 @@ const HeroSliderStatic = ({ string, pitch1, pitch2, pitch3, sliderText, sliderIm
 
           <h2 className="sub-title">{pitch1}</h2>
           <h1>{pitch2}</h1>
-          <p><a href="!#" className="btn btn-black rounded-0">{pitch3}</a></p>
+          <p><a href="/category/headsets" className="btn btn-black rounded-0">{pitch3}</a></p>
         </div>
       </div>
       <div className="col-md-8 order-1 align-self-end">
-        <img src="assets/img/banner/table.png" alt="banner" className="img-fluid" />
+        <img src="assets/img/banner/simbeatsep.jpg" alt="banner" className="img-fluid" />
       </div>
     </div>
 
