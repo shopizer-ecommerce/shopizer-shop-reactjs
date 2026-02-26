@@ -24,7 +24,9 @@ const TabProduct = ({
   const [categoryData, setCategoryData] = useState([]);
   useEffect(() => {
     getProductList();
+    if (defaultStore) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    }
   }, []);
   const getProductList = async () => {
     setLoader(true)

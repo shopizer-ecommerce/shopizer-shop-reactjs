@@ -3,6 +3,7 @@ import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 import { connect } from "react-redux";
+import WishlistButton from "./WishlistButton";
 // import { getDiscountPrice } from "../../helpers/product";
 import ProductModal from "./ProductModal";
 import { setProductID } from "../../redux/actions/productActions";
@@ -135,6 +136,9 @@ const ProductGridSingleTwo = ({
                     <span>{finalProductPrice} </span>
                   )}
               </div>
+            </div>
+            <div className="pro-wishlist-2">
+              <WishlistButton productId={product.id} />
             </div>
             {/* <div className="pro-wishlist-2">
               <button

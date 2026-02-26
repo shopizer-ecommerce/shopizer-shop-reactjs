@@ -35,7 +35,10 @@ axios.interceptors.request.use(async (config) => {
     // Do something before request is sent
     config.baseURL = BASE_URL;
     const token = await getLocalData("token");
-    config.headers.common['Authorization'] = token ? 'Bearer ' + token : '';
+    if (!config.headers) {
+        config.headers = {};
+    }
+    config.headers['Authorization'] = token ? 'Bearer ' + token : '';
     return config;
 }, (error) => {
     // Do something with request error
@@ -56,7 +59,7 @@ axios.interceptors.response.use((response) => {
     const { response } = error;
     // const originalRequest = config;
 
-    if (response.status === 401 || response.status === 404) {
+    if (response && (response.status === 401 || response.status === 404)) {
 
         return Promise.reject(error);
     }

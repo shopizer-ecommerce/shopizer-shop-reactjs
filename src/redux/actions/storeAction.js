@@ -8,14 +8,17 @@ export const setMerchant = () => {
         let action = constant.ACTION.STORE + window._env_.APP_MERCHANT;
         try {
             let response = await WebService.get(action);
-            // console.log(response);
-            // if (response) {
-            dispatch({
-                type: SET_MERCHANT,
-                payload: response
-            });
-            dispatch(setStore(response.code));
+            if (response) {
+                dispatch({
+                    type: SET_MERCHANT,
+                    payload: response
+                });
+                dispatch(setStore(response.code));
+            } else {
+                console.error('setMerchant: No response from store API');
+            }
         } catch (error) {
+            console.error('setMerchant failed:', error.message);
         }
 
     };

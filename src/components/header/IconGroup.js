@@ -61,9 +61,11 @@ const IconGroup = ({
       }
     }
     catch (error) {
-      setUser('')
-      setLocalData('token', '')
-      history.push('/')
+      if (error?.response?.status === 401) {
+        setUser('')
+        setLocalData('token', '')
+        history.push('/');
+      }
     }
   }
   const handleClick = e => {
@@ -214,6 +216,9 @@ const IconGroup = ({
               <div style={{ marginTop: 12 }}>
                 <li>
                   <Link to={"/my-account"}>{strings["My Account"]}</Link>
+                </li>
+                <li>
+                  <Link to={"/wishlist"}>{strings["Wishlist"] || "Wishlist"}</Link>
                 </li>
                 <li>
                   <Link to={"/recent-order"}>{strings["Recent Orders"]}</Link>
